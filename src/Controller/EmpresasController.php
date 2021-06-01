@@ -256,7 +256,7 @@ class EmpresasController extends AbstractController
     }
 
     /**
-     * @Route("/upd/{id}", name="empresas_add")
+     * @Route("/upd/{id}", name="empresas_upd")
      */
     public function upd(EntityManagerInterface $em, Request $request, $id): Response
     {
