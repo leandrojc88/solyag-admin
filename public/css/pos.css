@@ -1,0 +1,20 @@
+.panel_cliente {
+    background-color: #4a4a4a;
+    -webkit-box-shadow: -7px 0px 14px -6px rgb(31 31 31);
+    -moz-box-shadow: -7px 0px 14px -6px rgba(31,31,31,1);
+    box-shadow: -7px 0px 14px -6px rgb(31 31 31);
+}
+
+.cliente_head_foot {
+    background-color: #1d1d1d;
+    height: 40px;
+}
+
+.badge {
+
+    font-size: 120%;
+}
+
+label.card-foot-dark {
+    color: white;
+}

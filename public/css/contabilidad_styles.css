@@ -1,0 +1,172 @@
+.height-content {
+    min-height: 87vh !important;
+}
+
+.title-table {
+    font-size: 2.4rem;
+    padding: .5rem 0;
+}
+
+.toasts-alert {
+    position: fixed;
+    width: fit-content;
+    transition: .5s;
+    z-index: 1080;
+    top: .7rem;
+    right: 2rem;
+    border-width: 1px;
+    border-color: currentColor;
+}
+
+.transition-right {
+    right: -105vw;
+}
+
+.overflow-hidden-x-content {
+    overflow-x: hidden;
+}
+
+.invalid-label {
+    padding-left: 1rem;
+    color: red;
+}
+
+body {
+    --bg-nabvar: #343a40
+}
+
+.nabvar-navegation {
+    background: var(--bg-nabvar) !important;
+}
+
+.nabvar-navegation ul > a {
+    color: white !important;
+
+}
+
+.nabvar-navegation ul > a:hover {
+    background: transparent;
+}
+
+.nabvar-navegation li > a {
+    color: white !important;
+}
+
+.row-group-conta {
+    font-weight: 600;
+    background-color: black;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
+.row-group-subconta {
+    font-weight: 600;
+    background-color: #5d5753;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
+.read-only-select {
+    pointer-events: none;
+}
+
+/*********************** MY redefinicion de stilos ****************************/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+.bg-dark-app {
+    background: #2f2f2f
+}
+
+.bg-dark-app label {
+    color: white;
+}
+
+.bg-loading-modal {
+    background-color: rgba(10, 10, 10, 0.7);
+}
+
+.table-small-rows td {
+    padding: .2rem !important;
+    /*padding-bottom: .2rem !important;*/
+}
+
+.table-small-rows th {
+    padding-left: .4rem !important;
+    padding-right: .4rem !important;
+    text-align: center;
+}
+
+/* estilo impuesto por espesificidad */
+.invalid-label-orange {
+    /*margin-left: 10px;*/
+    color: darkorange !important;
+}
+
+/*********************** Importadaos redefinicion de stilos ****************************/
+
+.table-hover tbody tr:hover {
+    color: var(--light);
+    background-color: rgba(0, 0, 0, .075);
+}
+
+/* Comentado por jose miguel Cambia el tamano de todos los imput de la aplicacion
+.input-group.input-group-sm .form-control {
+    height: 31px !important;
+}*/
+
+input#from {
+    margin-right: 10px;
+}
+
+input#to {
+
+    margin-right: 10px;
+}
+
+select#estado {
+    margin-right: 10px;
+}
+
+
+select#empleado {
+    margin-right: 10px;
+}
+
+input#telefono {
+    margin-right: 10px;
+}
+
+.input-group .form-control {
+    height: auto;
+    color: #ffffff;
+    background: #2f2f2f !important;
+    border: 1px solid #ffffff80 !important;
+}
+
+.custom-select {
+    color: #ffffff;
+    background: #2f2f2f !important;
+    border: 1px solid #ffffff80 !important;
+}
+
+.input-group .form-control {
+    height: auto;
+    color: #ffffff !important;
+    background: #ffffff;
+}
+
+/* ------ RWD -------- */
+@media (max-width: 480px) {
+    .overflow-hidden-x-content {
+        overflow-x: auto;
+    }
+}

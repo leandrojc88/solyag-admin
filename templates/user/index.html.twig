@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {# header #}
+        <div class="d-flex align-items-center">
+            <h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+                Listado de Usuarios
+            </h4>
+            <div>
+                <button type="button" class="btn btn-primary btn-md" data-toggle="modal"
+                        data-target="#modal__form__id" data-placement="bottom" title="Adicionar"
+                        onclick="mostrarBtn()">
+                    <i class="fa fa-plus"> Adicionar</i>
+                </button>
+            </div>
+        </div>
+        {# end header #}
+
+        {# Modal de adicionar#}
+        {{ include('user/form_modal.html.twig',{title:'add'}) }}
+        {{ include('user/form_modal_reset_password.html.twig',{title:'reset'}) }}
+        {# list #}
+        <table class="table-small-rows table table-hover text-light">
+            <thead class="thead-dark">
+            <th scope="col-1" class="text-left">Nombre</th>
+            <th scope="col-1" class="text-left">Nombre Usuario</th>
+            <th width="150px" class="text-center">Acciones</th>
+            </thead>
+            <tbody>
+            {% for item in usuarios %}
+                <tr>
+                    <td style="font-weight:400;">{{ item.name }}</td>
+                    <td style="font-weight:400;">{{ item.username }}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="modal"
+                                data-target="#modal__reset__form__id" data-placement="bottom"
+                                title="Cambiar contraseña" onclick="asigId('{{ item.id }}')">
+                            <i class="fa fa-key"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="tooltip"
+                                data-placement="bottom" title="Eliminar"
+                                onclick="onDeleteConfirm({
+                                        message:'Está seguro que desea eliminar el usuario {{ item.username }} ?',
+                                        url:'{{ path('manage_user_delete',{id: item.id}) }}',
+                                        _token: '{{ csrf_token('delete' ~ item.id) }}'
+                                        })">
+                            <i class="fa fa-trash"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {# end list #}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        const TEXT_SELECT = '... seleccione ...';
+
+        function mostrarBtn() {
+            $('#modal__btn__actualizar').hide()
+        }
+
+        const onUpdate = function (config) {
+            $('#modal__btn__actualizar').show()
+            $('#modal__btn__aceptar').hide()
+
+
+            const {descripcion = '', id = '', codigo = '', punto_venta = ''} = config
+
+            $('#modal__form__id').modal('show')
+            $('#modal__form__label__id').text("Modificar " + descripcion)
+
+            $('#almacen_descripcion').val(descripcion)
+            $('#almacen_codigo').val(codigo)
+            if (punto_venta == 1)
+                $('#almacen_punto_venta').prop('checked', true)
+            else
+                $('#almacen_punto_venta').prop('checked', false)
+            $('#id_alamcen').val(id)
+        }
+
+        $(document).ready(function () {
+            // init
+            $('#modal__btn__reset').css('display', 'none')
+            $('#modal__btn__aceptar').css('display', 'none')
+
+            // validacion del formulario
+            var validateForm = $('#form_modal_target').validate({
+                errorClass: 'invalid-label-orange',
+                errorPlacement: function (error, element) {
+                    // colocar mensajes de error a la derecha de cada label para el componente
+                    const error_label = element.closest("form").find(element.attr('id') + "-error")
+                    if (error_label.length) {
+                        error_label.removeClass('hide')
+                    } else {
+                        error.addClass('ml-3')
+                        $(element)
+                            .closest("form")
+                            .find("label[for='" + element.attr("id") + "']")
+                            .append(error);
+                    }
+                },
+                rules: {
+                    'user[name]': "required",
+                    'user[username]': "required",
+                    'user[password]': "required",
+                    'user[repeat_password]': "required",
+                },
+                messages: {
+                    'user[name]': CONTAB_MSG.REQUIRED_NOT_BLANK,
+                    'user[username]': CONTAB_MSG.REQUIRED_NOT_BLANK,
+                    'user[password]': CONTAB_MSG.REQUIRED_NOT_BLANK,
+                    'user[repeat_password]': CONTAB_MSG.REQUIRED_NOT_BLANK,
+                }
+            })
+            $('#modal__btn__aceptar').on('click', function () {
+                const formulario = $('#form_modal_target')
+                formulario.attr('method', `POST`)
+                formulario.prop('action', '/manage-user/add')
+                formulario.submit()
+                if (validateForm.errorList.length === 0) loadingModal.show()
+            })
+
+            $('#modal__form__id').on('show.bs.modal', function (event) {
+                validateForm.resetForm()
+                $('#modal__form__label__id').text('Adicionar Usuario')
+            })
+
+            //------------ RESET PASSWORD---------------
+            $('#reset_password_password').on('keyup', function () {
+                if ($('#reset_password_password').val() != '' || $('#reset_password_repeat_password').val() != '') {
+                    if ($('#reset_password_password').val() != $('#reset_password_repeat_password').val()) {
+                        $('#label_error').css('display', 'block')
+                        $('#modal__btn__reset').css('display', 'none')
+                        $('#label_error').text('Las contraseñas no coinciden')
+                    } else {
+                        $('#label_error').css('display', 'none')
+                        $('#modal__btn__reset').css('display', 'block')
+                    }
+                } else {
+                    $('#label_error').css('display', 'block')
+                    $('#modal__btn__reset').css('display', 'none')
+                    $('#label_error').text('Los campos no pueden estar vacios')
+                }
+            })
+            $('#reset_password_repeat_password').on('keyup', function () {
+                if ($('#reset_password_password').val() != '' || $('#reset_password_repeat_password').val() != '') {
+                    if ($('#reset_password_password').val() != $('#reset_password_repeat_password').val()) {
+                        $('#label_error').css('display', 'block')
+                        $('#modal__btn__reset').css('display', 'none')
+                        $('#label_error').text('Las contraseñas no coinciden')
+                    } else {
+                        $('#label_error').css('display', 'none')
+                        $('#modal__btn__reset').css('display', 'block')
+                    }
+                } else {
+                    $('#label_error').css('display', 'block')
+                    $('#modal__btn__reset').css('display', 'none')
+                    $('#label_error').text('Los campos no pueden estar vacios')
+                }
+            })
+
+            //---------ADD USER
+            $('#user_password').on('keyup', function () {
+                if ($('#user_password').val() != $('#user_repeat_password').val()) {
+                    $('#label_error_add').css('display', 'block')
+                    $('#modal__btn__aceptar').css('display', 'none')
+                    $('#label_error_add').text('Las contraseñas no coinciden')
+                } else {
+                    $('#label_error_add').css('display', 'none')
+                    $('#modal__btn__aceptar').css('display', 'block')
+                }
+            })
+            $('#user_repeat_password').on('keyup', function () {
+                if ($('#user_password').val() != $('#user_repeat_password').val()) {
+                    $('#label_error_add').css('display', 'block')
+                    $('#modal__btn__aceptar').css('display', 'none')
+                    $('#label_error_add').text('Las contraseñas no coinciden')
+                } else {
+                    $('#label_error_add').css('display', 'none')
+                    $('#modal__btn__aceptar').css('display', 'block')
+                }
+            })
+        })
+
+
+        function asigId(id) {
+            $('#id_usuario_reset').val(id)
+        }
+
+        $('#modal__btn__reset').on('click', function () {
+            let id_reset = $('#id_usuario_reset').val();
+            let form_reset = $('#form_modal_target_reset')
+            form_reset.prop('action', '/manage-user/reset-password/' + id_reset)
+            form_reset.submit()
+        })
+    </script>
+{% endblock %}

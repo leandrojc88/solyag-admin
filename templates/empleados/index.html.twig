@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {# header #}
+        <div class="d-flex align-items-center">
+            <h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+                Listado de Empleados
+            </h4>
+        </div>
+
+
+        <table class="table-small-rows table table-hover text-light">
+            <thead class="thead-dark">
+            <th scope="col-1" class="text-left">Nombre</th>
+            <th scope="col-1" class="text-left">Correo</th>
+            </thead>
+            <tbody>
+            {% for item in data %}
+                <tr>
+                    <td style="font-weight:400;" colspan="2" class="row-group-conta font-weight-bold">{{ item.nombre_empresa }}</td>
+                </tr>
+                {% for element in item.empleados %}
+                    <tr>
+                        <td style="font-weight:400;">{{ element.nombre }}</td>
+                        <td style="font-weight:400;">{{ element.correo }}</td>
+                    </tr>
+
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {# end list #}
+    </div>
+{% endblock %}

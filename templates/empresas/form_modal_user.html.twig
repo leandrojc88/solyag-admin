@@ -1,0 +1,15 @@
+{% extends 'utils/modal_form_cuentas.html.twig' %}
+
+{% block modalbody %}
+    {{ form_start(form_administrador,{'attr': {'class': 'text-left','id':'form_modal_target_admin','method':'POST','autocomplete':"off"}}) }}
+    <div class="form-group input-group input-group-sm d-block">
+        {{ form_label(form_administrador.nombre) }}
+        {{ form_widget(form_administrador.nombre,{'attr': {'class': 'form-control w-100'}}) }}
+        {{ form_label(form_administrador.usuario) }}
+        {{ form_widget(form_administrador.usuario,{'attr': {'class': 'form-control w-100'}}) }}
+        <label for="" class="mt-1 text-center text-warning" id="label_error_add"></label>
+        <input type="text" hidden name="id_empresa" id="id_empresa_admin">
+    </div>
+    {{ form_end(form_administrador) }}
+
+{% endblock %}

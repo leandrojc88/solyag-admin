@@ -1,0 +1,21 @@
+0. BORRAR LA CARPETA 'VENDOR'
+
+1. configurar en php.init si da error de memory_limit (memory_limit=-1)
+
+2. habilirat extension=intl
+
+3. borrar en composer.json borrar las dependencias 'estas son erroneas' y estan causando problemas en la app
+
+    "vendor/doctrine1/annotations": "^1.0",
+    "vendor/doctrine1/doctrine-bundle": "^2.1",
+    "vendor/doctrine1/doctrine-migrations-bundle": "^3.0",
+    "vendor/doctrine1/orm": "^2.7"
+
+4. composer update - ejecutar el comando, cuando salte el error " The package has modified files:" escribir 'y' y dar enter
+	esto actualizara las versiones de las dependencias a las verciones x.y.z (y-minior, z-bugs)
+
+5. symfony check:security - ejecutar y ver si retorna "No packages have known vulnerabilities."
+
+6. composer require symfony/orm-pack - ejecutar para que reinstale el doctrine con todas sus dependencias
+
+7. composer require mike42/escpos-php - lib de impresora termica

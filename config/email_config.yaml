@@ -1,0 +1,6 @@
+config:
+  host: 'smtp.gmail.com'
+  port: 587
+  user: 'kahveahd@gmail.com'
+  password: 'Lady5*Everald0'
+  alias: 'Solyag Sistema'

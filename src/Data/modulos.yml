@@ -1,0 +1,9 @@
+modulos:
+  - id: 1
+    name: "Contabilidad"
+  - id: 2
+    name: "Contactos"
+  - id: 3
+    name: "Configuración"
+  - id: 4
+    name: "Remesas"

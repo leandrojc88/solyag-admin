@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        {# header #}
+        <div class="d-flex align-items-center">
+            <h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+                Módulos de "{{ nombre_empresa }}"
+            </h4>
+            <div>
+                <button type="button" class="btn btn-outline-warning btn-md" data-toggle="modal"
+                        data-target="#confirm__modal__active" data-placement="bottom" title="Guardar">
+                    <i class="fa fa-save"> Guardar</i>
+                </button>
+            </div>
+            <div class="ml-4">
+                <a type="button" class="btn btn-outline-secondary btn-md" title="Atrás"
+                   href="{{ url('empresas') }}">
+                    <i class="fa fa-reply-all"> Atrás</i>
+                </a>
+            </div>
+        </div>
+
+        {{ include('empresas_modulos/modal_save.html.twig') }}
+        <table class="table-small-rows table table-hover text-light">
+            <thead class="thead-dark">
+            <th width="100px" class="text-left"><i class="fa fa-check-square"></i></th>
+            <th scope="col-1" class="text-left">Nombre</th>
+            </thead>
+            <tbody>
+            {% for item in modulos %}
+                <tr>
+                    <td style="font-weight:400;">
+                        {% if item.check %}
+                            <input type="checkbox" checked name="modulo--{{ item.id }}" id="{{ item.id }}">
+                        {% else %}
+                            <input type="checkbox" name="modulo--{{ item.id }}" id="{{ item.id }}">
+                        {% endif %}
+                    </td>
+                    <td style="font-weight:400;">{{ item.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {# end list #}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#confirm__modal__active__btn_ok').on('click', function () {
+            let modulos = []
+            let id_empresa = '{{ id_empresa }}'
+            $('input[type=checkbox]:checked').each(function (item, valor) {
+                modulos.push(valor.id)
+            })
+
+            loadingModal.show()
+            $('body').append(`
+                    <form action='/empresas-modulos/guardar/permisos'
+                         method="post" id='form_guardar'>
+                        <input type='text' hidden name='id' value='${id_empresa}'/>
+                        <input type='text' hidden name='array' value='${modulos}'/>
+                    </form>`)
+            const fomrulario = $('#form_guardar')
+            fomrulario.submit()
+            fomrulario.remove()
+        })
+
+    </script>
+{% endblock %}

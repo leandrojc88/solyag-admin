@@ -1,0 +1,41 @@
+{% extends 'utils/modal_form.html.twig' %}
+
+{% block modalbody %}
+
+    {{ form_start(form,{'attr': {'enctype':'multipart/form-data','class': 'text-left','id':'form_modal_target','method':'POST','autocomplete':"off"}}) }}
+    <div class="form-group input-group input-group-sm d-block">
+        {{ form_label(form.nombre) }}
+        {{ form_widget(form.nombre,{'attr': {'class': 'form-control w-100'}}) }}
+        <div class="row mt-0 pt-0">
+            <div class="col-6">
+                {{ form_label(form.siglas) }}
+                {{ form_widget(form.siglas,{'attr': {'class': 'form-control w-100'}}) }}
+            </div>
+            <div class="col-6 mt-0">
+                {{ form_label(form.identificacion) }}
+                {{ form_widget(form.identificacion,{'attr': {'class': 'form-control w-100'}}) }}
+            </div>
+        </div>
+
+        <div class="row mt-0 pt-0">
+            <div class="col-6">
+                {{ form_label(form.nro_contrato) }}
+                {{ form_widget(form.nro_contrato,{'attr': {'class': 'form-control w-100'}}) }}
+                {{ form_label(form.telefono) }}
+                {{ form_widget(form.telefono,{'attr': {'class': 'form-control w-100'}}) }}
+                {{ form_label(form.correo) }}
+                {{ form_widget(form.correo,{'attr': {'class': 'form-control w-100'}}) }}
+            </div>
+            <div class="col-6 imgUp w-100 mt-4">
+                <div id="1" class="imagePreview" style="width: 200px;"></div>
+                <label class="btn btn-dark" style="width: 200px;">
+                    Icono de Empresa<input type="file" name="1" class="uploadFile img"
+                                value="Upload Photo"
+                                style="width: 0px;height: 0px;overflow: hidden;">
+                </label>
+            </div>
+        </div>
+        <input type="text" hidden id="id_empresa" name="id_empresa">
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

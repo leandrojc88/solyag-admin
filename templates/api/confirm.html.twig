@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{{ asset('css/tarjetas.css') }}"  />
+    <script src="{{ asset('js/script.security.js') }}" defer></script>
+
+<div class="confirm">
+<img id='espere' class="imagen-resultado" src="{{ asset('images/iconos/espere.svg') }}" > 
+<img id='diclinada' style="display: none;" class="imagen-resultado" src="{{ asset('images/iconos/diclinada.svg') }}" > 
+<img id='aprobada' style="display: none;" class="imagen-resultado" src="{{ asset('images/iconos/aprobada.svg') }}" > 
+
+<h1 id='mensaje' style="text-align: center;  ">Espere por favor</h1>
+
+     <a   class='boton-agregar-tarjeta'  id='home' style='display: none !important;' href="{{ path('home')}}">
+       Finalizar
+    </a>
+
+{% endblock %}
