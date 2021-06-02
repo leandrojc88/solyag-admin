@@ -22,10 +22,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class EmpresasController extends AbstractController
 {
-	public const dbHost = $_ENV["HOST"];
-    public const dbUsername = $_ENV["USER"];
-    public const dbPassword = $_ENV["PASS"];
-
     /**
      * @Route("/", name="empresas")
      */
@@ -389,7 +385,7 @@ class EmpresasController extends AbstractController
 
     public function createDB($name, $name_prueba)
     {
-        $conexion = new \mysqli(self::dbHost, self::dbUsername, self::dbPassword);
+        $conexion = new \mysqli($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"]);
         if ($conexion->connect_error) {
             die("conexion fallida " . $conexion->connet_error);
         }
@@ -414,7 +410,7 @@ class EmpresasController extends AbstractController
         $filePath = '../src/Controller/backup/db.sql';
 
         //FUNCION 1
-        $this->restoreDatabaseTables(self::dbHost, self::dbUsername, self::dbPassword, $dbName, $filePath);
+        $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
     }
 
     /**
@@ -427,7 +423,7 @@ class EmpresasController extends AbstractController
         $filePath = '../src/Controller/backup/db.sql';
 
         //FUNCION 1
-        $this->restoreDatabaseTables(self::dbHost, self::dbUsername, self::dbPassword, $dbName, $filePath);
+        $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
 
     }
 
