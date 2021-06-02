@@ -421,7 +421,7 @@ class EmpresasController extends AbstractController
     public function reastoreBackup(Request $request)
     {
         $id = $request->request->get('id');
-        $dbName = 'db_prueba_emp' . $id;
+        $dbName = 'db_emp' . $id;
         $filePath = '../src/Controller/backup/db.sql';
 
         //FUNCION 1
