@@ -411,6 +411,8 @@ class EmpresasController extends AbstractController
 
         //FUNCION 1
         $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+        $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
+        return $this->redirectToRoute('empresas');
     }
 
     /**
@@ -424,7 +426,8 @@ class EmpresasController extends AbstractController
 
         //FUNCION 1
         $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
-
+        $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
+        return $this->redirectToRoute('empresas');
     }
 
 
