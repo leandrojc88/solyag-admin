@@ -22,9 +22,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class EmpresasController extends AbstractController
 {
-    public const dbHost = 'localhost';
-    public const dbUsername = 'root';
-    public const dbPassword = '';
+	public const dbHost = $_ENV["HOST"];
+    public const dbUsername = $_ENV["USER"];
+    public const dbPassword = $_ENV["PASS"];
 
     /**
      * @Route("/", name="empresas")
