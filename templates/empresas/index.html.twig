@@ -76,10 +76,12 @@
                                     title="Desactivar" onclick="onDesactive({{ item.id }})">
                                 <i class="fa fa-check-square"></i>
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal"
-                                    data-target="#modal__form__cuentas__id" data-placement="bottom"
-                                    title="Crear Administrador" onclick="onCreateAdmin({{ item.id }})">
+                            {% if item.restore_test or item. restore %}
+                                <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal"
+                                data-target="#modal__form__cuentas__id" data-placement="bottom"
+                                title="Crear Administrador" onclick="onCreateAdmin({{ item.id }})">
                                 <i class="fa fa-user"></i>
+                            {% endif %}
                             </button>
                         {% else %}
                             <button type="button" class="btn btn-outline-info btn-sm ml-1" data-toggle="modal"
@@ -87,27 +89,46 @@
                                     onclick="onActive({{ item.id }})">
                                 <i class="fa fa-check-square"></i>
                             </button>
-
-                            <button type="button" class="btn btn-outline-info btn-sm ml-1"
-                                    title="Crear Administrador" onclick="showMessage()">
-                                <i class="fa fa-user-times"></i>
-                            </button>
+                            {% if item.restore_test or item. restore %}
+                                <button type="button" class="btn btn-outline-info btn-sm ml-1"
+                                        title="Crear Administrador" onclick="showMessage()">
+                                    <i class="fa fa-user-times"></i>
+                                </button>
+                            {% endif %}
                         {% endif %}
                     </td>
                     <td class="text-center">
                         {% if item.ready %}
-                            <button type="button" class="btn btn-secondary btn-sm px-1" data-toggle="modal"
-                                    data-target="#confirm__modal__database_test" data-placement="bottom"
-                                    title="Restaurar Base de Datos de Prueba"
-                                    onclick="restoreDatabaseTest('{{ item.id }}')">
-                                <i class="fa fa-database"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm px-1" data-toggle="modal"
-                                    data-target="#confirm__modal__database" data-placement="bottom"
-                                    title="Restaurar Base de Datos"
-                                    onclick="restoreDatabase('{{ item.id }}')">
-                                <i class="fa fa-database"></i>
-                            </button>
+                            {% if item.restore_test %}
+                                <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="modal"
+                                        data-target="#confirm__modal__database_test" data-placement="bottom"
+                                        title="Restaurar Base de Datos de Prueba"
+                                        onclick="restoreDatabaseTest('{{ item.id }}')">
+                                    <i class="fa fa-database"></i>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary btn-sm px-1" data-toggle="modal"
+                                        data-target="#confirm__modal__database_test" data-placement="bottom"
+                                        title="Restaurar Base de Datos de Prueba"
+                                        onclick="restoreDatabaseTest('{{ item.id }}')">
+                                    <i class="fa fa-database"></i>
+                                </button>
+                            {% endif %}
+                            {% if item.restore %}
+                                <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="modal"
+                                        data-target="#confirm__modal__database" data-placement="bottom"
+                                        title="Restaurar Base de Datos"
+                                        onclick="restoreDatabase('{{ item.id }}')">
+                                    <i class="fa fa-database"></i>
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary btn-sm px-1" data-toggle="modal"
+                                        data-target="#confirm__modal__database" data-placement="bottom"
+                                        title="Restaurar Base de Datos"
+                                        onclick="restoreDatabase('{{ item.id }}')">
+                                    <i class="fa fa-database"></i>
+                                </button>
+                            {% endif %}
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -200,11 +221,12 @@
             $('#modal__btn__actualizar').hide()
             $('#modal__btn__aceptar').show()
         }
+
         const onUpdate = function (config) {
             $('#modal__btn__actualizar').show()
             $('#modal__btn__aceptar').hide()
 
-            const {siglas,nombre,identificacion,nro_contrato,telefono,correo,id,} = config
+            const {siglas, nombre, identificacion, nro_contrato, telefono, correo, id,} = config
 
             $('#modal__form__id').modal('show')
             $('#modal__form__label__id').html("Modificar " + nombre)

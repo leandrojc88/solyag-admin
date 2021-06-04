@@ -30,7 +30,8 @@ class EmpresasController extends AbstractController
         $empresas = $em->getRepository(Empresas::class)->findBy(['activo' => true]);
 
         $row = [];
-        $query = 'SELECT * FROM cuenta';
+//        $query = 'SELECT * FROM cuenta';
+        /** @var Empresas $item */
         foreach ($empresas as $item) {
             $row[] = [
                 'nombre' => $item->getNombre(),
@@ -41,6 +42,8 @@ class EmpresasController extends AbstractController
                 'nro_contrato' => $item->getNroContrato(),
                 'id' => $item->getId(),
                 'ready' => $item->getReady(),
+                'restore'=>$item->getRestore(),
+                'restore_test'=>$item->getRestoreTest(),
             ];
         }
 
@@ -403,14 +406,20 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/restore_prueba", name="empresas_restore_prueba")
      */
-    public function reastoreBackupPrueba(Request $request)
+    public function reastoreBackupPrueba(EntityManagerInterface $em,Request $request)
     {
         $id = $request->request->get('id');
         $dbName = 'db_prueba_emp' . $id;
         $filePath = '../src/Controller/backup/db.sql';
-
         //FUNCION 1
         $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+        /** @var Empresas $empresa */
+        $empresa = $em->getRepository(Empresas::class)->find($id);
+        if($empresa){
+            $empresa->setRestoreTest(true);
+            $em->persist($empresa);
+            $em->flush();
+        }
         $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
         return $this->redirectToRoute('empresas');
     }
@@ -418,14 +427,20 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/restore", name="empresas_restore")
      */
-    public function reastoreBackup(Request $request)
+    public function reastoreBackup(EntityManagerInterface $em,Request $request)
     {
         $id = $request->request->get('id');
         $dbName = 'db_emp' . $id;
         $filePath = '../src/Controller/backup/db.sql';
-
         //FUNCION 1
         $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+        /** @var Empresas $empresa */
+        $empresa = $em->getRepository(Empresas::class)->find($id);
+        if($empresa){
+            $empresa->setRestore(true);
+            $em->persist($empresa);
+            $em->flush();
+        }
         $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
         return $this->redirectToRoute('empresas');
     }
