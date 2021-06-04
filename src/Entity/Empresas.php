@@ -57,6 +57,16 @@ class Empresas
      */
     private $ready;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $restore;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $restore_test;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +164,30 @@ class Empresas
     public function setReady(?bool $ready): self
     {
         $this->ready = $ready;
+
+        return $this;
+    }
+
+    public function getRestore(): ?bool
+    {
+        return $this->restore;
+    }
+
+    public function setRestore(?bool $restore): self
+    {
+        $this->restore = $restore;
+
+        return $this;
+    }
+
+    public function getRestoreTest(): ?bool
+    {
+        return $this->restore_test;
+    }
+
+    public function setRestoreTest(bool $restore_test): self
+    {
+        $this->restore_test = $restore_test;
 
         return $this;
     }
