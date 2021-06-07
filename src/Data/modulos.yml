@@ -1,9 +1,45 @@
 modulos:
   - id: 1
-    name: "Contabilidad"
+    name: "[Economía][Configuración]"
   - id: 2
-    name: "Contactos"
+    name: "[Economía][Inventario]"
   - id: 3
-    name: "Configuración"
+    name: "[Economía][Venta]"
   - id: 4
-    name: "Remesas"
+    name: "[Economía][Activo Fijo]"
+  - id: 5
+    name: "[Economía][Capital Humano]"
+  - id: 6
+    name: "[Economía][Contabilidad]"
+  - id: 7
+    name: "[Economía][Caja Chica]"
+  - id: 8
+    name: "[Economía][Reportes]"
+  - id: 9
+    name: "[Turismo][Transfer]"
+  - id: 10
+    name: "[Turismo][Hoteles]"
+  - id: 11
+    name: "[Turismo][Paquete de Visado]"
+  - id: 12
+    name: "[Telecomunicaciones][Recarga Cubacell]"
+  - id: 13
+    name: "[Telecomunicaciones][Gif Card]"
+  - id: 14
+    name: "[Telecomunicaciones][Otros]"
+  - id: 15
+    name: "[Distribucion y Entrega][Modulos para entregar]"
+  - id: 16
+    name: "[Distribucion y Entrega][Distribuidores]"
+  - id: 17
+    name: "[Pos de Venta]"
+  - id: 18
+    name: "[Reportes]"
+  - id: 19
+    name: "[Contactos]"
+  - id: 20
+    name: "[Configuración]"
+  - id: 21
+    name: "[Publicidade][Home]"
+  - id: 22
+    name: "[Publicidade][IMG Agencia]"
