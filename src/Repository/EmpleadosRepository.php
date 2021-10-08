@@ -19,6 +19,21 @@ class EmpleadosRepository extends ServiceEntityRepository
         parent::__construct($registry, Empleados::class);
     }
 
+    /**
+     * @return Empleados[] Returns an array of Empleados objects
+     */
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Empleados[] Returns an array of Empleados objects
     //  */
