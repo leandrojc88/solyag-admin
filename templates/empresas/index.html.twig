@@ -76,7 +76,7 @@
                                     title="Desactivar" onclick="onDesactive({{ item.id }})">
                                 <i class="fa fa-check-square"></i>
                             </button>
-                            {% if item.restore_test or item. restore %}
+                            {% if item.restore_test and item.restore %}
                                 <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal"
                                 data-target="#modal__form__cuentas__id" data-placement="bottom"
                                 title="Crear Administrador" onclick="onCreateAdmin({{ item.id }})">
@@ -89,7 +89,7 @@
                                     onclick="onActive({{ item.id }})">
                                 <i class="fa fa-check-square"></i>
                             </button>
-                            {% if item.restore_test or item. restore %}
+                            {% if item.restore_test and item. restore %}
                                 <button type="button" class="btn btn-outline-info btn-sm ml-1"
                                         title="Crear Administrador" onclick="showMessage()">
                                     <i class="fa fa-user-times"></i>

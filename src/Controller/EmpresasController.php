@@ -8,12 +8,14 @@ use App\Entity\Empleados;
 use App\Entity\Empresas;
 use App\Form\AdministradoresType;
 use App\Form\EmpresasType;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class EmpresasController
@@ -30,7 +32,7 @@ class EmpresasController extends AbstractController
         $empresas = $em->getRepository(Empresas::class)->findBy(['activo' => true]);
 
         $row = [];
-//        $query = 'SELECT * FROM cuenta';
+        //        $query = 'SELECT * FROM cuenta';
         /** @var Empresas $item */
         foreach ($empresas as $item) {
             $row[] = [
@@ -42,8 +44,8 @@ class EmpresasController extends AbstractController
                 'nro_contrato' => $item->getNroContrato(),
                 'id' => $item->getId(),
                 'ready' => $item->getReady(),
-                'restore'=>$item->getRestore(),
-                'restore_test'=>$item->getRestoreTest(),
+                'restore' => $item->getRestore(),
+                'restore_test' => $item->getRestoreTest(),
             ];
         }
 
@@ -118,8 +120,12 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/add_admin", name="empresas_add_admin")
      */
-    public function add_admin(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passEncoder): Response
-    {
+    public function add_admin(
+        EntityManagerInterface $em,
+        Request $request,
+        UserPasswordEncoderInterface $passEncoder,
+        HttpClientInterface $httpClientInterface
+    ): Response {
         $admin = $request->request->get('administradores');
         $nombre = $admin['nombre'];
         $usuario = $admin['usuario'];
@@ -131,18 +137,40 @@ class EmpresasController extends AbstractController
         ]);
 
         if (empty($duplicate)) {
-            $empleado = new Empleados();
-            $empleado
-                ->setIdEmpresa($em->getRepository(Empresas::class)->find($id_empresa))
-                ->setActivo(true)
-                ->setNombre($nombre)
-                ->setAdministrador(true)
-                ->setCorreo($usuario);
 
-            $em->persist($empleado);
+            $response = $httpClientInterface->request(
+                "POST",
+                $_ENV['SITE_SOLYAG'] . "/api/employee/create-employee-from-adminsolyag",
+                [
+                    "body" => [
+                        "user" => $usuario,
+                        "name" => $nombre,
+                        "id_empresa" => $id_empresa,
+                    ],
+                    'verify_peer' => false
+                ]
+            );
 
-            $em->flush();
-            $this->addFlash('success', 'Adminitrador creado satisfactoriamente');
+            if ($response->getStatusCode() == 404 || $response->getStatusCode() == 500) {
+
+                $this->addFlash('error', $response->getContent());
+            } else {
+
+                // enviar contrasena por email
+
+                $empleado = new Empleados();
+                $empleado
+                    ->setIdEmpresa($em->getRepository(Empresas::class)->find($id_empresa))
+                    ->setActivo(true)
+                    ->setNombre($nombre)
+                    ->setAdministrador(true)
+                    ->setCorreo($usuario);
+
+                $em->persist($empleado);
+
+                $em->flush();
+                $this->addFlash('success', 'Adminitrador creado satisfactoriamente');
+            }
         } else {
             $this->addFlash('error', 'El empleado ya se encuentra registrado en la empresa ' . $duplicate[0]->getIdEmpresa()->getNombre());
         }
@@ -406,7 +434,7 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/restore_prueba", name="empresas_restore_prueba")
      */
-    public function reastoreBackupPrueba(EntityManagerInterface $em,Request $request)
+    public function reastoreBackupPrueba(EntityManagerInterface $em, Request $request)
     {
         $id = $request->request->get('id');
         $dbName = 'db_prueba_emp' . $id;
@@ -415,19 +443,19 @@ class EmpresasController extends AbstractController
         $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
-        if($empresa){
+        if ($empresa) {
             $empresa->setRestoreTest(true);
             $em->persist($empresa);
             $em->flush();
         }
-        $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
+        $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
         return $this->redirectToRoute('empresas');
     }
 
     /**
      * @Route("/restore", name="empresas_restore")
      */
-    public function reastoreBackup(EntityManagerInterface $em,Request $request)
+    public function reastoreBackup(EntityManagerInterface $em, Request $request)
     {
         $id = $request->request->get('id');
         $dbName = 'db_emp' . $id;
@@ -436,12 +464,12 @@ class EmpresasController extends AbstractController
         $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
-        if($empresa){
+        if ($empresa) {
             $empresa->setRestore(true);
             $em->persist($empresa);
             $em->flush();
         }
-        $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
+        $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
         return $this->redirectToRoute('empresas');
     }
 

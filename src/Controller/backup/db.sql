@@ -1,155 +1,3240 @@
--- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2021 a las 05:20:44
--- Versión del servidor: 10.4.13-MariaDB
--- Versión de PHP: 7.4.8
+/*
+ Navicat Premium Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 100411
+ Source Host           : localhost:3306
+ Source Schema         : pruebas_solyag
 
+ Target Server Type    : MySQL
+ Target Server Version : 100411
+ File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+ Date: 10/10/2021 00:16:11
+*/
 
---
--- Base de datos: `db_update`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `activo_fijo`
---
-
-CREATE TABLE `activo_fijo` (
-  `id` int(11) NOT NULL,
-  `id_tipo_movimiento_id` int(11) DEFAULT NULL,
-  `id_tipo_movimiento_baja_id` int(11) DEFAULT NULL,
-  `id_area_responsabilidad_id` int(11) NOT NULL,
-  `id_grupo_activo_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `nro_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_consecutivo` int(11) NOT NULL,
+-- ----------------------------
+-- Table structure for activo_fijo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `activo_fijo`;
+CREATE TABLE `activo_fijo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_tipo_movimiento_id` int NULL DEFAULT NULL,
+  `id_tipo_movimiento_baja_id` int NULL DEFAULT NULL,
+  `id_area_responsabilidad_id` int NOT NULL,
+  `id_grupo_activo_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `nro_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_consecutivo` int NOT NULL,
   `fecha_alta` date NOT NULL,
-  `nro_documento_baja` int(11) DEFAULT NULL,
-  `fecha_baja` date DEFAULT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_documento_baja` int NULL DEFAULT NULL,
+  `fecha_baja` date NULL DEFAULT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `valor_inicial` double NOT NULL,
-  `depreciacion_acumulada` double DEFAULT NULL,
-  `valor_real` double DEFAULT NULL,
+  `depreciacion_acumulada` double NULL DEFAULT NULL,
+  `valor_real` double NULL DEFAULT NULL,
   `annos_vida_util` double NOT NULL,
-  `pais` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `marca` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_motor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_serie` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_chapa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_chasis` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `combustible` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pais` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `modelo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `marca` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_motor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_serie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_chapa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_chasis` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `combustible` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
-  `fecha_ultima_depreciacion` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `fecha_ultima_depreciacion` date NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_75EBC93EDB763453`(`id_tipo_movimiento_id`) USING BTREE,
+  INDEX `IDX_75EBC93E6FBA0327`(`id_tipo_movimiento_baja_id`) USING BTREE,
+  INDEX `IDX_75EBC93ED410562`(`id_area_responsabilidad_id`) USING BTREE,
+  INDEX `IDX_75EBC93E4A667A2B`(`id_grupo_activo_id`) USING BTREE,
+  INDEX `IDX_75EBC93E1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_75EBC93E1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_75EBC93E4A667A2B` FOREIGN KEY (`id_grupo_activo_id`) REFERENCES `grupo_activos` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_75EBC93E6FBA0327` FOREIGN KEY (`id_tipo_movimiento_baja_id`) REFERENCES `tipo_movimiento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_75EBC93ED410562` FOREIGN KEY (`id_area_responsabilidad_id`) REFERENCES `area_responsabilidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_75EBC93EDB763453` FOREIGN KEY (`id_tipo_movimiento_id`) REFERENCES `tipo_movimiento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Table structure for activo_fijo_cuentas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `activo_fijo_cuentas`;
+CREATE TABLE `activo_fijo_cuentas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_activo_id` int NOT NULL,
+  `id_cuenta_activo_id` int NOT NULL,
+  `id_subcuenta_activo_id` int NOT NULL,
+  `id_centro_costo_activo_id` int NOT NULL,
+  `id_area_responsabilidad_activo_id` int NOT NULL,
+  `id_cuenta_depreciacion_id` int NOT NULL,
+  `id_subcuenta_depreciacion_id` int NOT NULL,
+  `id_cuenta_gasto_id` int NOT NULL,
+  `id_subcuenta_gasto_id` int NOT NULL,
+  `id_centro_costo_gasto_id` int NOT NULL,
+  `id_elemento_gasto_gasto_id` int NOT NULL,
+  `id_cuenta_acreedora_id` int NULL DEFAULT NULL,
+  `id_subcuenta_acreedora_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_E0DF2901C84BDE84`(`id_activo_id`) USING BTREE,
+  INDEX `IDX_E0DF290186762CC7`(`id_cuenta_activo_id`) USING BTREE,
+  INDEX `IDX_E0DF29014476721E`(`id_subcuenta_activo_id`) USING BTREE,
+  INDEX `IDX_E0DF29012955A16D`(`id_centro_costo_activo_id`) USING BTREE,
+  INDEX `IDX_E0DF29014C675596`(`id_area_responsabilidad_activo_id`) USING BTREE,
+  INDEX `IDX_E0DF290174A5FFBA`(`id_cuenta_depreciacion_id`) USING BTREE,
+  INDEX `IDX_E0DF2901549C81D9`(`id_subcuenta_depreciacion_id`) USING BTREE,
+  INDEX `IDX_E0DF290180C608FA`(`id_cuenta_gasto_id`) USING BTREE,
+  INDEX `IDX_E0DF290157677646`(`id_subcuenta_gasto_id`) USING BTREE,
+  INDEX `IDX_E0DF2901A950EE53`(`id_centro_costo_gasto_id`) USING BTREE,
+  INDEX `IDX_E0DF2901A752F04B`(`id_elemento_gasto_gasto_id`) USING BTREE,
+  INDEX `IDX_E0DF29014D7B4AB9`(`id_cuenta_acreedora_id`) USING BTREE,
+  INDEX `IDX_E0DF2901EB1B341E`(`id_subcuenta_acreedora_id`) USING BTREE,
+  CONSTRAINT `FK_E0DF29012955A16D` FOREIGN KEY (`id_centro_costo_activo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF29014476721E` FOREIGN KEY (`id_subcuenta_activo_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF29014C675596` FOREIGN KEY (`id_area_responsabilidad_activo_id`) REFERENCES `area_responsabilidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF29014D7B4AB9` FOREIGN KEY (`id_cuenta_acreedora_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF2901549C81D9` FOREIGN KEY (`id_subcuenta_depreciacion_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF290157677646` FOREIGN KEY (`id_subcuenta_gasto_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF290174A5FFBA` FOREIGN KEY (`id_cuenta_depreciacion_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF290180C608FA` FOREIGN KEY (`id_cuenta_gasto_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF290186762CC7` FOREIGN KEY (`id_cuenta_activo_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF2901A752F04B` FOREIGN KEY (`id_elemento_gasto_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF2901A950EE53` FOREIGN KEY (`id_centro_costo_gasto_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF2901C84BDE84` FOREIGN KEY (`id_activo_id`) REFERENCES `activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E0DF2901EB1B341E` FOREIGN KEY (`id_subcuenta_acreedora_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Estructura de tabla para la tabla `activo_fijo_cuentas`
---
+-- ----------------------------
+-- Table structure for activo_fijo_movimiento_activo_fijo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `activo_fijo_movimiento_activo_fijo`;
+CREATE TABLE `activo_fijo_movimiento_activo_fijo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_activo_fijo_id` int NOT NULL,
+  `id_movimiento_activo_fijo_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_2FA61FF25832E72E`(`id_activo_fijo_id`) USING BTREE,
+  INDEX `IDX_2FA61FF27786CA71`(`id_movimiento_activo_fijo_id`) USING BTREE,
+  CONSTRAINT `FK_2FA61FF25832E72E` FOREIGN KEY (`id_activo_fijo_id`) REFERENCES `activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_2FA61FF27786CA71` FOREIGN KEY (`id_movimiento_activo_fijo_id`) REFERENCES `movimiento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
-CREATE TABLE `activo_fijo_cuentas` (
-  `id` int(11) NOT NULL,
-  `id_activo_id` int(11) NOT NULL,
-  `id_cuenta_activo_id` int(11) NOT NULL,
-  `id_subcuenta_activo_id` int(11) NOT NULL,
-  `id_centro_costo_activo_id` int(11) NOT NULL,
-  `id_area_responsabilidad_activo_id` int(11) NOT NULL,
-  `id_cuenta_depreciacion_id` int(11) NOT NULL,
-  `id_subcuenta_depreciacion_id` int(11) NOT NULL,
-  `id_cuenta_gasto_id` int(11) NOT NULL,
-  `id_subcuenta_gasto_id` int(11) NOT NULL,
-  `id_centro_costo_gasto_id` int(11) NOT NULL,
-  `id_elemento_gasto_gasto_id` int(11) NOT NULL,
-  `id_cuenta_acreedora_id` int(11) DEFAULT NULL,
-  `id_subcuenta_acreedora_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `activo_fijo_movimiento_activo_fijo`
---
-
-CREATE TABLE `activo_fijo_movimiento_activo_fijo` (
-  `id` int(11) NOT NULL,
-  `id_activo_fijo_id` int(11) NOT NULL,
-  `id_movimiento_activo_fijo_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `acumulado_vacaciones`
---
-
-CREATE TABLE `acumulado_vacaciones` (
-  `id` int(11) NOT NULL,
-  `id_empleado_id` int(11) NOT NULL,
+-- ----------------------------
+-- Table structure for acumulado_vacaciones
+-- ----------------------------
+-- DROP TABLE IF EXISTS `acumulado_vacaciones`;
+CREATE TABLE `acumulado_vacaciones`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_empleado_id` int NOT NULL,
   `dias` double NOT NULL,
-  `dinero` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `dinero` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_246B9D168D392AC7`(`id_empleado_id`) USING BTREE,
+  CONSTRAINT `FK_246B9D168D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `aeropuerto`
---
-
-CREATE TABLE `aeropuerto` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ajuste`
---
-
-CREATE TABLE `ajuste` (
-  `id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `nro_cuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_cuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_concecutivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
+-- ----------------------------
+-- Table structure for aeropuerto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `aeropuerto`;
+CREATE TABLE `aeropuerto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `activo` tinyint(1) NOT NULL,
-  `entrada` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Table structure for agencias
+-- ----------------------------
+-- DROP TABLE IF EXISTS `agencias`;
+CREATE TABLE `agencias`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Estructura de tabla para la tabla `almacen`
---
+-- ----------------------------
+-- Table structure for agencias_img
+-- ----------------------------
+-- DROP TABLE IF EXISTS `agencias_img`;
+CREATE TABLE `agencias_img`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
-CREATE TABLE `almacen` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+-- ----------------------------
+-- Table structure for agencias_tv
+-- ----------------------------
+-- DROP TABLE IF EXISTS `agencias_tv`;
+CREATE TABLE `agencias_tv`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `url` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_tv` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_unidad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for ajuste
+-- ----------------------------
+-- DROP TABLE IF EXISTS `ajuste`;
+CREATE TABLE `ajuste`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_documento_id` int NOT NULL,
+  `nro_cuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_cuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_concecutivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
   `activo` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `entrada` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_DD35BD326601BA07`(`id_documento_id`) USING BTREE,
+  CONSTRAINT `FK_DD35BD326601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for almacen
+-- ----------------------------
+-- DROP TABLE IF EXISTS `almacen`;
+CREATE TABLE `almacen`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `punto_venta` tinyint(1) NULL DEFAULT NULL,
+  `id_cuenta_inventario_id` int NULL DEFAULT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UNIQ_D5B2D25020332D99`(`codigo`) USING BTREE,
+  INDEX `IDX_D5B2D2501D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_D5B2D250A59A1B0B`(`id_cuenta_inventario_id`) USING BTREE,
+  CONSTRAINT `FK_D5B2D2501D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D5B2D250A59A1B0B` FOREIGN KEY (`id_cuenta_inventario_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for almacen_ocupado
+-- ----------------------------
+-- DROP TABLE IF EXISTS `almacen_ocupado`;
+CREATE TABLE `almacen_ocupado`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_almacen_id` int NOT NULL,
+  `id_usuario_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_AA53605839161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_AA5360587EB2C349`(`id_usuario_id`) USING BTREE,
+  CONSTRAINT `FK_AA53605839161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AA5360587EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for amenidades
+-- ----------------------------
+-- DROP TABLE IF EXISTS `amenidades`;
+CREATE TABLE `amenidades`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_6D8A3B4D1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_6D8A3B4D1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for amenidades_hotel
+-- ----------------------------
+-- DROP TABLE IF EXISTS `amenidades_hotel`;
+CREATE TABLE `amenidades_hotel`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_hotel_id` int NOT NULL,
+  `id_amenidades_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_2EB72C4C6298578D`(`id_hotel_id`) USING BTREE,
+  INDEX `IDX_2EB72C4C91F48FAD`(`id_amenidades_id`) USING BTREE,
+  CONSTRAINT `FK_2EB72C4C6298578D` FOREIGN KEY (`id_hotel_id`) REFERENCES `hotel` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_2EB72C4C91F48FAD` FOREIGN KEY (`id_amenidades_id`) REFERENCES `amenidades` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for apertura
+-- ----------------------------
+-- DROP TABLE IF EXISTS `apertura`;
+CREATE TABLE `apertura`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_documento_id` int NOT NULL,
+  `nro_cuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_cuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_concecutivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `entrada` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_DFFB55EB6601BA07`(`id_documento_id`) USING BTREE,
+  CONSTRAINT `FK_DFFB55EB6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for area_responsabilidad
+-- ----------------------------
+-- DROP TABLE IF EXISTS `area_responsabilidad`;
+CREATE TABLE `area_responsabilidad`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_F469C2BA1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_F469C2BA1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for asiento
+-- ----------------------------
+-- DROP TABLE IF EXISTS `asiento`;
+CREATE TABLE `asiento`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cuenta_id` int NOT NULL,
+  `id_subcuenta_id` int NOT NULL,
+  `id_documento_id` int NULL DEFAULT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_id` int NULL DEFAULT NULL,
+  `id_expediente_id` int NULL DEFAULT NULL,
+  `id_proveedor_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_tipo_comprobante_id` int NULL DEFAULT NULL,
+  `id_comprobante_id` int NULL DEFAULT NULL,
+  `id_factura_id` int NULL DEFAULT NULL,
+  `id_activo_fijo_id` int NULL DEFAULT NULL,
+  `id_area_responsabilidad_id` int NULL DEFAULT NULL,
+  `id_cotizacion_id` int NULL DEFAULT NULL,
+  `id_elemento_visa_id` int NULL DEFAULT NULL,
+  `tipo_cliente` int NULL DEFAULT NULL,
+  `id_cliente` int NULL DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `anno` int NOT NULL,
+  `credito` double NULL DEFAULT NULL,
+  `debito` double NULL DEFAULT NULL,
+  `nro_documento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `orden_operacion` int NULL DEFAULT NULL,
+  `banco` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_71D6D35C1ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  INDEX `IDX_71D6D35C2D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_71D6D35C6601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_71D6D35C39161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_71D6D35CC59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_71D6D35CF66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_71D6D35C71381BB3`(`id_orden_trabajo_id`) USING BTREE,
+  INDEX `IDX_71D6D35CF5DBAF2B`(`id_expediente_id`) USING BTREE,
+  INDEX `IDX_71D6D35CE8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_71D6D35C1D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_71D6D35CEF5F7851`(`id_tipo_comprobante_id`) USING BTREE,
+  INDEX `IDX_71D6D35C1800963C`(`id_comprobante_id`) USING BTREE,
+  INDEX `IDX_71D6D35C55C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_71D6D35C5832E72E`(`id_activo_fijo_id`) USING BTREE,
+  INDEX `IDX_71D6D35CD410562`(`id_area_responsabilidad_id`) USING BTREE,
+  INDEX `IDX_71D6D35C8E5841CF`(`id_cotizacion_id`) USING BTREE,
+  INDEX `IDX_71D6D35C4CC57875`(`id_elemento_visa_id`) USING BTREE,
+  CONSTRAINT `FK_71D6D35C1800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C4CC57875` FOREIGN KEY (`id_elemento_visa_id`) REFERENCES `elementos_visa` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C5832E72E` FOREIGN KEY (`id_activo_fijo_id`) REFERENCES `activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35C8E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35CC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35CD410562` FOREIGN KEY (`id_area_responsabilidad_id`) REFERENCES `area_responsabilidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35CE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35CEF5F7851` FOREIGN KEY (`id_tipo_comprobante_id`) REFERENCES `tipo_comprobante` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35CF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_71D6D35CF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 513 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for avisos_pagos
+-- ----------------------------
+-- DROP TABLE IF EXISTS `avisos_pagos`;
+CREATE TABLE `avisos_pagos`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_plazo_pago_id` int NOT NULL,
+  `id_cotizacion_id` int NOT NULL,
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_F439673A78A65A2`(`id_plazo_pago_id`) USING BTREE,
+  INDEX `IDX_F4396738E5841CF`(`id_cotizacion_id`) USING BTREE,
+  CONSTRAINT `FK_F4396738E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F439673A78A65A2` FOREIGN KEY (`id_plazo_pago_id`) REFERENCES `plazos_pago_cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for banco
+-- ----------------------------
+-- DROP TABLE IF EXISTS `banco`;
+CREATE TABLE `banco`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for beneficiarios_clientes
+-- ----------------------------
+-- DROP TABLE IF EXISTS `beneficiarios_clientes`;
+CREATE TABLE `beneficiarios_clientes`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cliente_id` int NOT NULL,
+  `id_pais_id` int NOT NULL,
+  `id_provincia_id` int NOT NULL,
+  `id_municipio_id` int NOT NULL,
+  `primer_nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `primer_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `segundo_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_alternativo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `primer_apellido_alternativo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `segundo_apellido_alternativo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `primer_telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `segundo_telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `identificacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `calle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `y` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_casa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `edificio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `apto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `reparto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_AE9DBD1E7BF9CE86`(`id_cliente_id`) USING BTREE,
+  INDEX `IDX_AE9DBD1E18997CB6`(`id_pais_id`) USING BTREE,
+  INDEX `IDX_AE9DBD1E6DB054DD`(`id_provincia_id`) USING BTREE,
+  INDEX `IDX_AE9DBD1E7B7D6E92`(`id_municipio_id`) USING BTREE,
+  CONSTRAINT `FK_AE9DBD1E18997CB6` FOREIGN KEY (`id_pais_id`) REFERENCES `pais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AE9DBD1E6DB054DD` FOREIGN KEY (`id_provincia_id`) REFERENCES `provincias` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AE9DBD1E7B7D6E92` FOREIGN KEY (`id_municipio_id`) REFERENCES `municipios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AE9DBD1E7BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cargo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cargo`;
+CREATE TABLE `cargo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for carrito
+-- ----------------------------
+-- DROP TABLE IF EXISTS `carrito`;
+CREATE TABLE `carrito`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for categoria_cliente
+-- ----------------------------
+-- DROP TABLE IF EXISTS `categoria_cliente`;
+CREATE TABLE `categoria_cliente`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prefijo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for categoria_producto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `categoria_producto`;
+CREATE TABLE `categoria_producto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for centro_costo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `centro_costo`;
+CREATE TABLE `centro_costo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_749608CE1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_749608CE1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cierre
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cierre`;
+CREATE TABLE `cierre`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_almacen_id` int NOT NULL,
+  `id_usuario_id` int NULL DEFAULT NULL,
+  `diario` tinyint(1) NOT NULL,
+  `mes` int NULL DEFAULT NULL,
+  `anno` int NOT NULL,
+  `fecha` date NOT NULL,
+  `saldo` double NOT NULL,
+  `abierto` tinyint(1) NULL DEFAULT NULL,
+  `debito` double NOT NULL,
+  `credito` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D0DCFCC739161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_D0DCFCC77EB2C349`(`id_usuario_id`) USING BTREE,
+  CONSTRAINT `FK_D0DCFCC739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D0DCFCC77EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cierre_diario
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cierre_diario`;
+CREATE TABLE `cierre_diario`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_almacen_id` int NOT NULL,
+  `id_usuario_id` int NOT NULL,
+  `fecha_cerrado` date NOT NULL,
+  `fecha_cerrado_real` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_F3D0CD8939161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_F3D0CD897EB2C349`(`id_usuario_id`) USING BTREE,
+  CONSTRAINT `FK_F3D0CD8939161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F3D0CD897EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cliente
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cliente`;
+CREATE TABLE `cliente`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellidos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `fecha` date NULL DEFAULT NULL,
+  `usuario` int NULL DEFAULT NULL,
+  `comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `identificacion_empresa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cliente_beneficiario
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cliente_beneficiario`;
+CREATE TABLE `cliente_beneficiario`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `primer_nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono_casa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `primer_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `segundo_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `alternativo_nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `alternativo_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `alternativo_segundo_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `identificacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `calle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `y` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `apto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `edificio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `reparto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `provincia` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `municipio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_pais` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cliente_contabilidad
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cliente_contabilidad`;
+CREATE TABLE `cliente_contabilidad`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefonos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fax` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `correos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cliente_solicitudes
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cliente_solicitudes`;
+CREATE TABLE `cliente_solicitudes`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cliente_id` int NOT NULL,
+  `id_solicitud_id` int NOT NULL,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D0874AE67BF9CE86`(`id_cliente_id`) USING BTREE,
+  INDEX `IDX_D0874AE63F78A396`(`id_solicitud_id`) USING BTREE,
+  INDEX `IDX_D0874AE61D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_D0874AE61D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D0874AE63F78A396` FOREIGN KEY (`id_solicitud_id`) REFERENCES `solicitud` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D0874AE67BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cobros_pagos
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cobros_pagos`;
+CREATE TABLE `cobros_pagos`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NULL DEFAULT NULL,
+  `id_informe_id` int NULL DEFAULT NULL,
+  `id_proveedor_id` int NULL DEFAULT NULL,
+  `id_movimiento_activo_fijo_id` int NULL DEFAULT NULL,
+  `debito` double NULL DEFAULT NULL,
+  `credito` double NULL DEFAULT NULL,
+  `id_tipo_cliente` int NULL DEFAULT NULL,
+  `id_cliente_venta` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D9581D1655C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_D9581D1626990C38`(`id_informe_id`) USING BTREE,
+  INDEX `IDX_D9581D16E8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_D9581D167786CA71`(`id_movimiento_activo_fijo_id`) USING BTREE,
+  CONSTRAINT `FK_D9581D1626990C38` FOREIGN KEY (`id_informe_id`) REFERENCES `informe_recepcion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D9581D1655C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D9581D167786CA71` FOREIGN KEY (`id_movimiento_activo_fijo_id`) REFERENCES `movimiento_activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D9581D16E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for comprobante_cierre
+-- ----------------------------
+-- DROP TABLE IF EXISTS `comprobante_cierre`;
+CREATE TABLE `comprobante_cierre`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_comprobante_id` int NOT NULL,
+  `id_cierre_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D03EA4C51800963C`(`id_comprobante_id`) USING BTREE,
+  INDEX `IDX_D03EA4C545F8C94C`(`id_cierre_id`) USING BTREE,
+  CONSTRAINT `FK_D03EA4C51800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D03EA4C545F8C94C` FOREIGN KEY (`id_cierre_id`) REFERENCES `cierre` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for comprobante_movimiento_activo_fijo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `comprobante_movimiento_activo_fijo`;
+CREATE TABLE `comprobante_movimiento_activo_fijo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_registro_comprobante_id` int NOT NULL,
+  `id_movimiento_activo_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `anno` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_81F5096A1399A3CF`(`id_registro_comprobante_id`) USING BTREE,
+  INDEX `IDX_81F5096A9D00B230`(`id_movimiento_activo_id`) USING BTREE,
+  INDEX `IDX_81F5096A1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_81F5096A1399A3CF` FOREIGN KEY (`id_registro_comprobante_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_81F5096A1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_81F5096A9D00B230` FOREIGN KEY (`id_movimiento_activo_id`) REFERENCES `movimiento_activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for comprobante_salario
+-- ----------------------------
+-- DROP TABLE IF EXISTS `comprobante_salario`;
+CREATE TABLE `comprobante_salario`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_registro_comprobante_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `mes` int NOT NULL,
+  `anno` int NOT NULL,
+  `quincena` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_8C5550701399A3CF`(`id_registro_comprobante_id`) USING BTREE,
+  INDEX `IDX_8C5550701D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_8C5550701399A3CF` FOREIGN KEY (`id_registro_comprobante_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8C5550701D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for config_precio_venta_servicio
+-- ----------------------------
+-- DROP TABLE IF EXISTS `config_precio_venta_servicio`;
+CREATE TABLE `config_precio_venta_servicio`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `identificador_servicio` int NOT NULL,
+  `prociento` double NULL DEFAULT NULL,
+  `valor_fijo` double NULL DEFAULT NULL,
+  `precio_venta_total` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_6A244E601D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_6A244E601D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for config_servicios
+-- ----------------------------
+-- DROP TABLE IF EXISTS `config_servicios`;
+CREATE TABLE `config_servicios`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_servicio_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `minimo` double NOT NULL,
+  `porciento` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_A1A8B71269D86E10`(`id_servicio_id`) USING BTREE,
+  INDEX `IDX_A1A8B7121D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_A1A8B7121D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A1A8B71269D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for configuracion_inicial
+-- ----------------------------
+-- DROP TABLE IF EXISTS `configuracion_inicial`;
+CREATE TABLE `configuracion_inicial`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_modulo_id` int NOT NULL,
+  `id_tipo_documento_id` int NOT NULL,
+  `deudora` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `str_cuentas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `str_subcuentas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `str_elemento_gasto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `str_cuentas_contrapartida` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `str_subcuentas_contrapartida` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_8521BE24404AE9D2`(`id_modulo_id`) USING BTREE,
+  INDEX `IDX_8521BE247A4F962`(`id_tipo_documento_id`) USING BTREE,
+  CONSTRAINT `FK_8521BE24404AE9D2` FOREIGN KEY (`id_modulo_id`) REFERENCES `modulo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8521BE247A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for configuracion_reglas_remesas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `configuracion_reglas_remesas`;
+CREATE TABLE `configuracion_reglas_remesas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_pais_id` int NOT NULL,
+  `id_proveedor_id` int NOT NULL,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `minimo` double NOT NULL,
+  `maximo` double NOT NULL,
+  `valor_fijo_costo` double NULL DEFAULT NULL,
+  `porciento_costo` double NULL DEFAULT NULL,
+  `valor_fijo_venta` double NULL DEFAULT NULL,
+  `porciento_venta` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_2398566118997CB6`(`id_pais_id`) USING BTREE,
+  INDEX `IDX_23985661E8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_239856611D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_2398566118997CB6` FOREIGN KEY (`id_pais_id`) REFERENCES `pais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_239856611D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_23985661E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for consecutivo_servicio
+-- ----------------------------
+-- DROP TABLE IF EXISTS `consecutivo_servicio`;
+CREATE TABLE `consecutivo_servicio`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `id_servicio_id` int NOT NULL,
+  `id_cotizacion_id` int NOT NULL,
+  `anno` int NOT NULL,
+  `consecutivo` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_EAB6E3871D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_EAB6E38769D86E10`(`id_servicio_id`) USING BTREE,
+  INDEX `IDX_EAB6E3878E5841CF`(`id_cotizacion_id`) USING BTREE,
+  CONSTRAINT `FK_EAB6E3871D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_EAB6E38769D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_EAB6E3878E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for contratos_cliente
+-- ----------------------------
+-- DROP TABLE IF EXISTS `contratos_cliente`;
+CREATE TABLE `contratos_cliente`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cliente_id` int NOT NULL,
+  `id_moneda_id` int NOT NULL,
+  `nro_contrato` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
+  `fecha_aprobado` date NOT NULL,
+  `fecha_vencimiento` date NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `importe` double NOT NULL,
+  `resto` double NULL DEFAULT NULL,
+  `id_padre` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_29A5BB477BF9CE86`(`id_cliente_id`) USING BTREE,
+  INDEX `IDX_29A5BB47374388F5`(`id_moneda_id`) USING BTREE,
+  CONSTRAINT `FK_29A5BB47374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_29A5BB477BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente_contabilidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cotizacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cotizacion`;
+CREATE TABLE `cotizacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `edit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `json` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `datetime` datetime NOT NULL,
+  `total` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pagado` tinyint(1) NULL DEFAULT NULL,
+  `id_factura` int NULL DEFAULT NULL,
+  `fecha_factura` datetime NULL DEFAULT NULL,
+  `activo` tinyint(1) NULL DEFAULT NULL,
+  `anno` int NULL DEFAULT NULL,
+  `nro_consecutivo` int NOT NULL,
+  `tipo_plazo_pago` int NULL DEFAULT NULL,
+  `fecha_maxima_pago` date NULL DEFAULT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_44A5EC031D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_44A5EC031D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for creditos_precio_venta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `creditos_precio_venta`;
+CREATE TABLE `creditos_precio_venta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_config_precio_venta_id` int NOT NULL,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `identificador_servicio` int NOT NULL,
+  `credito` tinyint(1) NULL DEFAULT NULL,
+  `importe` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_847FE8A94699DFE5`(`id_config_precio_venta_id`) USING BTREE,
+  INDEX `IDX_847FE8A91D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_847FE8A91D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_847FE8A94699DFE5` FOREIGN KEY (`id_config_precio_venta_id`) REFERENCES `config_precio_venta_servicio` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for criterio_analisis
+-- ----------------------------
+-- DROP TABLE IF EXISTS `criterio_analisis`;
+CREATE TABLE `criterio_analisis`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abreviatura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cuadre_diario
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cuadre_diario`;
+CREATE TABLE `cuadre_diario`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cuenta_id` int NOT NULL,
+  `id_subcuenta_id` int NOT NULL,
+  `id_cierre_id` int NOT NULL,
+  `id_almacen_id` int NOT NULL,
+  `str_analisis` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `saldo` decimal(10, 2) NOT NULL,
+  `debito` double NOT NULL,
+  `credito` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_60ABEFD91ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  INDEX `IDX_60ABEFD92D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_60ABEFD945F8C94C`(`id_cierre_id`) USING BTREE,
+  INDEX `IDX_60ABEFD939161EBF`(`id_almacen_id`) USING BTREE,
+  CONSTRAINT `FK_60ABEFD91ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_60ABEFD92D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_60ABEFD939161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_60ABEFD945F8C94C` FOREIGN KEY (`id_cierre_id`) REFERENCES `cierre` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cuenta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cuenta`;
+CREATE TABLE `cuenta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_tipo_cuenta_id` int NOT NULL,
+  `nro_cuenta` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deudora` tinyint(1) NOT NULL,
+  `mixta` tinyint(1) NOT NULL,
+  `obligacion_deudora` tinyint(1) NOT NULL,
+  `obligacion_acreedora` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `produccion` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_31C7BFCF45E7F350`(`id_tipo_cuenta_id`) USING BTREE,
+  CONSTRAINT `FK_31C7BFCF45E7F350` FOREIGN KEY (`id_tipo_cuenta_id`) REFERENCES `tipo_cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 87 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cuenta_criterio_analisis
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cuenta_criterio_analisis`;
+CREATE TABLE `cuenta_criterio_analisis`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cuenta_id` int NOT NULL,
+  `id_criterio_analisis_id` int NOT NULL,
+  `orden` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_AF040B091ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  INDEX `IDX_AF040B095ABBE5F6`(`id_criterio_analisis_id`) USING BTREE,
+  CONSTRAINT `FK_AF040B091ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AF040B095ABBE5F6` FOREIGN KEY (`id_criterio_analisis_id`) REFERENCES `criterio_analisis` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 165 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cuentas_cliente
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cuentas_cliente`;
+CREATE TABLE `cuentas_cliente`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_moneda_id` int NOT NULL,
+  `id_cliente_id` int NOT NULL,
+  `id_banco_id` int NULL DEFAULT NULL,
+  `nro_cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_64653310374388F5`(`id_moneda_id`) USING BTREE,
+  INDEX `IDX_646533107BF9CE86`(`id_cliente_id`) USING BTREE,
+  INDEX `IDX_646533109CDF4BAB`(`id_banco_id`) USING BTREE,
+  CONSTRAINT `FK_64653310374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_646533107BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente_contabilidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_646533109CDF4BAB` FOREIGN KEY (`id_banco_id`) REFERENCES `banco` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for cuentas_unidad
+-- ----------------------------
+-- DROP TABLE IF EXISTS `cuentas_unidad`;
+CREATE TABLE `cuentas_unidad`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_banco_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_moneda_id` int NOT NULL,
+  `nro_cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_355374209CDF4BAB`(`id_banco_id`) USING BTREE,
+  INDEX `IDX_355374201D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_35537420374388F5`(`id_moneda_id`) USING BTREE,
+  CONSTRAINT `FK_355374201D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_35537420374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_355374209CDF4BAB` FOREIGN KEY (`id_banco_id`) REFERENCES `banco` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for custom_user
+-- ----------------------------
+-- DROP TABLE IF EXISTS `custom_user`;
+CREATE TABLE `custom_user`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_user_id` int NOT NULL,
+  `nombre_completo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UNIQ_8CE51EB479F37AE5`(`id_user_id`) USING BTREE,
+  CONSTRAINT `FK_8CE51EB479F37AE5` FOREIGN KEY (`id_user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for depreciacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `depreciacion`;
+CREATE TABLE `depreciacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `unidad_id` int NOT NULL,
+  `fecha` date NOT NULL,
+  `anno` int NOT NULL,
+  `fundamentacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D618AE149D01464C`(`unidad_id`) USING BTREE,
+  CONSTRAINT `FK_D618AE149D01464C` FOREIGN KEY (`unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for descuestos_servicios_cotizacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `descuestos_servicios_cotizacion`;
+CREATE TABLE `descuestos_servicios_cotizacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cotizacion_id` int NOT NULL,
+  `id_servicio_id` int NOT NULL,
+  `descuento` double NOT NULL,
+  `fijo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_1C606F008E5841CF`(`id_cotizacion_id`) USING BTREE,
+  INDEX `IDX_1C606F0069D86E10`(`id_servicio_id`) USING BTREE,
+  CONSTRAINT `FK_1C606F0069D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_1C606F008E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for detalles_facturas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `detalles_facturas`;
+CREATE TABLE `detalles_facturas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NOT NULL,
+  `cancepto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `importe` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_38E68B7155C5F988`(`id_factura_id`) USING BTREE,
+  CONSTRAINT `FK_38E68B7155C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for devolucion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `devolucion`;
+CREATE TABLE `devolucion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_documento_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_almacen_id` int NOT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_orden_tabajo_id` int NULL DEFAULT NULL,
+  `nro_cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `nro_concecutivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_524D9F676601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_524D9F671D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_524D9F6739161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_524D9F67C59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_524D9F67F66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_524D9F675074DD86`(`id_orden_tabajo_id`) USING BTREE,
+  CONSTRAINT `FK_524D9F671D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_524D9F6739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_524D9F675074DD86` FOREIGN KEY (`id_orden_tabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_524D9F676601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_524D9F67C59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_524D9F67F66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for distribuidor
+-- ----------------------------
+-- DROP TABLE IF EXISTS `distribuidor`;
+CREATE TABLE `distribuidor`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pais_id` int NULL DEFAULT NULL,
+  `moneda_id` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `identificacion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_1AE277DFC604D5C6`(`pais_id`) USING BTREE,
+  INDEX `IDX_1AE277DFB77634D2`(`moneda_id`) USING BTREE,
+  CONSTRAINT `FK_1AE277DFB77634D2` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_1AE277DFC604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for distribuidor_provincias
+-- ----------------------------
+-- DROP TABLE IF EXISTS `distribuidor_provincias`;
+CREATE TABLE `distribuidor_provincias`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `distribuidor_id` int NOT NULL,
+  `provincias_id` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_8DA1E24DCEEEDB42`(`distribuidor_id`) USING BTREE,
+  INDEX `IDX_8DA1E24DA156727D`(`provincias_id`) USING BTREE,
+  CONSTRAINT `FK_8DA1E24DA156727D` FOREIGN KEY (`provincias_id`) REFERENCES `provincias` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8DA1E24DCEEEDB42` FOREIGN KEY (`distribuidor_id`) REFERENCES `distribuidor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for distribuidor_saldo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `distribuidor_saldo`;
+CREATE TABLE `distribuidor_saldo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `distribuidor_id` int NULL DEFAULT NULL,
+  `moneda_id` int NULL DEFAULT NULL,
+  `saldo` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_29FECCE6CEEEDB42`(`distribuidor_id`) USING BTREE,
+  INDEX `IDX_29FECCE6B77634D2`(`moneda_id`) USING BTREE,
+  CONSTRAINT `FK_29FECCE6B77634D2` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_29FECCE6CEEEDB42` FOREIGN KEY (`distribuidor_id`) REFERENCES `distribuidor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for distribuidor_zona
+-- ----------------------------
+-- DROP TABLE IF EXISTS `distribuidor_zona`;
+CREATE TABLE `distribuidor_zona`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `zona_id` int NOT NULL,
+  `distribuidor_id` int NOT NULL,
+  `comision` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_1DA5FABD104EA8FC`(`zona_id`) USING BTREE,
+  INDEX `IDX_1DA5FABDCEEEDB42`(`distribuidor_id`) USING BTREE,
+  CONSTRAINT `FK_1DA5FABD104EA8FC` FOREIGN KEY (`zona_id`) REFERENCES `zona_remesas` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_1DA5FABDCEEEDB42` FOREIGN KEY (`distribuidor_id`) REFERENCES `distribuidor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for doctrine_migration_versions
+-- ----------------------------
+-- DROP TABLE IF EXISTS `doctrine_migration_versions`;
+CREATE TABLE `doctrine_migration_versions`  (
+  `version` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `executed_at` datetime NULL DEFAULT NULL,
+  `execution_time` int NULL DEFAULT NULL,
+  PRIMARY KEY (`version`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for documento
+-- ----------------------------
+-- DROP TABLE IF EXISTS `documento`;
+CREATE TABLE `documento`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_almacen_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_moneda_id` int NOT NULL,
+  `id_tipo_documento_id` int NULL DEFAULT NULL,
+  `id_documento_cancelado_id` int NULL DEFAULT NULL,
+  `importe_total` double NOT NULL,
+  `fecha` date NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `anno` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_B6B12EC739161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_B6B12EC71D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_B6B12EC7374388F5`(`id_moneda_id`) USING BTREE,
+  INDEX `IDX_B6B12EC77A4F962`(`id_tipo_documento_id`) USING BTREE,
+  INDEX `IDX_B6B12EC74832F387`(`id_documento_cancelado_id`) USING BTREE,
+  CONSTRAINT `FK_B6B12EC71D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B6B12EC7374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B6B12EC739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B6B12EC74832F387` FOREIGN KEY (`id_documento_cancelado_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B6B12EC77A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for elemento_gasto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `elemento_gasto`;
+CREATE TABLE `elemento_gasto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for elementos_visa
+-- ----------------------------
+-- DROP TABLE IF EXISTS `elementos_visa`;
+CREATE TABLE `elementos_visa`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_proveedor_id` int NOT NULL,
+  `id_servicio_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `costo` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_90B65E04E8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_90B65E0469D86E10`(`id_servicio_id`) USING BTREE,
+  INDEX `IDX_90B65E041D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_90B65E041D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_90B65E0469D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_90B65E04E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for empleado
+-- ----------------------------
+-- DROP TABLE IF EXISTS `empleado`;
+CREATE TABLE `empleado`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `id_cargo_id` int NULL DEFAULT NULL,
+  `id_usuario_id` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `fecha_alta` date NULL DEFAULT NULL,
+  `baja` tinyint(1) NOT NULL,
+  `fecha_baja` date NULL DEFAULT NULL,
+  `direccion_particular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rol` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `identificacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sueldo_bruto_mensual` double NULL DEFAULT NULL,
+  `salario_x_hora` double NULL DEFAULT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `banco` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `cajero` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UNIQ_D9D9BF527EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_D9D9BF521D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_D9D9BF52D1E12F15`(`id_cargo_id`) USING BTREE,
+  CONSTRAINT `FK_D9D9BF521D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D9D9BF527EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D9D9BF52D1E12F15` FOREIGN KEY (`id_cargo_id`) REFERENCES `cargo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for estado
+-- ----------------------------
+-- DROP TABLE IF EXISTS `estado`;
+CREATE TABLE `estado`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `orden` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `color` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for estado_solicitudes
+-- ----------------------------
+-- DROP TABLE IF EXISTS `estado_solicitudes`;
+CREATE TABLE `estado_solicitudes`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for expediente
+-- ----------------------------
+-- DROP TABLE IF EXISTS `expediente`;
+CREATE TABLE `expediente`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `anno` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D59CA4131D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_D59CA4131D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for facilidades
+-- ----------------------------
+-- DROP TABLE IF EXISTS `facilidades`;
+CREATE TABLE `facilidades`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_551461581D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_551461581D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for facilidades_hotel
+-- ----------------------------
+-- DROP TABLE IF EXISTS `facilidades_hotel`;
+CREATE TABLE `facilidades_hotel`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_hotel_id` int NOT NULL,
+  `id_facilidades_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_78E84AB16298578D`(`id_hotel_id`) USING BTREE,
+  INDEX `IDX_78E84AB15FB489F0`(`id_facilidades_id`) USING BTREE,
+  CONSTRAINT `FK_78E84AB15FB489F0` FOREIGN KEY (`id_facilidades_id`) REFERENCES `facilidades` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_78E84AB16298578D` FOREIGN KEY (`id_hotel_id`) REFERENCES `hotel` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for factura
+-- ----------------------------
+-- DROP TABLE IF EXISTS `factura`;
+CREATE TABLE `factura`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_contrato_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_usuario_id` int NOT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_expediente_id` int NULL DEFAULT NULL,
+  `id_categoria_cliente_id` int NULL DEFAULT NULL,
+  `id_termino_pago_id` int NULL DEFAULT NULL,
+  `id_moneda_id` int NULL DEFAULT NULL,
+  `id_factura_cancela_id` int NULL DEFAULT NULL,
+  `fecha_factura` date NOT NULL,
+  `tipo_cliente` int NULL DEFAULT NULL,
+  `id_cliente` int NULL DEFAULT NULL,
+  `nro_factura` int NOT NULL,
+  `anno` int NOT NULL,
+  `cuenta_obligacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `subcuenta_obligacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `importe` double NOT NULL,
+  `contabilizada` tinyint(1) NULL DEFAULT NULL,
+  `ncf` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `cancelada` tinyint(1) NULL DEFAULT NULL,
+  `motivo_cancelacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `servicio` tinyint(1) NULL DEFAULT NULL,
+  `observacion_general` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_F9EBA00968BCB606`(`id_contrato_id`) USING BTREE,
+  INDEX `IDX_F9EBA0091D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_F9EBA0097EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_F9EBA009C59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_F9EBA00971381BB3`(`id_orden_trabajo_id`) USING BTREE,
+  INDEX `IDX_F9EBA009F66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_F9EBA009F5DBAF2B`(`id_expediente_id`) USING BTREE,
+  INDEX `IDX_F9EBA0094F4C4E26`(`id_categoria_cliente_id`) USING BTREE,
+  INDEX `IDX_F9EBA009C37A5552`(`id_termino_pago_id`) USING BTREE,
+  INDEX `IDX_F9EBA009374388F5`(`id_moneda_id`) USING BTREE,
+  INDEX `IDX_F9EBA00999274826`(`id_factura_cancela_id`) USING BTREE,
+  CONSTRAINT `FK_F9EBA0091D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA009374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA0094F4C4E26` FOREIGN KEY (`id_categoria_cliente_id`) REFERENCES `categoria_cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA00968BCB606` FOREIGN KEY (`id_contrato_id`) REFERENCES `contratos_cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA00971381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA0097EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA00999274826` FOREIGN KEY (`id_factura_cancela_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA009C37A5552` FOREIGN KEY (`id_termino_pago_id`) REFERENCES `termino_pago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA009C59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA009F5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F9EBA009F66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for factura_cotizacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `factura_cotizacion`;
+CREATE TABLE `factura_cotizacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cotizacion_id` int NOT NULL,
+  `id_usuario_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_categoria_cliente_id` int NULL DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `nro_factura` int NOT NULL,
+  `anno` int NOT NULL,
+  `ncf` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_ADBC38788E5841CF`(`id_cotizacion_id`) USING BTREE,
+  INDEX `IDX_ADBC38787EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_ADBC38781D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_ADBC38784F4C4E26`(`id_categoria_cliente_id`) USING BTREE,
+  CONSTRAINT `FK_ADBC38781D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_ADBC38784F4C4E26` FOREIGN KEY (`id_categoria_cliente_id`) REFERENCES `categoria_cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_ADBC38787EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_ADBC38788E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for factura_documento
+-- ----------------------------
+-- DROP TABLE IF EXISTS `factura_documento`;
+CREATE TABLE `factura_documento`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NOT NULL,
+  `id_documento_id` int NOT NULL,
+  `id_movimiento_venta_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_CCC060C155C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_CCC060C16601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_CCC060C1EC34F77F`(`id_movimiento_venta_id`) USING BTREE,
+  CONSTRAINT `FK_CCC060C155C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_CCC060C16601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_CCC060C1EC34F77F` FOREIGN KEY (`id_movimiento_venta_id`) REFERENCES `movimiento_venta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for factura_imposdom
+-- ----------------------------
+-- DROP TABLE IF EXISTS `factura_imposdom`;
+CREATE TABLE `factura_imposdom`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cedula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `casillero` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ciudad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL,
+  `sh` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cierre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pago` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `json` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lb` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for factura_no_contable
+-- ----------------------------
+-- DROP TABLE IF EXISTS `factura_no_contable`;
+CREATE TABLE `factura_no_contable`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `json` varchar(10000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `datetime` datetime NOT NULL,
+  `total` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for facturas_comprobante
+-- ----------------------------
+-- DROP TABLE IF EXISTS `facturas_comprobante`;
+CREATE TABLE `facturas_comprobante`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NOT NULL,
+  `id_comprobante_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `anno` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_6FD2F19B55C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_6FD2F19B1800963C`(`id_comprobante_id`) USING BTREE,
+  INDEX `IDX_6FD2F19B1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_6FD2F19B1800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_6FD2F19B1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_6FD2F19B55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for grupo_activos
+-- ----------------------------
+-- DROP TABLE IF EXISTS `grupo_activos`;
+CREATE TABLE `grupo_activos`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `porciento_deprecia_anno` double NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for habitaciones_hotel
+-- ----------------------------
+-- DROP TABLE IF EXISTS `habitaciones_hotel`;
+CREATE TABLE `habitaciones_hotel`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_amenidades_id` int NOT NULL,
+  `id_hotel_id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_74F394B091F48FAD`(`id_amenidades_id`) USING BTREE,
+  INDEX `IDX_74F394B06298578D`(`id_hotel_id`) USING BTREE,
+  CONSTRAINT `FK_74F394B06298578D` FOREIGN KEY (`id_hotel_id`) REFERENCES `hotel` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_74F394B091F48FAD` FOREIGN KEY (`id_amenidades_id`) REFERENCES `amenidades` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for hotel
+-- ----------------------------
+-- DROP TABLE IF EXISTS `hotel`;
+CREATE TABLE `hotel`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locacion` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `telefono` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `correo` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `check_in` time NOT NULL,
+  `check_out` time NOT NULL,
+  `facebook` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `instagram` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `whatsapp` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `twitter` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `activo` tinyint(1) NOT NULL,
+  `descripcion_hotel` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `politicas_hotel` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for hotel_destino
+-- ----------------------------
+-- DROP TABLE IF EXISTS `hotel_destino`;
+CREATE TABLE `hotel_destino`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for hotel_origen
+-- ----------------------------
+-- DROP TABLE IF EXISTS `hotel_origen`;
+CREATE TABLE `hotel_origen`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for impuesto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `impuesto`;
+CREATE TABLE `impuesto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valor` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_B6E63AA11D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_B6E63AA11D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for impuesto_sobre_renta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `impuesto_sobre_renta`;
+CREATE TABLE `impuesto_sobre_renta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_empleado_id` int NOT NULL,
+  `id_nomina_pago_id` int NOT NULL,
+  `id_rango_escala_id` int NOT NULL,
+  `seguridad_social_mensual` double NULL DEFAULT NULL,
+  `salario_bruto_anual` double NOT NULL,
+  `seguridad_social_anual` double NULL DEFAULT NULL,
+  `salario_despues_seguridad_social` double NOT NULL,
+  `monto_segun_rango` double NULL DEFAULT NULL,
+  `monto_segun_rango_escala` double NULL DEFAULT NULL,
+  `excedente_segun_rango_escala` double NULL DEFAULT NULL,
+  `por_ciento_impuesto_excedente` double NULL DEFAULT NULL,
+  `monto_adicional_rango_escala` double NULL DEFAULT NULL,
+  `impuesto_renta_pagar_anual` double NULL DEFAULT NULL,
+  `impuesto_renta_pagar_mensual` double NULL DEFAULT NULL,
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_5EF11EF48D392AC7`(`id_empleado_id`) USING BTREE,
+  INDEX `IDX_5EF11EF4E9DBC8E8`(`id_nomina_pago_id`) USING BTREE,
+  INDEX `IDX_5EF11EF4A9ECE748`(`id_rango_escala_id`) USING BTREE,
+  CONSTRAINT `FK_5EF11EF48D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_5EF11EF4A9ECE748` FOREIGN KEY (`id_rango_escala_id`) REFERENCES `rango_escala_dgii` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_5EF11EF4E9DBC8E8` FOREIGN KEY (`id_nomina_pago_id`) REFERENCES `nomina_pago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for impuestos_servicio_cotizacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `impuestos_servicio_cotizacion`;
+CREATE TABLE `impuestos_servicio_cotizacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cotizacion_id` int NOT NULL,
+  `id_servicio_id` int NOT NULL,
+  `id_impuesto_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_2CA4AD5E8E5841CF`(`id_cotizacion_id`) USING BTREE,
+  INDEX `IDX_2CA4AD5E69D86E10`(`id_servicio_id`) USING BTREE,
+  INDEX `IDX_2CA4AD5ECA29A612`(`id_impuesto_id`) USING BTREE,
+  CONSTRAINT `FK_2CA4AD5E69D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_2CA4AD5E8E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_2CA4AD5ECA29A612` FOREIGN KEY (`id_impuesto_id`) REFERENCES `impuesto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for informe_recepcion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `informe_recepcion`;
+CREATE TABLE `informe_recepcion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_documento_id` int NOT NULL,
+  `id_proveedor_id` int NULL DEFAULT NULL,
+  `nro_cuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_cuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_concecutivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
+  `codigo_factura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `fecha_factura` date NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `producto` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_62A4EBD6601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_62A4EBDE8F12801`(`id_proveedor_id`) USING BTREE,
+  CONSTRAINT `FK_62A4EBD6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_62A4EBDE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for instrumento_cobro
+-- ----------------------------
+-- DROP TABLE IF EXISTS `instrumento_cobro`;
+CREATE TABLE `instrumento_cobro`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for localidades
+-- ----------------------------
+-- DROP TABLE IF EXISTS `localidades`;
+CREATE TABLE `localidades`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_minucipio_id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_7A9712DA956589FB`(`id_minucipio_id`) USING BTREE,
+  CONSTRAINT `FK_7A9712DA956589FB` FOREIGN KEY (`id_minucipio_id`) REFERENCES `municipios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for lugares
+-- ----------------------------
+-- DROP TABLE IF EXISTS `lugares`;
+CREATE TABLE `lugares`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `zona_id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `habilitado` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_A4EE5DFC104EA8FC`(`zona_id`) USING BTREE,
+  CONSTRAINT `FK_A4EE5DFC104EA8FC` FOREIGN KEY (`zona_id`) REFERENCES `zona` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for mercancia
+-- ----------------------------
+-- DROP TABLE IF EXISTS `mercancia`;
+CREATE TABLE `mercancia`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_amlacen_id` int NOT NULL,
+  `id_unidad_medida_id` int NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `existencia` double NOT NULL,
+  `importe` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `nro_subcuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_cuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_subcuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `precio_venta` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_9D094AE0E2C70A62`(`id_amlacen_id`) USING BTREE,
+  INDEX `IDX_9D094AE0E16A5625`(`id_unidad_medida_id`) USING BTREE,
+  CONSTRAINT `FK_9D094AE0E16A5625` FOREIGN KEY (`id_unidad_medida_id`) REFERENCES `unidad_medida` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_9D094AE0E2C70A62` FOREIGN KEY (`id_amlacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for mercancia_categoria_producto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `mercancia_categoria_producto`;
+CREATE TABLE `mercancia_categoria_producto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mercancia_id` int NULL DEFAULT NULL,
+  `categoria_producto_id` int NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_BDA242A6BCE90A26`(`mercancia_id`) USING BTREE,
+  INDEX `IDX_BDA242A669022511`(`categoria_producto_id`) USING BTREE,
+  CONSTRAINT `FK_BDA242A669022511` FOREIGN KEY (`categoria_producto_id`) REFERENCES `categoria_producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BDA242A6BCE90A26` FOREIGN KEY (`mercancia_id`) REFERENCES `mercancia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for mercancia_impuesto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `mercancia_impuesto`;
+CREATE TABLE `mercancia_impuesto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mercancia_id` int NULL DEFAULT NULL,
+  `impuesto_id` int NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_2E2D6041BCE90A26`(`mercancia_id`) USING BTREE,
+  INDEX `IDX_2E2D6041D23B6BE5`(`impuesto_id`) USING BTREE,
+  CONSTRAINT `FK_2E2D6041BCE90A26` FOREIGN KEY (`mercancia_id`) REFERENCES `mercancia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_2E2D6041D23B6BE5` FOREIGN KEY (`impuesto_id`) REFERENCES `impuesto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for mercancia_producto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `mercancia_producto`;
+CREATE TABLE `mercancia_producto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_mercancia_id` int NOT NULL,
+  `id_producto_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_3F705CF59F287F54`(`id_mercancia_id`) USING BTREE,
+  INDEX `IDX_3F705CF56E57A479`(`id_producto_id`) USING BTREE,
+  CONSTRAINT `FK_3F705CF56E57A479` FOREIGN KEY (`id_producto_id`) REFERENCES `producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_3F705CF59F287F54` FOREIGN KEY (`id_mercancia_id`) REFERENCES `mercancia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for modulo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `modulo`;
+CREATE TABLE `modulo`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for moneda
+-- ----------------------------
+-- DROP TABLE IF EXISTS `moneda`;
+CREATE TABLE `moneda`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for moneda_pais
+-- ----------------------------
+-- DROP TABLE IF EXISTS `moneda_pais`;
+CREATE TABLE `moneda_pais`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_pais` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for movimiento
+-- ----------------------------
+-- DROP TABLE IF EXISTS `movimiento`;
+CREATE TABLE `movimiento`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_tipo_documento_activo_fijo_id` int NOT NULL,
+  `id_tipo_movimiento_id` int NOT NULL,
+  `id_unidad_origen_id` int NOT NULL,
+  `id_unidad_destino_id` int NOT NULL,
+  `fecha` date NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_C8FF107AD1CE493D`(`id_tipo_documento_activo_fijo_id`) USING BTREE,
+  INDEX `IDX_C8FF107ADB763453`(`id_tipo_movimiento_id`) USING BTREE,
+  INDEX `IDX_C8FF107A873C7FC7`(`id_unidad_origen_id`) USING BTREE,
+  INDEX `IDX_C8FF107A4F781EA`(`id_unidad_destino_id`) USING BTREE,
+  CONSTRAINT `FK_C8FF107A4F781EA` FOREIGN KEY (`id_unidad_destino_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_C8FF107A873C7FC7` FOREIGN KEY (`id_unidad_origen_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_C8FF107AD1CE493D` FOREIGN KEY (`id_tipo_documento_activo_fijo_id`) REFERENCES `tipo_documento_activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_C8FF107ADB763453` FOREIGN KEY (`id_tipo_movimiento_id`) REFERENCES `tipo_movimiento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for movimiento_activo_fijo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `movimiento_activo_fijo`;
+CREATE TABLE `movimiento_activo_fijo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `id_activo_fijo_id` int NOT NULL,
+  `id_tipo_movimiento_id` int NOT NULL,
+  `id_cuenta_id` int NOT NULL,
+  `id_subcuenta_id` int NOT NULL,
+  `id_usuario_id` int NOT NULL,
+  `id_unidad_destino_origen_id` int NULL DEFAULT NULL,
+  `id_proveedor_id` int NULL DEFAULT NULL,
+  `id_movimiento_cancelado_id` int NULL DEFAULT NULL,
+  `fecha` date NOT NULL,
+  `fundamentacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entrada` tinyint(1) NOT NULL,
+  `nro_consecutivo` int NOT NULL,
+  `anno` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `id_tipo_cliente` int NULL DEFAULT NULL,
+  `id_cliente` int NULL DEFAULT NULL,
+  `cancelado` tinyint(1) NULL DEFAULT NULL,
+  `fecha_factura` date NULL DEFAULT NULL,
+  `nro_factura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_A985A0DA1D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_A985A0DA5832E72E`(`id_activo_fijo_id`) USING BTREE,
+  INDEX `IDX_A985A0DADB763453`(`id_tipo_movimiento_id`) USING BTREE,
+  INDEX `IDX_A985A0DA1ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  INDEX `IDX_A985A0DA2D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_A985A0DA7EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_A985A0DA4B1CE99D`(`id_unidad_destino_origen_id`) USING BTREE,
+  INDEX `IDX_A985A0DAE8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_A985A0DA571159DE`(`id_movimiento_cancelado_id`) USING BTREE,
+  CONSTRAINT `FK_A985A0DA1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DA1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DA2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DA4B1CE99D` FOREIGN KEY (`id_unidad_destino_origen_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DA571159DE` FOREIGN KEY (`id_movimiento_cancelado_id`) REFERENCES `movimiento_activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DA5832E72E` FOREIGN KEY (`id_activo_fijo_id`) REFERENCES `activo_fijo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DA7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DADB763453` FOREIGN KEY (`id_tipo_movimiento_id`) REFERENCES `tipo_movimiento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A985A0DAE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for movimiento_mercancia
+-- ----------------------------
+-- DROP TABLE IF EXISTS `movimiento_mercancia`;
+CREATE TABLE `movimiento_mercancia`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_mercancia_id` int NOT NULL,
+  `id_documento_id` int NOT NULL,
+  `id_tipo_documento_id` int NOT NULL,
+  `id_usuario_id` int NULL DEFAULT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_expediente_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_id` int NULL DEFAULT NULL,
+  `id_factura_id` int NULL DEFAULT NULL,
+  `id_movimiento_cancelado_id` int NULL DEFAULT NULL,
+  `cantidad` double NOT NULL,
+  `importe` double NOT NULL,
+  `existencia` double NOT NULL,
+  `fecha` date NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `entrada` tinyint(1) NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_subcuenta_deudora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_44876BD79F287F54`(`id_mercancia_id`) USING BTREE,
+  INDEX `IDX_44876BD76601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_44876BD77A4F962`(`id_tipo_documento_id`) USING BTREE,
+  INDEX `IDX_44876BD77EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_44876BD7C59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_44876BD7F66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_44876BD739161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_44876BD7F5DBAF2B`(`id_expediente_id`) USING BTREE,
+  INDEX `IDX_44876BD771381BB3`(`id_orden_trabajo_id`) USING BTREE,
+  INDEX `IDX_44876BD755C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_44876BD7571159DE`(`id_movimiento_cancelado_id`) USING BTREE,
+  CONSTRAINT `FK_44876BD739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD755C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD7571159DE` FOREIGN KEY (`id_movimiento_cancelado_id`) REFERENCES `movimiento_mercancia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD76601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD771381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD77A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD77EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD79F287F54` FOREIGN KEY (`id_mercancia_id`) REFERENCES `mercancia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD7C59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD7F5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_44876BD7F66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for movimiento_producto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `movimiento_producto`;
+CREATE TABLE `movimiento_producto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_producto_id` int NOT NULL,
+  `id_documento_id` int NOT NULL,
+  `id_tipo_documento_id` int NOT NULL,
+  `id_usuario_id` int NULL DEFAULT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_id` int NULL DEFAULT NULL,
+  `id_expediente_id` int NULL DEFAULT NULL,
+  `id_factura_id` int NULL DEFAULT NULL,
+  `id_movimiento_cancelado_id` int NULL DEFAULT NULL,
+  `cantidad` double NOT NULL,
+  `importe` double NOT NULL,
+  `existencia` double NOT NULL,
+  `fecha` date NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `entrada` tinyint(1) NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_subcuenta_deudora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC6E57A479`(`id_producto_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC6601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC7A4F962`(`id_tipo_documento_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC7EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFCC59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFCF66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC39161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC71381BB3`(`id_orden_trabajo_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFCF5DBAF2B`(`id_expediente_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC55C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_FFC0EDFC571159DE`(`id_movimiento_cancelado_id`) USING BTREE,
+  CONSTRAINT `FK_FFC0EDFC39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC571159DE` FOREIGN KEY (`id_movimiento_cancelado_id`) REFERENCES `movimiento_producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC6E57A479` FOREIGN KEY (`id_producto_id`) REFERENCES `producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC7A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFC7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFCC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFCF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_FFC0EDFCF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for movimiento_servicio
+-- ----------------------------
+-- DROP TABLE IF EXISTS `movimiento_servicio`;
+CREATE TABLE `movimiento_servicio`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NOT NULL,
+  `servicio_id` int NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `impuesto` double NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_deudora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cuenta_nominal_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subcuenta_nominal_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `costo` double NULL DEFAULT NULL,
+  `anno` int NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descuento` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_93FD19C355C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_93FD19C371CAA3E7`(`servicio_id`) USING BTREE,
+  CONSTRAINT `FK_93FD19C355C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_93FD19C371CAA3E7` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for movimiento_venta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `movimiento_venta`;
+CREATE TABLE `movimiento_venta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NOT NULL,
+  `id_almacen_id` int NOT NULL,
+  `id_centro_costo_acreedor_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_acreedor_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_acreedor_id` int NULL DEFAULT NULL,
+  `id_expediente_acreedor_id` int NULL DEFAULT NULL,
+  `mercancia` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cantidad` double NOT NULL,
+  `precio` double NOT NULL,
+  `descuento_recarga` double NULL DEFAULT NULL,
+  `existencia` double NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_deudora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `costo` double NULL DEFAULT NULL,
+  `anno` int NULL DEFAULT NULL,
+  `cuenta_nominal_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `subcuenta_nominal_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_mercancia` int NULL DEFAULT NULL,
+  `impuesto` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_8E3F7AE555C5F988`(`id_factura_id`) USING BTREE,
+  INDEX `IDX_8E3F7AE539161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_8E3F7AE5D8F8B0AD`(`id_centro_costo_acreedor_id`) USING BTREE,
+  INDEX `IDX_8E3F7AE5FA3DF5CD`(`id_orden_trabajo_acreedor_id`) USING BTREE,
+  INDEX `IDX_8E3F7AE5F0821C98`(`id_elemento_gasto_acreedor_id`) USING BTREE,
+  INDEX `IDX_8E3F7AE56EA527F2`(`id_expediente_acreedor_id`) USING BTREE,
+  CONSTRAINT `FK_8E3F7AE539161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8E3F7AE555C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8E3F7AE56EA527F2` FOREIGN KEY (`id_expediente_acreedor_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8E3F7AE5D8F8B0AD` FOREIGN KEY (`id_centro_costo_acreedor_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8E3F7AE5F0821C98` FOREIGN KEY (`id_elemento_gasto_acreedor_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_8E3F7AE5FA3DF5CD` FOREIGN KEY (`id_orden_trabajo_acreedor_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for municipios
+-- ----------------------------
+-- DROP TABLE IF EXISTS `municipios`;
+CREATE TABLE `municipios`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `provincia_id` int NULL DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_BBFAB5864E7121AF`(`provincia_id`) USING BTREE,
+  CONSTRAINT `FK_BBFAB5864E7121AF` FOREIGN KEY (`provincia_id`) REFERENCES `provincias` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 176 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for nomina_pago
+-- ----------------------------
+-- DROP TABLE IF EXISTS `nomina_pago`;
+CREATE TABLE `nomina_pago`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_empleado_id` int NOT NULL,
+  `id_usuario_aprueba_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NOT NULL,
+  `comision` double NULL DEFAULT NULL,
+  `vacaciones` double NULL DEFAULT NULL,
+  `horas_extra` double NULL DEFAULT NULL,
+  `otros` double NULL DEFAULT NULL,
+  `total_ingresos` double NOT NULL,
+  `ingresos_cotizables_tss` double NOT NULL,
+  `isr` double NULL DEFAULT NULL,
+  `ars` double NULL DEFAULT NULL,
+  `afp` double NULL DEFAULT NULL,
+  `cooperativa` double NULL DEFAULT NULL,
+  `plan_medico_complementario` double NULL DEFAULT NULL,
+  `restaurant` double NULL DEFAULT NULL,
+  `total_deducido` double NULL DEFAULT NULL,
+  `sueldo_neto_pagar` double NULL DEFAULT NULL,
+  `afp_empleador` double NULL DEFAULT NULL,
+  `sfs_empleador` double NULL DEFAULT NULL,
+  `srl_empleador` double NULL DEFAULT NULL,
+  `infotep_empleador` double NULL DEFAULT NULL,
+  `mes` int NOT NULL,
+  `anno` int NOT NULL,
+  `fecha` date NOT NULL,
+  `elaborada` tinyint(1) NULL DEFAULT NULL,
+  `aprobada` tinyint(1) NULL DEFAULT NULL,
+  `quincena` int NOT NULL,
+  `salario_bruto` double NULL DEFAULT NULL,
+  `cant_horas_trabajadas` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_5CB8BD338D392AC7`(`id_empleado_id`) USING BTREE,
+  INDEX `IDX_5CB8BD33AC6A6301`(`id_usuario_aprueba_id`) USING BTREE,
+  INDEX `IDX_5CB8BD331D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_5CB8BD331D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_5CB8BD338D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_5CB8BD33AC6A6301` FOREIGN KEY (`id_usuario_aprueba_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for nomina_tercero_comprobante
+-- ----------------------------
+-- DROP TABLE IF EXISTS `nomina_tercero_comprobante`;
+CREATE TABLE `nomina_tercero_comprobante`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_nomina_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_comprobante_id` int NULL DEFAULT NULL,
+  `mes` int NOT NULL,
+  `anno` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D4A77ABF2547677`(`id_nomina_id`) USING BTREE,
+  INDEX `IDX_D4A77ABF1D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_D4A77ABF1800963C`(`id_comprobante_id`) USING BTREE,
+  CONSTRAINT `FK_D4A77ABF1800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D4A77ABF1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D4A77ABF2547677` FOREIGN KEY (`id_nomina_id`) REFERENCES `nomina_pago` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for nominas_consecutivos
+-- ----------------------------
+-- DROP TABLE IF EXISTS `nominas_consecutivos`;
+CREATE TABLE `nominas_consecutivos`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `mes` int NOT NULL,
+  `anno` int NOT NULL,
+  `nro_consecutivo` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_9FC8A71A1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_9FC8A71A1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for obligacion_cobro
+-- ----------------------------
+-- DROP TABLE IF EXISTS `obligacion_cobro`;
+CREATE TABLE `obligacion_cobro`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura_id` int NOT NULL,
+  `id_cliente` int NOT NULL,
+  `tipo_cliente` int NOT NULL,
+  `fecha_factura` date NOT NULL,
+  `importe_factura` double NOT NULL,
+  `cuenta_obligacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subcuenta_obligacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `resto_pagar` double NOT NULL,
+  `liquidada` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_807C726D55C5F988`(`id_factura_id`) USING BTREE,
+  CONSTRAINT `FK_807C726D55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for obligacion_pago
+-- ----------------------------
+-- DROP TABLE IF EXISTS `obligacion_pago`;
+CREATE TABLE `obligacion_pago`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_proveedor_id` int NOT NULL,
+  `id_documento_id` int NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  `nro_cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valor_pagado` double NULL DEFAULT NULL,
+  `resto` double NOT NULL,
+  `liquidado` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo_factura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_factura` date NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_403C9B3BE8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_403C9B3B6601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_403C9B3B1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_403C9B3B1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_403C9B3B6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_403C9B3BE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for operaciones_comprobante_operaciones
+-- ----------------------------
+-- DROP TABLE IF EXISTS `operaciones_comprobante_operaciones`;
+CREATE TABLE `operaciones_comprobante_operaciones`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cuenta_id` int NOT NULL,
+  `id_subcuenta_id` int NOT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_expediente_id` int NULL DEFAULT NULL,
+  `id_proveedor_id` int NULL DEFAULT NULL,
+  `id_registro_comprobantes_id` int NOT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `id_instrumento_cobro_id` int NULL DEFAULT NULL,
+  `id_cliente` int NULL DEFAULT NULL,
+  `id_tipo_cliente` int NULL DEFAULT NULL,
+  `credito` double NOT NULL,
+  `debito` double NOT NULL,
+  `banco` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_E7EA17E1ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  INDEX `IDX_E7EA17E2D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_E7EA17EC59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_E7EA17E71381BB3`(`id_orden_trabajo_id`) USING BTREE,
+  INDEX `IDX_E7EA17EF66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_E7EA17EF5DBAF2B`(`id_expediente_id`) USING BTREE,
+  INDEX `IDX_E7EA17EE8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_E7EA17EECB9FBA7`(`id_registro_comprobantes_id`) USING BTREE,
+  INDEX `IDX_E7EA17E39161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_E7EA17E1D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_E7EA17E47B60D7E`(`id_instrumento_cobro_id`) USING BTREE,
+  CONSTRAINT `FK_E7EA17E1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17E1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17E2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17E39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17E47B60D7E` FOREIGN KEY (`id_instrumento_cobro_id`) REFERENCES `instrumento_cobro` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17E71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17EC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17EE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17EECB9FBA7` FOREIGN KEY (`id_registro_comprobantes_id`) REFERENCES `registro_comprobantes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17EF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_E7EA17EF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for orden_paquete
+-- ----------------------------
+-- DROP TABLE IF EXISTS `orden_paquete`;
+CREATE TABLE `orden_paquete`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_beneficiarios_clientes_id` int NOT NULL,
+  `nro_orden` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `weight` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_AEE672BBD2000A0`(`id_beneficiarios_clientes_id`) USING BTREE,
+  CONSTRAINT `FK_AEE672BBD2000A0` FOREIGN KEY (`id_beneficiarios_clientes_id`) REFERENCES `beneficiarios_clientes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 133 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for orden_trabajo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `orden_trabajo`;
+CREATE TABLE `orden_trabajo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `anno` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_4158A0241D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_4158A02439161EBF`(`id_almacen_id`) USING BTREE,
+  CONSTRAINT `FK_4158A0241D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_4158A02439161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for pagos_cotizacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `pagos_cotizacion`;
+CREATE TABLE `pagos_cotizacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `id_empleado` int NOT NULL,
+  `monto` double NOT NULL,
+  `cambio` double NULL DEFAULT NULL,
+  `id_cotizacion` int NOT NULL,
+  `id_moneda` int NOT NULL,
+  `id_tipo_de_pago` int NOT NULL,
+  `id_banco` int NULL DEFAULT NULL,
+  `id_cuenta_bancaria` int NULL DEFAULT NULL,
+  `numero_confirmacion_deposito` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `last4_tarjeta` int NULL DEFAULT NULL,
+  `codigo_confirmacion_tarjeta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tipo_de_tarjeta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nota` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_transaccion` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for pagos_venta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `pagos_venta`;
+CREATE TABLE `pagos_venta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `empleado_id` int NOT NULL,
+  `factura_id` int NOT NULL,
+  `moneda_id` int NOT NULL,
+  `banco_id` int NULL DEFAULT NULL,
+  `cuenta_id` int NULL DEFAULT NULL,
+  `tipo_pago` int NOT NULL,
+  `fecha` datetime NOT NULL,
+  `monto` double NOT NULL,
+  `cambio` double NULL DEFAULT NULL,
+  `datos_deposito` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nota` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_F3D4BBF7952BE730`(`empleado_id`) USING BTREE,
+  INDEX `IDX_F3D4BBF7F04F795F`(`factura_id`) USING BTREE,
+  INDEX `IDX_F3D4BBF7B77634D2`(`moneda_id`) USING BTREE,
+  INDEX `IDX_F3D4BBF7CC04A73E`(`banco_id`) USING BTREE,
+  INDEX `IDX_F3D4BBF79AEFF118`(`cuenta_id`) USING BTREE,
+  CONSTRAINT `FK_F3D4BBF7952BE730` FOREIGN KEY (`empleado_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F3D4BBF79AEFF118` FOREIGN KEY (`cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F3D4BBF7B77634D2` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F3D4BBF7CC04A73E` FOREIGN KEY (`banco_id`) REFERENCES `banco` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F3D4BBF7F04F795F` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for pais
+-- ----------------------------
+-- DROP TABLE IF EXISTS `pais`;
+CREATE TABLE `pais`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for periodo_sistema
+-- ----------------------------
+-- DROP TABLE IF EXISTS `periodo_sistema`;
+CREATE TABLE `periodo_sistema`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_usuario_id` int NOT NULL,
+  `mes` int NOT NULL,
+  `anno` int NOT NULL,
+  `tipo` int NOT NULL,
+  `fecha` date NOT NULL,
+  `cerrado` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_AEF0BAAD1D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_AEF0BAAD39161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_AEF0BAAD7EB2C349`(`id_usuario_id`) USING BTREE,
+  CONSTRAINT `FK_AEF0BAAD1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AEF0BAAD39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AEF0BAAD7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for plan_hotel
+-- ----------------------------
+-- DROP TABLE IF EXISTS `plan_hotel`;
+CREATE TABLE `plan_hotel`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for plazos_pago_cotizacion
+-- ----------------------------
+-- DROP TABLE IF EXISTS `plazos_pago_cotizacion`;
+CREATE TABLE `plazos_pago_cotizacion`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cotizacion_id` int NOT NULL,
+  `fecha` date NOT NULL,
+  `cuota` double NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_4A1D3ED28E5841CF`(`id_cotizacion_id`) USING BTREE,
+  CONSTRAINT `FK_4A1D3ED28E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for por_ciento_nominas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `por_ciento_nominas`;
+CREATE TABLE `por_ciento_nominas`  (
+  `id` int NOT NULL,
+  `por_ciento` double NOT NULL,
+  `criterio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `denominacion` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for precio_venta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `precio_venta`;
+CREATE TABLE `precio_venta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tramo` int NULL DEFAULT NULL,
+  `poerciento` double NULL DEFAULT NULL,
+  `fijo` double NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for producto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `producto`;
+CREATE TABLE `producto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_amlacen_id` int NOT NULL,
+  `id_unidad_medida_id` int NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `existencia` double NOT NULL,
+  `importe` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `nro_subcuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_cuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nro_subcuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `precio_venta` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_A7BB0615E2C70A62`(`id_amlacen_id`) USING BTREE,
+  INDEX `IDX_A7BB0615E16A5625`(`id_unidad_medida_id`) USING BTREE,
+  CONSTRAINT `FK_A7BB0615E16A5625` FOREIGN KEY (`id_unidad_medida_id`) REFERENCES `unidad_medida` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_A7BB0615E2C70A62` FOREIGN KEY (`id_amlacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for producto_categoria_producto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `producto_categoria_producto`;
+CREATE TABLE `producto_categoria_producto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `producto_id` int NULL DEFAULT NULL,
+  `categoria_producto_id` int NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_956AB0777645698E`(`producto_id`) USING BTREE,
+  INDEX `IDX_956AB07769022511`(`categoria_producto_id`) USING BTREE,
+  CONSTRAINT `FK_956AB07769022511` FOREIGN KEY (`categoria_producto_id`) REFERENCES `categoria_producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_956AB0777645698E` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for producto_impuesto
+-- ----------------------------
+-- DROP TABLE IF EXISTS `producto_impuesto`;
+CREATE TABLE `producto_impuesto`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `producto_id` int NULL DEFAULT NULL,
+  `impuesto_id` int NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_9E754B747645698E`(`producto_id`) USING BTREE,
+  INDEX `IDX_9E754B74D23B6BE5`(`impuesto_id`) USING BTREE,
+  CONSTRAINT `FK_9E754B747645698E` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_9E754B74D23B6BE5` FOREIGN KEY (`impuesto_id`) REFERENCES `impuesto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for proveedor
+-- ----------------------------
+-- DROP TABLE IF EXISTS `proveedor`;
+CREATE TABLE `proveedor`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pais_id` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `celular` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono1` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono2` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_16C068CEC604D5C6`(`pais_id`) USING BTREE,
+  CONSTRAINT `FK_16C068CEC604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for proveedor_unidad
+-- ----------------------------
+-- DROP TABLE IF EXISTS `proveedor_unidad`;
+CREATE TABLE `proveedor_unidad`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `proveedor_id` int NULL DEFAULT NULL,
+  `unidad_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_EE37BED5CB305D73`(`proveedor_id`) USING BTREE,
+  INDEX `IDX_EE37BED59D01464C`(`unidad_id`) USING BTREE,
+  CONSTRAINT `FK_EE37BED59D01464C` FOREIGN KEY (`unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_EE37BED5CB305D73` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for proveedor_unidad_servicios
+-- ----------------------------
+-- DROP TABLE IF EXISTS `proveedor_unidad_servicios`;
+CREATE TABLE `proveedor_unidad_servicios`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `servicio_id` int NULL DEFAULT NULL,
+  `proveedor_unidad_id` int NULL DEFAULT NULL,
+  `activo` tinyint(1) NULL DEFAULT NULL,
+  `id_subservicio_id` int NULL DEFAULT NULL,
+  `costo` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_68EBF91E71CAA3E7`(`servicio_id`) USING BTREE,
+  INDEX `IDX_68EBF91E2FF8143C`(`proveedor_unidad_id`) USING BTREE,
+  INDEX `IDX_68EBF91E32C7D54`(`id_subservicio_id`) USING BTREE,
+  CONSTRAINT `FK_68EBF91E2FF8143C` FOREIGN KEY (`proveedor_unidad_id`) REFERENCES `proveedor_unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_68EBF91E32C7D54` FOREIGN KEY (`id_subservicio_id`) REFERENCES `subservicio` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_68EBF91E71CAA3E7` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for provincias
+-- ----------------------------
+-- DROP TABLE IF EXISTS `provincias`;
+CREATE TABLE `provincias`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pais_id` int NULL DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_pais` int NULL DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_9F631427C604D5C6`(`pais_id`) USING BTREE,
+  CONSTRAINT `FK_9F631427C604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for puesto_trabajo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `puesto_trabajo`;
+CREATE TABLE `puesto_trabajo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NOT NULL,
+  `nombre_impresora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `puesto_trabajo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `caja_registradora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_DBFAC77639161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_DBFAC7761D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_DBFAC7761D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_DBFAC77639161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for rango_escala_dgii
+-- ----------------------------
+-- DROP TABLE IF EXISTS `rango_escala_dgii`;
+CREATE TABLE `rango_escala_dgii`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `anno` int NOT NULL,
+  `escala` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `por_ciento` double NOT NULL,
+  `minimo` double NULL DEFAULT NULL,
+  `maximo` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `valor_fijo` double NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for registro_comprobantes
+-- ----------------------------
+-- DROP TABLE IF EXISTS `registro_comprobantes`;
+CREATE TABLE `registro_comprobantes`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NOT NULL,
+  `id_tipo_comprobante_id` int NOT NULL,
+  `id_usuario_id` int NOT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_instrumento_cobro_id` int NULL DEFAULT NULL,
+  `nro_consecutivo` int NOT NULL,
+  `fecha` date NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `debito` double NOT NULL,
+  `credito` double NOT NULL,
+  `anno` int NOT NULL,
+  `tipo` int NULL DEFAULT NULL,
+  `documento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_B2D1B2B21D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_B2D1B2B2EF5F7851`(`id_tipo_comprobante_id`) USING BTREE,
+  INDEX `IDX_B2D1B2B27EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_B2D1B2B239161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_B2D1B2B247B60D7E`(`id_instrumento_cobro_id`) USING BTREE,
+  CONSTRAINT `FK_B2D1B2B21D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B2D1B2B239161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B2D1B2B247B60D7E` FOREIGN KEY (`id_instrumento_cobro_id`) REFERENCES `instrumento_cobro` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B2D1B2B27EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_B2D1B2B2EF5F7851` FOREIGN KEY (`id_tipo_comprobante_id`) REFERENCES `tipo_comprobante` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for reglas_remesas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `reglas_remesas`;
+CREATE TABLE `reglas_remesas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_moneda_pais` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `desde` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hasta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tarifa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for rent_entrega
+-- ----------------------------
+-- DROP TABLE IF EXISTS `rent_entrega`;
+CREATE TABLE `rent_entrega`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for rent_recogida
+-- ----------------------------
+-- DROP TABLE IF EXISTS `rent_recogida`;
+CREATE TABLE `rent_recogida`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for reporte_efectivo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `reporte_efectivo`;
+CREATE TABLE `reporte_efectivo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `monto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cambio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_cotizacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for saldo_cuentas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `saldo_cuentas`;
+CREATE TABLE `saldo_cuentas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cuenta_id` int NOT NULL,
+  `id_subcuenta_id` int NOT NULL,
+  `id_centro_costo_id` int NULL DEFAULT NULL,
+  `id_elemento_gasto_id` int NULL DEFAULT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `id_unidad_id` int NOT NULL,
+  `id_proveedor_id` int NULL DEFAULT NULL,
+  `id_expediente_id` int NULL DEFAULT NULL,
+  `id_orden_trabajo_id` int NULL DEFAULT NULL,
+  `mes` int NOT NULL,
+  `anno` int NOT NULL,
+  `saldo` double NOT NULL,
+  `tipo_cliente` int NULL DEFAULT NULL,
+  `id_cliente` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_BB2B71AE1ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  INDEX `IDX_BB2B71AE2D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_BB2B71AEC59B01FF`(`id_centro_costo_id`) USING BTREE,
+  INDEX `IDX_BB2B71AEF66372E9`(`id_elemento_gasto_id`) USING BTREE,
+  INDEX `IDX_BB2B71AE39161EBF`(`id_almacen_id`) USING BTREE,
+  INDEX `IDX_BB2B71AE1D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_BB2B71AEE8F12801`(`id_proveedor_id`) USING BTREE,
+  INDEX `IDX_BB2B71AEF5DBAF2B`(`id_expediente_id`) USING BTREE,
+  INDEX `IDX_BB2B71AE71381BB3`(`id_orden_trabajo_id`) USING BTREE,
+  CONSTRAINT `FK_BB2B71AE1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AE1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AE2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AE39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AE71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AEC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AEE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AEF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_BB2B71AEF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for servicios
+-- ----------------------------
+-- DROP TABLE IF EXISTS `servicios`;
+CREATE TABLE `servicios`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abreviatura` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `activo` tinyint(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for solicitud
+-- ----------------------------
+-- DROP TABLE IF EXISTS `solicitud`;
+CREATE TABLE `solicitud`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `primer_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `segundo_apellido` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono_fijo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono_celular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_96D27CC01D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_96D27CC01D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for solicitud_turismo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `solicitud_turismo`;
+CREATE TABLE `solicitud_turismo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `vuelo_cantidad_adultos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `vuelo_cantidad_ninos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `vuelo_origen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `vuelo_destino` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `vuelo_ida` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `vuelo_vuelta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `vuelo_comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_destino` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_categoria` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_plan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tranfer_llegada` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_salida` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_lugar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_destino` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_vehiculo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tour_nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tour_fecha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tour_comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_tipo_vehiculo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_lugar_recogida` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_lugar_entrega` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_fecha_desde` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_desde` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_hasta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_fecha_hasta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `fecha_solicitud` datetime NULL DEFAULT NULL,
+  `stado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `nombre_cliente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_adultos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `hotel_ninos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_adultos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_ninos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tramfer_ida_vuelta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tour_ninos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tour_adultos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rent_cantidad_personas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `empleado_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `urgente` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for solicitud_turismo_comentario
+-- ----------------------------
+-- DROP TABLE IF EXISTS `solicitud_turismo_comentario`;
+CREATE TABLE `solicitud_turismo_comentario`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_solicitud_turismo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL,
+  `comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for stripe_factura
+-- ----------------------------
+-- DROP TABLE IF EXISTS `stripe_factura`;
+CREATE TABLE `stripe_factura`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `auth` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estatus` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cliente_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `monto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for subcuenta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `subcuenta`;
+CREATE TABLE `subcuenta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cuenta_id` int NOT NULL,
+  `nro_subcuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `elemento_gasto` tinyint(1) NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deudora` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_57BB37EA1ADA4D3F`(`id_cuenta_id`) USING BTREE,
+  CONSTRAINT `FK_57BB37EA1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 169 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for subcuenta_criterio_analisis
+-- ----------------------------
+-- DROP TABLE IF EXISTS `subcuenta_criterio_analisis`;
+CREATE TABLE `subcuenta_criterio_analisis`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_subcuenta_id` int NOT NULL,
+  `id_criterio_analisis_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_52A4A7682D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_52A4A7685ABBE5F6`(`id_criterio_analisis_id`) USING BTREE,
+  CONSTRAINT `FK_52A4A7682D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_52A4A7685ABBE5F6` FOREIGN KEY (`id_criterio_analisis_id`) REFERENCES `criterio_analisis` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for subcuenta_proveedor
+-- ----------------------------
+-- DROP TABLE IF EXISTS `subcuenta_proveedor`;
+CREATE TABLE `subcuenta_proveedor`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_subcuenta_id` int NOT NULL,
+  `id_proveedor_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_5C22E4B82D412F53`(`id_subcuenta_id`) USING BTREE,
+  INDEX `IDX_5C22E4B8E8F12801`(`id_proveedor_id`) USING BTREE,
+  CONSTRAINT `FK_5C22E4B82D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_5C22E4B8E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for subservicio
+-- ----------------------------
+-- DROP TABLE IF EXISTS `subservicio`;
+CREATE TABLE `subservicio`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_servicio_id` int NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_C0164FA369D86E10`(`id_servicio_id`) USING BTREE,
+  CONSTRAINT `FK_C0164FA369D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tasa_cambio
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tasa_cambio`;
+CREATE TABLE `tasa_cambio`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_moneda_origen_id` int NOT NULL,
+  `id_moneda_destino_id` int NOT NULL,
+  `anno` int NOT NULL,
+  `mes` int NOT NULL,
+  `valor` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_DAB48606FA5CADE9`(`id_moneda_origen_id`) USING BTREE,
+  INDEX `IDX_DAB48606D85CECF7`(`id_moneda_destino_id`) USING BTREE,
+  CONSTRAINT `FK_DAB48606D85CECF7` FOREIGN KEY (`id_moneda_destino_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_DAB48606FA5CADE9` FOREIGN KEY (`id_moneda_origen_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tasa_de_cambio
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tasa_de_cambio`;
+CREATE TABLE `tasa_de_cambio`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tasa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `tasa_sugerida` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for termino_pago
+-- ----------------------------
+-- DROP TABLE IF EXISTS `termino_pago`;
+CREATE TABLE `termino_pago`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_comprobante
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_comprobante`;
+CREATE TABLE `tipo_comprobante`  (
+  `id` int NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `abreviatura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_cuenta
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_cuenta`;
+CREATE TABLE `tipo_cuenta`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_documento
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_documento`;
+CREATE TABLE `tipo_documento`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_documento_activo_fijo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_documento_activo_fijo`;
+CREATE TABLE `tipo_documento_activo_fijo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_movimiento
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_movimiento`;
+CREATE TABLE `tipo_movimiento`  (
+  `id` int NOT NULL,
+  `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_traslado
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_traslado`;
+CREATE TABLE `tipo_traslado`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tipo_vehiculo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tipo_vehiculo`;
+CREATE TABLE `tipo_vehiculo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cantidad_ini_persona` int NOT NULL,
+  `cantidad_fin_persona` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tour_nombre
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tour_nombre`;
+CREATE TABLE `tour_nombre`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for tramo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `tramo`;
+CREATE TABLE `tramo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `proveedor` int NOT NULL,
+  `origen` int NOT NULL,
+  `destino` int NOT NULL,
+  `ida_vuelta` tinyint(1) NOT NULL,
+  `vehiculo` int NOT NULL,
+  `precio` double NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `traslado` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for transfer_destino
+-- ----------------------------
+-- DROP TABLE IF EXISTS `transfer_destino`;
+CREATE TABLE `transfer_destino`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for transfer_origen
+-- ----------------------------
+-- DROP TABLE IF EXISTS `transfer_origen`;
+CREATE TABLE `transfer_origen`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for transferencia
+-- ----------------------------
+-- DROP TABLE IF EXISTS `transferencia`;
+CREATE TABLE `transferencia`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_documento_id` int NOT NULL,
+  `id_unidad_id` int NULL DEFAULT NULL,
+  `id_almacen_id` int NULL DEFAULT NULL,
+  `nro_cuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_inventario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_cuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_acreedora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_concecutivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `entrada` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_EDC227306601BA07`(`id_documento_id`) USING BTREE,
+  INDEX `IDX_EDC227301D34FA6B`(`id_unidad_id`) USING BTREE,
+  INDEX `IDX_EDC2273039161EBF`(`id_almacen_id`) USING BTREE,
+  CONSTRAINT `FK_EDC227301D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_EDC2273039161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_EDC227306601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for trasacciones
+-- ----------------------------
+-- DROP TABLE IF EXISTS `trasacciones`;
+CREATE TABLE `trasacciones`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `transaccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_cotizacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `monto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banco` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empleado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL,
+  `cuenta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_transaccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nota` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for turno_trabajo
+-- ----------------------------
+-- DROP TABLE IF EXISTS `turno_trabajo`;
+CREATE TABLE `turno_trabajo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_puesto_trabajo_id` int NULL DEFAULT NULL,
+  `id_usuario_id` int NOT NULL,
+  `fecha` date NOT NULL,
+  `cerrado` tinyint(1) NOT NULL,
+  `id_unidad_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_CFD6B1EE1ED9E395`(`id_puesto_trabajo_id`) USING BTREE,
+  INDEX `IDX_CFD6B1EE7EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_CFD6B1EE1D34FA6B`(`id_unidad_id`) USING BTREE,
+  CONSTRAINT `FK_CFD6B1EE1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_CFD6B1EE1ED9E395` FOREIGN KEY (`id_puesto_trabajo_id`) REFERENCES `puesto_trabajo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_CFD6B1EE7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for unidad
+-- ----------------------------
+-- DROP TABLE IF EXISTS `unidad`;
+CREATE TABLE `unidad`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_padre_id` int NULL DEFAULT NULL,
+  `id_moneda_id` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `codigo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `telefono` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `correo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `rnc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UNIQ_F3E6D02F3A909126`(`nombre`) USING BTREE,
+  UNIQUE INDEX `UNIQ_F3E6D02F20332D99`(`codigo`) USING BTREE,
+  INDEX `IDX_F3E6D02F31E700CD`(`id_padre_id`) USING BTREE,
+  INDEX `IDX_F3E6D02F374388F5`(`id_moneda_id`) USING BTREE,
+  CONSTRAINT `FK_F3E6D02F31E700CD` FOREIGN KEY (`id_padre_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_F3E6D02F374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for unidad_medida
+-- ----------------------------
+-- DROP TABLE IF EXISTS `unidad_medida`;
+CREATE TABLE `unidad_medida`  (
+  `id` int NOT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abreviatura` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+-- DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
+  `status` tinyint(1) NOT NULL,
+  `id_moneda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_agencia_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UNIQ_8D93D649F85E0677`(`username`) USING BTREE,
+  INDEX `IDX_8D93D64937D1669`(`id_agencia_id`) USING BTREE,
+  CONSTRAINT `FK_8D93D64937D1669` FOREIGN KEY (`id_agencia_id`) REFERENCES `unidad` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for user_client_tmp
+-- ----------------------------
+-- DROP TABLE IF EXISTS `user_client_tmp`;
+CREATE TABLE `user_client_tmp`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario_id` int NOT NULL,
+  `id_cliente_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_AC2C28007EB2C349`(`id_usuario_id`) USING BTREE,
+  INDEX `IDX_AC2C28007BF9CE86`(`id_cliente_id`) USING BTREE,
+  CONSTRAINT `FK_AC2C28007BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_AC2C28007EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for vacaciones_disfrutadas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `vacaciones_disfrutadas`;
+CREATE TABLE `vacaciones_disfrutadas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_empleado_id` int NOT NULL,
+  `cantidad_dias` int NOT NULL,
+  `cantidad_pagada` double NOT NULL,
+  `fecha_inicio` date NULL DEFAULT NULL,
+  `fecha_fin` date NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_F02817318D392AC7`(`id_empleado_id`) USING BTREE,
+  CONSTRAINT `FK_F02817318D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for vale_salida
+-- ----------------------------
+-- DROP TABLE IF EXISTS `vale_salida`;
+CREATE TABLE `vale_salida`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_documento_id` int NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  `producto` tinyint(1) NOT NULL,
+  `nro_consecutivo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `anno` int NOT NULL,
+  `fecha_solicitud` date NOT NULL,
+  `nro_solicitud` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_cuenta_deudora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nro_subcuenta_deudora` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UNIQ_90C265C86601BA07`(`id_documento_id`) USING BTREE,
+  CONSTRAINT `FK_90C265C86601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for vuelo_destino
+-- ----------------------------
+-- DROP TABLE IF EXISTS `vuelo_destino`;
+CREATE TABLE `vuelo_destino`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for vuelo_origen
+-- ----------------------------
+-- DROP TABLE IF EXISTS `vuelo_origen`;
+CREATE TABLE `vuelo_origen`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for zona
+-- ----------------------------
+-- DROP TABLE IF EXISTS `zona`;
+CREATE TABLE `zona`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for zona_remesas
+-- ----------------------------
+-- DROP TABLE IF EXISTS `zona_remesas`;
+CREATE TABLE `zona_remesas`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pais_id` int NULL DEFAULT NULL,
+  `provincia_id` int NULL DEFAULT NULL,
+  `municipio_id` int NULL DEFAULT NULL,
+  `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_D37DCA05C604D5C6`(`pais_id`) USING BTREE,
+  INDEX `IDX_D37DCA054E7121AF`(`provincia_id`) USING BTREE,
+  INDEX `IDX_D37DCA0558BC1BE0`(`municipio_id`) USING BTREE,
+  CONSTRAINT `FK_D37DCA054E7121AF` FOREIGN KEY (`provincia_id`) REFERENCES `provincias` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D37DCA0558BC1BE0` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_D37DCA05C604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+-----------------------------------------------------------------------
+-- DATA INSERT
+-----------------------------------------------------------------------
+
 
 --
 -- Volcado de datos para la tabla `almacen`
@@ -160,215 +3245,8 @@ INSERT INTO `almacen` (`id`, `id_unidad_id`, `descripcion`, `activo`, `codigo`) 
 (2, 1, 'Almacén Mercancias para la Venta', 1, '02'),
 (3, 1, 'Almacén de Productos Terminados', 1, '03');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `almacen_ocupado`
---
-
-CREATE TABLE `almacen_ocupado` (
-  `id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `amenidades`
---
-
-CREATE TABLE `amenidades` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `amenidades_hotel`
---
-
-CREATE TABLE `amenidades_hotel` (
-  `id` int(11) NOT NULL,
-  `id_hotel_id` int(11) NOT NULL,
-  `id_amenidades_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `apertura`
---
-
-CREATE TABLE `apertura` (
-  `id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `nro_cuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_cuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_concecutivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `entrada` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `area_responsabilidad`
---
-
-CREATE TABLE `area_responsabilidad` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `asiento`
---
-
-CREATE TABLE `asiento` (
-  `id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_documento_id` int(11) DEFAULT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_id` int(11) DEFAULT NULL,
-  `id_expediente_id` int(11) DEFAULT NULL,
-  `id_proveedor_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_tipo_comprobante_id` int(11) DEFAULT NULL,
-  `id_comprobante_id` int(11) DEFAULT NULL,
-  `id_factura_id` int(11) DEFAULT NULL,
-  `id_activo_fijo_id` int(11) DEFAULT NULL,
-  `id_area_responsabilidad_id` int(11) DEFAULT NULL,
-  `id_cotizacion_id` int(11) DEFAULT NULL,
-  `id_elemento_visa_id` int(11) DEFAULT NULL,
-  `tipo_cliente` int(11) DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `anno` int(11) NOT NULL,
-  `credito` double DEFAULT NULL,
-  `debito` double DEFAULT NULL,
-  `nro_documento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `orden_operacion` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `avisos_pagos`
---
-
-CREATE TABLE `avisos_pagos` (
-  `id` int(11) NOT NULL,
-  `id_plazo_pago_id` int(11) NOT NULL,
-  `id_cotizacion_id` int(11) NOT NULL,
-  `fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `banco`
---
-
-CREATE TABLE `banco` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `beneficiarios_clientes`
---
-
-CREATE TABLE `beneficiarios_clientes` (
-  `id` int(11) NOT NULL,
-  `id_cliente_id` int(11) NOT NULL,
-  `id_pais_id` int(11) NOT NULL,
-  `id_provincia_id` int(11) NOT NULL,
-  `id_municipio_id` int(11) NOT NULL,
-  `primer_nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `primer_apellido` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `segundo_apellido` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_alternativo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `primer_apellido_alternativo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `segundo_apellido_alternativo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `primer_telefono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `segundo_telefono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `identificacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `calle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `y` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_casa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `edificio` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `apto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reparto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cargo`
---
-
-CREATE TABLE `cargo` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `cargo`
---
-
 INSERT INTO `cargo` (`id`, `nombre`, `activo`) VALUES
 (1, 'Administrador del Sistema', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `carrito`
---
-
-CREATE TABLE `carrito` (
-  `id` int(11) NOT NULL,
-  `json` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
-  `empleado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categoria_cliente`
---
-
-CREATE TABLE `categoria_cliente` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prefijo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `categoria_cliente`
---
 
 INSERT INTO `categoria_cliente` (`id`, `nombre`, `prefijo`) VALUES
 (1, 'Factura de Crédito Fiscal', 'B01'),
@@ -383,23 +3261,6 @@ INSERT INTO `categoria_cliente` (`id`, `nombre`, `prefijo`) VALUES
 (10, 'Comprobante para Exportación', 'B16'),
 (11, 'Comprobante de Pago al Exterior', 'B17');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `centro_costo`
---
-
-CREATE TABLE `centro_costo` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `centro_costo`
---
 
 INSERT INTO `centro_costo` (`id`, `id_unidad_id`, `activo`, `codigo`, `nombre`) VALUES
 (22, 1, 1, '0150', 'Combo de aseo'),
@@ -407,319 +3268,14 @@ INSERT INTO `centro_costo` (`id`, `id_unidad_id`, `activo`, `codigo`, `nombre`) 
 (24, 1, 1, '0170', 'Combo de Alimento'),
 (25, 1, 1, '0180', 'Otros');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `cierre`
---
-
-CREATE TABLE `cierre` (
-  `id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) DEFAULT NULL,
-  `diario` tinyint(1) NOT NULL,
-  `mes` int(11) DEFAULT NULL,
-  `anno` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `saldo` double NOT NULL,
-  `abierto` tinyint(1) DEFAULT NULL,
-  `debito` double NOT NULL,
-  `credito` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cierre_diario`
---
-
-CREATE TABLE `cierre_diario` (
-  `id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `fecha_cerrado` date NOT NULL,
-  `fecha_cerrado_real` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cliente`
---
-
-CREATE TABLE `cliente` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apellidos` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
-  `usuario` int(11) DEFAULT NULL,
-  `comentario` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `identificacion_empresa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `cliente`
---
 
 INSERT INTO `cliente` (`id`, `nombre`, `apellidos`, `correo`, `direccion`, `token`, `fecha`, `usuario`, `comentario`, `telefono`, `identificacion_empresa`) VALUES
 (1, 'Adrian', 'Gonzalez', 'adrian@solyag.com', NULL, NULL, NULL, NULL, NULL, '8295540346', NULL),
 (2, 'Adrian', 'Gonzalez', NULL, 'John F kEENDY', NULL, NULL, NULL, NULL, '829554046', NULL),
 (3, 'jesus', 'sole', 'horizontes86@gmail.com', 'sarasota', NULL, NULL, NULL, NULL, '8492690312', NULL);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `cliente_contabilidad`
---
-
-CREATE TABLE `cliente_contabilidad` (
-  `id` int(11) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefonos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fax` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cliente_solicitudes`
---
-
-CREATE TABLE `cliente_solicitudes` (
-  `id` int(11) NOT NULL,
-  `id_cliente_id` int(11) NOT NULL,
-  `id_solicitud_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cobros_pagos`
---
-
-CREATE TABLE `cobros_pagos` (
-  `id` int(11) NOT NULL,
-  `id_factura_id` int(11) DEFAULT NULL,
-  `id_informe_id` int(11) DEFAULT NULL,
-  `id_proveedor_id` int(11) DEFAULT NULL,
-  `id_movimiento_activo_fijo_id` int(11) DEFAULT NULL,
-  `debito` double DEFAULT NULL,
-  `credito` double DEFAULT NULL,
-  `id_tipo_cliente` int(11) DEFAULT NULL,
-  `id_cliente_venta` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comprobante_cierre`
---
-
-CREATE TABLE `comprobante_cierre` (
-  `id` int(11) NOT NULL,
-  `id_comprobante_id` int(11) NOT NULL,
-  `id_cierre_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comprobante_movimiento_activo_fijo`
---
-
-CREATE TABLE `comprobante_movimiento_activo_fijo` (
-  `id` int(11) NOT NULL,
-  `id_registro_comprobante_id` int(11) NOT NULL,
-  `id_movimiento_activo_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `anno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comprobante_salario`
---
-
-CREATE TABLE `comprobante_salario` (
-  `id` int(11) NOT NULL,
-  `id_registro_comprobante_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `mes` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `quincena` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `configuracion_inicial`
---
-
-CREATE TABLE `configuracion_inicial` (
-  `id` int(11) NOT NULL,
-  `id_modulo_id` int(11) NOT NULL,
-  `id_tipo_documento_id` int(11) NOT NULL,
-  `deudora` tinyint(1) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `str_cuentas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `str_subcuentas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `str_elemento_gasto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `str_cuentas_contrapartida` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `str_subcuentas_contrapartida` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `configuracion_reglas_remesas`
---
-
-CREATE TABLE `configuracion_reglas_remesas` (
-  `id` int(11) NOT NULL,
-  `id_pais_id` int(11) NOT NULL,
-  `id_proveedor_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `minimo` double NOT NULL,
-  `maximo` double NOT NULL,
-  `valor_fijo_costo` double DEFAULT NULL,
-  `porciento_costo` double DEFAULT NULL,
-  `valor_fijo_venta` double DEFAULT NULL,
-  `porciento_venta` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `config_precio_venta_servicio`
---
-
-CREATE TABLE `config_precio_venta_servicio` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `identificador_servicio` int(11) NOT NULL,
-  `prociento` double DEFAULT NULL,
-  `valor_fijo` double DEFAULT NULL,
-  `precio_venta_total` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `config_servicios`
---
-
-CREATE TABLE `config_servicios` (
-  `id` int(11) NOT NULL,
-  `id_servicio_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `minimo` double NOT NULL,
-  `porciento` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `consecutivo_servicio`
---
-
-CREATE TABLE `consecutivo_servicio` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_servicio_id` int(11) NOT NULL,
-  `id_cotizacion_id` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `consecutivo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `contratos_cliente`
---
-
-CREATE TABLE `contratos_cliente` (
-  `id` int(11) NOT NULL,
-  `id_cliente_id` int(11) NOT NULL,
-  `id_moneda_id` int(11) NOT NULL,
-  `nro_contrato` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
-  `fecha_aprobado` date NOT NULL,
-  `fecha_vencimiento` date DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `importe` double NOT NULL,
-  `resto` double DEFAULT NULL,
-  `id_padre` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cotizacion`
---
-
-CREATE TABLE `cotizacion` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `edit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `json` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
-  `empleado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `datetime` datetime NOT NULL,
-  `total` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_cliente` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_cliente` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_moneda` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pagado` tinyint(1) DEFAULT NULL,
-  `id_factura` int(11) DEFAULT NULL,
-  `fecha_factura` datetime DEFAULT NULL,
-  `activo` tinyint(1) DEFAULT NULL,
-  `anno` int(11) DEFAULT NULL,
-  `nro_consecutivo` int(11) NOT NULL,
-  `tipo_plazo_pago` int(11) DEFAULT NULL,
-  `fecha_maxima_pago` date DEFAULT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `creditos_precio_venta`
---
-
-CREATE TABLE `creditos_precio_venta` (
-  `id` int(11) NOT NULL,
-  `id_config_precio_venta_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `identificador_servicio` int(11) NOT NULL,
-  `credito` tinyint(1) DEFAULT NULL,
-  `importe` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `criterio_analisis`
---
-
-CREATE TABLE `criterio_analisis` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abreviatura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `criterio_analisis`
---
 
 INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (1, 'ALMACéN', 'ALM', 1),
@@ -740,47 +3296,7 @@ INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (16, 'CUENTAS DE INGRESOS', 'ING', 1),
 (17, 'CUENTAS DE GASTOS', 'GAT', 1);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `cuadre_diario`
---
-
-CREATE TABLE `cuadre_diario` (
-  `id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_cierre_id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `str_analisis` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `saldo` decimal(10,2) NOT NULL,
-  `debito` double NOT NULL,
-  `credito` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cuenta`
---
-
-CREATE TABLE `cuenta` (
-  `id` int(11) NOT NULL,
-  `id_tipo_cuenta_id` int(11) NOT NULL,
-  `nro_cuenta` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deudora` tinyint(1) NOT NULL,
-  `mixta` tinyint(1) NOT NULL,
-  `obligacion_deudora` tinyint(1) NOT NULL,
-  `obligacion_acreedora` tinyint(1) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `produccion` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `cuenta`
---
 
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES
 (1, 1, 103, 'Efectivo en Caja', 1, 0, 0, 0, 1, 0),
@@ -870,52 +3386,6 @@ INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudor
 (85, 11, 646, 'Reservas para Inversiones', 0, 0, 0, 0, 1, 0),
 (86, 8, 526, 'Obligaciones a Largo Plazo', 0, 0, 0, 1, 1, 0);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cuentas_cliente`
---
-
-CREATE TABLE `cuentas_cliente` (
-  `id` int(11) NOT NULL,
-  `id_moneda_id` int(11) NOT NULL,
-  `id_cliente_id` int(11) NOT NULL,
-  `id_banco_id` int(11) DEFAULT NULL,
-  `nro_cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cuentas_unidad`
---
-
-CREATE TABLE `cuentas_unidad` (
-  `id` int(11) NOT NULL,
-  `id_banco_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_moneda_id` int(11) NOT NULL,
-  `nro_cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cuenta_criterio_analisis`
---
-
-CREATE TABLE `cuenta_criterio_analisis` (
-  `id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `id_criterio_analisis_id` int(11) NOT NULL,
-  `orden` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `cuenta_criterio_analisis`
---
 
 INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_analisis_id`, `orden`) VALUES
 (10, 3, 6, NULL),
@@ -980,89 +3450,6 @@ INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_anali
 (162, 86, 6, 1),
 (164, 42, 8, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `custom_user`
---
-
-CREATE TABLE `custom_user` (
-  `id` int(11) NOT NULL,
-  `id_user_id` int(11) NOT NULL,
-  `nombre_completo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `depreciacion`
---
-
-CREATE TABLE `depreciacion` (
-  `id` int(11) NOT NULL,
-  `unidad_id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `anno` int(11) NOT NULL,
-  `fundamentacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `descuestos_servicios_cotizacion`
---
-
-CREATE TABLE `descuestos_servicios_cotizacion` (
-  `id` int(11) NOT NULL,
-  `id_cotizacion_id` int(11) NOT NULL,
-  `id_servicio_id` int(11) NOT NULL,
-  `descuento` double NOT NULL,
-  `fijo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `devolucion`
---
-
-CREATE TABLE `devolucion` (
-  `id` int(11) NOT NULL,
-  `id_documento_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_orden_tabajo_id` int(11) DEFAULT NULL,
-  `nro_cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `nro_concecutivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `distribuidor`
---
-
-CREATE TABLE `distribuidor` (
-  `id` int(11) NOT NULL,
-  `pais_id` int(11) DEFAULT NULL,
-  `moneda_id` int(11) DEFAULT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefono` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `identificacion` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `distribuidor`
---
 
 INSERT INTO `distribuidor` (`id`, `pais_id`, `moneda_id`, `nombre`, `telefono`, `email`, `identificacion`, `activo`) VALUES
 (1, 1, 4, 'Camilo Alberto', '55816826', 'kahveahd@gmail.com', '89102815009', 0),
@@ -1101,22 +3488,7 @@ INSERT INTO `distribuidor` (`id`, `pais_id`, `moneda_id`, `nombre`, `telefono`, 
 (34, 1, 4, 'Milagros Marteatus Guerra', '55791157', 'no@gmail.com', 'no', 1),
 (35, 1, 4, 'saddsada', 'dasadds', 'asdassd@gmail.com', 'ssada', 0);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `distribuidor_provincias`
---
-
-CREATE TABLE `distribuidor_provincias` (
-  `id` int(11) NOT NULL,
-  `distribuidor_id` int(11) NOT NULL,
-  `provincias_id` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `distribuidor_provincias`
---
 
 INSERT INTO `distribuidor_provincias` (`id`, `distribuidor_id`, `provincias_id`, `activo`) VALUES
 (1, 1, 2, 1),
@@ -1158,22 +3530,6 @@ INSERT INTO `distribuidor_provincias` (`id`, `distribuidor_id`, `provincias_id`,
 (37, 34, 3, 1),
 (38, 35, 2, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `distribuidor_saldo`
---
-
-CREATE TABLE `distribuidor_saldo` (
-  `id` int(11) NOT NULL,
-  `distribuidor_id` int(11) DEFAULT NULL,
-  `moneda_id` int(11) DEFAULT NULL,
-  `saldo` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `distribuidor_saldo`
---
 
 INSERT INTO `distribuidor_saldo` (`id`, `distribuidor_id`, `moneda_id`, `saldo`) VALUES
 (1, 1, 4, 0),
@@ -1214,23 +3570,7 @@ INSERT INTO `distribuidor_saldo` (`id`, `distribuidor_id`, `moneda_id`, `saldo`)
 (36, 35, 4, 0),
 (37, 35, 1, 0);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `distribuidor_zona`
---
-
-CREATE TABLE `distribuidor_zona` (
-  `id` int(11) NOT NULL,
-  `zona_id` int(11) NOT NULL,
-  `distribuidor_id` int(11) NOT NULL,
-  `comision` double NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `distribuidor_zona`
---
 
 INSERT INTO `distribuidor_zona` (`id`, `zona_id`, `distribuidor_id`, `comision`, `activo`) VALUES
 (1, 1, 1, 2, 1),
@@ -1243,77 +3583,6 @@ INSERT INTO `distribuidor_zona` (`id`, `zona_id`, `distribuidor_id`, `comision`,
 (8, 5, 7, 75, 1),
 (9, 6, 7, 1000, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `doctrine_migration_versions`
---
-
-CREATE TABLE `doctrine_migration_versions` (
-  `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
-  `executed_at` datetime DEFAULT NULL,
-  `execution_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `doctrine_migration_versions`
---
-
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20210519021953', '2021-05-19 04:20:37', 603796);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `documento`
---
-
-CREATE TABLE `documento` (
-  `id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_moneda_id` int(11) NOT NULL,
-  `id_tipo_documento_id` int(11) DEFAULT NULL,
-  `id_documento_cancelado_id` int(11) DEFAULT NULL,
-  `importe_total` double NOT NULL,
-  `fecha` date NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `anno` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `elementos_visa`
---
-
-CREATE TABLE `elementos_visa` (
-  `id` int(11) NOT NULL,
-  `id_proveedor_id` int(11) NOT NULL,
-  `id_servicio_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `costo` double NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `elemento_gasto`
---
-
-CREATE TABLE `elemento_gasto` (
-  `id` int(11) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `elemento_gasto`
---
 
 INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES
 (1, '1001', 'Materiales de Oficina', 1),
@@ -1341,55 +3610,10 @@ INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES
 (23, '8005', 'Otros Servicios', 1),
 (24, 'Traspasos de Gastos Indirectos', '9000', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `empleado`
---
-
-CREATE TABLE `empleado` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_cargo_id` int(11) DEFAULT NULL,
-  `id_usuario_id` int(11) DEFAULT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fecha_alta` date DEFAULT NULL,
-  `baja` tinyint(1) NOT NULL,
-  `fecha_baja` date DEFAULT NULL,
-  `direccion_particular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rol` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `identificacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sueldo_bruto_mensual` double DEFAULT NULL,
-  `salario_x_hora` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `empleado`
---
 
 INSERT INTO `empleado` (`id`, `id_unidad_id`, `id_cargo_id`, `id_usuario_id`, `nombre`, `correo`, `fecha_alta`, `baja`, `fecha_baja`, `direccion_particular`, `telefono`, `rol`, `activo`, `identificacion`, `sueldo_bruto_mensual`, `salario_x_hora`) VALUES
 (1, 1, 1, 1, 'root@solyag.com', 'admin@solyag.com', '2020-10-28', 0, NULL, 'Calle A', '555555555', 'ROLE_ADMIN', 1, '89102815009', NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estado`
---
-
-CREATE TABLE `estado` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `orden` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `color` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `estado`
---
 
 INSERT INTO `estado` (`id`, `nombre`, `orden`, `activo`, `color`) VALUES
 (1, 'Pendiente', 1, 1, '#DDDBDB'),
@@ -1399,403 +3623,21 @@ INSERT INTO `estado` (`id`, `nombre`, `orden`, `activo`, `color`) VALUES
 (5, 'Entregada', 5, 1, '#9A710A'),
 (6, 'Cancelada', 6, 1, '#F10000');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estado_solicitudes`
---
-
-CREATE TABLE `estado_solicitudes` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `expediente`
---
-
-CREATE TABLE `expediente` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `anno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `facilidades`
---
-
-CREATE TABLE `facilidades` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `facilidades_hotel`
---
-
-CREATE TABLE `facilidades_hotel` (
-  `id` int(11) NOT NULL,
-  `id_hotel_id` int(11) NOT NULL,
-  `id_facilidades_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `factura`
---
-
-CREATE TABLE `factura` (
-  `id` int(11) NOT NULL,
-  `id_contrato_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_expediente_id` int(11) DEFAULT NULL,
-  `id_categoria_cliente_id` int(11) DEFAULT NULL,
-  `id_termino_pago_id` int(11) DEFAULT NULL,
-  `id_moneda_id` int(11) DEFAULT NULL,
-  `id_factura_cancela_id` int(11) DEFAULT NULL,
-  `fecha_factura` date NOT NULL,
-  `tipo_cliente` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `nro_factura` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `cuenta_obligacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subcuenta_obligacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `importe` double NOT NULL,
-  `contabilizada` tinyint(1) DEFAULT NULL,
-  `ncf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cancelada` tinyint(1) DEFAULT NULL,
-  `motivo_cancelacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `servicio` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `facturas_comprobante`
---
-
-CREATE TABLE `facturas_comprobante` (
-  `id` int(11) NOT NULL,
-  `id_factura_id` int(11) NOT NULL,
-  `id_comprobante_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `anno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `factura_cotizacion`
---
-
-CREATE TABLE `factura_cotizacion` (
-  `id` int(11) NOT NULL,
-  `id_cotizacion_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_categoria_cliente_id` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `nro_factura` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `ncf` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `factura_documento`
---
-
-CREATE TABLE `factura_documento` (
-  `id` int(11) NOT NULL,
-  `id_factura_id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `id_movimiento_venta_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `grupo_activos`
---
-
-CREATE TABLE `grupo_activos` (
-  `id` int(11) NOT NULL,
-  `porciento_deprecia_anno` double NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `habitaciones_hotel`
---
-
-CREATE TABLE `habitaciones_hotel` (
-  `id` int(11) NOT NULL,
-  `id_amenidades_id` int(11) NOT NULL,
-  `id_hotel_id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `hotel`
---
-
-CREATE TABLE `hotel` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `locacion` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `check_in` time NOT NULL,
-  `check_out` time NOT NULL,
-  `facebook` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `instagram` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `whatsapp` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `twitter` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `descripcion_hotel` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `politicas_hotel` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `impresora`
---
-
-CREATE TABLE `impresora` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `nombre_impresora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `puesto_trabajo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `impresora`
---
 
 INSERT INTO `impresora` (`id`, `id_unidad_id`, `nombre_impresora`, `puesto_trabajo`, `activo`) VALUES
 (1, 1, 'PS-80', 'Puesto de Trabajo 1', 1),
 (2, 1, 'PS-81', 'Puesto de Trabajo 2', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `impuesto`
---
-
-CREATE TABLE `impuesto` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valor` double NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `impuestos_servicio_cotizacion`
---
-
-CREATE TABLE `impuestos_servicio_cotizacion` (
-  `id` int(11) NOT NULL,
-  `id_cotizacion_id` int(11) NOT NULL,
-  `id_servicio_id` int(11) NOT NULL,
-  `id_impuesto_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `impuesto_sobre_renta`
---
-
-CREATE TABLE `impuesto_sobre_renta` (
-  `id` int(11) NOT NULL,
-  `id_empleado_id` int(11) NOT NULL,
-  `id_nomina_pago_id` int(11) NOT NULL,
-  `id_rango_escala_id` int(11) NOT NULL,
-  `seguridad_social_mensual` double DEFAULT NULL,
-  `salario_bruto_anual` double NOT NULL,
-  `seguridad_social_anual` double DEFAULT NULL,
-  `salario_despues_seguridad_social` double NOT NULL,
-  `monto_segun_rango` double DEFAULT NULL,
-  `monto_segun_rango_escala` double DEFAULT NULL,
-  `excedente_segun_rango_escala` double DEFAULT NULL,
-  `por_ciento_impuesto_excedente` double DEFAULT NULL,
-  `monto_adicional_rango_escala` double DEFAULT NULL,
-  `impuesto_renta_pagar_anual` double DEFAULT NULL,
-  `impuesto_renta_pagar_mensual` double DEFAULT NULL,
-  `fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `informe_recepcion`
---
-
-CREATE TABLE `informe_recepcion` (
-  `id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `id_proveedor_id` int(11) DEFAULT NULL,
-  `nro_cuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_cuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_concecutivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
-  `codigo_factura` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fecha_factura` date DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `producto` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `instrumento_cobro`
---
-
-CREATE TABLE `instrumento_cobro` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `instrumento_cobro`
---
 
 INSERT INTO `instrumento_cobro` (`id`, `nombre`, `activo`) VALUES
 (1, 'Cheque', 1),
 (2, 'Transferencia', 1),
 (3, 'Efectivo', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `lugares`
---
-
-CREATE TABLE `lugares` (
-  `id` int(11) NOT NULL,
-  `zona_id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `habilitado` tinyint(1) NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `lugares`
---
 
 INSERT INTO `lugares` (`id`, `zona_id`, `nombre`, `habilitado`, `activo`) VALUES
 (1, 1, 'Zona Colonial', 1, 1),
 (2, 2, 'Bavaro Palace', 1, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mercancia`
---
-
-CREATE TABLE `mercancia` (
-  `id` int(11) NOT NULL,
-  `id_amlacen_id` int(11) NOT NULL,
-  `id_unidad_medida_id` int(11) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `existencia` double NOT NULL,
-  `importe` double NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `nro_subcuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_cuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_subcuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `precio_venta` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mercancia_impuesto`
---
-
-CREATE TABLE `mercancia_impuesto` (
-  `id` int(11) NOT NULL,
-  `mercancia_id` int(11) DEFAULT NULL,
-  `impuesto_id` int(11) DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mercancia_producto`
---
-
-CREATE TABLE `mercancia_producto` (
-  `id` int(11) NOT NULL,
-  `id_mercancia_id` int(11) NOT NULL,
-  `id_producto_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `modulo`
---
-
-CREATE TABLE `modulo` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `moneda`
---
-
-CREATE TABLE `moneda` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `moneda`
---
 
 INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES
 (1, 'USD', 1),
@@ -1803,202 +3645,10 @@ INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES
 (3, 'RD$', 1),
 (4, 'CUP', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `moneda_pais`
---
-
-CREATE TABLE `moneda_pais` (
-  `id` int(11) NOT NULL,
-  `id_pais` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_moneda` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `moneda_pais`
---
-
 INSERT INTO `moneda_pais` (`id`, `id_pais`, `id_moneda`, `status`) VALUES
 (1, '1', '4', '1'),
 (2, '1', '1', '1');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `movimiento`
---
-
-CREATE TABLE `movimiento` (
-  `id` int(11) NOT NULL,
-  `id_tipo_documento_activo_fijo_id` int(11) NOT NULL,
-  `id_tipo_movimiento_id` int(11) NOT NULL,
-  `id_unidad_origen_id` int(11) NOT NULL,
-  `id_unidad_destino_id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `movimiento_activo_fijo`
---
-
-CREATE TABLE `movimiento_activo_fijo` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_activo_fijo_id` int(11) NOT NULL,
-  `id_tipo_movimiento_id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `id_unidad_destino_origen_id` int(11) DEFAULT NULL,
-  `id_proveedor_id` int(11) DEFAULT NULL,
-  `id_movimiento_cancelado_id` int(11) DEFAULT NULL,
-  `fecha` date NOT NULL,
-  `fundamentacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entrada` tinyint(1) NOT NULL,
-  `nro_consecutivo` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `id_tipo_cliente` int(11) DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL,
-  `cancelado` tinyint(1) DEFAULT NULL,
-  `fecha_factura` date DEFAULT NULL,
-  `nro_factura` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `movimiento_mercancia`
---
-
-CREATE TABLE `movimiento_mercancia` (
-  `id` int(11) NOT NULL,
-  `id_mercancia_id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `id_tipo_documento_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) DEFAULT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_expediente_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_id` int(11) DEFAULT NULL,
-  `id_factura_id` int(11) DEFAULT NULL,
-  `id_movimiento_cancelado_id` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL,
-  `importe` double NOT NULL,
-  `existencia` double NOT NULL,
-  `fecha` date NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `entrada` tinyint(1) NOT NULL,
-  `cuenta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_subcuenta_deudora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `movimiento_producto`
---
-
-CREATE TABLE `movimiento_producto` (
-  `id` int(11) NOT NULL,
-  `id_producto_id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `id_tipo_documento_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) DEFAULT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_id` int(11) DEFAULT NULL,
-  `id_expediente_id` int(11) DEFAULT NULL,
-  `id_factura_id` int(11) DEFAULT NULL,
-  `id_movimiento_cancelado_id` int(11) DEFAULT NULL,
-  `cantidad` double NOT NULL,
-  `importe` double NOT NULL,
-  `existencia` double NOT NULL,
-  `fecha` date NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `entrada` tinyint(1) NOT NULL,
-  `cuenta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_subcuenta_deudora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `movimiento_servicio`
---
-
-CREATE TABLE `movimiento_servicio` (
-  `id` int(11) NOT NULL,
-  `id_factura_id` int(11) NOT NULL,
-  `servicio_id` int(11) NOT NULL,
-  `cantidad` double NOT NULL,
-  `precio` double NOT NULL,
-  `impuesto` double DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_deudora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cuenta_nominal_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subcuenta_nominal_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `costo` double DEFAULT NULL,
-  `anno` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `movimiento_venta`
---
-
-CREATE TABLE `movimiento_venta` (
-  `id` int(11) NOT NULL,
-  `id_factura_id` int(11) NOT NULL,
-  `id_almacen_id` int(11) NOT NULL,
-  `id_centro_costo_acreedor_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_acreedor_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_acreedor_id` int(11) DEFAULT NULL,
-  `id_expediente_acreedor_id` int(11) DEFAULT NULL,
-  `mercancia` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cantidad` double NOT NULL,
-  `precio` double NOT NULL,
-  `descuento_recarga` double DEFAULT NULL,
-  `existencia` double DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_deudora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `costo` double DEFAULT NULL,
-  `anno` int(11) DEFAULT NULL,
-  `cuenta_nominal_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subcuenta_nominal_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_mercancia` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `municipios`
---
-
-CREATE TABLE `municipios` (
-  `id` int(11) NOT NULL,
-  `provincia_id` int(11) DEFAULT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `municipios`
---
 
 INSERT INTO `municipios` (`id`, `provincia_id`, `code`, `nombre`, `activo`) VALUES
 (1, 1, 'Habana', 'Playa', 1),
@@ -2177,367 +3827,11 @@ INSERT INTO `municipios` (`id`, `provincia_id`, `code`, `nombre`, `activo`) VALU
 (174, 16, 'Guantánamo', 'Yateras', 1),
 (175, 17, 'Isla de la Juventud', 'Nueva Gerona', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `nominas_consecutivos`
---
-
-CREATE TABLE `nominas_consecutivos` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `mes` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `nro_consecutivo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `nomina_pago`
---
-
-CREATE TABLE `nomina_pago` (
-  `id` int(11) NOT NULL,
-  `id_empleado_id` int(11) NOT NULL,
-  `id_usuario_aprueba_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `comision` double DEFAULT NULL,
-  `vacaciones` double DEFAULT NULL,
-  `horas_extra` double DEFAULT NULL,
-  `otros` double DEFAULT NULL,
-  `total_ingresos` double NOT NULL,
-  `ingresos_cotizables_tss` double NOT NULL,
-  `isr` double DEFAULT NULL,
-  `ars` double DEFAULT NULL,
-  `afp` double DEFAULT NULL,
-  `cooperativa` double DEFAULT NULL,
-  `plan_medico_complementario` double DEFAULT NULL,
-  `restaurant` double DEFAULT NULL,
-  `total_deducido` double DEFAULT NULL,
-  `sueldo_neto_pagar` double DEFAULT NULL,
-  `afp_empleador` double DEFAULT NULL,
-  `sfs_empleador` double DEFAULT NULL,
-  `srl_empleador` double DEFAULT NULL,
-  `infotep_empleador` double DEFAULT NULL,
-  `mes` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `elaborada` tinyint(1) DEFAULT NULL,
-  `aprobada` tinyint(1) DEFAULT NULL,
-  `quincena` int(11) NOT NULL,
-  `salario_bruto` double DEFAULT NULL,
-  `cant_horas_trabajadas` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `nomina_tercero_comprobante`
---
-
-CREATE TABLE `nomina_tercero_comprobante` (
-  `id` int(11) NOT NULL,
-  `id_nomina_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_comprobante_id` int(11) DEFAULT NULL,
-  `mes` int(11) NOT NULL,
-  `anno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `obligacion_cobro`
---
-
-CREATE TABLE `obligacion_cobro` (
-  `id` int(11) NOT NULL,
-  `id_factura_id` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `tipo_cliente` int(11) NOT NULL,
-  `fecha_factura` date NOT NULL,
-  `importe_factura` double NOT NULL,
-  `cuenta_obligacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subcuenta_obligacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `resto_pagar` double NOT NULL,
-  `liquidada` tinyint(1) NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `obligacion_pago`
---
-
-CREATE TABLE `obligacion_pago` (
-  `id` int(11) NOT NULL,
-  `id_proveedor_id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `nro_cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valor_pagado` double DEFAULT NULL,
-  `resto` double NOT NULL,
-  `liquidado` tinyint(1) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `codigo_factura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fecha_factura` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `operaciones_comprobante_operaciones`
---
-
-CREATE TABLE `operaciones_comprobante_operaciones` (
-  `id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_expediente_id` int(11) DEFAULT NULL,
-  `id_proveedor_id` int(11) DEFAULT NULL,
-  `id_registro_comprobantes_id` int(11) NOT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `id_instrumento_cobro_id` int(11) DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL,
-  `id_tipo_cliente` int(11) DEFAULT NULL,
-  `credito` double NOT NULL,
-  `debito` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `orden_trabajo`
---
-
-CREATE TABLE `orden_trabajo` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `anno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pagos_cotizacion`
---
-
-CREATE TABLE `pagos_cotizacion` (
-  `id` int(11) NOT NULL,
-  `fecha` datetime NOT NULL,
-  `id_empleado` int(11) NOT NULL,
-  `monto` double NOT NULL,
-  `cambio` double DEFAULT NULL,
-  `id_cotizacion` int(11) NOT NULL,
-  `id_moneda` int(11) NOT NULL,
-  `id_tipo_de_pago` int(11) NOT NULL,
-  `id_banco` int(11) DEFAULT NULL,
-  `id_cuenta_bancaria` int(11) DEFAULT NULL,
-  `numero_confirmacion_deposito` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last4_tarjeta` int(11) DEFAULT NULL,
-  `codigo_confirmacion_tarjeta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tipo_de_tarjeta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nota` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_transaccion` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pais`
---
-
-CREATE TABLE `pais` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `pais`
---
 
 INSERT INTO `pais` (`id`, `nombre`, `activo`) VALUES
 (1, 'Cuba', 1);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `periodo_sistema`
---
-
-CREATE TABLE `periodo_sistema` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `mes` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `tipo` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `cerrado` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `plan_hotel`
---
-
-CREATE TABLE `plan_hotel` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `plazos_pago_cotizacion`
---
-
-CREATE TABLE `plazos_pago_cotizacion` (
-  `id` int(11) NOT NULL,
-  `id_cotizacion_id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `cuota` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `por_ciento_nominas`
---
-
-CREATE TABLE `por_ciento_nominas` (
-  `id` int(11) NOT NULL,
-  `por_ciento` double NOT NULL,
-  `criterio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `denominacion` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `precio_venta`
---
-
-CREATE TABLE `precio_venta` (
-  `id` int(11) NOT NULL,
-  `tramo` int(11) DEFAULT NULL,
-  `poerciento` double DEFAULT NULL,
-  `fijo` double DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `producto`
---
-
-CREATE TABLE `producto` (
-  `id` int(11) NOT NULL,
-  `id_amlacen_id` int(11) NOT NULL,
-  `id_unidad_medida_id` int(11) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `existencia` double NOT NULL,
-  `importe` double NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `nro_subcuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_cuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nro_subcuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `precio_venta` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `producto_impuesto`
---
-
-CREATE TABLE `producto_impuesto` (
-  `id` int(11) NOT NULL,
-  `producto_id` int(11) DEFAULT NULL,
-  `impuesto_id` int(11) DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `proveedor`
---
-
-CREATE TABLE `proveedor` (
-  `id` int(11) NOT NULL,
-  `pais_id` int(11) DEFAULT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `celular` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono1` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono2` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `proveedor_unidad`
---
-
-CREATE TABLE `proveedor_unidad` (
-  `id` int(11) NOT NULL,
-  `proveedor_id` int(11) DEFAULT NULL,
-  `unidad_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `proveedor_unidad_servicios`
---
-
-CREATE TABLE `proveedor_unidad_servicios` (
-  `id` int(11) NOT NULL,
-  `servicio_id` int(11) DEFAULT NULL,
-  `proveedor_unidad_id` int(11) DEFAULT NULL,
-  `activo` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `provincias`
---
-
-CREATE TABLE `provincias` (
-  `id` int(11) NOT NULL,
-  `pais_id` int(11) DEFAULT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_pais` int(11) DEFAULT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `provincias`
---
 
 INSERT INTO `provincias` (`id`, `pais_id`, `code`, `nombre`, `id_pais`, `activo`) VALUES
 (1, 1, 'Habana', 'Habana', 1, 0),
@@ -2558,86 +3852,7 @@ INSERT INTO `provincias` (`id`, `pais_id`, `code`, `nombre`, `id_pais`, `activo`
 (16, 1, 'Guantánamo', 'Guantánamo', 1, 1),
 (17, 1, 'Isla de la Juventud', 'Isla de la Juventud', 1, 1);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `rango_escala_dgii`
---
-
-CREATE TABLE `rango_escala_dgii` (
-  `id` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `escala` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `por_ciento` double NOT NULL,
-  `minimo` double DEFAULT NULL,
-  `maximo` double NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `valor_fijo` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `registro_comprobantes`
---
-
-CREATE TABLE `registro_comprobantes` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_tipo_comprobante_id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_instrumento_cobro_id` int(11) DEFAULT NULL,
-  `nro_consecutivo` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `debito` double NOT NULL,
-  `credito` double NOT NULL,
-  `anno` int(11) NOT NULL,
-  `tipo` int(11) DEFAULT NULL,
-  `documento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `saldo_cuentas`
---
-
-CREATE TABLE `saldo_cuentas` (
-  `id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_centro_costo_id` int(11) DEFAULT NULL,
-  `id_elemento_gasto_id` int(11) DEFAULT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `id_unidad_id` int(11) NOT NULL,
-  `id_proveedor_id` int(11) DEFAULT NULL,
-  `id_expediente_id` int(11) DEFAULT NULL,
-  `id_orden_trabajo_id` int(11) DEFAULT NULL,
-  `mes` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `saldo` double NOT NULL,
-  `tipo_cliente` int(11) DEFAULT NULL,
-  `id_cliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `servicios`
---
-
-CREATE TABLE `servicios` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abreviatura` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `servicios`
---
 
 INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`) VALUES
 (1, 'Recarga Cubacell', '0010', 'RC'),
@@ -2655,57 +3870,6 @@ INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`) VALUES
 (13, 'Diseño', '0130', 'D'),
 (14, 'Marketing y redes Sociales', '0140', 'MRS');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `solicitud`
---
-
-CREATE TABLE `solicitud` (
-  `id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `primer_apellido` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `segundo_apellido` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefono_fijo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono_celular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `stripe_factura`
---
-
-CREATE TABLE `stripe_factura` (
-  `id` int(11) NOT NULL,
-  `auth` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estatus` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cliente_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_empleado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `monto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fecha` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `subcuenta`
---
-
-CREATE TABLE `subcuenta` (
-  `id` int(11) NOT NULL,
-  `id_cuenta_id` int(11) NOT NULL,
-  `nro_subcuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `elemento_gasto` tinyint(1) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deudora` tinyint(1) NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `subcuenta`
---
 
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`) VALUES
 (1, 1, '0001', 0, 'Efectivo', 1, 1),
@@ -2877,21 +4041,6 @@ INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`
 (167, 39, '0010', 0, 'Cobros Anticipados', 0, 1),
 (168, 66, '0030', 0, 'Servicios', 1, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `subcuenta_criterio_analisis`
---
-
-CREATE TABLE `subcuenta_criterio_analisis` (
-  `id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_criterio_analisis_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `subcuenta_criterio_analisis`
---
 
 INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio_analisis_id`) VALUES
 (1, 16, 2),
@@ -2966,56 +4115,12 @@ INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio
 (101, 165, 6),
 (102, 166, 6);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `subcuenta_proveedor`
---
-
-CREATE TABLE `subcuenta_proveedor` (
-  `id` int(11) NOT NULL,
-  `id_subcuenta_id` int(11) NOT NULL,
-  `id_proveedor_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tasa_cambio`
---
-
-CREATE TABLE `tasa_cambio` (
-  `id` int(11) NOT NULL,
-  `id_moneda_origen_id` int(11) NOT NULL,
-  `id_moneda_destino_id` int(11) NOT NULL,
-  `anno` int(11) NOT NULL,
-  `mes` int(11) NOT NULL,
-  `valor` double NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tasa_cambio`
---
 
 INSERT INTO `tasa_cambio` (`id`, `id_moneda_origen_id`, `id_moneda_destino_id`, `anno`, `mes`, `valor`, `activo`) VALUES
 (1, 1, 4, 2021, 5, 30, 1),
 (2, 4, 1, 2021, 5, 0.033333333333333, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `termino_pago`
---
-
-CREATE TABLE `termino_pago` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `termino_pago`
---
 
 INSERT INTO `termino_pago` (`id`, `nombre`) VALUES
 (1, 'Contra servicio'),
@@ -3024,42 +4129,9 @@ INSERT INTO `termino_pago` (`id`, `nombre`) VALUES
 (4, 'A 30 días'),
 (5, 'A 45 días');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_comprobante`
---
-
-CREATE TABLE `tipo_comprobante` (
-  `id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `abreviatura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo_comprobante`
---
-
 INSERT INTO `tipo_comprobante` (`id`, `descripcion`, `activo`, `abreviatura`) VALUES
 (1, 'COMPROBANTE DE APERTURA', 1, 'AP'),
 (2, 'COMPROBANTE DE OPERACIONES', 1, '00');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_cuenta`
---
-
-CREATE TABLE `tipo_cuenta` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo_cuenta`
---
 
 INSERT INTO `tipo_cuenta` (`id`, `nombre`, `activo`) VALUES
 (1, 'Activos Circulantes', 1),
@@ -3078,22 +4150,6 @@ INSERT INTO `tipo_cuenta` (`id`, `nombre`, `activo`) VALUES
 (14, 'Cuentas Nominales Acreedoras', 1),
 (15, 'Cuenta de Resultado', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_documento`
---
-
-CREATE TABLE `tipo_documento` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo_documento`
---
-
 INSERT INTO `tipo_documento` (`id`, `nombre`, `activo`) VALUES
 (1, 'INFORME DE RECECIÓN MERCANCIA', 1),
 (2, 'INFORME DE RECECIÓN PRODUCTO', 1),
@@ -3109,35 +4165,6 @@ INSERT INTO `tipo_documento` (`id`, `nombre`, `activo`) VALUES
 (12, 'APERTURA', 1),
 (13, 'APERTURA PRODUCTO', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_documento_activo_fijo`
---
-
-CREATE TABLE `tipo_documento_activo_fijo` (
-  `id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_movimiento`
---
-
-CREATE TABLE `tipo_movimiento` (
-  `id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo_movimiento`
---
-
 INSERT INTO `tipo_movimiento` (`id`, `descripcion`, `activo`, `codigo`) VALUES
 (1, 'APERTURA', 1, 'AP'),
 (2, 'COMPRA', 1, 'A'),
@@ -3147,123 +4174,13 @@ INSERT INTO `tipo_movimiento` (`id`, `descripcion`, `activo`, `codigo`) VALUES
 (6, 'BAJAS DE ACTIVOS', 1, 'BA'),
 (7, 'VENTA DE ACTIVOS', 1, 'VA');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_traslado`
---
-
-CREATE TABLE `tipo_traslado` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `tipo_traslado`
---
-
 INSERT INTO `tipo_traslado` (`id`, `nombre`, `activo`) VALUES
 (1, 'Privado', 1),
 (2, 'Colectivo', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tipo_vehiculo`
---
-
-CREATE TABLE `tipo_vehiculo` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cantidad_ini_persona` int(11) NOT NULL,
-  `cantidad_fin_persona` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `picture` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tramo`
---
-
-CREATE TABLE `tramo` (
-  `id` int(11) NOT NULL,
-  `proveedor` int(11) NOT NULL,
-  `origen` int(11) NOT NULL,
-  `destino` int(11) NOT NULL,
-  `ida_vuelta` tinyint(1) NOT NULL,
-  `vehiculo` int(11) NOT NULL,
-  `precio` double NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `traslado` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `transferencia`
---
-
-CREATE TABLE `transferencia` (
-  `id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `id_unidad_id` int(11) DEFAULT NULL,
-  `id_almacen_id` int(11) DEFAULT NULL,
-  `nro_cuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_inventario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_cuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_acreedora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_concecutivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `entrada` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `unidad`
---
-
-CREATE TABLE `unidad` (
-  `id` int(11) NOT NULL,
-  `id_padre_id` int(11) DEFAULT NULL,
-  `id_moneda_id` int(11) DEFAULT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rnc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `unidad`
---
-
 INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES
 (1, NULL, NULL, 'Grupo Horizontes Admin', 1, NULL, 'Calle Juan Sanchez Ramirez esq Wenceslao Alvarez  #52 local B1 Zona Universitaria, Santo  Domingo , República Dominicana', NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `unidad_medida`
---
-
-CREATE TABLE `unidad_medida` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abreviatura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `unidad_medida`
---
 
 INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (1, 'Centímetro', 'cm', 1),
@@ -3281,113 +4198,16 @@ INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (13, 'Unidad', 'u', 1),
 (14, 'Blister', 'Blister', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `user`
---
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
-  `status` tinyint(1) NOT NULL,
-  `id_moneda` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `id_agencia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `user`
---
 
 INSERT INTO `user` (`id`, `username`, `roles`, `status`, `id_moneda`, `id_agencia`, `password`) VALUES
 (1, 'root@solyag.com', '[\"ROLE_ADMIN\"]', 1, '1', NULL, '$argon2id$v=19$m=65536,t=4,p=1$b0tTTFd2OTEwZ1pMZXpoYw$4vh7/DGIgA6QKXFZiapxgmhv/OeSfs6ki30/FTLSOx4');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `user_client_tmp`
---
-
-CREATE TABLE `user_client_tmp` (
-  `id` int(11) NOT NULL,
-  `id_usuario_id` int(11) NOT NULL,
-  `id_cliente_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `vacaciones_disfrutadas`
---
-
-CREATE TABLE `vacaciones_disfrutadas` (
-  `id` int(11) NOT NULL,
-  `id_empleado_id` int(11) NOT NULL,
-  `cantidad_dias` int(11) NOT NULL,
-  `cantidad_pagada` double NOT NULL,
-  `fecha_inicio` date DEFAULT NULL,
-  `fecha_fin` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `vale_salida`
---
-
-CREATE TABLE `vale_salida` (
-  `id` int(11) NOT NULL,
-  `id_documento_id` int(11) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `producto` tinyint(1) NOT NULL,
-  `nro_consecutivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `anno` int(11) NOT NULL,
-  `fecha_solicitud` date NOT NULL,
-  `nro_solicitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_cuenta_deudora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nro_subcuenta_deudora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `zona`
---
-
-CREATE TABLE `zona` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `zona`
---
 
 INSERT INTO `zona` (`id`, `nombre`, `activo`) VALUES
 (1, 'Santo domingo', 1),
 (2, 'Punta Cana', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `zona_remesas`
---
-
-CREATE TABLE `zona_remesas` (
-  `id` int(11) NOT NULL,
-  `pais_id` int(11) DEFAULT NULL,
-  `provincia_id` int(11) DEFAULT NULL,
-  `municipio_id` int(11) DEFAULT NULL,
-  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activo` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `zona_remesas`
---
 
 INSERT INTO `zona_remesas` (`id`, `pais_id`, `provincia_id`, `municipio_id`, `nombre`, `activo`) VALUES
 (1, 1, 2, 10, 'mismi pinar', 0),
@@ -3400,2660 +4220,3 @@ INSERT INTO `zona_remesas` (`id`, `pais_id`, `provincia_id`, `municipio_id`, `no
 (8, 1, 7, 33, 'Campo Florido', 1),
 (9, 1, 2, 5, 'Guane', 1),
 (10, 1, 7, 37, 'Jaimanitas', 1);
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `activo_fijo`
---
-ALTER TABLE `activo_fijo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_75EBC93EDB763453` (`id_tipo_movimiento_id`),
-  ADD KEY `IDX_75EBC93E6FBA0327` (`id_tipo_movimiento_baja_id`),
-  ADD KEY `IDX_75EBC93ED410562` (`id_area_responsabilidad_id`),
-  ADD KEY `IDX_75EBC93E4A667A2B` (`id_grupo_activo_id`),
-  ADD KEY `IDX_75EBC93E1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `activo_fijo_cuentas`
---
-ALTER TABLE `activo_fijo_cuentas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_E0DF2901C84BDE84` (`id_activo_id`),
-  ADD KEY `IDX_E0DF290186762CC7` (`id_cuenta_activo_id`),
-  ADD KEY `IDX_E0DF29014476721E` (`id_subcuenta_activo_id`),
-  ADD KEY `IDX_E0DF29012955A16D` (`id_centro_costo_activo_id`),
-  ADD KEY `IDX_E0DF29014C675596` (`id_area_responsabilidad_activo_id`),
-  ADD KEY `IDX_E0DF290174A5FFBA` (`id_cuenta_depreciacion_id`),
-  ADD KEY `IDX_E0DF2901549C81D9` (`id_subcuenta_depreciacion_id`),
-  ADD KEY `IDX_E0DF290180C608FA` (`id_cuenta_gasto_id`),
-  ADD KEY `IDX_E0DF290157677646` (`id_subcuenta_gasto_id`),
-  ADD KEY `IDX_E0DF2901A950EE53` (`id_centro_costo_gasto_id`),
-  ADD KEY `IDX_E0DF2901A752F04B` (`id_elemento_gasto_gasto_id`),
-  ADD KEY `IDX_E0DF29014D7B4AB9` (`id_cuenta_acreedora_id`),
-  ADD KEY `IDX_E0DF2901EB1B341E` (`id_subcuenta_acreedora_id`);
-
---
--- Indices de la tabla `activo_fijo_movimiento_activo_fijo`
---
-ALTER TABLE `activo_fijo_movimiento_activo_fijo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_2FA61FF25832E72E` (`id_activo_fijo_id`),
-  ADD KEY `IDX_2FA61FF27786CA71` (`id_movimiento_activo_fijo_id`);
-
---
--- Indices de la tabla `acumulado_vacaciones`
---
-ALTER TABLE `acumulado_vacaciones`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_246B9D168D392AC7` (`id_empleado_id`);
-
---
--- Indices de la tabla `aeropuerto`
---
-ALTER TABLE `aeropuerto`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `ajuste`
---
-ALTER TABLE `ajuste`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_DD35BD326601BA07` (`id_documento_id`);
-
---
--- Indices de la tabla `almacen`
---
-ALTER TABLE `almacen`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_D5B2D25020332D99` (`codigo`),
-  ADD KEY `IDX_D5B2D2501D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `almacen_ocupado`
---
-ALTER TABLE `almacen_ocupado`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_AA53605839161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_AA5360587EB2C349` (`id_usuario_id`);
-
---
--- Indices de la tabla `amenidades`
---
-ALTER TABLE `amenidades`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_6D8A3B4D1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `amenidades_hotel`
---
-ALTER TABLE `amenidades_hotel`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_2EB72C4C6298578D` (`id_hotel_id`),
-  ADD KEY `IDX_2EB72C4C91F48FAD` (`id_amenidades_id`);
-
---
--- Indices de la tabla `apertura`
---
-ALTER TABLE `apertura`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_DFFB55EB6601BA07` (`id_documento_id`);
-
---
--- Indices de la tabla `area_responsabilidad`
---
-ALTER TABLE `area_responsabilidad`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F469C2BA1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `asiento`
---
-ALTER TABLE `asiento`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_71D6D35C1ADA4D3F` (`id_cuenta_id`),
-  ADD KEY `IDX_71D6D35C2D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_71D6D35C6601BA07` (`id_documento_id`),
-  ADD KEY `IDX_71D6D35C39161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_71D6D35CC59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_71D6D35CF66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_71D6D35C71381BB3` (`id_orden_trabajo_id`),
-  ADD KEY `IDX_71D6D35CF5DBAF2B` (`id_expediente_id`),
-  ADD KEY `IDX_71D6D35CE8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_71D6D35C1D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_71D6D35CEF5F7851` (`id_tipo_comprobante_id`),
-  ADD KEY `IDX_71D6D35C1800963C` (`id_comprobante_id`),
-  ADD KEY `IDX_71D6D35C55C5F988` (`id_factura_id`),
-  ADD KEY `IDX_71D6D35C5832E72E` (`id_activo_fijo_id`),
-  ADD KEY `IDX_71D6D35CD410562` (`id_area_responsabilidad_id`),
-  ADD KEY `IDX_71D6D35C8E5841CF` (`id_cotizacion_id`),
-  ADD KEY `IDX_71D6D35C4CC57875` (`id_elemento_visa_id`);
-
---
--- Indices de la tabla `avisos_pagos`
---
-ALTER TABLE `avisos_pagos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F439673A78A65A2` (`id_plazo_pago_id`),
-  ADD KEY `IDX_F4396738E5841CF` (`id_cotizacion_id`);
-
---
--- Indices de la tabla `banco`
---
-ALTER TABLE `banco`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `beneficiarios_clientes`
---
-ALTER TABLE `beneficiarios_clientes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_AE9DBD1E7BF9CE86` (`id_cliente_id`),
-  ADD KEY `IDX_AE9DBD1E18997CB6` (`id_pais_id`),
-  ADD KEY `IDX_AE9DBD1E6DB054DD` (`id_provincia_id`),
-  ADD KEY `IDX_AE9DBD1E7B7D6E92` (`id_municipio_id`);
-
---
--- Indices de la tabla `cargo`
---
-ALTER TABLE `cargo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `carrito`
---
-ALTER TABLE `carrito`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `categoria_cliente`
---
-ALTER TABLE `categoria_cliente`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `centro_costo`
---
-ALTER TABLE `centro_costo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_749608CE1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `cierre`
---
-ALTER TABLE `cierre`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D0DCFCC739161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_D0DCFCC77EB2C349` (`id_usuario_id`);
-
---
--- Indices de la tabla `cierre_diario`
---
-ALTER TABLE `cierre_diario`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F3D0CD8939161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_F3D0CD897EB2C349` (`id_usuario_id`);
-
---
--- Indices de la tabla `cliente`
---
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cliente_contabilidad`
---
-ALTER TABLE `cliente_contabilidad`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cliente_solicitudes`
---
-ALTER TABLE `cliente_solicitudes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D0874AE67BF9CE86` (`id_cliente_id`),
-  ADD KEY `IDX_D0874AE63F78A396` (`id_solicitud_id`),
-  ADD KEY `IDX_D0874AE61D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `cobros_pagos`
---
-ALTER TABLE `cobros_pagos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D9581D1655C5F988` (`id_factura_id`),
-  ADD KEY `IDX_D9581D1626990C38` (`id_informe_id`),
-  ADD KEY `IDX_D9581D16E8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_D9581D167786CA71` (`id_movimiento_activo_fijo_id`);
-
---
--- Indices de la tabla `comprobante_cierre`
---
-ALTER TABLE `comprobante_cierre`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D03EA4C51800963C` (`id_comprobante_id`),
-  ADD KEY `IDX_D03EA4C545F8C94C` (`id_cierre_id`);
-
---
--- Indices de la tabla `comprobante_movimiento_activo_fijo`
---
-ALTER TABLE `comprobante_movimiento_activo_fijo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_81F5096A1399A3CF` (`id_registro_comprobante_id`),
-  ADD KEY `IDX_81F5096A9D00B230` (`id_movimiento_activo_id`),
-  ADD KEY `IDX_81F5096A1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `comprobante_salario`
---
-ALTER TABLE `comprobante_salario`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_8C5550701399A3CF` (`id_registro_comprobante_id`),
-  ADD KEY `IDX_8C5550701D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `configuracion_inicial`
---
-ALTER TABLE `configuracion_inicial`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_8521BE24404AE9D2` (`id_modulo_id`),
-  ADD KEY `IDX_8521BE247A4F962` (`id_tipo_documento_id`);
-
---
--- Indices de la tabla `configuracion_reglas_remesas`
---
-ALTER TABLE `configuracion_reglas_remesas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_2398566118997CB6` (`id_pais_id`),
-  ADD KEY `IDX_23985661E8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_239856611D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `config_precio_venta_servicio`
---
-ALTER TABLE `config_precio_venta_servicio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_6A244E601D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `config_servicios`
---
-ALTER TABLE `config_servicios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_A1A8B71269D86E10` (`id_servicio_id`),
-  ADD KEY `IDX_A1A8B7121D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `consecutivo_servicio`
---
-ALTER TABLE `consecutivo_servicio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_EAB6E3871D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_EAB6E38769D86E10` (`id_servicio_id`),
-  ADD KEY `IDX_EAB6E3878E5841CF` (`id_cotizacion_id`);
-
---
--- Indices de la tabla `contratos_cliente`
---
-ALTER TABLE `contratos_cliente`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_29A5BB477BF9CE86` (`id_cliente_id`),
-  ADD KEY `IDX_29A5BB47374388F5` (`id_moneda_id`);
-
---
--- Indices de la tabla `cotizacion`
---
-ALTER TABLE `cotizacion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_44A5EC031D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `creditos_precio_venta`
---
-ALTER TABLE `creditos_precio_venta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_847FE8A94699DFE5` (`id_config_precio_venta_id`),
-  ADD KEY `IDX_847FE8A91D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `criterio_analisis`
---
-ALTER TABLE `criterio_analisis`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cuadre_diario`
---
-ALTER TABLE `cuadre_diario`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_60ABEFD91ADA4D3F` (`id_cuenta_id`),
-  ADD KEY `IDX_60ABEFD92D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_60ABEFD945F8C94C` (`id_cierre_id`),
-  ADD KEY `IDX_60ABEFD939161EBF` (`id_almacen_id`);
-
---
--- Indices de la tabla `cuenta`
---
-ALTER TABLE `cuenta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_31C7BFCF45E7F350` (`id_tipo_cuenta_id`);
-
---
--- Indices de la tabla `cuentas_cliente`
---
-ALTER TABLE `cuentas_cliente`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_64653310374388F5` (`id_moneda_id`),
-  ADD KEY `IDX_646533107BF9CE86` (`id_cliente_id`),
-  ADD KEY `IDX_646533109CDF4BAB` (`id_banco_id`);
-
---
--- Indices de la tabla `cuentas_unidad`
---
-ALTER TABLE `cuentas_unidad`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_355374209CDF4BAB` (`id_banco_id`),
-  ADD KEY `IDX_355374201D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_35537420374388F5` (`id_moneda_id`);
-
---
--- Indices de la tabla `cuenta_criterio_analisis`
---
-ALTER TABLE `cuenta_criterio_analisis`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_AF040B091ADA4D3F` (`id_cuenta_id`),
-  ADD KEY `IDX_AF040B095ABBE5F6` (`id_criterio_analisis_id`);
-
---
--- Indices de la tabla `custom_user`
---
-ALTER TABLE `custom_user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_8CE51EB479F37AE5` (`id_user_id`);
-
---
--- Indices de la tabla `depreciacion`
---
-ALTER TABLE `depreciacion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D618AE149D01464C` (`unidad_id`);
-
---
--- Indices de la tabla `descuestos_servicios_cotizacion`
---
-ALTER TABLE `descuestos_servicios_cotizacion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_1C606F008E5841CF` (`id_cotizacion_id`),
-  ADD KEY `IDX_1C606F0069D86E10` (`id_servicio_id`);
-
---
--- Indices de la tabla `devolucion`
---
-ALTER TABLE `devolucion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_524D9F676601BA07` (`id_documento_id`),
-  ADD KEY `IDX_524D9F671D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_524D9F6739161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_524D9F67C59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_524D9F67F66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_524D9F675074DD86` (`id_orden_tabajo_id`);
-
---
--- Indices de la tabla `distribuidor`
---
-ALTER TABLE `distribuidor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_1AE277DFC604D5C6` (`pais_id`),
-  ADD KEY `IDX_1AE277DFB77634D2` (`moneda_id`);
-
---
--- Indices de la tabla `distribuidor_provincias`
---
-ALTER TABLE `distribuidor_provincias`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_8DA1E24DCEEEDB42` (`distribuidor_id`),
-  ADD KEY `IDX_8DA1E24DA156727D` (`provincias_id`);
-
---
--- Indices de la tabla `distribuidor_saldo`
---
-ALTER TABLE `distribuidor_saldo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_29FECCE6CEEEDB42` (`distribuidor_id`),
-  ADD KEY `IDX_29FECCE6B77634D2` (`moneda_id`);
-
---
--- Indices de la tabla `distribuidor_zona`
---
-ALTER TABLE `distribuidor_zona`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_1DA5FABD104EA8FC` (`zona_id`),
-  ADD KEY `IDX_1DA5FABDCEEEDB42` (`distribuidor_id`);
-
---
--- Indices de la tabla `doctrine_migration_versions`
---
-ALTER TABLE `doctrine_migration_versions`
-  ADD PRIMARY KEY (`version`);
-
---
--- Indices de la tabla `documento`
---
-ALTER TABLE `documento`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_B6B12EC739161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_B6B12EC71D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_B6B12EC7374388F5` (`id_moneda_id`),
-  ADD KEY `IDX_B6B12EC77A4F962` (`id_tipo_documento_id`),
-  ADD KEY `IDX_B6B12EC74832F387` (`id_documento_cancelado_id`);
-
---
--- Indices de la tabla `elementos_visa`
---
-ALTER TABLE `elementos_visa`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_90B65E04E8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_90B65E0469D86E10` (`id_servicio_id`),
-  ADD KEY `IDX_90B65E041D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `elemento_gasto`
---
-ALTER TABLE `elemento_gasto`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `empleado`
---
-ALTER TABLE `empleado`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_D9D9BF527EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_D9D9BF521D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_D9D9BF52D1E12F15` (`id_cargo_id`);
-
---
--- Indices de la tabla `estado`
---
-ALTER TABLE `estado`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `estado_solicitudes`
---
-ALTER TABLE `estado_solicitudes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `expediente`
---
-ALTER TABLE `expediente`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D59CA4131D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `facilidades`
---
-ALTER TABLE `facilidades`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_551461581D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `facilidades_hotel`
---
-ALTER TABLE `facilidades_hotel`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_78E84AB16298578D` (`id_hotel_id`),
-  ADD KEY `IDX_78E84AB15FB489F0` (`id_facilidades_id`);
-
---
--- Indices de la tabla `factura`
---
-ALTER TABLE `factura`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F9EBA00968BCB606` (`id_contrato_id`),
-  ADD KEY `IDX_F9EBA0091D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_F9EBA0097EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_F9EBA009C59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_F9EBA00971381BB3` (`id_orden_trabajo_id`),
-  ADD KEY `IDX_F9EBA009F66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_F9EBA009F5DBAF2B` (`id_expediente_id`),
-  ADD KEY `IDX_F9EBA0094F4C4E26` (`id_categoria_cliente_id`),
-  ADD KEY `IDX_F9EBA009C37A5552` (`id_termino_pago_id`),
-  ADD KEY `IDX_F9EBA009374388F5` (`id_moneda_id`),
-  ADD KEY `IDX_F9EBA00999274826` (`id_factura_cancela_id`);
-
---
--- Indices de la tabla `facturas_comprobante`
---
-ALTER TABLE `facturas_comprobante`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_6FD2F19B55C5F988` (`id_factura_id`),
-  ADD KEY `IDX_6FD2F19B1800963C` (`id_comprobante_id`),
-  ADD KEY `IDX_6FD2F19B1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `factura_cotizacion`
---
-ALTER TABLE `factura_cotizacion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_ADBC38788E5841CF` (`id_cotizacion_id`),
-  ADD KEY `IDX_ADBC38787EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_ADBC38781D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_ADBC38784F4C4E26` (`id_categoria_cliente_id`);
-
---
--- Indices de la tabla `factura_documento`
---
-ALTER TABLE `factura_documento`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_CCC060C155C5F988` (`id_factura_id`),
-  ADD KEY `IDX_CCC060C16601BA07` (`id_documento_id`),
-  ADD KEY `IDX_CCC060C1EC34F77F` (`id_movimiento_venta_id`);
-
---
--- Indices de la tabla `grupo_activos`
---
-ALTER TABLE `grupo_activos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `habitaciones_hotel`
---
-ALTER TABLE `habitaciones_hotel`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_74F394B091F48FAD` (`id_amenidades_id`),
-  ADD KEY `IDX_74F394B06298578D` (`id_hotel_id`);
-
---
--- Indices de la tabla `hotel`
---
-ALTER TABLE `hotel`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `impresora`
---
-ALTER TABLE `impresora`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_BBCADB321D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `impuesto`
---
-ALTER TABLE `impuesto`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_B6E63AA11D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `impuestos_servicio_cotizacion`
---
-ALTER TABLE `impuestos_servicio_cotizacion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_2CA4AD5E8E5841CF` (`id_cotizacion_id`),
-  ADD KEY `IDX_2CA4AD5E69D86E10` (`id_servicio_id`),
-  ADD KEY `IDX_2CA4AD5ECA29A612` (`id_impuesto_id`);
-
---
--- Indices de la tabla `impuesto_sobre_renta`
---
-ALTER TABLE `impuesto_sobre_renta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_5EF11EF48D392AC7` (`id_empleado_id`),
-  ADD KEY `IDX_5EF11EF4E9DBC8E8` (`id_nomina_pago_id`),
-  ADD KEY `IDX_5EF11EF4A9ECE748` (`id_rango_escala_id`);
-
---
--- Indices de la tabla `informe_recepcion`
---
-ALTER TABLE `informe_recepcion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_62A4EBD6601BA07` (`id_documento_id`),
-  ADD KEY `IDX_62A4EBDE8F12801` (`id_proveedor_id`);
-
---
--- Indices de la tabla `instrumento_cobro`
---
-ALTER TABLE `instrumento_cobro`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `lugares`
---
-ALTER TABLE `lugares`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_A4EE5DFC104EA8FC` (`zona_id`);
-
---
--- Indices de la tabla `mercancia`
---
-ALTER TABLE `mercancia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_9D094AE0E2C70A62` (`id_amlacen_id`),
-  ADD KEY `IDX_9D094AE0E16A5625` (`id_unidad_medida_id`);
-
---
--- Indices de la tabla `mercancia_impuesto`
---
-ALTER TABLE `mercancia_impuesto`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_2E2D6041BCE90A26` (`mercancia_id`),
-  ADD KEY `IDX_2E2D6041D23B6BE5` (`impuesto_id`);
-
---
--- Indices de la tabla `mercancia_producto`
---
-ALTER TABLE `mercancia_producto`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_3F705CF59F287F54` (`id_mercancia_id`),
-  ADD KEY `IDX_3F705CF56E57A479` (`id_producto_id`);
-
---
--- Indices de la tabla `modulo`
---
-ALTER TABLE `modulo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `moneda`
---
-ALTER TABLE `moneda`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `moneda_pais`
---
-ALTER TABLE `moneda_pais`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `movimiento`
---
-ALTER TABLE `movimiento`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_C8FF107AD1CE493D` (`id_tipo_documento_activo_fijo_id`),
-  ADD KEY `IDX_C8FF107ADB763453` (`id_tipo_movimiento_id`),
-  ADD KEY `IDX_C8FF107A873C7FC7` (`id_unidad_origen_id`),
-  ADD KEY `IDX_C8FF107A4F781EA` (`id_unidad_destino_id`);
-
---
--- Indices de la tabla `movimiento_activo_fijo`
---
-ALTER TABLE `movimiento_activo_fijo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_A985A0DA1D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_A985A0DA5832E72E` (`id_activo_fijo_id`),
-  ADD KEY `IDX_A985A0DADB763453` (`id_tipo_movimiento_id`),
-  ADD KEY `IDX_A985A0DA1ADA4D3F` (`id_cuenta_id`),
-  ADD KEY `IDX_A985A0DA2D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_A985A0DA7EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_A985A0DA4B1CE99D` (`id_unidad_destino_origen_id`),
-  ADD KEY `IDX_A985A0DAE8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_A985A0DA571159DE` (`id_movimiento_cancelado_id`);
-
---
--- Indices de la tabla `movimiento_mercancia`
---
-ALTER TABLE `movimiento_mercancia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_44876BD79F287F54` (`id_mercancia_id`),
-  ADD KEY `IDX_44876BD76601BA07` (`id_documento_id`),
-  ADD KEY `IDX_44876BD77A4F962` (`id_tipo_documento_id`),
-  ADD KEY `IDX_44876BD77EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_44876BD7C59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_44876BD7F66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_44876BD739161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_44876BD7F5DBAF2B` (`id_expediente_id`),
-  ADD KEY `IDX_44876BD771381BB3` (`id_orden_trabajo_id`),
-  ADD KEY `IDX_44876BD755C5F988` (`id_factura_id`),
-  ADD KEY `IDX_44876BD7571159DE` (`id_movimiento_cancelado_id`);
-
---
--- Indices de la tabla `movimiento_producto`
---
-ALTER TABLE `movimiento_producto`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_FFC0EDFC6E57A479` (`id_producto_id`),
-  ADD KEY `IDX_FFC0EDFC6601BA07` (`id_documento_id`),
-  ADD KEY `IDX_FFC0EDFC7A4F962` (`id_tipo_documento_id`),
-  ADD KEY `IDX_FFC0EDFC7EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_FFC0EDFCC59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_FFC0EDFCF66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_FFC0EDFC39161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_FFC0EDFC71381BB3` (`id_orden_trabajo_id`),
-  ADD KEY `IDX_FFC0EDFCF5DBAF2B` (`id_expediente_id`),
-  ADD KEY `IDX_FFC0EDFC55C5F988` (`id_factura_id`),
-  ADD KEY `IDX_FFC0EDFC571159DE` (`id_movimiento_cancelado_id`);
-
---
--- Indices de la tabla `movimiento_servicio`
---
-ALTER TABLE `movimiento_servicio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_93FD19C355C5F988` (`id_factura_id`),
-  ADD KEY `IDX_93FD19C371CAA3E7` (`servicio_id`);
-
---
--- Indices de la tabla `movimiento_venta`
---
-ALTER TABLE `movimiento_venta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_8E3F7AE555C5F988` (`id_factura_id`),
-  ADD KEY `IDX_8E3F7AE539161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_8E3F7AE5D8F8B0AD` (`id_centro_costo_acreedor_id`),
-  ADD KEY `IDX_8E3F7AE5FA3DF5CD` (`id_orden_trabajo_acreedor_id`),
-  ADD KEY `IDX_8E3F7AE5F0821C98` (`id_elemento_gasto_acreedor_id`),
-  ADD KEY `IDX_8E3F7AE56EA527F2` (`id_expediente_acreedor_id`);
-
---
--- Indices de la tabla `municipios`
---
-ALTER TABLE `municipios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_BBFAB5864E7121AF` (`provincia_id`);
-
---
--- Indices de la tabla `nominas_consecutivos`
---
-ALTER TABLE `nominas_consecutivos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_9FC8A71A1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `nomina_pago`
---
-ALTER TABLE `nomina_pago`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_5CB8BD338D392AC7` (`id_empleado_id`),
-  ADD KEY `IDX_5CB8BD33AC6A6301` (`id_usuario_aprueba_id`),
-  ADD KEY `IDX_5CB8BD331D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `nomina_tercero_comprobante`
---
-ALTER TABLE `nomina_tercero_comprobante`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D4A77ABF2547677` (`id_nomina_id`),
-  ADD KEY `IDX_D4A77ABF1D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_D4A77ABF1800963C` (`id_comprobante_id`);
-
---
--- Indices de la tabla `obligacion_cobro`
---
-ALTER TABLE `obligacion_cobro`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_807C726D55C5F988` (`id_factura_id`);
-
---
--- Indices de la tabla `obligacion_pago`
---
-ALTER TABLE `obligacion_pago`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_403C9B3BE8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_403C9B3B6601BA07` (`id_documento_id`),
-  ADD KEY `IDX_403C9B3B1D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `operaciones_comprobante_operaciones`
---
-ALTER TABLE `operaciones_comprobante_operaciones`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_E7EA17E1ADA4D3F` (`id_cuenta_id`),
-  ADD KEY `IDX_E7EA17E2D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_E7EA17EC59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_E7EA17E71381BB3` (`id_orden_trabajo_id`),
-  ADD KEY `IDX_E7EA17EF66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_E7EA17EF5DBAF2B` (`id_expediente_id`),
-  ADD KEY `IDX_E7EA17EE8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_E7EA17EECB9FBA7` (`id_registro_comprobantes_id`),
-  ADD KEY `IDX_E7EA17E39161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_E7EA17E1D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_E7EA17E47B60D7E` (`id_instrumento_cobro_id`);
-
---
--- Indices de la tabla `orden_trabajo`
---
-ALTER TABLE `orden_trabajo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_4158A0241D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_4158A02439161EBF` (`id_almacen_id`);
-
---
--- Indices de la tabla `pagos_cotizacion`
---
-ALTER TABLE `pagos_cotizacion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `pais`
---
-ALTER TABLE `pais`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `periodo_sistema`
---
-ALTER TABLE `periodo_sistema`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_AEF0BAAD1D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_AEF0BAAD39161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_AEF0BAAD7EB2C349` (`id_usuario_id`);
-
---
--- Indices de la tabla `plan_hotel`
---
-ALTER TABLE `plan_hotel`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `plazos_pago_cotizacion`
---
-ALTER TABLE `plazos_pago_cotizacion`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_4A1D3ED28E5841CF` (`id_cotizacion_id`);
-
---
--- Indices de la tabla `por_ciento_nominas`
---
-ALTER TABLE `por_ciento_nominas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `precio_venta`
---
-ALTER TABLE `precio_venta`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_A7BB0615E2C70A62` (`id_amlacen_id`),
-  ADD KEY `IDX_A7BB0615E16A5625` (`id_unidad_medida_id`);
-
---
--- Indices de la tabla `producto_impuesto`
---
-ALTER TABLE `producto_impuesto`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_9E754B747645698E` (`producto_id`),
-  ADD KEY `IDX_9E754B74D23B6BE5` (`impuesto_id`);
-
---
--- Indices de la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_16C068CEC604D5C6` (`pais_id`);
-
---
--- Indices de la tabla `proveedor_unidad`
---
-ALTER TABLE `proveedor_unidad`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_EE37BED5CB305D73` (`proveedor_id`),
-  ADD KEY `IDX_EE37BED59D01464C` (`unidad_id`);
-
---
--- Indices de la tabla `proveedor_unidad_servicios`
---
-ALTER TABLE `proveedor_unidad_servicios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_68EBF91E71CAA3E7` (`servicio_id`),
-  ADD KEY `IDX_68EBF91E2FF8143C` (`proveedor_unidad_id`);
-
---
--- Indices de la tabla `provincias`
---
-ALTER TABLE `provincias`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_9F631427C604D5C6` (`pais_id`);
-
---
--- Indices de la tabla `rango_escala_dgii`
---
-ALTER TABLE `rango_escala_dgii`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `registro_comprobantes`
---
-ALTER TABLE `registro_comprobantes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_B2D1B2B21D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_B2D1B2B2EF5F7851` (`id_tipo_comprobante_id`),
-  ADD KEY `IDX_B2D1B2B27EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_B2D1B2B239161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_B2D1B2B247B60D7E` (`id_instrumento_cobro_id`);
-
---
--- Indices de la tabla `saldo_cuentas`
---
-ALTER TABLE `saldo_cuentas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_BB2B71AE1ADA4D3F` (`id_cuenta_id`),
-  ADD KEY `IDX_BB2B71AE2D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_BB2B71AEC59B01FF` (`id_centro_costo_id`),
-  ADD KEY `IDX_BB2B71AEF66372E9` (`id_elemento_gasto_id`),
-  ADD KEY `IDX_BB2B71AE39161EBF` (`id_almacen_id`),
-  ADD KEY `IDX_BB2B71AE1D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_BB2B71AEE8F12801` (`id_proveedor_id`),
-  ADD KEY `IDX_BB2B71AEF5DBAF2B` (`id_expediente_id`),
-  ADD KEY `IDX_BB2B71AE71381BB3` (`id_orden_trabajo_id`);
-
---
--- Indices de la tabla `servicios`
---
-ALTER TABLE `servicios`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `solicitud`
---
-ALTER TABLE `solicitud`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_96D27CC01D34FA6B` (`id_unidad_id`);
-
---
--- Indices de la tabla `stripe_factura`
---
-ALTER TABLE `stripe_factura`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `subcuenta`
---
-ALTER TABLE `subcuenta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_57BB37EA1ADA4D3F` (`id_cuenta_id`);
-
---
--- Indices de la tabla `subcuenta_criterio_analisis`
---
-ALTER TABLE `subcuenta_criterio_analisis`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_52A4A7682D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_52A4A7685ABBE5F6` (`id_criterio_analisis_id`);
-
---
--- Indices de la tabla `subcuenta_proveedor`
---
-ALTER TABLE `subcuenta_proveedor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_5C22E4B82D412F53` (`id_subcuenta_id`),
-  ADD KEY `IDX_5C22E4B8E8F12801` (`id_proveedor_id`);
-
---
--- Indices de la tabla `tasa_cambio`
---
-ALTER TABLE `tasa_cambio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_DAB48606FA5CADE9` (`id_moneda_origen_id`),
-  ADD KEY `IDX_DAB48606D85CECF7` (`id_moneda_destino_id`);
-
---
--- Indices de la tabla `termino_pago`
---
-ALTER TABLE `termino_pago`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_comprobante`
---
-ALTER TABLE `tipo_comprobante`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_cuenta`
---
-ALTER TABLE `tipo_cuenta`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_documento`
---
-ALTER TABLE `tipo_documento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_documento_activo_fijo`
---
-ALTER TABLE `tipo_documento_activo_fijo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_movimiento`
---
-ALTER TABLE `tipo_movimiento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_traslado`
---
-ALTER TABLE `tipo_traslado`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tipo_vehiculo`
---
-ALTER TABLE `tipo_vehiculo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tramo`
---
-ALTER TABLE `tramo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `transferencia`
---
-ALTER TABLE `transferencia`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_EDC227306601BA07` (`id_documento_id`),
-  ADD KEY `IDX_EDC227301D34FA6B` (`id_unidad_id`),
-  ADD KEY `IDX_EDC2273039161EBF` (`id_almacen_id`);
-
---
--- Indices de la tabla `unidad`
---
-ALTER TABLE `unidad`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_F3E6D02F3A909126` (`nombre`),
-  ADD UNIQUE KEY `UNIQ_F3E6D02F20332D99` (`codigo`),
-  ADD KEY `IDX_F3E6D02F31E700CD` (`id_padre_id`),
-  ADD KEY `IDX_F3E6D02F374388F5` (`id_moneda_id`);
-
---
--- Indices de la tabla `unidad_medida`
---
-ALTER TABLE `unidad_medida`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`);
-
---
--- Indices de la tabla `user_client_tmp`
---
-ALTER TABLE `user_client_tmp`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_AC2C28007EB2C349` (`id_usuario_id`),
-  ADD KEY `IDX_AC2C28007BF9CE86` (`id_cliente_id`);
-
---
--- Indices de la tabla `vacaciones_disfrutadas`
---
-ALTER TABLE `vacaciones_disfrutadas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F02817318D392AC7` (`id_empleado_id`);
-
---
--- Indices de la tabla `vale_salida`
---
-ALTER TABLE `vale_salida`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_90C265C86601BA07` (`id_documento_id`);
-
---
--- Indices de la tabla `zona`
---
-ALTER TABLE `zona`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `zona_remesas`
---
-ALTER TABLE `zona_remesas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_D37DCA05C604D5C6` (`pais_id`),
-  ADD KEY `IDX_D37DCA054E7121AF` (`provincia_id`),
-  ADD KEY `IDX_D37DCA0558BC1BE0` (`municipio_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `activo_fijo`
---
-ALTER TABLE `activo_fijo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `activo_fijo_cuentas`
---
-ALTER TABLE `activo_fijo_cuentas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `activo_fijo_movimiento_activo_fijo`
---
-ALTER TABLE `activo_fijo_movimiento_activo_fijo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `acumulado_vacaciones`
---
-ALTER TABLE `acumulado_vacaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `aeropuerto`
---
-ALTER TABLE `aeropuerto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `ajuste`
---
-ALTER TABLE `ajuste`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `almacen`
---
-ALTER TABLE `almacen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `almacen_ocupado`
---
-ALTER TABLE `almacen_ocupado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `amenidades`
---
-ALTER TABLE `amenidades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `amenidades_hotel`
---
-ALTER TABLE `amenidades_hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `apertura`
---
-ALTER TABLE `apertura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `area_responsabilidad`
---
-ALTER TABLE `area_responsabilidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `asiento`
---
-ALTER TABLE `asiento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `avisos_pagos`
---
-ALTER TABLE `avisos_pagos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `banco`
---
-ALTER TABLE `banco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `beneficiarios_clientes`
---
-ALTER TABLE `beneficiarios_clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cargo`
---
-ALTER TABLE `cargo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `carrito`
---
-ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `centro_costo`
---
-ALTER TABLE `centro_costo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT de la tabla `cierre`
---
-ALTER TABLE `cierre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cierre_diario`
---
-ALTER TABLE `cierre_diario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cliente`
---
-ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `cliente_contabilidad`
---
-ALTER TABLE `cliente_contabilidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cliente_solicitudes`
---
-ALTER TABLE `cliente_solicitudes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cobros_pagos`
---
-ALTER TABLE `cobros_pagos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `comprobante_cierre`
---
-ALTER TABLE `comprobante_cierre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `comprobante_movimiento_activo_fijo`
---
-ALTER TABLE `comprobante_movimiento_activo_fijo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `comprobante_salario`
---
-ALTER TABLE `comprobante_salario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `configuracion_inicial`
---
-ALTER TABLE `configuracion_inicial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `configuracion_reglas_remesas`
---
-ALTER TABLE `configuracion_reglas_remesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `config_precio_venta_servicio`
---
-ALTER TABLE `config_precio_venta_servicio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `config_servicios`
---
-ALTER TABLE `config_servicios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `consecutivo_servicio`
---
-ALTER TABLE `consecutivo_servicio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `contratos_cliente`
---
-ALTER TABLE `contratos_cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cotizacion`
---
-ALTER TABLE `cotizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `creditos_precio_venta`
---
-ALTER TABLE `creditos_precio_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `criterio_analisis`
---
-ALTER TABLE `criterio_analisis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT de la tabla `cuadre_diario`
---
-ALTER TABLE `cuadre_diario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cuenta`
---
-ALTER TABLE `cuenta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
-
---
--- AUTO_INCREMENT de la tabla `cuentas_cliente`
---
-ALTER TABLE `cuentas_cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cuentas_unidad`
---
-ALTER TABLE `cuentas_unidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cuenta_criterio_analisis`
---
-ALTER TABLE `cuenta_criterio_analisis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
-
---
--- AUTO_INCREMENT de la tabla `custom_user`
---
-ALTER TABLE `custom_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `depreciacion`
---
-ALTER TABLE `depreciacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `descuestos_servicios_cotizacion`
---
-ALTER TABLE `descuestos_servicios_cotizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `devolucion`
---
-ALTER TABLE `devolucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `distribuidor`
---
-ALTER TABLE `distribuidor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- AUTO_INCREMENT de la tabla `distribuidor_provincias`
---
-ALTER TABLE `distribuidor_provincias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT de la tabla `distribuidor_saldo`
---
-ALTER TABLE `distribuidor_saldo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
-
---
--- AUTO_INCREMENT de la tabla `distribuidor_zona`
---
-ALTER TABLE `distribuidor_zona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT de la tabla `documento`
---
-ALTER TABLE `documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `elementos_visa`
---
-ALTER TABLE `elementos_visa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `elemento_gasto`
---
-ALTER TABLE `elemento_gasto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT de la tabla `empleado`
---
-ALTER TABLE `empleado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `estado`
---
-ALTER TABLE `estado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `expediente`
---
-ALTER TABLE `expediente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `facilidades`
---
-ALTER TABLE `facilidades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `facilidades_hotel`
---
-ALTER TABLE `facilidades_hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `factura`
---
-ALTER TABLE `factura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `facturas_comprobante`
---
-ALTER TABLE `facturas_comprobante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `factura_cotizacion`
---
-ALTER TABLE `factura_cotizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `factura_documento`
---
-ALTER TABLE `factura_documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `grupo_activos`
---
-ALTER TABLE `grupo_activos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `habitaciones_hotel`
---
-ALTER TABLE `habitaciones_hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `hotel`
---
-ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `impresora`
---
-ALTER TABLE `impresora`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `impuesto`
---
-ALTER TABLE `impuesto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `impuestos_servicio_cotizacion`
---
-ALTER TABLE `impuestos_servicio_cotizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `impuesto_sobre_renta`
---
-ALTER TABLE `impuesto_sobre_renta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `informe_recepcion`
---
-ALTER TABLE `informe_recepcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `instrumento_cobro`
---
-ALTER TABLE `instrumento_cobro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `lugares`
---
-ALTER TABLE `lugares`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `mercancia`
---
-ALTER TABLE `mercancia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `mercancia_impuesto`
---
-ALTER TABLE `mercancia_impuesto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `mercancia_producto`
---
-ALTER TABLE `mercancia_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `moneda`
---
-ALTER TABLE `moneda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `moneda_pais`
---
-ALTER TABLE `moneda_pais`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `movimiento`
---
-ALTER TABLE `movimiento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `movimiento_activo_fijo`
---
-ALTER TABLE `movimiento_activo_fijo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `movimiento_mercancia`
---
-ALTER TABLE `movimiento_mercancia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `movimiento_producto`
---
-ALTER TABLE `movimiento_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `movimiento_servicio`
---
-ALTER TABLE `movimiento_servicio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `movimiento_venta`
---
-ALTER TABLE `movimiento_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `municipios`
---
-ALTER TABLE `municipios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
-
---
--- AUTO_INCREMENT de la tabla `nominas_consecutivos`
---
-ALTER TABLE `nominas_consecutivos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `nomina_pago`
---
-ALTER TABLE `nomina_pago`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `nomina_tercero_comprobante`
---
-ALTER TABLE `nomina_tercero_comprobante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `obligacion_cobro`
---
-ALTER TABLE `obligacion_cobro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `obligacion_pago`
---
-ALTER TABLE `obligacion_pago`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `operaciones_comprobante_operaciones`
---
-ALTER TABLE `operaciones_comprobante_operaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `orden_trabajo`
---
-ALTER TABLE `orden_trabajo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pagos_cotizacion`
---
-ALTER TABLE `pagos_cotizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pais`
---
-ALTER TABLE `pais`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `periodo_sistema`
---
-ALTER TABLE `periodo_sistema`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `plan_hotel`
---
-ALTER TABLE `plan_hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `plazos_pago_cotizacion`
---
-ALTER TABLE `plazos_pago_cotizacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `precio_venta`
---
-ALTER TABLE `precio_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `producto_impuesto`
---
-ALTER TABLE `producto_impuesto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `proveedor_unidad`
---
-ALTER TABLE `proveedor_unidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `proveedor_unidad_servicios`
---
-ALTER TABLE `proveedor_unidad_servicios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `provincias`
---
-ALTER TABLE `provincias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT de la tabla `rango_escala_dgii`
---
-ALTER TABLE `rango_escala_dgii`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `registro_comprobantes`
---
-ALTER TABLE `registro_comprobantes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `saldo_cuentas`
---
-ALTER TABLE `saldo_cuentas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `solicitud`
---
-ALTER TABLE `solicitud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `stripe_factura`
---
-ALTER TABLE `stripe_factura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `subcuenta`
---
-ALTER TABLE `subcuenta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
-
---
--- AUTO_INCREMENT de la tabla `subcuenta_criterio_analisis`
---
-ALTER TABLE `subcuenta_criterio_analisis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
-
---
--- AUTO_INCREMENT de la tabla `subcuenta_proveedor`
---
-ALTER TABLE `subcuenta_proveedor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tasa_cambio`
---
-ALTER TABLE `tasa_cambio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `tipo_cuenta`
---
-ALTER TABLE `tipo_cuenta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT de la tabla `tipo_documento_activo_fijo`
---
-ALTER TABLE `tipo_documento_activo_fijo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tipo_traslado`
---
-ALTER TABLE `tipo_traslado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `tipo_vehiculo`
---
-ALTER TABLE `tipo_vehiculo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `tramo`
---
-ALTER TABLE `tramo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `transferencia`
---
-ALTER TABLE `transferencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `unidad`
---
-ALTER TABLE `unidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `user_client_tmp`
---
-ALTER TABLE `user_client_tmp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `vacaciones_disfrutadas`
---
-ALTER TABLE `vacaciones_disfrutadas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `vale_salida`
---
-ALTER TABLE `vale_salida`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `zona`
---
-ALTER TABLE `zona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `zona_remesas`
---
-ALTER TABLE `zona_remesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `activo_fijo`
---
-ALTER TABLE `activo_fijo`
-  ADD CONSTRAINT `FK_75EBC93E1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_75EBC93E4A667A2B` FOREIGN KEY (`id_grupo_activo_id`) REFERENCES `grupo_activos` (`id`),
-  ADD CONSTRAINT `FK_75EBC93E6FBA0327` FOREIGN KEY (`id_tipo_movimiento_baja_id`) REFERENCES `tipo_movimiento` (`id`),
-  ADD CONSTRAINT `FK_75EBC93ED410562` FOREIGN KEY (`id_area_responsabilidad_id`) REFERENCES `area_responsabilidad` (`id`),
-  ADD CONSTRAINT `FK_75EBC93EDB763453` FOREIGN KEY (`id_tipo_movimiento_id`) REFERENCES `tipo_movimiento` (`id`);
-
---
--- Filtros para la tabla `activo_fijo_cuentas`
---
-ALTER TABLE `activo_fijo_cuentas`
-  ADD CONSTRAINT `FK_E0DF29012955A16D` FOREIGN KEY (`id_centro_costo_activo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_E0DF29014476721E` FOREIGN KEY (`id_subcuenta_activo_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF29014C675596` FOREIGN KEY (`id_area_responsabilidad_activo_id`) REFERENCES `area_responsabilidad` (`id`),
-  ADD CONSTRAINT `FK_E0DF29014D7B4AB9` FOREIGN KEY (`id_cuenta_acreedora_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF2901549C81D9` FOREIGN KEY (`id_subcuenta_depreciacion_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF290157677646` FOREIGN KEY (`id_subcuenta_gasto_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF290174A5FFBA` FOREIGN KEY (`id_cuenta_depreciacion_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF290180C608FA` FOREIGN KEY (`id_cuenta_gasto_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF290186762CC7` FOREIGN KEY (`id_cuenta_activo_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_E0DF2901A752F04B` FOREIGN KEY (`id_elemento_gasto_gasto_id`) REFERENCES `elemento_gasto` (`id`),
-  ADD CONSTRAINT `FK_E0DF2901A950EE53` FOREIGN KEY (`id_centro_costo_gasto_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_E0DF2901C84BDE84` FOREIGN KEY (`id_activo_id`) REFERENCES `activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_E0DF2901EB1B341E` FOREIGN KEY (`id_subcuenta_acreedora_id`) REFERENCES `subcuenta` (`id`);
-
---
--- Filtros para la tabla `activo_fijo_movimiento_activo_fijo`
---
-ALTER TABLE `activo_fijo_movimiento_activo_fijo`
-  ADD CONSTRAINT `FK_2FA61FF25832E72E` FOREIGN KEY (`id_activo_fijo_id`) REFERENCES `activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_2FA61FF27786CA71` FOREIGN KEY (`id_movimiento_activo_fijo_id`) REFERENCES `movimiento` (`id`);
-
---
--- Filtros para la tabla `acumulado_vacaciones`
---
-ALTER TABLE `acumulado_vacaciones`
-  ADD CONSTRAINT `FK_246B9D168D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`);
-
---
--- Filtros para la tabla `ajuste`
---
-ALTER TABLE `ajuste`
-  ADD CONSTRAINT `FK_DD35BD326601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`);
-
---
--- Filtros para la tabla `almacen`
---
-ALTER TABLE `almacen`
-  ADD CONSTRAINT `FK_D5B2D2501D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `almacen_ocupado`
---
-ALTER TABLE `almacen_ocupado`
-  ADD CONSTRAINT `FK_AA53605839161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_AA5360587EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `amenidades`
---
-ALTER TABLE `amenidades`
-  ADD CONSTRAINT `FK_6D8A3B4D1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `amenidades_hotel`
---
-ALTER TABLE `amenidades_hotel`
-  ADD CONSTRAINT `FK_2EB72C4C6298578D` FOREIGN KEY (`id_hotel_id`) REFERENCES `hotel` (`id`),
-  ADD CONSTRAINT `FK_2EB72C4C91F48FAD` FOREIGN KEY (`id_amenidades_id`) REFERENCES `amenidades` (`id`);
-
---
--- Filtros para la tabla `apertura`
---
-ALTER TABLE `apertura`
-  ADD CONSTRAINT `FK_DFFB55EB6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`);
-
---
--- Filtros para la tabla `area_responsabilidad`
---
-ALTER TABLE `area_responsabilidad`
-  ADD CONSTRAINT `FK_F469C2BA1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `asiento`
---
-ALTER TABLE `asiento`
-  ADD CONSTRAINT `FK_71D6D35C1800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C4CC57875` FOREIGN KEY (`id_elemento_visa_id`) REFERENCES `elementos_visa` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C5832E72E` FOREIGN KEY (`id_activo_fijo_id`) REFERENCES `activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_71D6D35C8E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`),
-  ADD CONSTRAINT `FK_71D6D35CC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_71D6D35CD410562` FOREIGN KEY (`id_area_responsabilidad_id`) REFERENCES `area_responsabilidad` (`id`),
-  ADD CONSTRAINT `FK_71D6D35CE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`),
-  ADD CONSTRAINT `FK_71D6D35CEF5F7851` FOREIGN KEY (`id_tipo_comprobante_id`) REFERENCES `tipo_comprobante` (`id`),
-  ADD CONSTRAINT `FK_71D6D35CF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_71D6D35CF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `avisos_pagos`
---
-ALTER TABLE `avisos_pagos`
-  ADD CONSTRAINT `FK_F4396738E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`),
-  ADD CONSTRAINT `FK_F439673A78A65A2` FOREIGN KEY (`id_plazo_pago_id`) REFERENCES `plazos_pago_cotizacion` (`id`);
-
---
--- Filtros para la tabla `beneficiarios_clientes`
---
-ALTER TABLE `beneficiarios_clientes`
-  ADD CONSTRAINT `FK_AE9DBD1E18997CB6` FOREIGN KEY (`id_pais_id`) REFERENCES `pais` (`id`),
-  ADD CONSTRAINT `FK_AE9DBD1E6DB054DD` FOREIGN KEY (`id_provincia_id`) REFERENCES `provincias` (`id`),
-  ADD CONSTRAINT `FK_AE9DBD1E7B7D6E92` FOREIGN KEY (`id_municipio_id`) REFERENCES `municipios` (`id`),
-  ADD CONSTRAINT `FK_AE9DBD1E7BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente` (`id`);
-
---
--- Filtros para la tabla `centro_costo`
---
-ALTER TABLE `centro_costo`
-  ADD CONSTRAINT `FK_749608CE1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `cierre`
---
-ALTER TABLE `cierre`
-  ADD CONSTRAINT `FK_D0DCFCC739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_D0DCFCC77EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `cierre_diario`
---
-ALTER TABLE `cierre_diario`
-  ADD CONSTRAINT `FK_F3D0CD8939161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_F3D0CD897EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `cliente_solicitudes`
---
-ALTER TABLE `cliente_solicitudes`
-  ADD CONSTRAINT `FK_D0874AE61D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_D0874AE63F78A396` FOREIGN KEY (`id_solicitud_id`) REFERENCES `solicitud` (`id`),
-  ADD CONSTRAINT `FK_D0874AE67BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente` (`id`);
-
---
--- Filtros para la tabla `cobros_pagos`
---
-ALTER TABLE `cobros_pagos`
-  ADD CONSTRAINT `FK_D9581D1626990C38` FOREIGN KEY (`id_informe_id`) REFERENCES `informe_recepcion` (`id`),
-  ADD CONSTRAINT `FK_D9581D1655C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_D9581D167786CA71` FOREIGN KEY (`id_movimiento_activo_fijo_id`) REFERENCES `movimiento_activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_D9581D16E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `comprobante_cierre`
---
-ALTER TABLE `comprobante_cierre`
-  ADD CONSTRAINT `FK_D03EA4C51800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_D03EA4C545F8C94C` FOREIGN KEY (`id_cierre_id`) REFERENCES `cierre` (`id`);
-
---
--- Filtros para la tabla `comprobante_movimiento_activo_fijo`
---
-ALTER TABLE `comprobante_movimiento_activo_fijo`
-  ADD CONSTRAINT `FK_81F5096A1399A3CF` FOREIGN KEY (`id_registro_comprobante_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_81F5096A1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_81F5096A9D00B230` FOREIGN KEY (`id_movimiento_activo_id`) REFERENCES `movimiento_activo_fijo` (`id`);
-
---
--- Filtros para la tabla `comprobante_salario`
---
-ALTER TABLE `comprobante_salario`
-  ADD CONSTRAINT `FK_8C5550701399A3CF` FOREIGN KEY (`id_registro_comprobante_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_8C5550701D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `configuracion_inicial`
---
-ALTER TABLE `configuracion_inicial`
-  ADD CONSTRAINT `FK_8521BE24404AE9D2` FOREIGN KEY (`id_modulo_id`) REFERENCES `modulo` (`id`),
-  ADD CONSTRAINT `FK_8521BE247A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`);
-
---
--- Filtros para la tabla `configuracion_reglas_remesas`
---
-ALTER TABLE `configuracion_reglas_remesas`
-  ADD CONSTRAINT `FK_2398566118997CB6` FOREIGN KEY (`id_pais_id`) REFERENCES `pais` (`id`),
-  ADD CONSTRAINT `FK_239856611D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_23985661E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `config_precio_venta_servicio`
---
-ALTER TABLE `config_precio_venta_servicio`
-  ADD CONSTRAINT `FK_6A244E601D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `config_servicios`
---
-ALTER TABLE `config_servicios`
-  ADD CONSTRAINT `FK_A1A8B7121D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_A1A8B71269D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`);
-
---
--- Filtros para la tabla `consecutivo_servicio`
---
-ALTER TABLE `consecutivo_servicio`
-  ADD CONSTRAINT `FK_EAB6E3871D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_EAB6E38769D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`),
-  ADD CONSTRAINT `FK_EAB6E3878E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`);
-
---
--- Filtros para la tabla `contratos_cliente`
---
-ALTER TABLE `contratos_cliente`
-  ADD CONSTRAINT `FK_29A5BB47374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_29A5BB477BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente_contabilidad` (`id`);
-
---
--- Filtros para la tabla `cotizacion`
---
-ALTER TABLE `cotizacion`
-  ADD CONSTRAINT `FK_44A5EC031D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `creditos_precio_venta`
---
-ALTER TABLE `creditos_precio_venta`
-  ADD CONSTRAINT `FK_847FE8A91D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_847FE8A94699DFE5` FOREIGN KEY (`id_config_precio_venta_id`) REFERENCES `config_precio_venta_servicio` (`id`);
-
---
--- Filtros para la tabla `cuadre_diario`
---
-ALTER TABLE `cuadre_diario`
-  ADD CONSTRAINT `FK_60ABEFD91ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_60ABEFD92D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_60ABEFD939161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_60ABEFD945F8C94C` FOREIGN KEY (`id_cierre_id`) REFERENCES `cierre` (`id`);
-
---
--- Filtros para la tabla `cuenta`
---
-ALTER TABLE `cuenta`
-  ADD CONSTRAINT `FK_31C7BFCF45E7F350` FOREIGN KEY (`id_tipo_cuenta_id`) REFERENCES `tipo_cuenta` (`id`);
-
---
--- Filtros para la tabla `cuentas_cliente`
---
-ALTER TABLE `cuentas_cliente`
-  ADD CONSTRAINT `FK_64653310374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_646533107BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente_contabilidad` (`id`),
-  ADD CONSTRAINT `FK_646533109CDF4BAB` FOREIGN KEY (`id_banco_id`) REFERENCES `banco` (`id`);
-
---
--- Filtros para la tabla `cuentas_unidad`
---
-ALTER TABLE `cuentas_unidad`
-  ADD CONSTRAINT `FK_355374201D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_35537420374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_355374209CDF4BAB` FOREIGN KEY (`id_banco_id`) REFERENCES `banco` (`id`);
-
---
--- Filtros para la tabla `cuenta_criterio_analisis`
---
-ALTER TABLE `cuenta_criterio_analisis`
-  ADD CONSTRAINT `FK_AF040B091ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_AF040B095ABBE5F6` FOREIGN KEY (`id_criterio_analisis_id`) REFERENCES `criterio_analisis` (`id`);
-
---
--- Filtros para la tabla `custom_user`
---
-ALTER TABLE `custom_user`
-  ADD CONSTRAINT `FK_8CE51EB479F37AE5` FOREIGN KEY (`id_user_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `depreciacion`
---
-ALTER TABLE `depreciacion`
-  ADD CONSTRAINT `FK_D618AE149D01464C` FOREIGN KEY (`unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `descuestos_servicios_cotizacion`
---
-ALTER TABLE `descuestos_servicios_cotizacion`
-  ADD CONSTRAINT `FK_1C606F0069D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`),
-  ADD CONSTRAINT `FK_1C606F008E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`);
-
---
--- Filtros para la tabla `devolucion`
---
-ALTER TABLE `devolucion`
-  ADD CONSTRAINT `FK_524D9F671D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_524D9F6739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_524D9F675074DD86` FOREIGN KEY (`id_orden_tabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_524D9F676601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_524D9F67C59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_524D9F67F66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `distribuidor`
---
-ALTER TABLE `distribuidor`
-  ADD CONSTRAINT `FK_1AE277DFB77634D2` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_1AE277DFC604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`);
-
---
--- Filtros para la tabla `distribuidor_provincias`
---
-ALTER TABLE `distribuidor_provincias`
-  ADD CONSTRAINT `FK_8DA1E24DA156727D` FOREIGN KEY (`provincias_id`) REFERENCES `provincias` (`id`),
-  ADD CONSTRAINT `FK_8DA1E24DCEEEDB42` FOREIGN KEY (`distribuidor_id`) REFERENCES `distribuidor` (`id`);
-
---
--- Filtros para la tabla `distribuidor_saldo`
---
-ALTER TABLE `distribuidor_saldo`
-  ADD CONSTRAINT `FK_29FECCE6B77634D2` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_29FECCE6CEEEDB42` FOREIGN KEY (`distribuidor_id`) REFERENCES `distribuidor` (`id`);
-
---
--- Filtros para la tabla `distribuidor_zona`
---
-ALTER TABLE `distribuidor_zona`
-  ADD CONSTRAINT `FK_1DA5FABD104EA8FC` FOREIGN KEY (`zona_id`) REFERENCES `zona_remesas` (`id`),
-  ADD CONSTRAINT `FK_1DA5FABDCEEEDB42` FOREIGN KEY (`distribuidor_id`) REFERENCES `distribuidor` (`id`);
-
---
--- Filtros para la tabla `documento`
---
-ALTER TABLE `documento`
-  ADD CONSTRAINT `FK_B6B12EC71D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_B6B12EC7374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_B6B12EC739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_B6B12EC74832F387` FOREIGN KEY (`id_documento_cancelado_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_B6B12EC77A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`);
-
---
--- Filtros para la tabla `elementos_visa`
---
-ALTER TABLE `elementos_visa`
-  ADD CONSTRAINT `FK_90B65E041D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_90B65E0469D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`),
-  ADD CONSTRAINT `FK_90B65E04E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `empleado`
---
-ALTER TABLE `empleado`
-  ADD CONSTRAINT `FK_D9D9BF521D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_D9D9BF527EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_D9D9BF52D1E12F15` FOREIGN KEY (`id_cargo_id`) REFERENCES `cargo` (`id`);
-
---
--- Filtros para la tabla `expediente`
---
-ALTER TABLE `expediente`
-  ADD CONSTRAINT `FK_D59CA4131D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `facilidades`
---
-ALTER TABLE `facilidades`
-  ADD CONSTRAINT `FK_551461581D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `facilidades_hotel`
---
-ALTER TABLE `facilidades_hotel`
-  ADD CONSTRAINT `FK_78E84AB15FB489F0` FOREIGN KEY (`id_facilidades_id`) REFERENCES `facilidades` (`id`),
-  ADD CONSTRAINT `FK_78E84AB16298578D` FOREIGN KEY (`id_hotel_id`) REFERENCES `hotel` (`id`);
-
---
--- Filtros para la tabla `factura`
---
-ALTER TABLE `factura`
-  ADD CONSTRAINT `FK_F9EBA0091D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_F9EBA009374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_F9EBA0094F4C4E26` FOREIGN KEY (`id_categoria_cliente_id`) REFERENCES `categoria_cliente` (`id`),
-  ADD CONSTRAINT `FK_F9EBA00968BCB606` FOREIGN KEY (`id_contrato_id`) REFERENCES `contratos_cliente` (`id`),
-  ADD CONSTRAINT `FK_F9EBA00971381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_F9EBA0097EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_F9EBA00999274826` FOREIGN KEY (`id_factura_cancela_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_F9EBA009C37A5552` FOREIGN KEY (`id_termino_pago_id`) REFERENCES `termino_pago` (`id`),
-  ADD CONSTRAINT `FK_F9EBA009C59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_F9EBA009F5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_F9EBA009F66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `facturas_comprobante`
---
-ALTER TABLE `facturas_comprobante`
-  ADD CONSTRAINT `FK_6FD2F19B1800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_6FD2F19B1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_6FD2F19B55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`);
-
---
--- Filtros para la tabla `factura_cotizacion`
---
-ALTER TABLE `factura_cotizacion`
-  ADD CONSTRAINT `FK_ADBC38781D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_ADBC38784F4C4E26` FOREIGN KEY (`id_categoria_cliente_id`) REFERENCES `categoria_cliente` (`id`),
-  ADD CONSTRAINT `FK_ADBC38787EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_ADBC38788E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`);
-
---
--- Filtros para la tabla `factura_documento`
---
-ALTER TABLE `factura_documento`
-  ADD CONSTRAINT `FK_CCC060C155C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_CCC060C16601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_CCC060C1EC34F77F` FOREIGN KEY (`id_movimiento_venta_id`) REFERENCES `movimiento_venta` (`id`);
-
---
--- Filtros para la tabla `habitaciones_hotel`
---
-ALTER TABLE `habitaciones_hotel`
-  ADD CONSTRAINT `FK_74F394B06298578D` FOREIGN KEY (`id_hotel_id`) REFERENCES `hotel` (`id`),
-  ADD CONSTRAINT `FK_74F394B091F48FAD` FOREIGN KEY (`id_amenidades_id`) REFERENCES `amenidades` (`id`);
-
---
--- Filtros para la tabla `impresora`
---
-ALTER TABLE `impresora`
-  ADD CONSTRAINT `FK_BBCADB321D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `impuesto`
---
-ALTER TABLE `impuesto`
-  ADD CONSTRAINT `FK_B6E63AA11D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `impuestos_servicio_cotizacion`
---
-ALTER TABLE `impuestos_servicio_cotizacion`
-  ADD CONSTRAINT `FK_2CA4AD5E69D86E10` FOREIGN KEY (`id_servicio_id`) REFERENCES `servicios` (`id`),
-  ADD CONSTRAINT `FK_2CA4AD5E8E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`),
-  ADD CONSTRAINT `FK_2CA4AD5ECA29A612` FOREIGN KEY (`id_impuesto_id`) REFERENCES `impuesto` (`id`);
-
---
--- Filtros para la tabla `impuesto_sobre_renta`
---
-ALTER TABLE `impuesto_sobre_renta`
-  ADD CONSTRAINT `FK_5EF11EF48D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`),
-  ADD CONSTRAINT `FK_5EF11EF4A9ECE748` FOREIGN KEY (`id_rango_escala_id`) REFERENCES `rango_escala_dgii` (`id`),
-  ADD CONSTRAINT `FK_5EF11EF4E9DBC8E8` FOREIGN KEY (`id_nomina_pago_id`) REFERENCES `nomina_pago` (`id`);
-
---
--- Filtros para la tabla `informe_recepcion`
---
-ALTER TABLE `informe_recepcion`
-  ADD CONSTRAINT `FK_62A4EBD6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_62A4EBDE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `lugares`
---
-ALTER TABLE `lugares`
-  ADD CONSTRAINT `FK_A4EE5DFC104EA8FC` FOREIGN KEY (`zona_id`) REFERENCES `zona` (`id`);
-
---
--- Filtros para la tabla `mercancia`
---
-ALTER TABLE `mercancia`
-  ADD CONSTRAINT `FK_9D094AE0E16A5625` FOREIGN KEY (`id_unidad_medida_id`) REFERENCES `unidad_medida` (`id`),
-  ADD CONSTRAINT `FK_9D094AE0E2C70A62` FOREIGN KEY (`id_amlacen_id`) REFERENCES `almacen` (`id`);
-
---
--- Filtros para la tabla `mercancia_impuesto`
---
-ALTER TABLE `mercancia_impuesto`
-  ADD CONSTRAINT `FK_2E2D6041BCE90A26` FOREIGN KEY (`mercancia_id`) REFERENCES `mercancia` (`id`),
-  ADD CONSTRAINT `FK_2E2D6041D23B6BE5` FOREIGN KEY (`impuesto_id`) REFERENCES `impuesto` (`id`);
-
---
--- Filtros para la tabla `mercancia_producto`
---
-ALTER TABLE `mercancia_producto`
-  ADD CONSTRAINT `FK_3F705CF56E57A479` FOREIGN KEY (`id_producto_id`) REFERENCES `producto` (`id`),
-  ADD CONSTRAINT `FK_3F705CF59F287F54` FOREIGN KEY (`id_mercancia_id`) REFERENCES `mercancia` (`id`);
-
---
--- Filtros para la tabla `movimiento`
---
-ALTER TABLE `movimiento`
-  ADD CONSTRAINT `FK_C8FF107A4F781EA` FOREIGN KEY (`id_unidad_destino_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_C8FF107A873C7FC7` FOREIGN KEY (`id_unidad_origen_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_C8FF107AD1CE493D` FOREIGN KEY (`id_tipo_documento_activo_fijo_id`) REFERENCES `tipo_documento_activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_C8FF107ADB763453` FOREIGN KEY (`id_tipo_movimiento_id`) REFERENCES `tipo_movimiento` (`id`);
-
---
--- Filtros para la tabla `movimiento_activo_fijo`
---
-ALTER TABLE `movimiento_activo_fijo`
-  ADD CONSTRAINT `FK_A985A0DA1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_A985A0DA1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_A985A0DA2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_A985A0DA4B1CE99D` FOREIGN KEY (`id_unidad_destino_origen_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_A985A0DA571159DE` FOREIGN KEY (`id_movimiento_cancelado_id`) REFERENCES `movimiento_activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_A985A0DA5832E72E` FOREIGN KEY (`id_activo_fijo_id`) REFERENCES `activo_fijo` (`id`),
-  ADD CONSTRAINT `FK_A985A0DA7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_A985A0DADB763453` FOREIGN KEY (`id_tipo_movimiento_id`) REFERENCES `tipo_movimiento` (`id`),
-  ADD CONSTRAINT `FK_A985A0DAE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `movimiento_mercancia`
---
-ALTER TABLE `movimiento_mercancia`
-  ADD CONSTRAINT `FK_44876BD739161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_44876BD755C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_44876BD7571159DE` FOREIGN KEY (`id_movimiento_cancelado_id`) REFERENCES `movimiento_mercancia` (`id`),
-  ADD CONSTRAINT `FK_44876BD76601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_44876BD771381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_44876BD77A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`),
-  ADD CONSTRAINT `FK_44876BD77EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_44876BD79F287F54` FOREIGN KEY (`id_mercancia_id`) REFERENCES `mercancia` (`id`),
-  ADD CONSTRAINT `FK_44876BD7C59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_44876BD7F5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_44876BD7F66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `movimiento_producto`
---
-ALTER TABLE `movimiento_producto`
-  ADD CONSTRAINT `FK_FFC0EDFC39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC571159DE` FOREIGN KEY (`id_movimiento_cancelado_id`) REFERENCES `movimiento_producto` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC6E57A479` FOREIGN KEY (`id_producto_id`) REFERENCES `producto` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC7A4F962` FOREIGN KEY (`id_tipo_documento_id`) REFERENCES `tipo_documento` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFC7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFCC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFCF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_FFC0EDFCF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `movimiento_servicio`
---
-ALTER TABLE `movimiento_servicio`
-  ADD CONSTRAINT `FK_93FD19C355C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_93FD19C371CAA3E7` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`);
-
---
--- Filtros para la tabla `movimiento_venta`
---
-ALTER TABLE `movimiento_venta`
-  ADD CONSTRAINT `FK_8E3F7AE539161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_8E3F7AE555C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`),
-  ADD CONSTRAINT `FK_8E3F7AE56EA527F2` FOREIGN KEY (`id_expediente_acreedor_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_8E3F7AE5D8F8B0AD` FOREIGN KEY (`id_centro_costo_acreedor_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_8E3F7AE5F0821C98` FOREIGN KEY (`id_elemento_gasto_acreedor_id`) REFERENCES `elemento_gasto` (`id`),
-  ADD CONSTRAINT `FK_8E3F7AE5FA3DF5CD` FOREIGN KEY (`id_orden_trabajo_acreedor_id`) REFERENCES `orden_trabajo` (`id`);
-
---
--- Filtros para la tabla `municipios`
---
-ALTER TABLE `municipios`
-  ADD CONSTRAINT `FK_BBFAB5864E7121AF` FOREIGN KEY (`provincia_id`) REFERENCES `provincias` (`id`);
-
---
--- Filtros para la tabla `nominas_consecutivos`
---
-ALTER TABLE `nominas_consecutivos`
-  ADD CONSTRAINT `FK_9FC8A71A1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `nomina_pago`
---
-ALTER TABLE `nomina_pago`
-  ADD CONSTRAINT `FK_5CB8BD331D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_5CB8BD338D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`),
-  ADD CONSTRAINT `FK_5CB8BD33AC6A6301` FOREIGN KEY (`id_usuario_aprueba_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `nomina_tercero_comprobante`
---
-ALTER TABLE `nomina_tercero_comprobante`
-  ADD CONSTRAINT `FK_D4A77ABF1800963C` FOREIGN KEY (`id_comprobante_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_D4A77ABF1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_D4A77ABF2547677` FOREIGN KEY (`id_nomina_id`) REFERENCES `nomina_pago` (`id`);
-
---
--- Filtros para la tabla `obligacion_cobro`
---
-ALTER TABLE `obligacion_cobro`
-  ADD CONSTRAINT `FK_807C726D55C5F988` FOREIGN KEY (`id_factura_id`) REFERENCES `factura` (`id`);
-
---
--- Filtros para la tabla `obligacion_pago`
---
-ALTER TABLE `obligacion_pago`
-  ADD CONSTRAINT `FK_403C9B3B1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_403C9B3B6601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`),
-  ADD CONSTRAINT `FK_403C9B3BE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `operaciones_comprobante_operaciones`
---
-ALTER TABLE `operaciones_comprobante_operaciones`
-  ADD CONSTRAINT `FK_E7EA17E1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_E7EA17E1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_E7EA17E2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_E7EA17E39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_E7EA17E47B60D7E` FOREIGN KEY (`id_instrumento_cobro_id`) REFERENCES `instrumento_cobro` (`id`),
-  ADD CONSTRAINT `FK_E7EA17E71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_E7EA17EC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_E7EA17EE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`),
-  ADD CONSTRAINT `FK_E7EA17EECB9FBA7` FOREIGN KEY (`id_registro_comprobantes_id`) REFERENCES `registro_comprobantes` (`id`),
-  ADD CONSTRAINT `FK_E7EA17EF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_E7EA17EF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `orden_trabajo`
---
-ALTER TABLE `orden_trabajo`
-  ADD CONSTRAINT `FK_4158A0241D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_4158A02439161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`);
-
---
--- Filtros para la tabla `periodo_sistema`
---
-ALTER TABLE `periodo_sistema`
-  ADD CONSTRAINT `FK_AEF0BAAD1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_AEF0BAAD39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_AEF0BAAD7EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `plazos_pago_cotizacion`
---
-ALTER TABLE `plazos_pago_cotizacion`
-  ADD CONSTRAINT `FK_4A1D3ED28E5841CF` FOREIGN KEY (`id_cotizacion_id`) REFERENCES `cotizacion` (`id`);
-
---
--- Filtros para la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD CONSTRAINT `FK_A7BB0615E16A5625` FOREIGN KEY (`id_unidad_medida_id`) REFERENCES `unidad_medida` (`id`),
-  ADD CONSTRAINT `FK_A7BB0615E2C70A62` FOREIGN KEY (`id_amlacen_id`) REFERENCES `almacen` (`id`);
-
---
--- Filtros para la tabla `producto_impuesto`
---
-ALTER TABLE `producto_impuesto`
-  ADD CONSTRAINT `FK_9E754B747645698E` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`),
-  ADD CONSTRAINT `FK_9E754B74D23B6BE5` FOREIGN KEY (`impuesto_id`) REFERENCES `impuesto` (`id`);
-
---
--- Filtros para la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  ADD CONSTRAINT `FK_16C068CEC604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`);
-
---
--- Filtros para la tabla `proveedor_unidad`
---
-ALTER TABLE `proveedor_unidad`
-  ADD CONSTRAINT `FK_EE37BED59D01464C` FOREIGN KEY (`unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_EE37BED5CB305D73` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `proveedor_unidad_servicios`
---
-ALTER TABLE `proveedor_unidad_servicios`
-  ADD CONSTRAINT `FK_68EBF91E2FF8143C` FOREIGN KEY (`proveedor_unidad_id`) REFERENCES `proveedor_unidad` (`id`),
-  ADD CONSTRAINT `FK_68EBF91E71CAA3E7` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`);
-
---
--- Filtros para la tabla `provincias`
---
-ALTER TABLE `provincias`
-  ADD CONSTRAINT `FK_9F631427C604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`);
-
---
--- Filtros para la tabla `registro_comprobantes`
---
-ALTER TABLE `registro_comprobantes`
-  ADD CONSTRAINT `FK_B2D1B2B21D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_B2D1B2B239161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_B2D1B2B247B60D7E` FOREIGN KEY (`id_instrumento_cobro_id`) REFERENCES `instrumento_cobro` (`id`),
-  ADD CONSTRAINT `FK_B2D1B2B27EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_B2D1B2B2EF5F7851` FOREIGN KEY (`id_tipo_comprobante_id`) REFERENCES `tipo_comprobante` (`id`);
-
---
--- Filtros para la tabla `saldo_cuentas`
---
-ALTER TABLE `saldo_cuentas`
-  ADD CONSTRAINT `FK_BB2B71AE1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AE1D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AE2D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AE39161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AE71381BB3` FOREIGN KEY (`id_orden_trabajo_id`) REFERENCES `orden_trabajo` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AEC59B01FF` FOREIGN KEY (`id_centro_costo_id`) REFERENCES `centro_costo` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AEE8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AEF5DBAF2B` FOREIGN KEY (`id_expediente_id`) REFERENCES `expediente` (`id`),
-  ADD CONSTRAINT `FK_BB2B71AEF66372E9` FOREIGN KEY (`id_elemento_gasto_id`) REFERENCES `elemento_gasto` (`id`);
-
---
--- Filtros para la tabla `solicitud`
---
-ALTER TABLE `solicitud`
-  ADD CONSTRAINT `FK_96D27CC01D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`);
-
---
--- Filtros para la tabla `subcuenta`
---
-ALTER TABLE `subcuenta`
-  ADD CONSTRAINT `FK_57BB37EA1ADA4D3F` FOREIGN KEY (`id_cuenta_id`) REFERENCES `cuenta` (`id`);
-
---
--- Filtros para la tabla `subcuenta_criterio_analisis`
---
-ALTER TABLE `subcuenta_criterio_analisis`
-  ADD CONSTRAINT `FK_52A4A7682D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_52A4A7685ABBE5F6` FOREIGN KEY (`id_criterio_analisis_id`) REFERENCES `criterio_analisis` (`id`);
-
---
--- Filtros para la tabla `subcuenta_proveedor`
---
-ALTER TABLE `subcuenta_proveedor`
-  ADD CONSTRAINT `FK_5C22E4B82D412F53` FOREIGN KEY (`id_subcuenta_id`) REFERENCES `subcuenta` (`id`),
-  ADD CONSTRAINT `FK_5C22E4B8E8F12801` FOREIGN KEY (`id_proveedor_id`) REFERENCES `proveedor` (`id`);
-
---
--- Filtros para la tabla `tasa_cambio`
---
-ALTER TABLE `tasa_cambio`
-  ADD CONSTRAINT `FK_DAB48606D85CECF7` FOREIGN KEY (`id_moneda_destino_id`) REFERENCES `moneda` (`id`),
-  ADD CONSTRAINT `FK_DAB48606FA5CADE9` FOREIGN KEY (`id_moneda_origen_id`) REFERENCES `moneda` (`id`);
-
---
--- Filtros para la tabla `transferencia`
---
-ALTER TABLE `transferencia`
-  ADD CONSTRAINT `FK_EDC227301D34FA6B` FOREIGN KEY (`id_unidad_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_EDC2273039161EBF` FOREIGN KEY (`id_almacen_id`) REFERENCES `almacen` (`id`),
-  ADD CONSTRAINT `FK_EDC227306601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`);
-
---
--- Filtros para la tabla `unidad`
---
-ALTER TABLE `unidad`
-  ADD CONSTRAINT `FK_F3E6D02F31E700CD` FOREIGN KEY (`id_padre_id`) REFERENCES `unidad` (`id`),
-  ADD CONSTRAINT `FK_F3E6D02F374388F5` FOREIGN KEY (`id_moneda_id`) REFERENCES `moneda` (`id`);
-
---
--- Filtros para la tabla `user_client_tmp`
---
-ALTER TABLE `user_client_tmp`
-  ADD CONSTRAINT `FK_AC2C28007BF9CE86` FOREIGN KEY (`id_cliente_id`) REFERENCES `cliente` (`id`),
-  ADD CONSTRAINT `FK_AC2C28007EB2C349` FOREIGN KEY (`id_usuario_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `vacaciones_disfrutadas`
---
-ALTER TABLE `vacaciones_disfrutadas`
-  ADD CONSTRAINT `FK_F02817318D392AC7` FOREIGN KEY (`id_empleado_id`) REFERENCES `empleado` (`id`);
-
---
--- Filtros para la tabla `vale_salida`
---
-ALTER TABLE `vale_salida`
-  ADD CONSTRAINT `FK_90C265C86601BA07` FOREIGN KEY (`id_documento_id`) REFERENCES `documento` (`id`);
-
---
--- Filtros para la tabla `zona_remesas`
---
-ALTER TABLE `zona_remesas`
-  ADD CONSTRAINT `FK_D37DCA054E7121AF` FOREIGN KEY (`provincia_id`) REFERENCES `provincias` (`id`),
-  ADD CONSTRAINT `FK_D37DCA0558BC1BE0` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id`),
-  ADD CONSTRAINT `FK_D37DCA05C604D5C6` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
