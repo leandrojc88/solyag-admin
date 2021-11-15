@@ -2,7 +2,11 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Empleados;
+use App\Entity\Empresas;
 use App\Repository\EmpleadosRepository;
+use App\Repository\EmpresasRepository;
+use App\Repository\ModulosEmpresasRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +25,19 @@ class EmpleadoApiController extends AbstractController
      */
     public function getEmployeeByEmail(
         Request $request,
-        EmpleadosRepository $empleadosRepository
+        EmpleadosRepository $empleadosRepository,
+        EmpresasRepository $empresasRepository
     ): JsonResponse {
-        $employee = $empleadosRepository->findBy(['correo' => $request->get('email')]);
 
-        if ($employee)
-            return $this->json($employee);
+        /** @var Empleados $employee */
+
+        $employee = $empleadosRepository->findOneBy(['correo' => $request->get('email')]);
+        if ($employee) {
+
+            $modules = $empresasRepository->arrayModules($employee->getIdEmpresa()->getId());
+
+            return $this->json(['employee' => $employee, 'modules' => $modules]);
+        }
 
         return $this->json('Empleado no registrado', 500);
     }
