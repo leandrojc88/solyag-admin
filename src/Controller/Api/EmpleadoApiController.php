@@ -3,10 +3,10 @@
 namespace App\Controller\Api;
 
 use App\Entity\Empleados;
-use App\Entity\Empresas;
 use App\Repository\EmpleadosRepository;
 use App\Repository\EmpresasRepository;
 use App\Repository\ModulosEmpresasRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,5 +40,28 @@ class EmpleadoApiController extends AbstractController
         }
 
         return $this->json('Empleado no registrado', 500);
+    }
+
+    /**
+     * @Route("/create-employee", name="create_employee")
+     */
+    public function createEmployee(
+        Request $request,
+        EntityManagerInterface $em,
+        EmpresasRepository $empresasRepository
+    ): JsonResponse {
+
+        $empledo = new Empleados();
+        $empledo
+            ->setCorreo($request->get('email'))
+            ->setIdEmpresa($empresasRepository->find($request->get('id_empresa')))
+            ->setActivo(true)
+            ->setAdministrador($request->get('is_admin'))
+            ->setNombre($request->get('name'));
+
+        $em->persist($empledo);
+        $em->flush();
+
+        return $this->json('datos guardados');
     }
 }
