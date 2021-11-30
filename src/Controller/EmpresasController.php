@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\backup\SGBD;
+use App\Controller\CoreMigrations\MigratorExcecuter;
 use App\Entity\Administradores;
 use App\Entity\Empleados;
 use App\Entity\Empresas;
@@ -267,7 +268,9 @@ class EmpresasController extends AbstractController
             ->setCorreo($correo)
             ->setNroContrato($nro_contrato)
             ->setSiglas($siglas)
-            ->setTelefono($telefono);
+            ->setTelefono($telefono)
+            ->setRestore(false)
+            ->setRestoreTest(false);
         $em->persist($new_Empresa);
         $em->flush();
 
@@ -434,13 +437,19 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/restore_prueba", name="empresas_restore_prueba")
      */
-    public function reastoreBackupPrueba(EntityManagerInterface $em, Request $request)
-    {
+    public function reastoreBackupPrueba(
+        EntityManagerInterface $em,
+        Request $request,
+        MigratorExcecuter $migratorExcecuter
+    ) {
         $id = $request->request->get('id');
-        $dbName = 'db_prueba_emp' . $id;
-        $filePath = '../src/Controller/backup/db.sql';
-        //FUNCION 1
-        $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+
+        $migratorExcecuter->restoreDataBase($id, true);
+
+        // $dbName = 'db_prueba_emp' . $id;
+        // $filePath = '../src/Controller/backup/db.sql';
+        // //FUNCION 1
+        // $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
         if ($empresa) {
@@ -455,13 +464,20 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/restore", name="empresas_restore")
      */
-    public function reastoreBackup(EntityManagerInterface $em, Request $request)
-    {
+    public function reastoreBackup(
+        EntityManagerInterface $em,
+        Request $request,
+        MigratorExcecuter $migratorExcecuter
+    ) {
+
         $id = $request->request->get('id');
-        $dbName = 'db_emp' . $id;
-        $filePath = '../src/Controller/backup/db.sql';
+        // $dbName = 'db_emp' . $id;
+
+        $migratorExcecuter->restoreDataBase($id);
+
+        // $filePath = '../src/Controller/backup/db.sql';
         //FUNCION 1
-        $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+        // $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
         if ($empresa) {
