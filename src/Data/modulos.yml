@@ -43,3 +43,9 @@ modulos:
     name: "[Publicidade][Home]"
   - id: 22
     name: "[Publicidade][IMG Agencia]"
+  - id: 23
+    name: "[Multi-Servicios][Remesas]"
+  - id: 24
+    name: "[Multi-Servicios][Envíos de paquetes]"
+  - id: 25
+    name: "[Multi-Servicios][Combos de comida]"

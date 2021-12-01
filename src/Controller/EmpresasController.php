@@ -274,13 +274,21 @@ class EmpresasController extends AbstractController
         $em->persist($new_Empresa);
         $em->flush();
 
-        /***COPY IMAGE**/
+        /***COPY IMAGE EMPRES**/
         $fichero = $siglas . '-' . $identificacion . '.jpg';
-        if ($request->files->get('1')) {
+        if ($request->files->get('icono_empresa')) {
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
-            $archivo = $request->files->get('1');
+            $archivo = $request->files->get('icono_empresa');
             $archivo->move($destino, $fichero);
         }
+        /***COPY IMAGE TICKET**/
+        $fichero = $siglas . '-' . $identificacion . '-ticket.jpg';
+        if ($request->files->get('icono_ticket')) {
+            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
+            $archivo = $request->files->get('icono_ticket');
+            $archivo->move($destino, $fichero);
+        }
+
         $this->addFlash('success', 'Empresa adicionada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
     }
@@ -385,6 +393,7 @@ class EmpresasController extends AbstractController
 
         /** @var Empresas $new_Empresa */
         $new_Empresa = $em->getRepository(Empresas::class)->find($id);
+
         $new_Empresa
             ->setActivo(true)
             ->setNombre($nombre)
@@ -394,15 +403,25 @@ class EmpresasController extends AbstractController
             ->setSiglas($siglas)
             ->setTelefono($telefono);
         $em->persist($new_Empresa);
-        $em->flush();
 
-        /***COPY IMAGE**/
+
+        /***COPY IMAGE EMPRES**/
         $fichero = $siglas . '-' . $identificacion . '.jpg';
-        if ($request->files->get('1')) {
+        if ($request->files->get('icono_empresa')) {
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
-            $archivo = $request->files->get('1');
+            $archivo = $request->files->get('icono_empresa');
             $archivo->move($destino, $fichero);
+            $new_Empresa->setImageLg($_ENV['SITE_URL'].'/public/images/empresas/' . $siglas . '/'.$fichero);
         }
+        /***COPY IMAGE TICKET**/
+        $fichero_ticket = $siglas . '-' . $identificacion . '-ticket.jpg';
+        if ($request->files->get('icono_ticket')) {
+            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
+            $archivo = $request->files->get('icono_ticket');
+            $archivo->move($destino, $fichero_ticket);
+            $new_Empresa->setImageLg($_ENV['SITE_URL'].'/public/images/empresas/' . $siglas . '/'.$fichero_ticket);
+        }
+        $em->flush();
         $this->addFlash('success', 'Empresa modificada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
     }
