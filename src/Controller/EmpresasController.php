@@ -272,7 +272,7 @@ class EmpresasController extends AbstractController
             ->setRestore(false)
             ->setRestoreTest(false);
         $em->persist($new_Empresa);
-        $em->flush();
+
 
         /***COPY IMAGE EMPRES**/
         $fichero = $siglas . '-' . $identificacion . '.jpg';
@@ -280,6 +280,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_empresa');
             $archivo->move($destino, $fichero);
+            $new_Empresa->setIcono($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero);
         }
         /***COPY IMAGE TICKET**/
         $fichero = $siglas . '-' . $identificacion . '-ticket.jpg';
@@ -287,8 +288,10 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_ticket');
             $archivo->move($destino, $fichero);
+            $new_Empresa->setIconoTicket($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero);
         }
 
+        $em->flush();
         $this->addFlash('success', 'Empresa adicionada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
     }
@@ -411,7 +414,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_empresa');
             $archivo->move($destino, $fichero);
-            $new_Empresa->setImageLg($_ENV['SITE_URL'].'/public/images/empresas/' . $siglas . '/'.$fichero);
+            $new_Empresa->setIcono($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero);
         }
         /***COPY IMAGE TICKET**/
         $fichero_ticket = $siglas . '-' . $identificacion . '-ticket.jpg';
@@ -419,7 +422,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_ticket');
             $archivo->move($destino, $fichero_ticket);
-            $new_Empresa->setImageLg($_ENV['SITE_URL'].'/public/images/empresas/' . $siglas . '/'.$fichero_ticket);
+            $new_Empresa->setIconoTicket($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero_ticket);
         }
         $em->flush();
         $this->addFlash('success', 'Empresa modificada satisfactoriamente.');

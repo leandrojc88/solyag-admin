@@ -67,6 +67,16 @@ class Empresas
      */
     private $restore_test;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $icono;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $icono_ticket;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,6 +198,30 @@ class Empresas
     public function setRestoreTest(bool $restore_test): self
     {
         $this->restore_test = $restore_test;
+
+        return $this;
+    }
+
+    public function getIcono(): ?string
+    {
+        return $this->icono;
+    }
+
+    public function setIcono(?string $icono): self
+    {
+        $this->icono = $icono;
+
+        return $this;
+    }
+
+    public function getIconoTicket(): ?string
+    {
+        return $this->icono_ticket;
+    }
+
+    public function setIconoTicket(?string $icono_ticket): self
+    {
+        $this->icono_ticket = $icono_ticket;
 
         return $this;
     }
