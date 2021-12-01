@@ -2,7 +2,7 @@
 
 namespace App\Controller\CoreMigrations;
 
-use App\Controller\CoreMigrations\migrations\Version20211126035422;
+use App\Controller\CoreMigrations\fixtures\initialDataFixture;
 use Doctrine\DBAL\Connection;
 use Doctrine\Migrations\Finder\GlobFinder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,12 +17,10 @@ class MigratorExcecuter
     private EntityManagerInterface $em;
 
     private Connection $currentConn;
-    private LoggerInterface $loger;
 
-    public function __construct(EntityManagerInterface $em, LoggerInterface $loger)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->loger = $loger;
 
         $this->currentConn = $this->em->getConnection();
     }
@@ -44,7 +42,7 @@ class MigratorExcecuter
         }
     }
 
-    public function restoreDataBase($empresaId, bool $test = false)
+    public function excecuteMigrations($empresaId, bool $test = false)
     {
         $this->loadMigrationsFile();
 
@@ -52,8 +50,23 @@ class MigratorExcecuter
         $conn = $this->getConnextion($dbname);
 
         foreach ($this->migrationsClass as $key => $migration) {
-            $migration->exceute($conn, $this->loger);
+            $migration->exceute($conn);
         }
+    }
+
+    public function loadInitFixtures($empresaId, $test = false)
+    {
+
+        $dbname = $test ? 'db_prueba_emp' . $empresaId : 'db_emp' . $empresaId;
+        $conn = $this->getConnextion($dbname);
+
+        $testFixture = new initialDataFixture();
+
+        $testFixture->exceute($conn);
+    }
+
+    public function loadListFixtures($empresaId)
+    {
     }
 
     public function createDB($name, $name_prueba): bool

@@ -444,7 +444,9 @@ class EmpresasController extends AbstractController
     ) {
         $id = $request->request->get('id');
 
-        $migratorExcecuter->restoreDataBase($id, true);
+        $migratorExcecuter->excecuteMigrations($id, true);
+
+        $migratorExcecuter->loadInitFixtures($id, true);
 
         // $dbName = 'db_prueba_emp' . $id;
         // $filePath = '../src/Controller/backup/db.sql';
@@ -473,7 +475,7 @@ class EmpresasController extends AbstractController
         $id = $request->request->get('id');
         // $dbName = 'db_emp' . $id;
 
-        $migratorExcecuter->restoreDataBase($id);
+        $migratorExcecuter->excecuteMigrations($id);
 
         // $filePath = '../src/Controller/backup/db.sql';
         //FUNCION 1

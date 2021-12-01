@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 abstract class AbstratCoreMigration
 {
     /** @var Query[] */
-    private $plannedSql = [];
+    protected $plannedSql = [];
 
     public function __construct()
     {
@@ -40,12 +40,11 @@ abstract class AbstratCoreMigration
      */
     abstract public function up(): void;
 
-    public function exceute(Connection $conn, LoggerInterface $loger): void
+    public function exceute(Connection $conn): void
     {
         if (!$this->canExcecute($conn)) return;
 
         foreach ($this->plannedSql as $key => $sql) {
-            $loger->notice($sql->getStatement());
             $conn->executeQuery($sql->getStatement());
         }
 
