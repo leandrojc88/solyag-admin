@@ -19,21 +19,11 @@ INSERT INTO `categoria_cliente` (`id`, `nombre`, `prefijo`) VALUES
 (10, 'Comprobante para Exportación', 'B16'),
 (11, 'Comprobante de Pago al Exterior', 'B17');
 
-
 INSERT INTO `centro_costo` (`id`, `id_unidad_id`, `activo`, `codigo`, `nombre`) VALUES
 (22, 1, 1, '0150', 'Combo de aseo'),
 (23, 1, 1, '0160', 'Combo de Medicamento'),
 (24, 1, 1, '0170', 'Combo de Alimento'),
 (25, 1, 1, '0180', 'Otros');
-
-
-
-INSERT INTO `cliente` (`id`, `nombre`, `apellidos`, `correo`, `direccion`, `token`, `fecha`, `usuario`, `comentario`, `telefono`, `identificacion_empresa`) VALUES
-(1, 'Adrian', 'Gonzalez', 'adrian@solyag.com', NULL, NULL, NULL, NULL, NULL, '8295540346', NULL),
-(2, 'Adrian', 'Gonzalez', NULL, 'John F kEENDY', NULL, NULL, NULL, NULL, '829554046', NULL),
-(3, 'jesus', 'sole', 'horizontes86@gmail.com', 'sarasota', NULL, NULL, NULL, NULL, '8492690312', NULL);
-
-
 
 INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (1, 'ALMACéN', 'ALM', 1),
@@ -53,8 +43,6 @@ INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (15, 'ACCIONISTAS', 'ACC', 1),
 (16, 'CUENTAS DE INGRESOS', 'ING', 1),
 (17, 'CUENTAS DE GASTOS', 'GAT', 1);
-
-
 
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES
 (1, 1, 103, 'Efectivo en Caja', 1, 0, 0, 0, 1, 0),
@@ -144,7 +132,6 @@ INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudor
 (85, 11, 646, 'Reservas para Inversiones', 0, 0, 0, 0, 1, 0),
 (86, 8, 526, 'Obligaciones a Largo Plazo', 0, 0, 0, 1, 1, 0);
 
-
 INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_analisis_id`, `orden`) VALUES
 (10, 3, 6, NULL),
 (11, 5, 14, NULL),
@@ -208,140 +195,6 @@ INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_anali
 (162, 86, 6, 1),
 (164, 42, 8, 1);
 
-
-INSERT INTO `distribuidor` (`id`, `pais_id`, `moneda_id`, `nombre`, `telefono`, `email`, `identificacion`, `activo`) VALUES
-(1, 1, 4, 'Camilo Alberto', '55816826', 'kahveahd@gmail.com', '89102815009', 0),
-(2, 1, 4, 'Maikel Exposito Martinez', '54730685', 'maikelexpmartinez@gmail.com', '92092928189', 1),
-(3, 1, 4, 'gkhjgn yfhjg ylhgjk', '54824547', 'horizontes86@gmail.com', '45784754845', 0),
-(4, 1, 4, 'jb', '1424', 'no.@gmail.com', 'no', 0),
-(5, 1, 4, 'Elizardo Ríos Morales', '52714739', 'no@gmail.com', 'no', 1),
-(6, 1, 4, 'Mario Martin Pages', '55776339', 'no@gmail.com', 'no', 1),
-(7, 1, 4, 'José Carlos Pérez Moreno', '54602465', 'no@gmail.com', 'no', 1),
-(8, 1, 4, 'Ramon Martínez Vidal', '52538840', 'no@gmail.com', 'no', 1),
-(9, 1, 4, 'Lázaro López Hernández', '53693714', 'no@gmail.com', 'no', 1),
-(10, 1, 4, 'Jessica Morales Paradela', '53519871', 'no@gmail.com', 'no', 1),
-(11, 1, 4, 'Saidel Quintana Charbonier', '54545233', 'no@gmail.com', 'no', 1),
-(12, 1, 4, 'Daymara Molina Gomez', '58031968', 'no@gmail.com', 'no', 1),
-(13, 1, 4, 'Yordanka Fagundo Borrego', '58407584', 'no@gmail.com', 'no', 1),
-(14, 1, 4, 'Marisvel Orozco Betancourt', '54763181', 'no@gmail.com', 'no', 1),
-(15, 1, 4, 'Katerin Alonso Arencibia', '58117743', 'no@gmail.com', 'no', 1),
-(16, 1, 4, 'Sergio Aguila Guerra', '52837250', 'no@gmail.com', 'no', 1),
-(17, 1, 4, 'Javier Alejandro Ferrer Prado', '58527495', 'no@gmail.com', 'no', 1),
-(18, 1, 4, 'Antonio Luis Valdivia Valdivis', '53068957', 'no@gmail.com', 'no', 1),
-(19, 1, 4, 'Miriulky Oliva Bastida', '54474687', 'no@gmail.com', 'no', 1),
-(20, 1, 4, 'Orisbel Fuentes Gonzalez', '54476870', 'no@gmail.com', 'no', 1),
-(21, 1, 4, 'Iris Morales Buchillon', '58918362', 'no@gmail.com', 'no', 1),
-(22, 1, 4, 'Karen Caceres Gomez', '53936639', 'no@gmail.com', 'no', 1),
-(23, 1, 4, 'Sergio Gonzalez Castro', '58252628', 'no@gmail.com', 'no', 1),
-(24, 1, 4, 'Marcos Omelio Sanchez Roldan', '58636944', 'no@gmail.com', 'no', 1),
-(25, 1, 4, 'Reinaldo Rivero Marrero', '52614104', 'no@gmail.com', 'no', 1),
-(26, 1, 4, 'Karina Pupo Quiala', '55047677', 'no@gmail.com', 'no', 1),
-(27, 1, 4, 'Miriela Perez Silva', '52046412', 'no@gmail.com', 'no', 1),
-(28, 1, 4, 'Marisol Socarras Sariol', '58222778', 'no@gmail.com', 'no', 1),
-(29, 1, 4, 'Yordan Carcases Cedeno', '58552369', 'no@gmail.com', 'no', 1),
-(30, 1, 4, 'Jose Luis Sensat De La Paz', '53088577', 'no@gmail.com', 'no', 1),
-(31, 1, 4, 'Pedro Jose Sanchez Rodriguez', '52152017', 'no@gmail.com', 'no', 1),
-(32, 1, 4, 'Lourdes Calvo Garcia', '58289967', 'no@gmail.com', 'NO', 1),
-(33, 1, 4, 'Senia Almaguer Cuenca', '54558908', 'no@gmail.com', 'NO', 1),
-(34, 1, 4, 'Milagros Marteatus Guerra', '55791157', 'no@gmail.com', 'no', 1),
-(35, 1, 4, 'saddsada', 'dasadds', 'asdassd@gmail.com', 'ssada', 0);
-
-
-
-INSERT INTO `distribuidor_provincias` (`id`, `distribuidor_id`, `provincias_id`, `activo`) VALUES
-(1, 1, 2, 1),
-(2, 1, 3, 0),
-(3, 2, 6, 0),
-(4, 2, 7, 1),
-(5, 2, 8, 0),
-(6, 3, 2, 1),
-(7, 4, 5, 1),
-(8, 5, 2, 1),
-(9, 6, 2, 1),
-(10, 7, 2, 1),
-(11, 8, 2, 1),
-(12, 9, 2, 1),
-(13, 10, 6, 1),
-(14, 11, 6, 1),
-(15, 12, 8, 1),
-(16, 13, 3, 1),
-(17, 14, 3, 1),
-(18, 15, 3, 1),
-(19, 16, 5, 1),
-(20, 17, 5, 1),
-(21, 18, 10, 1),
-(22, 19, 10, 1),
-(23, 20, 10, 1),
-(24, 21, 11, 1),
-(25, 22, 9, 1),
-(26, 23, 9, 1),
-(27, 24, 12, 1),
-(28, 25, 14, 1),
-(29, 26, 14, 1),
-(30, 27, 13, 1),
-(31, 28, 15, 1),
-(32, 29, 4, 1),
-(33, 30, 4, 1),
-(34, 31, 16, 1),
-(35, 32, 2, 1),
-(36, 33, 3, 1),
-(37, 34, 3, 1),
-(38, 35, 2, 1);
-
-
-INSERT INTO `distribuidor_saldo` (`id`, `distribuidor_id`, `moneda_id`, `saldo`) VALUES
-(1, 1, 4, 0),
-(2, 2, 4, 0),
-(3, 3, 4, 0),
-(4, 4, 4, 0),
-(5, 5, 4, 0),
-(6, 6, 4, 0),
-(7, 7, 4, 0),
-(8, 8, 4, 0),
-(9, 9, 4, 0),
-(10, 10, 4, 0),
-(11, 11, 4, 0),
-(12, 12, 4, 0),
-(13, 13, 4, 0),
-(14, 14, 4, 0),
-(15, 15, 4, 0),
-(16, 16, 4, 0),
-(17, 17, 4, 0),
-(18, 18, 4, 0),
-(19, 19, 4, 0),
-(20, 20, 4, 0),
-(21, 21, 4, 0),
-(22, 22, 4, 0),
-(23, 23, 4, 0),
-(24, 24, 4, 0),
-(25, 25, 4, 0),
-(26, 26, 4, 0),
-(27, 27, 4, 0),
-(28, 28, 4, 0),
-(29, 29, 4, 0),
-(30, 30, 4, 0),
-(31, 31, 4, 0),
-(32, 32, 4, 0),
-(33, 33, 4, 0),
-(34, 34, 4, 0),
-(35, 34, 1, 0),
-(36, 35, 4, 0),
-(37, 35, 1, 0);
-
-
-
-INSERT INTO `distribuidor_zona` (`id`, `zona_id`, `distribuidor_id`, `comision`, `activo`) VALUES
-(1, 1, 1, 2, 1),
-(2, 2, 18, 3, 0),
-(3, 3, 18, 2, 0),
-(4, 4, 18, 3, 0),
-(5, 3, 7, 50, 1),
-(6, 2, 7, 75, 1),
-(7, 4, 7, 75, 1),
-(8, 5, 7, 75, 1),
-(9, 6, 7, 1000, 1);
-
-
 INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES
 (1, '1001', 'Materiales de Oficina', 1),
 (2, '1002', 'Materiales y Productos de Aseo', 1),
@@ -368,261 +221,16 @@ INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES
 (23, '8005', 'Otros Servicios', 1),
 (24, 'Traspasos de Gastos Indirectos', '9000', 1);
 
-
-INSERT INTO `empleado` (`id`, `id_unidad_id`, `id_cargo_id`, `id_usuario_id`, `nombre`, `correo`, `fecha_alta`, `baja`, `fecha_baja`, `direccion_particular`, `telefono`, `rol`, `activo`, `identificacion`, `sueldo_bruto_mensual`, `salario_x_hora`) VALUES
-(1, 1, 1, 1, 'root@solyag.com', 'admin@solyag.com', '2020-10-28', 0, NULL, 'Calle A', '555555555', 'ROLE_ADMIN', 1, '89102815009', NULL, NULL);
-
-
-INSERT INTO `estado` (`id`, `nombre`, `orden`, `activo`, `color`) VALUES
-(1, 'Pendiente', 1, 1, '#DDDBDB'),
-(2, 'Asignada', 2, 1, '#0C2EC0'),
-(3, 'En Proceso', 3, 1, '#84C0F7'),
-(4, 'Distribución', 4, 1, '#18B437'),
-(5, 'Entregada', 5, 1, '#9A710A'),
-(6, 'Cancelada', 6, 1, '#F10000');
-
 INSERT INTO `instrumento_cobro` (`id`, `nombre`, `activo`) VALUES
 (1, 'Cheque', 1),
 (2, 'Transferencia', 1),
 (3, 'Efectivo', 1);
-
-
-INSERT INTO `lugares` (`id`, `zona_id`, `nombre`, `habilitado`, `activo`) VALUES
-(1, 1, 'Zona Colonial', 1, 1),
-(2, 2, 'Bavaro Palace', 1, 1);
-
 
 INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES
 (1, 'USD', 1),
 (2, 'EUR', 1),
 (3, 'RD$', 1),
 (4, 'CUP', 1);
-
-INSERT INTO `moneda_pais` (`id`, `id_pais`, `id_moneda`, `status`) VALUES
-(1, '1', '4', '1'),
-(2, '1', '1', '1');
-
-
-INSERT INTO `municipios` (`id`, `provincia_id`, `code`, `nombre`, `activo`) VALUES
-(1, 1, 'Habana', 'Playa', 1),
-(2, 1, 'Habana', 'Marianao', 1),
-(3, 1, 'Habana', 'La Lisa', 1),
-(4, 2, 'Pinar del Rio', 'Consolación del Sur', 1),
-(5, 2, 'Pinar del Rio', 'Guane', 1),
-(6, 2, 'Pinar del Rio', 'La Palma', 1),
-(7, 2, 'Pinar del Rio', 'Los Palacios', 1),
-(8, 2, 'Pinar del Rio', 'Mantua', 1),
-(9, 2, 'Pinar del Rio', 'Minas de Matahambre', 1),
-(10, 2, 'Pinar del Rio', 'Pinar del Río', 1),
-(11, 2, 'Pinar del Rio', 'San Juan y Martínez', 1),
-(12, 2, 'Pinar del Rio', 'San Luis', 1),
-(13, 2, 'Pinar del Rio', 'Sandino', 1),
-(14, 2, 'Pinar del Rio', 'Viñales', 1),
-(15, 6, 'Artemisa', 'Alquízar', 1),
-(16, 6, 'Artemisa', 'Artemisa', 1),
-(17, 6, 'Artemisa', 'Bahía Honda', 1),
-(18, 6, 'Artemisa', 'Bauta', 1),
-(19, 6, 'Artemisa', 'Caimito', 1),
-(20, 6, 'Artemisa', 'Candelaria', 1),
-(21, 6, 'Artemisa', 'Guanajay', 1),
-(22, 6, 'Artemisa', 'Güira de Melena', 1),
-(23, 6, 'Artemisa', 'Mariel', 1),
-(24, 6, 'Artemisa', 'San Antonio de los Baños', 1),
-(25, 6, 'Artemisa', 'San Cristóbal', 1),
-(26, 7, 'La Habana', 'Arroyo Naranjo', 1),
-(27, 7, 'La Habana', 'Boyeros', 1),
-(28, 7, 'La Habana', 'Centro Habana', 1),
-(29, 7, 'La Habana', 'Cerro', 1),
-(30, 7, 'La Habana', 'Cotorro', 1),
-(31, 7, 'La Habana', 'Diez de Octubre', 1),
-(32, 7, 'La Habana', 'Guanabacoa', 1),
-(33, 7, 'La Habana', 'La Habana del Este', 1),
-(34, 7, 'La Habana', 'La Habana Vieja', 1),
-(35, 7, 'La Habana', 'La Lisa', 1),
-(36, 7, 'La Habana', 'Marianao', 1),
-(37, 7, 'La Habana', 'Playa', 1),
-(38, 7, 'La Habana', 'Plaza de la Revolución', 1),
-(39, 7, 'La Habana', 'Regla', 1),
-(40, 7, 'La Habana', 'San Miguel del Padrón', 1),
-(41, 8, 'Mayabeque', 'Batabanó', 1),
-(42, 8, 'Mayabeque', 'Bejucal', 1),
-(43, 8, 'Mayabeque', 'Güines', 1),
-(44, 8, 'Mayabeque', 'Jaruco', 1),
-(45, 8, 'Mayabeque', 'Madruga', 1),
-(46, 8, 'Mayabeque', 'Melena del Sur', 1),
-(47, 8, 'Mayabeque', 'Nueva Paz', 1),
-(48, 8, 'Mayabeque', 'Quivicán', 1),
-(49, 8, 'Mayabeque', 'San José de las Lajas', 1),
-(50, 8, 'Mayabeque', 'San Nicolás', 1),
-(51, 8, 'Mayabeque', 'Santa Cruz del Norte', 1),
-(52, 3, 'Matanzas', 'Calimete', 1),
-(53, 3, 'Matanzas', 'Cárdenas', 1),
-(54, 3, 'Matanzas', 'Varadero', 1),
-(55, 3, 'Matanzas', 'Ciénaga de Zapata', 1),
-(56, 3, 'Matanzas', 'Colón', 1),
-(57, 3, 'Matanzas', 'Jagüey Grande', 1),
-(58, 3, 'Matanzas', 'Jovellanos', 1),
-(59, 3, 'Matanzas', 'Limonar', 1),
-(60, 3, 'Matanzas', 'Los Arabos', 1),
-(61, 3, 'Matanzas', 'Martí', 1),
-(62, 3, 'Matanzas', 'Matanzas', 1),
-(63, 3, 'Matanzas', 'Pedro Betancourt', 1),
-(64, 3, 'Matanzas', 'Perico', 1),
-(65, 3, 'Matanzas', 'Unión de Reyes', 1),
-(66, 5, 'Cienfuegos', 'Abreus', 1),
-(67, 5, 'Cienfuegos', 'Aguada de Pasajeros', 1),
-(68, 5, 'Cienfuegos', 'Cruces', 1),
-(69, 5, 'Cienfuegos', 'Cumanayagua', 1),
-(70, 5, 'Cienfuegos', 'Lajas', 1),
-(71, 5, 'Cienfuegos', 'Palmira', 1),
-(72, 5, 'Cienfuegos', 'Rodas', 1),
-(73, 5, 'Cienfuegos', 'Cienfuegos', 1),
-(74, 5, 'Cienfuegos', 'Santa Isabel de las Lajas', 1),
-(75, 9, 'Villa Clara', 'Caibarién', 1),
-(76, 9, 'Villa Clara', 'Cayo Santa María', 1),
-(77, 9, 'Villa Clara', 'Camajuaní', 1),
-(78, 9, 'Villa Clara', 'Cifuentes', 1),
-(79, 9, 'Villa Clara', 'Corralillo', 1),
-(80, 9, 'Villa Clara', 'Encrucijada', 1),
-(81, 9, 'Villa Clara', 'Manicaragua', 1),
-(82, 9, 'Villa Clara', 'Placetas', 1),
-(83, 9, 'Villa Clara', 'Quemado de Güines', 1),
-(84, 9, 'Villa Clara', 'Ranchuelo', 1),
-(85, 9, 'Villa Clara', 'Remedios', 1),
-(86, 9, 'Villa Clara', 'Sagua la Grande', 1),
-(87, 9, 'Villa Clara', 'Santa Clara', 1),
-(88, 9, 'Villa Clara', 'Santo Domingo', 1),
-(89, 10, 'Sancti Spíritus', 'Cabaiguán', 1),
-(90, 10, 'Sancti Spíritus', 'Fomento', 1),
-(91, 10, 'Sancti Spíritus', 'Jatibonico', 1),
-(92, 10, 'Sancti Spíritus', 'La Sierpe', 1),
-(93, 10, 'Sancti Spíritus', 'Sancti Spíritus', 1),
-(94, 10, 'Sancti Spíritus', 'Taguasco', 1),
-(95, 10, 'Sancti Spíritus', 'Trinidad', 1),
-(96, 10, 'Sancti Spíritus', 'Yaguajay', 1),
-(97, 11, 'Ciego de Ávila', 'Baraguá', 1),
-(98, 11, 'Ciego de Ávila', 'Bolivia', 1),
-(99, 11, 'Ciego de Ávila', 'Chambas', 1),
-(100, 11, 'Ciego de Ávila', 'Ciego de Ávila', 1),
-(101, 11, 'Ciego de Ávila', 'Ciro Redondo', 1),
-(102, 11, 'Ciego de Ávila', 'Majagua', 1),
-(103, 11, 'Ciego de Ávila', 'Florencia', 1),
-(104, 11, 'Ciego de Ávila', 'Morón', 1),
-(105, 11, 'Ciego de Ávila', 'Primero de Enero', 1),
-(106, 11, 'Ciego de Ávila', 'Venezuela', 1),
-(107, 12, 'Camagüey', 'Camagüey', 1),
-(108, 12, 'Camagüey', 'Carlos M. de Céspedes', 1),
-(109, 12, 'Camagüey', 'Esmeralda', 1),
-(110, 12, 'Camagüey', 'Florida', 1),
-(111, 12, 'Camagüey', 'Guáimaro', 1),
-(112, 12, 'Camagüey', 'Jimaguayú', 1),
-(113, 12, 'Camagüey', 'Minas', 1),
-(114, 12, 'Camagüey', 'Najasa', 1),
-(115, 12, 'Camagüey', 'Nuevitas', 1),
-(116, 12, 'Camagüey', 'Santa Cruz del Sur', 1),
-(117, 12, 'Camagüey', 'Sibanicú', 1),
-(118, 12, 'Camagüey', 'Sierra de Cubitas', 1),
-(119, 12, 'Camagüey', 'Vertientes', 1),
-(120, 13, 'Las Tunas', 'Amancio', 1),
-(121, 13, 'Las Tunas', 'Colombia', 1),
-(122, 13, 'Las Tunas', 'Jesús Menéndez', 1),
-(123, 13, 'Las Tunas', 'Las Tunas', 1),
-(124, 13, 'Las Tunas', 'Jobabo', 1),
-(125, 13, 'Las Tunas', 'Majibacoa', 1),
-(126, 13, 'Las Tunas', 'Manatí', 1),
-(127, 13, 'Las Tunas', 'Puerto Padre', 1),
-(128, 14, 'Holguín', 'Antilla', 1),
-(129, 14, 'Holguín', 'Báguanos', 1),
-(130, 14, 'Holguín', 'Banes', 1),
-(131, 14, 'Holguín', 'Guardalavaca', 1),
-(132, 14, 'Holguín', 'Cacocum', 1),
-(133, 14, 'Holguín', 'Calixto García', 1),
-(134, 14, 'Holguín', 'Frank País', 1),
-(135, 14, 'Holguín', 'Cueto', 1),
-(136, 14, 'Holguín', 'Gibara', 1),
-(137, 14, 'Holguín', 'Holguín', 1),
-(138, 14, 'Holguín', 'Mayarí', 1),
-(139, 14, 'Holguín', 'Rafael Freyre', 1),
-(140, 14, 'Holguín', 'Moa', 1),
-(141, 14, 'Holguín', 'Sagua de Tánamo', 1),
-(142, 14, 'Holguín', 'Urbano Noris', 1),
-(143, 15, 'Granma', 'Bartolomé Masó', 1),
-(144, 15, 'Granma', 'Bayamo', 1),
-(145, 15, 'Granma', 'Buey Arriba', 1),
-(146, 15, 'Granma', 'Campechuela', 1),
-(147, 15, 'Granma', 'Cauto Cristo', 1),
-(148, 15, 'Granma', 'Guisa', 1),
-(149, 15, 'Granma', 'Jiguaní', 1),
-(150, 15, 'Granma', 'Manzanillo', 1),
-(151, 15, 'Granma', 'Media Luna', 1),
-(152, 15, 'Granma', 'Niquero', 1),
-(153, 15, 'Granma', 'Pilón', 1),
-(154, 15, 'Granma', 'Río Cauto', 1),
-(155, 15, 'Granma', 'Yara', 1),
-(156, 4, 'Santiago de Cuba', 'Contramaestre', 1),
-(157, 4, 'Santiago de Cuba', 'Guamá', 1),
-(158, 4, 'Santiago de Cuba', 'Mella', 1),
-(159, 4, 'Santiago de Cuba', 'Palma Soriano', 1),
-(160, 4, 'Santiago de Cuba', 'San Luis', 1),
-(161, 4, 'Santiago de Cuba', 'Santiago de Cuba', 1),
-(162, 4, 'Santiago de Cuba', 'Segundo Frente', 1),
-(163, 4, 'Santiago de Cuba', 'Songo-La Maya', 1),
-(164, 4, 'Santiago de Cuba', 'Tercer Frente', 1),
-(165, 16, 'Guantánamo', 'Baracoa', 1),
-(166, 16, 'Guantánamo', 'Caimanera', 1),
-(167, 16, 'Guantánamo', 'El Salvador', 1),
-(168, 16, 'Guantánamo', 'Guantánamo', 1),
-(169, 16, 'Guantánamo', 'Imías', 1),
-(170, 16, 'Guantánamo', 'Maisí', 1),
-(171, 16, 'Guantánamo', 'Manuel Tames', 1),
-(172, 16, 'Guantánamo', 'Niceto Pérez', 1),
-(173, 16, 'Guantánamo', 'San Antonio del Sur', 1),
-(174, 16, 'Guantánamo', 'Yateras', 1),
-(175, 17, 'Isla de la Juventud', 'Nueva Gerona', 1);
-
-
-INSERT INTO `pais` (`id`, `nombre`, `activo`) VALUES
-(1, 'Cuba', 1);
-
-
-
-INSERT INTO `provincias` (`id`, `pais_id`, `code`, `nombre`, `id_pais`, `activo`) VALUES
-(1, 1, 'Habana', 'Habana', 1, 0),
-(2, 1, 'Pinar del Rio', 'Pinar del Rio', 1, 1),
-(3, 1, 'Matanzas', 'Matanzas', 1, 1),
-(4, 1, 'Santiago de Cuba', 'Santiago de Cuba', 1, 1),
-(5, 1, 'Cienfuegos', 'Cienfuegos', 1, 1),
-(6, 1, 'Artemisa', 'Artemisa', 1, 1),
-(7, 1, 'La Habana', 'La Habana', 1, 1),
-(8, 1, 'Mayabeque', 'Mayabeque', 1, 1),
-(9, 1, 'Villa Clara', 'Villa Clara', 1, 1),
-(10, 1, 'Sancti Spíritus', 'Sancti Spíritus', 1, 1),
-(11, 1, 'Ciego de Ávila', 'Ciego de Ávila', 1, 1),
-(12, 1, 'Camagüey', 'Camagüey', 1, 1),
-(13, 1, 'Las Tunas', 'Las Tunas', 1, 1),
-(14, 1, 'Holguín', 'Holguín', 1, 1),
-(15, 1, 'Granma', 'Granma', 1, 1),
-(16, 1, 'Guantánamo', 'Guantánamo', 1, 1),
-(17, 1, 'Isla de la Juventud', 'Isla de la Juventud', 1, 1);
-
-
-
-INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`) VALUES
-(1, 'Recarga Cubacell', '0010', 'RC'),
-(2, 'Recarga Nauta', '0020', 'RN'),
-(3, 'Larga Distancia', '0030', 'LD'),
-(4, 'Envio de Remesas', '0040', 'ER'),
-(5, 'Boletos Aéreos', '0050', 'BA'),
-(6, 'Renta de Hoteles', '0060', 'RH'),
-(7, 'Renta de Autos', '0070', 'RA'),
-(8, 'Excursiones', '0080', 'E'),
-(9, 'Envio de paquetes', '0090', 'EP'),
-(10, 'Paquetes Turísticos', '0100', 'PT'),
-(11, 'Paquete Turístico Básico', '0110', 'PTB'),
-(12, 'Desarrollo de Software', '0120', 'DS'),
-(13, 'Diseño', '0130', 'D'),
-(14, 'Marketing y redes Sociales', '0140', 'MRS');
-
 
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`) VALUES
 (1, 1, '0001', 0, 'Efectivo', 1, 1),
@@ -794,7 +402,6 @@ INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`
 (167, 39, '0010', 0, 'Cobros Anticipados', 0, 1),
 (168, 66, '0030', 0, 'Servicios', 1, 1);
 
-
 INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio_analisis_id`) VALUES
 (1, 16, 2),
 (2, 16, 3),
@@ -868,20 +475,6 @@ INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio
 (101, 165, 6),
 (102, 166, 6);
 
-
-
-INSERT INTO `tasa_cambio` (`id`, `id_moneda_origen_id`, `id_moneda_destino_id`, `anno`, `mes`, `valor`, `activo`) VALUES
-(1, 1, 4, 2021, 5, 30, 1),
-(2, 4, 1, 2021, 5, 0.033333333333333, 1);
-
-
-INSERT INTO `termino_pago` (`id`, `nombre`) VALUES
-(1, 'Contra servicio'),
-(2, 'A 7 días'),
-(3, 'A 15 días'),
-(4, 'A 30 días'),
-(5, 'A 45 días');
-
 INSERT INTO `tipo_comprobante` (`id`, `descripcion`, `activo`, `abreviatura`) VALUES
 (1, 'COMPROBANTE DE APERTURA', 1, 'AP'),
 (2, 'COMPROBANTE DE OPERACIONES', 1, '00');
@@ -927,13 +520,8 @@ INSERT INTO `tipo_movimiento` (`id`, `descripcion`, `activo`, `codigo`) VALUES
 (6, 'BAJAS DE ACTIVOS', 1, 'BA'),
 (7, 'VENTA DE ACTIVOS', 1, 'VA');
 
-INSERT INTO `tipo_traslado` (`id`, `nombre`, `activo`) VALUES
-(1, 'Privado', 1),
-(2, 'Colectivo', 1);
-
 INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES
 (1, NULL, NULL, 'Grupo Horizontes Admin', 1, NULL, 'Calle Juan Sanchez Ramirez esq Wenceslao Alvarez  #52 local B1 Zona Universitaria, Santo  Domingo , República Dominicana', NULL, NULL, NULL, NULL);
-
 
 INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (1, 'Centímetro', 'cm', 1),
@@ -950,26 +538,3 @@ INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 (12, 'Metro cúbico', 'm³', 1),
 (13, 'Unidad', 'u', 1),
 (14, 'Blister', 'Blister', 1);
-
-
-INSERT INTO `user` (`id`, `username`, `roles`, `status`, `id_moneda`, `id_agencia_id`, `password`) VALUES
-(1, 'root@solyag.com', '[\"ROLE_ADMIN\"]', 1, '1', NULL, '$argon2id$v=19$m=65536,t=4,p=1$b0tTTFd2OTEwZ1pMZXpoYw$4vh7/DGIgA6QKXFZiapxgmhv/OeSfs6ki30/FTLSOx4');
-
-
-
-INSERT INTO `zona` (`id`, `nombre`, `activo`) VALUES
-(1, 'Santo domingo', 1),
-(2, 'Punta Cana', 1);
-
-
-INSERT INTO `zona_remesas` (`id`, `pais_id`, `provincia_id`, `municipio_id`, `nombre`, `activo`) VALUES
-(1, 1, 2, 10, 'mismi pinar', 0),
-(2, 1, 2, 11, 'Rio Seco', 1),
-(3, 1, 2, 11, 'San Juan y Martinez', 1),
-(4, 1, 2, 11, 'Punta de Carta', 1),
-(5, 1, 2, 11, 'San Juan y Martinez (periferia)', 1),
-(6, 1, 7, 32, 'Guanabacoa', 1),
-(7, 1, 7, 32, 'La Gallega', 1),
-(8, 1, 7, 33, 'Campo Florido', 1),
-(9, 1, 2, 5, 'Guane', 1),
-(10, 1, 7, 37, 'Jaimanitas', 1);
