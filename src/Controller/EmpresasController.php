@@ -405,7 +405,7 @@ class EmpresasController extends AbstractController
             ->setNroContrato($nro_contrato)
             ->setSiglas($siglas)
             ->setTelefono($telefono);
-        $em->persist($new_Empresa);
+
 
 
         /***COPY IMAGE EMPRES**/
@@ -424,6 +424,7 @@ class EmpresasController extends AbstractController
             $archivo->move($destino, $fichero_ticket);
             $new_Empresa->setIconoTicket($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero_ticket);
         }
+        $em->persist($new_Empresa);
         $em->flush();
         $this->addFlash('success', 'Empresa modificada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
