@@ -30,16 +30,19 @@ class EmpleadoApiController extends AbstractController
     ): JsonResponse {
 
         /** @var Empleados $employee */
-
         $employee = $empleadosRepository->findOneBy(['correo' => $request->get('email')]);
+
         if ($employee) {
+
+            if (!$employee->getIdEmpresa()->getReady())
+                return $this->json('Su empresa no tiene el servicio disponible', 501);
 
             $modules = $empresasRepository->arrayModules($employee->getIdEmpresa()->getId());
 
             return $this->json(['employee' => $employee, 'modules' => $modules]);
         }
 
-        return $this->json('Empleado no registrado', 500);
+        return $this->json('Error de credenciales', 502);
     }
 
     /**
