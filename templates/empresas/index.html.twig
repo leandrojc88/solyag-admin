@@ -58,6 +58,8 @@
                                         telefono:'{{ item.telefono }}' ,
                                         correo:'{{ item.correo }}' ,
                                         id: '{{ item.id }}',
+                                        icono: '{{ item.icono }}',
+                                        icono_ticket: '{{ item.icono_ticket }}',
                                         })">
                             <i class="fa fa-edit"></i>
                         </button>
@@ -226,7 +228,7 @@
             $('#modal__btn__actualizar').show()
             $('#modal__btn__aceptar').hide()
 
-            const {siglas, nombre, identificacion, nro_contrato, telefono, correo, id,} = config
+            const {siglas, nombre, identificacion, nro_contrato, telefono, correo, id, icono, icono_ticket} = config
 
             $('#modal__form__id').modal('show')
             $('#modal__form__label__id').html("Modificar " + nombre)
@@ -238,6 +240,10 @@
             $('#empresas_nro_contrato').val(nro_contrato)
             $('#empresas_telefono').val(telefono)
             $('#empresas_correo').val(correo)
+                        
+            $('#icono_empresa').css("background-image", "url(" +  icono + ")");
+            $('#icono_ticket').css("background-image", "url(" +  icono_ticket + ")");
+
         }
         $(document).ready(function () {
             // init

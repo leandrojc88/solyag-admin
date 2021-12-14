@@ -46,6 +46,8 @@ class EmpresasController extends AbstractController
                 'id' => $item->getId(),
                 'ready' => $item->getReady(),
                 'restore' => $item->getRestore(),
+                'icono' => $item->getIcono(),
+                'icono_ticket' => $item->getIconoTicket(),
                 'restore_test' => $item->getRestoreTest(),
             ];
         }
