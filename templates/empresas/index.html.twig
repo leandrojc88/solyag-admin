@@ -31,8 +31,8 @@
             <th width="120px" class="text-left">Siglas</th>
             <th scope="col-1" class="text-left">Nombre</th>
             <th width="180px" class="text-left">Identificación</th>
-            <th width="180px" class="text-left">Nro. Contrato</th>
-            <th width="180px" class="text-left">Teléfono</th>
+            {# <th width="180px" class="text-left">Nro. Contrato</th>
+            <th width="180px" class="text-left">Teléfono</th> #}
             <th width="180px" class="text-left">Correo</th>
             <th width="180px" class="text-center">Acciones</th>
             <th width="100px" class="text-center">Restaurar</th>
@@ -44,8 +44,8 @@
                     <td style="font-weight:400;">{{ item.siglas }}</td>
                     <td style="font-weight:400;">{{ item.nombre }}</td>
                     <td style="font-weight:400;">{{ item.identificacion }}</td>
-                    <td style="font-weight:400;">{{ item.nro_contrato }}</td>
-                    <td style="font-weight:400;">{{ item.telefono }}</td>
+                    {# <td style="font-weight:400;">{{ item.nro_contrato }}</td>
+                    <td style="font-weight:400;">{{ item.telefono }}</td> #}
                     <td style="font-weight:400;">{{ item.correo }}</td>
                     <td class="text-center">
                         <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip"
@@ -284,7 +284,7 @@
             })
 
 
-            var validateFormAdmin = $('#form_modal_target_admin').validate({
+            $('#form_modal_target_admin').validate({
                 errorClass: 'invalid-label-orange',
                 errorPlacement: function (error, element) {
                     // colocar mensajes de error a la derecha de cada label para el componente
@@ -301,20 +301,28 @@
                 },
                 rules: {
                     'administradores[nombre]': "required",
-                    'administradores[usuario]': "required"
+                    'administradores[usuario]': {
+                                                required: true,
+                                                email: true
+                                                }
                 },
                 messages: {
                     'administradores[nombre]': 'Obligatorio!',
-                    'administradores[usuario]': 'Obligatorio!'
+                    'administradores[usuario]': {
+                                                required: 'Obligatorio!',
+                                                email: 'Debe ser un correo valido'
+                                                }
                 }
             })
 
             $('#modal__btn__cuenta__aceptar').on('click', function () {
                 const formulario_admin = $('#form_modal_target_admin')
-                formulario_admin.attr('method', `POST`)
-                formulario_admin.prop('action', '/empresas/add_admin')
-                formulario_admin.submit()
-                if (validateFormAdmin.errorList.length === 0) loadingModal.show()
+                if (formulario_admin.valid()) {
+                    formulario_admin.attr('method', `POST`)
+                    formulario_admin.prop('action', '/empresas/add_admin')
+                    formulario_admin.submit()
+                    loadingModal.show()
+                }
             })
 
             $('#modal__btn__actualizar').on('click', function () {

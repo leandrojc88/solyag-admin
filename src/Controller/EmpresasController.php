@@ -152,9 +152,11 @@ class EmpresasController extends AbstractController
                 ]
             );
 
-            if ($response->getStatusCode() == 404 || $response->getStatusCode() == 500) {
+            if ($response->getStatusCode() == 501)
+                $this->addFlash('error', 'el usuario esta en uso');
 
-                $this->addFlash('error', $response->getContent());
+            if ($response->getStatusCode() == 502) {
+                $this->addFlash('error', 'Erro de Envio de correo');
             } else {
 
                 // enviar contrasena por email
@@ -280,7 +282,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_empresa');
             $archivo->move($destino, $fichero);
-            $new_Empresa->setIcono($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero);
+            $new_Empresa->setIcono($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
         }
         /***COPY IMAGE TICKET**/
         $fichero = $siglas . '-' . $identificacion . '-ticket.jpg';
@@ -288,7 +290,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_ticket');
             $archivo->move($destino, $fichero);
-            $new_Empresa->setIconoTicket($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero);
+            $new_Empresa->setIconoTicket($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
         }
 
         $em->flush();
@@ -414,7 +416,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_empresa');
             $archivo->move($destino, $fichero);
-            $new_Empresa->setIcono($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero);
+            $new_Empresa->setIcono($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
         }
         /***COPY IMAGE TICKET**/
         $fichero_ticket = $siglas . '-' . $identificacion . '-ticket.jpg';
@@ -422,7 +424,7 @@ class EmpresasController extends AbstractController
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_ticket');
             $archivo->move($destino, $fichero_ticket);
-            $new_Empresa->setIconoTicket($_ENV['SITE_URL'].'/images/empresas/' . $siglas . '/'.$fichero_ticket);
+            $new_Empresa->setIconoTicket($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero_ticket);
         }
         $em->persist($new_Empresa);
         $em->flush();
