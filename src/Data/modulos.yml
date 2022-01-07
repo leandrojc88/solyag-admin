@@ -49,3 +49,5 @@ modulos:
     name: "[Multi-Servicios][Envíos de paquetes]"
   - id: 25
     name: "[Multi-Servicios][Combos de comida]"
+  - id: 26
+    name: "[Economía][Finanzas]"
