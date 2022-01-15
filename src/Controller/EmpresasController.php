@@ -154,6 +154,8 @@ class EmpresasController extends AbstractController
                 ]
             );
 
+            dd($response);
+
             if ($response->getStatusCode() == 501)
                 $this->addFlash('error', 'el usuario esta en uso');
 
