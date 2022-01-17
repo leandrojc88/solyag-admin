@@ -515,7 +515,7 @@ class EmpresasController extends AbstractController
             // load initial data
             $migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email, true);
             // load test data
-            $migratorExcecuter->loadTestFixtures($id);
+            // $migratorExcecuter->loadTestFixtures($id);
 
 
             $empresa->setRestoreTest(true);
