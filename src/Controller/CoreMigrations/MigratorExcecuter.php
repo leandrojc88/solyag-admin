@@ -3,6 +3,7 @@
 namespace App\Controller\CoreMigrations;
 
 use App\Controller\CoreMigrations\fixtures\initialDataFixture;
+use App\Controller\CoreMigrations\fixtures\testDataFixture;
 use Doctrine\DBAL\Connection;
 use Doctrine\Migrations\Finder\GlobFinder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,13 +55,24 @@ class MigratorExcecuter
         }
     }
 
-    public function loadInitFixtures($empresaId, $test = false)
+    public function loadInitFixtures($empresaId, $unit, $phone, $email, $test = false)
     {
 
         $dbname = $test ? 'db_prueba_emp' . $empresaId : 'db_emp' . $empresaId;
         $conn = $this->getConnextion($dbname);
 
-        $testFixture = new initialDataFixture();
+        $testFixture = new initialDataFixture($unit, $phone, $email);
+
+        $testFixture->exceute($conn);
+    }
+
+    public function loadTestFixtures($empresaId)
+    {
+
+        $dbname = 'db_prueba_emp' . $empresaId;
+        $conn = $this->getConnextion($dbname);
+
+        $testFixture = new testDataFixture();
 
         $testFixture->exceute($conn);
     }

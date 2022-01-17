@@ -18,7 +18,7 @@ abstract class AbstratFixture extends AbstratCoreMigration
         if (!$this->canExcecute($conn)) return;
 
         $tempListSql = $this->plannedSql;
-
+        // dd($tempListSql);
         while (count($tempListSql) > 0) {
 
             try {
@@ -31,7 +31,6 @@ abstract class AbstratFixture extends AbstratCoreMigration
             } catch (UniqueConstraintViolationException $th) {
                 continue;
             } catch (\Exception $th) {
-                dd($th, $sql, $sql->getStatement(), $tempListSql);
                 array_push($tempListSql, $sql);
             }
         }

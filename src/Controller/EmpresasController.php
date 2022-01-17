@@ -461,34 +461,6 @@ class EmpresasController extends AbstractController
         return 'false';
     }
 
-    /**
-     * @Route("/restore_prueba", name="empresas_restore_prueba")
-     */
-    public function reastoreBackupPrueba(
-        EntityManagerInterface $em,
-        Request $request,
-        MigratorExcecuter $migratorExcecuter
-    ) {
-        $id = $request->request->get('id');
-
-        $migratorExcecuter->excecuteMigrations($id, true);
-
-        $migratorExcecuter->loadInitFixtures($id, true);
-
-        // $dbName = 'db_prueba_emp' . $id;
-        // $filePath = '../src/Controller/backup/db.sql';
-        // //FUNCION 1
-        // $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
-        /** @var Empresas $empresa */
-        $empresa = $em->getRepository(Empresas::class)->find($id);
-        if ($empresa) {
-            $empresa->setRestoreTest(true);
-            $em->persist($empresa);
-            $em->flush();
-        }
-        $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
-        return $this->redirectToRoute('empresas');
-    }
 
     /**
      * @Route("/restore", name="empresas_restore")
@@ -500,17 +472,53 @@ class EmpresasController extends AbstractController
     ) {
 
         $id = $request->request->get('id');
-        // $dbName = 'db_emp' . $id;
 
-        $migratorExcecuter->excecuteMigrations($id);
+        /** @var Empresas $empresa */
+        $empresa = $em->getRepository(Empresas::class)->find($id);
 
-        // $filePath = '../src/Controller/backup/db.sql';
-        //FUNCION 1
-        // $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+        if ($empresa) {
+
+            $unit = $empresa->getNombre();
+            $phone = $empresa->getTelefono();
+            $email = $empresa->getCorreo();
+
+            $migratorExcecuter->excecuteMigrations($id);
+            $migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email);
+
+            $empresa->setRestore(true);
+            $em->persist($empresa);
+            $em->flush();
+        }
+        $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
+        return $this->redirectToRoute('empresas');
+    }
+
+    /**
+     * @Route("/restore_prueba", name="empresas_restore_prueba")
+     */
+    public function reastoreBackupPrueba(
+        EntityManagerInterface $em,
+        Request $request,
+        MigratorExcecuter $migratorExcecuter
+    ) {
+        $id = $request->request->get('id');
+
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
         if ($empresa) {
-            $empresa->setRestore(true);
+
+            $unit = $empresa->getNombre();
+            $phone = $empresa->getTelefono();
+            $email = $empresa->getCorreo();
+
+            $migratorExcecuter->excecuteMigrations($id, true);
+            // load initial data
+            $migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email, true);
+            // load test data
+            $migratorExcecuter->loadTestFixtures($id);
+
+
+            $empresa->setRestoreTest(true);
             $em->persist($empresa);
             $em->flush();
         }

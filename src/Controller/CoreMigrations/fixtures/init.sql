@@ -564,3 +564,4 @@ INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (11
 INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (12, 'Metro cúbico', 'm³', 1);
 INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (13, 'Unidad', 'u', 1);
 INSERT INTO `unidad_medida` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (14, 'Blister', 'Blister', 1);
+INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES (1, NULL, 3, 'Solyag Express', 1, '', 'dir.', '', '', '', '');

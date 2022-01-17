@@ -7,6 +7,19 @@ use App\Controller\CoreMigrations\AbstratFixture;
 class initialDataFixture extends AbstratFixture
 {
 
+    private $unit = "";
+    private $phone = "";
+    private $email = "";
+
+    public function __construct($unid="", $phone="", $email="")
+    {
+        $this->unit = $unid;
+        $this->phone = $phone;
+        $this->email = $email;
+
+        $this->up();
+    }
+
     public function up(): void
     {
         $file = file_get_contents(dirname(__FILE__) . '/initialData.sql');
@@ -18,5 +31,9 @@ class initialDataFixture extends AbstratFixture
             if (!$niceSql) continue;
             $this->addSql($niceSql);
         }
+
+        
+        // unidad
+        $this->addSql("INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES (1, NULL, 3, '$this->unit', 1, '', 'dir.', '$this->phone', '$this->email', '', '');");
     }
 }
