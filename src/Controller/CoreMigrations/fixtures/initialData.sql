@@ -34,8 +34,8 @@ INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES
 INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (17, 'CUENTAS DE GASTOS', 'GAT', 1);
 INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (18, 'BANCO', 'B', 0);
 INSERT INTO `criterio_analisis` (`id`, `nombre`, `abreviatura`, `activo`) VALUES (19, 'NÚMERO DE CUENTA', 'NRO-CTA', 1);
-INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (1, 1, 103, 'Efectivo en Caja', 1, 0, 0, 0, 1, 0);
-INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (2, 1, 109, 'Efectivo en Banco', 1, 0, 0, 0, 1, 0);
+INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (1, 1, 103, 'Efectivo en Caja en RD$', 1, 0, 0, 0, 1, 0);
+INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (2, 1, 109, 'Efectivo en Banco en RD$', 1, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (3, 1, 131, 'Efectos por Cobrar a Corto Plazo', 1, 0, 1, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (4, 1, 134, 'Cuenta en Participacion', 1, 0, 1, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (5, 1, 142, 'Prestamos y Otras Operaciones Crediticias', 1, 0, 0, 0, 1, 0);
@@ -88,7 +88,7 @@ INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudor
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (51, 10, 565, 'Cuentas por Pagar Diversas', 0, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (52, 10, 569, 'Cuentas por Pagar Compra de Monedas', 0, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (53, 10, 570, 'Ingresos de Periodos Futuros', 0, 0, 0, 0, 1, 0);
-INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (54, 11, 600, 'Capital Contable', 0, 0, 0, 0, 1, 0);
+INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (54, 11, 600, 'Capital Contable en RD$', 0, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (55, 11, 605, 'Acciones por Emitir', 1, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (56, 11, 608, 'Acciones Suscritas', 0, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (57, 11, 615, 'Revalorizacion de Activos Fijos Tangibles', 1, 0, 0, 0, 1, 0);
@@ -217,10 +217,7 @@ INSERT INTO `estado_solicitudes` (`id`, `nombre`, `activo`) VALUES (1, 'Registra
 INSERT INTO `estado_solicitudes` (`id`, `nombre`, `activo`) VALUES (2, 'Procesada', 1);
 INSERT INTO `estado_solicitudes` (`id`, `nombre`, `activo`) VALUES (3, 'Pagada', 1);
 INSERT INTO `estado_solicitudes` (`id`, `nombre`, `activo`) VALUES (4, 'Aceptada', 1);
-INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES (1, 'USD', 1);
-INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES (2, 'EUR', 1);
-INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES (3, 'RD$', 1);
-INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES (4, 'CUP', 1);
+INSERT INTO `moneda` (`id`, `nombre`, `activo`) VALUES (1, 'RD$', 1);
 INSERT INTO `rango_escala_dgii` (`id`, `anno`, `escala`, `por_ciento`, `minimo`, `maximo`, `activo`, `valor_fijo`) VALUES (2, 2021, 'Rentas hasta RD$416,220.00', 0, 0, 416220, 1, 0);
 INSERT INTO `rango_escala_dgii` (`id`, `anno`, `escala`, `por_ciento`, `minimo`, `maximo`, `activo`, `valor_fijo`) VALUES (3, 2021, 'Rentas desde RD$416,220.01 hasta RD$624,329.00', 15, 416220.01, 624329, 1, 0);
 INSERT INTO `rango_escala_dgii` (`id`, `anno`, `escala`, `por_ciento`, `minimo`, `maximo`, `activo`, `valor_fijo`) VALUES (4, 2021, 'Rentas desde RD$624329.01 hasta RD$867123.00', 20, 624329.01, 867123, 1, 31216);
