@@ -77,6 +77,7 @@ INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudor
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (41, 7, 440, 'Obligacion con el Estado', 0, 0, 0, 1, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (42, 7, 455, 'Nominas por Pagar', 0, 0, 0, 1, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (43, 7, 470, 'Prestamos Recibidos', 0, 0, 0, 1, 1, 0);
+INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (112, 1, 480, "Gastos acumulados por pagar", 0, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (44, 7, 492, 'Provision para Vacaciones', 0, 0, 0, 0, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (45, 8, 510, 'Efectos por pagar a largo plazo', 0, 0, 0, 1, 1, 0);
 INSERT INTO `cuenta` (`id`, `id_tipo_cuenta_id`, `nro_cuenta`, `nombre`, `deudora`, `mixta`, `obligacion_deudora`, `obligacion_acreedora`, `activo`, `produccion`) VALUES (46, 8, 515, 'Cuentas por Pagar a Largo Plazo', 0, 0, 0, 1, 1, 0);
@@ -181,6 +182,7 @@ INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_anali
 INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_analisis_id`, `orden`) VALUES (168, 64, 4, 1);
 INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_analisis_id`, `orden`) VALUES (169, 64, 5, 2);
 INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_analisis_id`, `orden`) VALUES (171, 38, 6, 1);
+INSERT INTO `cuenta_criterio_analisis` (`id`, `id_cuenta_id`, `id_criterio_analisis_id`, `orden`) VALUES (172, 112, 6, 1);
 INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES (1, '1001', 'Materiales de Oficina', 1);
 INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES (2, '1002', 'Materiales y Productos de Aseo', 1);
 INSERT INTO `elemento_gasto` (`id`, `codigo`, `descripcion`, `activo`) VALUES (3, '1003', 'Alimentos', 1);
@@ -431,6 +433,7 @@ INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`) VALUES (186, 2, '00033335555', 0, 'TD SOLYAG INC', 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`) VALUES (187, 2, '00061', 0, 'PAYPAL', 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`) VALUES (188, 38, '0001', 0, 'Servicios comprados', 0, 1);
+INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`) VALUES (275, 112, "0010", 0, "Gastos acumulados por pagar", 0, 1);
 INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio_analisis_id`) VALUES (1, 16, 2);
 INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio_analisis_id`) VALUES (2, 16, 3);
 INSERT INTO `subcuenta_criterio_analisis` (`id`, `id_subcuenta_id`, `id_criterio_analisis_id`) VALUES (3, 16, 4);

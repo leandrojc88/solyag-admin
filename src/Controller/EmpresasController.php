@@ -472,6 +472,7 @@ class EmpresasController extends AbstractController
     ) {
 
         $id = $request->request->get('id');
+        $fullLoading = false;
 
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
@@ -482,15 +483,20 @@ class EmpresasController extends AbstractController
             $phone = $empresa->getTelefono();
             $email = $empresa->getCorreo();
 
-            $migratorExcecuter->excecuteMigrations($id);
-            $migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email);
+            // cuando se no queden mas migraciones por ejecutar, entonces ejecutar Fixtures
+            if (!$migratorExcecuter->excecuteMigrations($id)) {
+                // load initial data
+                if (!$migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email))
+                    $fullLoading = true;
+            }
 
             $empresa->setRestore(true);
             $em->persist($empresa);
             $em->flush();
         }
-        $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
-        return $this->redirectToRoute('empresas');
+        return $this->json(['full_loading' => $fullLoading]);
+        // $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
+        // return $this->redirectToRoute('empresas');
     }
 
     /**
@@ -503,6 +509,8 @@ class EmpresasController extends AbstractController
     ) {
         $id = $request->request->get('id');
 
+        $fullLoading = false;
+
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
         if ($empresa) {
@@ -511,19 +519,21 @@ class EmpresasController extends AbstractController
             $phone = $empresa->getTelefono();
             $email = $empresa->getCorreo();
 
-            $migratorExcecuter->excecuteMigrations($id, true);
-            // load initial data
-            $migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email, true);
+            // cuando se no queden mas migraciones por ejecutar, entonces ejecutar Fixtures
+            if (!$migratorExcecuter->excecuteMigrations($id, true)) {
+                // load initial data
+                if (!$migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email, true))
+                    $fullLoading = true;
+            }
             // load test data
             // $migratorExcecuter->loadTestFixtures($id);
-
 
             $empresa->setRestoreTest(true);
             $em->persist($empresa);
             $em->flush();
         }
-        $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
-        return $this->redirectToRoute('empresas');
+        return $this->json(['full_loading' => $fullLoading]);
+        // return $this->redirectToRoute('empresas');
     }
 
 

@@ -37,18 +37,21 @@ abstract class AbstratCoreMigration
 
     /**
      * @throws MigrationException|DBALException
+     * 
+     * @return bool if migration true(se esta ejecutando), false(no puede ser ejecutada)
      */
     abstract public function up(): void;
 
-    public function exceute(Connection $conn): void
+    public function exceute(Connection $conn): bool
     {
-        if (!$this->canExcecute($conn)) return;
+        if (!$this->canExcecute($conn)) return false;
 
         foreach ($this->plannedSql as $key => $sql) {
             $conn->executeQuery($sql->getStatement());
         }
 
         $this->registerInDB($conn);
+        return true;
     }
 
     public function canExcecute(Connection $conn): bool

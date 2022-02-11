@@ -36,6 +36,18 @@ class MigratorExcecuter
         $finder = new GlobFinder();
 
         $strMigrationsClass = $finder->findMigrations(__DIR__ . '/migrations');
+        $trsShow = [];
+
+        // para lograr ordenar consecutivamente por el nombre de la migracion el $strMigrationsClass 
+        asort($strMigrationsClass);
+        // for ($i=0; $i < count($strMigrationsClass); $i++) { 
+        //     $strMigration = $strMigrationsClass[$i];
+        //     $trsShow[] = $strMigrationsClass[$i];
+        //     $this->migrationsClass[] = new $strMigration();
+        //     # code...
+        // }
+
+        // dd($strMigrationsClass,, $strMigrationsClass,$trsShow, $this->migrationsClass);
 
         foreach ($strMigrationsClass as $key => $strMigration) {
 
@@ -43,6 +55,14 @@ class MigratorExcecuter
         }
     }
 
+    /**
+     * ejecuta todas las migraciones en una base de datos
+     * de una en una para evitar la `Maximum execution time`
+     * 
+     * @return bool
+     *      **true**  - en caso que se ejecute correctamente | 
+     *      **false** - para poder dar paso a que se ejecute mas codigo ocmo las `Fixtures`
+     */
     public function excecuteMigrations($empresaId, bool $test = false)
     {
         $this->loadMigrationsFile();
@@ -51,10 +71,21 @@ class MigratorExcecuter
         $conn = $this->getConnextion($dbname);
 
         foreach ($this->migrationsClass as $key => $migration) {
-            $migration->exceute($conn);
+            // validar que se ejecute una sola migracion para hacerlo async con ajax
+            if ($migration->exceute($conn)) return true;
         }
+
+        return false;
     }
 
+    /**
+     * ejecuta `initialDataFixture` en una base de datos
+     * de una en una para evitar la `Maximum execution time`
+     * 
+     * @return bool
+     *      **true**  - en caso que se ejecute correctamente | 
+     *      **false** - para poder dar paso a que se ejecute mas codigo
+     */
     public function loadInitFixtures($empresaId, $unit, $phone, $email, $test = false)
     {
 
@@ -63,9 +94,19 @@ class MigratorExcecuter
 
         $testFixture = new initialDataFixture($unit, $phone, $email);
 
-        $testFixture->exceute($conn);
+        if ($testFixture->exceute($conn)) return true;
+
+        return false;
     }
 
+    /**
+     * ejecuta `testDataFixture` en una base de datos
+     * de una en una para evitar la `Maximum execution time`
+     * 
+     * @return bool
+     *      **true**  - en caso que se ejecute correctamente | 
+     *      **false** - para poder dar paso a que se ejecute mas codigo
+     */
     public function loadTestFixtures($empresaId)
     {
 
@@ -74,7 +115,9 @@ class MigratorExcecuter
 
         $testFixture = new testDataFixture();
 
-        $testFixture->exceute($conn);
+        if ($testFixture->exceute($conn)) return true;
+
+        return false;
     }
 
     public function loadListFixtures($empresaId)

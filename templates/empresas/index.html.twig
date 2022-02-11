@@ -397,8 +397,8 @@
             $('#page__confirm__modal__database').val(id)
         }
 
-        $('#confirm__modal__database__btn_ok').on('click', function () {
-            loadingModal.show()
+        $('#confirm__modal__database__btn_ok').on('click', async function () {
+            /*loadingModal.show()
             let id = $('#page__confirm__modal__database').val()
             $('body').append(`
                     <form action='/empresas/restore'
@@ -408,26 +408,80 @@
 
             const fomrulario = $('#form_restore')
             fomrulario.submit()
-            fomrulario.remove()
+            fomrulario.remove()*/
+
+            loadingModal.show()
+            
+            let id = $('#page__confirm__modal__database').val()
+            let full_loading = false
+
+            const updateDB = () => new Promise( resolve => {
+                $.ajax({
+                    method: "POST",
+                    data: {id},
+                    url: '/empresas/restore',
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.full_loading) {
+                            resolve(true)                
+                        }
+                        resolve(false)
+                    },
+
+                    error: function(err) {
+                        loadingModal.close();
+                        alertTemplate('Error interno al modificar la BD', 'danger')
+                    }
+                });
+            });
+            
+            while(!full_loading) {
+                full_loading = await updateDB();
+            }
+
+            loadingModal.close();
+            $('#confirm__modal__database').modal('hide')
+             window.location.replace('/empresas');
         })
 
         function restoreDatabaseTest(id) {
             $('#page__confirm__modal__database_test').val(id)
         }
 
-        $('#confirm__modal__database_test__btn_ok').on('click', function () {
+        $('#confirm__modal__database_test__btn_ok').on('click', async function () {
             loadingModal.show()
+            
             let id = $('#page__confirm__modal__database_test').val()
-            $('body').append(`
-                    <form action='/empresas/restore_prueba'
-                         method="post" id='form_restore_prueba'>
-                            <input type='text' hidden name='id' value='${id}'/>
-                    </form>`)
+            let full_loading = false
 
-            const fomrulario = $('#form_restore_prueba')
-            fomrulario.submit()
-            fomrulario.remove()
-        })
+            const updateDB = () => new Promise( resolve => {
+                $.ajax({
+                    method: "POST",
+                    data: {id},
+                    url: '/empresas/restore_prueba',
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.full_loading) {
+                            resolve(true)                
+                        }
+                        resolve(false)
+                    },                    
+                    error: function(err) {
+                        alertTemplate('Error interno al modificar la BD', 'danger')
+                        loadingModal.close();
+                    }
+                });
+            });
+            
+            while(!full_loading) {
+                full_loading = await updateDB();
+            }
+
+            loadingModal.close();
+            $('#confirm__modal__database_test').modal('hide')
+            window.location.replace('/empresas');
+        
+        });
 
         function showMessage() {
             alertTemplate('No puede crear un administrador sin activar la empresa.', 'danger')

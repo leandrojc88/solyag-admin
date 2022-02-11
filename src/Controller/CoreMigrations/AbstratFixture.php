@@ -12,10 +12,12 @@ abstract class AbstratFixture extends AbstratCoreMigration
 
     /**
      * do it excecute the sql while is not done!
+     * 
+     * @return bool if migration true(se esta ejecutando), false(no puede ser ejecutada)
      */
-    public function exceute(Connection $conn): void
+    public function exceute(Connection $conn): bool
     {
-        if (!$this->canExcecute($conn)) return;
+        if (!$this->canExcecute($conn)) return false;
 
         $tempListSql = $this->plannedSql;
         // dd($tempListSql);
@@ -36,5 +38,6 @@ abstract class AbstratFixture extends AbstratCoreMigration
         }
 
         $this->registerInDB($conn);
+        return true;
     }
 }
