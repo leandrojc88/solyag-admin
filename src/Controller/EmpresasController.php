@@ -297,6 +297,12 @@ class EmpresasController extends AbstractController
         }
 
         $em->flush();
+
+        $name_database = 'db_emp' . $new_Empresa->getId();
+        $name_database_prueba = 'db_prueba_emp' . $new_Empresa->getId();
+        //crear la base de datos
+        $this->createDB($name_database, $name_database_prueba);
+
         $this->addFlash('success', 'Empresa adicionada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
     }
