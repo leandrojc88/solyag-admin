@@ -274,6 +274,7 @@ class EmpresasController extends AbstractController
             ->setSiglas($siglas)
             ->setTelefono($telefono)
             ->setRestore(false)
+            ->setReady(true)
             ->setRestoreTest(false);
         $em->persist($new_Empresa);
 
