@@ -280,7 +280,7 @@ class EmpresasController extends AbstractController
 
 
         /***COPY IMAGE EMPRES**/
-        $fichero = $siglas . '-' . $identificacion . '.jpg';
+        $fichero = $siglas . '-' . $identificacion . '.png';
         if ($request->files->get('icono_empresa')) {
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_empresa');
@@ -288,7 +288,7 @@ class EmpresasController extends AbstractController
             $new_Empresa->setIcono($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
         }
         /***COPY IMAGE TICKET**/
-        $fichero = $siglas . '-' . $identificacion . '-ticket.jpg';
+        $fichero = $siglas . '-' . $identificacion . '-ticket.png';
         if ($request->files->get('icono_ticket')) {
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_ticket');
@@ -420,7 +420,7 @@ class EmpresasController extends AbstractController
 
 
         /***COPY IMAGE EMPRES**/
-        $fichero = $siglas . '-' . $identificacion . '.jpg';
+        $fichero = $siglas . '-' . $identificacion . '.png';
         if ($request->files->get('icono_empresa')) {
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_empresa');
@@ -428,7 +428,7 @@ class EmpresasController extends AbstractController
             $new_Empresa->setIcono($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
         }
         /***COPY IMAGE TICKET**/
-        $fichero_ticket = $siglas . '-' . $identificacion . '-ticket.jpg';
+        $fichero_ticket = $siglas . '-' . $identificacion . '-ticket.png';
         if ($request->files->get('icono_ticket')) {
             $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
             $archivo = $request->files->get('icono_ticket');
