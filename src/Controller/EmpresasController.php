@@ -9,6 +9,7 @@ use App\Entity\Empleados;
 use App\Entity\Empresas;
 use App\Form\AdministradoresType;
 use App\Form\EmpresasType;
+use App\Repository\EmpleadosRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,13 +66,24 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/delete/{id}", name="empresas_delete")
      */
-    public function delete(EntityManagerInterface $em, $id): Response
-    {
+    public function delete(
+        EntityManagerInterface $em,
+        EmpleadosRepository $empleadosRepository,
+        $id
+    ): Response {
         $empresa = $em->getRepository(Empresas::class)->find($id);
         if (!$empresa) {
             $this->addFlash('error', 'La empresa no existe');
             return $this->redirectToRoute('empresas');
         }
+
+        $empreados = $empleadosRepository->findBy(['id_empresa' => $id]);
+
+        foreach ($empreados as $empleado) {
+            $em->remove($empleado);
+        }
+        $em->flush();
+                
         $empresa->setActivo(false);
         $em->persist($empresa);
         $em->flush();
