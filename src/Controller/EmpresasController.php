@@ -83,7 +83,7 @@ class EmpresasController extends AbstractController
             $em->remove($empleado);
         }
         $em->flush();
-                
+
         $empresa->setActivo(false);
         $em->persist($empresa);
         $em->flush();
@@ -153,6 +153,8 @@ class EmpresasController extends AbstractController
 
         if (empty($duplicate)) {
 
+            $empresa = $em->getRepository(Empresas::class)->find($id_empresa);
+
             $response = $httpClientInterface->request(
                 "POST",
                 $_ENV['SITE_SOLYAG'] . "/api/employee/create-employee-from-adminsolyag",
@@ -161,6 +163,8 @@ class EmpresasController extends AbstractController
                         "user" => $usuario,
                         "name" => $nombre,
                         "id_empresa" => $id_empresa,
+                        "empresa_name" => $empresa->getNombre(),
+                        "icon" => $empresa->getIconoTicket()
                     ],
                     'verify_peer' => false
                 ]
@@ -177,7 +181,7 @@ class EmpresasController extends AbstractController
 
                 $empleado = new Empleados();
                 $empleado
-                    ->setIdEmpresa($em->getRepository(Empresas::class)->find($id_empresa))
+                    ->setIdEmpresa($empresa)
                     ->setActivo(true)
                     ->setNombre($nombre)
                     ->setAdministrador(true)
