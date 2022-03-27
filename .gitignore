@@ -53,3 +53,5 @@
 /.web-server-pid
 
 /.env.local
+
+/public/images/empresas
