@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmpresasRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +78,16 @@ class Empresas
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $icono_ticket;
+
+    /**
+     * @ORM\OneToMany(targetEntity=EmpresaCierre::class, mappedBy="empresa")
+     */
+    private $empresaCierres;
+
+    public function __construct()
+    {
+        $this->empresaCierres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -222,6 +234,36 @@ class Empresas
     public function setIconoTicket(?string $icono_ticket): self
     {
         $this->icono_ticket = $icono_ticket;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmpresaCierre[]
+     */
+    public function getEmpresaCierres(): Collection
+    {
+        return $this->empresaCierres;
+    }
+
+    public function addEmpresaCierre(EmpresaCierre $empresaCierre): self
+    {
+        if (!$this->empresaCierres->contains($empresaCierre)) {
+            $this->empresaCierres[] = $empresaCierre;
+            $empresaCierre->setEmpresa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmpresaCierre(EmpresaCierre $empresaCierre): self
+    {
+        if ($this->empresaCierres->removeElement($empresaCierre)) {
+            // set the owning side to null (unless already changed)
+            if ($empresaCierre->getEmpresa() === $this) {
+                $empresaCierre->setEmpresa(null);
+            }
+        }
 
         return $this;
     }
