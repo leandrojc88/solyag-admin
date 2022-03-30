@@ -18,7 +18,7 @@ class EmpresaCierre
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Empresas::class, inversedBy="empresaCierres")
+     * @ORM\ManyToOne(targetEntity=Empresas::class)
      */
     private $empresa;
 
