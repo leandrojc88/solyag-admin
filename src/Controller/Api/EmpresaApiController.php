@@ -61,23 +61,28 @@ class EmpresaApiController extends AbstractController
 
         if (!$empresa) return  $this->json('no existe la empresa', 402);
 
-        if ($cierre == "true") {
+        /** @var EmpresaCierre $empresaCierre */
+        $empresaCierre = $empresaCierreRepository->findOneBy([
+            'idAgencia' => $idAgencia, 'empresa' => $empresa
+        ]);
 
-            $empresaCierre = new EmpresaCierre();
-            $empresaCierre->setEmpresa($empresa);
-            $empresaCierre->setIdAgencia($idAgencia);
-            $empresaCierre->setCierre($cierre);
+        if ($cierre == "true" || $cierre == true) {
 
-            $em->persist($empresaCierre);
-            $em->flush();
+            if (!$empresaCierre) {
+                $empresaCierre = new EmpresaCierre();
+                $empresaCierre->setEmpresa($empresa);
+                $empresaCierre->setIdAgencia($idAgencia);
+                $empresaCierre->setCierre($cierre);
+
+                $em->persist($empresaCierre);
+                $em->flush();
+            }
         } else {
-            /** @var EmpresaCierre $empresaCierre */
-            $empresaCierre = $empresaCierreRepository->findOneBy([
-                'idAgencia' => $idAgencia, 'empresa' => $empresa
-            ]);
 
-            $em->remove($empresaCierre);
-            $em->flush();
+            if ($empresaCierre) {
+                $em->remove($empresaCierre);
+                $em->flush();
+            }
         }
 
 
@@ -89,14 +94,11 @@ class EmpresaApiController extends AbstractController
      * @Route("/manage-empresa-cierre", name="get_manage_empresa_cierre", methods={"GET"})
      */
     public function getAllEmpresaCierre(
-        Request $request,
-        EntityManagerInterface $em,
-        EmpresasRepository $empresasRepository,
         EmpresaCierreRepository $empresaCierreRepository
     ): JsonResponse {
 
         /** @var EmpresaCierre[] $empresaCierre */
-        $empresaCierre = $empresaCierreRepository->findAll();
+        $empresaCierre = $empresaCierreRepository->findBy([], ['empresa' => 'ASC', 'idAgencia' => 'ASC']);
 
         $data = [];
 
