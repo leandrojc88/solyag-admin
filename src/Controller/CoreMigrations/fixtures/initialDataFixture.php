@@ -39,6 +39,6 @@ class initialDataFixture extends AbstratFixture
         $this->addSql("INSERT INTO `almacen` VALUES (1, 1, 61, 'Almacén de Tránsito', 1, '000', 0, 'Dir.', 0, 0, 0, 0, 0);");
 
         // User para cierres automaticos
-        $this->addSql("INSERT INTO `user` VALUES (1, 1, '$this->email', '[ADMIN]', 1, 1, '', '$this->unit');");
+        $this->addSql("INSERT INTO `user` VALUES (1, 1, '$this->email', '['ROLE_ADMIN']', 1, 1, '', '$this->unit');");
     }
 }
