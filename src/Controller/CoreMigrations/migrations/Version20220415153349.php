@@ -20,7 +20,6 @@ final class Version20220415153349 extends AbstratCoreMigration
     public function up() : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE sessions');
         $this->addSql('ALTER TABLE factura ADD json_servicios LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\'');
         $this->addSql('ALTER TABLE movimiento_servicio ADD id_subservicio_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE movimiento_servicio ADD CONSTRAINT FK_93FD19C332C7D54 FOREIGN KEY (id_subservicio_id) REFERENCES subservicio (id)');
@@ -33,7 +32,6 @@ final class Version20220415153349 extends AbstratCoreMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE sessions (sess_id VARBINARY(128) NOT NULL, sess_data BLOB NOT NULL, sess_lifetime INT UNSIGNED NOT NULL, sess_time INT UNSIGNED NOT NULL, PRIMARY KEY(sess_id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('ALTER TABLE factura DROP json_servicios');
         $this->addSql('ALTER TABLE movimiento_servicio DROP FOREIGN KEY FK_93FD19C332C7D54');
         $this->addSql('DROP INDEX IDX_93FD19C332C7D54 ON movimiento_servicio');
