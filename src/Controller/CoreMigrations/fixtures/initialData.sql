@@ -351,7 +351,7 @@ INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(300, 10, '0000', 0, 'Subcuenta de tránsito', 1, 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(305, 67, '0000', 0, 'Subcuenta de tránsito', 1, 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(306, 76, '0000', 0, 'Subcuenta de tránsito', 0, 1, 1);
-INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(365, 68, '0000', 0, 'Subcuenta de tránsito', 1, 1, 1);
+INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(375, 68, '0000', 0, 'Subcuenta de tránsito', 1, 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(307, 75, '0000', 0, 'Subcuenta de tránsito', 0, 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(330, 7, '0010', 0, 'Anticipos de salario', 1, 1, 1);
 INSERT INTO `subcuenta` (`id`, `id_cuenta_id`, `nro_subcuenta`, `elemento_gasto`, `descripcion`, `deudora`, `activo`, `bloqueado`) VALUES(355, 141, '0001', 0, 'Efectivo', 1, 1,1);
