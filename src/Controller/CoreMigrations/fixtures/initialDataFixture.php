@@ -33,7 +33,7 @@ class initialDataFixture extends AbstratFixture
         }
 
         // unidad
-        $this->addSql("INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES (1, NULL, 1, '$this->unit', 1, '', 'dir.', '$this->phone', '$this->email', '', '');");
+        $this->addSql("INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES (1, NULL, 2, '$this->unit', 1, '', 'dir.', '$this->phone', '$this->email', '', '');");
 
         // almacen de transito
         $this->addSql("INSERT INTO `almacen` VALUES (1, 1, 61, 'Almacén de Tránsito', 1, '000', 0, 'Dir.', 0, 0, 0, 0, 0);");
