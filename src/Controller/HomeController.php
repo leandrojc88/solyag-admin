@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\CoreMigrations\MigratorExcecuter;
 use App\Entity\User;
 
 use App\Entity\Pais;
@@ -35,7 +36,6 @@ class HomeController extends AbstractController
      */
     public function home(EntityManagerInterface $em)
     {
-        //Código del módulo de CONTABILIDAD, NO BORRAR
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         return $this->render('home/index.html.twig');

@@ -69,7 +69,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'username' => $credentials['username'],
-            'status'=>1
+            'status' => 1
         ]);
 
         if (!$user) {
@@ -82,7 +82,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        
+
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 

@@ -25,6 +25,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        // dd("dentro!");
         if ($this->getUser()) {
             if ($this->getUser()->isStatus())
                 return $this->redirectToRoute('home');

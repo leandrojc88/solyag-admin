@@ -47,4 +47,24 @@ class EmpresasRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function arrayModules($id_empresa): array
+    {
+
+        $func = function ($valor) {            
+            return $valor['id_modulo'];
+        };
+
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e.id, m.id as id_modulo
+            FROM App\Entity\ModulosEmpresas e
+            LEFT JOIN e.id_modulo m
+            WHERE e.id_empresa = :p_id_empresa'
+        )
+            ->setParameter('p_id_empresa', $id_empresa)
+            ->getArrayResult();
+
+        return  array_map($func, $query);
+    }
 }

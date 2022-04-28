@@ -2,30 +2,31 @@
 
 declare(strict_types=1);
 
-namespace DoctrineMigrations;
+namespace App\Controller\CoreMigrations\migrations;
 
+use App\Controller\CoreMigrations\AbstratCoreMigration;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210604042824 extends AbstractMigration
+final class Version20220122201141 extends AbstratCoreMigration
 {
     public function getDescription() : string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up() : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE empresas ADD restore TINYINT(1) DEFAULT NULL, ADD restore_test TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE unidad ADD cierre_automatico TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE empresas DROP restore, DROP restore_test');
+        $this->addSql('ALTER TABLE unidad DROP cierre_automatico');
     }
 }

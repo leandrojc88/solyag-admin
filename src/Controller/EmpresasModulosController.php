@@ -24,7 +24,8 @@ class EmpresasModulosController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em,$id): Response
     {
         $empresa = $em->getRepository(Empresas::class)->find($id);
-        $modulos = $em->getRepository(Modulos::class)->findAll();
+        // $modulos = $em->getRepository(Modulos::class)->findAll();
+        $modulos = $em->getRepository(Modulos::class)->findBy([], ['nombre' => 'asc']);
         $modulos_empresas = $em->getRepository(ModulosEmpresas::class)->findBy(['id_empresa'=>$empresa]);
         $rows = [];
         foreach ($modulos as $key=>$item){

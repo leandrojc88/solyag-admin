@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Controller\backup\SGBD;
+use App\Controller\CoreMigrations\MigratorExcecuter;
 use App\Entity\Administradores;
 use App\Entity\Empleados;
 use App\Entity\Empresas;
 use App\Form\AdministradoresType;
 use App\Form\EmpresasType;
+use App\Repository\EmpleadosRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class EmpresasController
@@ -30,7 +34,7 @@ class EmpresasController extends AbstractController
         $empresas = $em->getRepository(Empresas::class)->findBy(['activo' => true]);
 
         $row = [];
-//        $query = 'SELECT * FROM cuenta';
+        //        $query = 'SELECT * FROM cuenta';
         /** @var Empresas $item */
         foreach ($empresas as $item) {
             $row[] = [
@@ -42,8 +46,10 @@ class EmpresasController extends AbstractController
                 'nro_contrato' => $item->getNroContrato(),
                 'id' => $item->getId(),
                 'ready' => $item->getReady(),
-                'restore'=>$item->getRestore(),
-                'restore_test'=>$item->getRestoreTest(),
+                'restore' => $item->getRestore(),
+                'icono' => $item->getIcono(),
+                'icono_ticket' => $item->getIconoTicket(),
+                'restore_test' => $item->getRestoreTest(),
             ];
         }
 
@@ -60,13 +66,24 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/delete/{id}", name="empresas_delete")
      */
-    public function delete(EntityManagerInterface $em, $id): Response
-    {
+    public function delete(
+        EntityManagerInterface $em,
+        EmpleadosRepository $empleadosRepository,
+        $id
+    ): Response {
         $empresa = $em->getRepository(Empresas::class)->find($id);
         if (!$empresa) {
             $this->addFlash('error', 'La empresa no existe');
             return $this->redirectToRoute('empresas');
         }
+
+        $empreados = $empleadosRepository->findBy(['id_empresa' => $id]);
+
+        foreach ($empreados as $empleado) {
+            $em->remove($empleado);
+        }
+        $em->flush();
+
         $empresa->setActivo(false);
         $em->persist($empresa);
         $em->flush();
@@ -118,8 +135,12 @@ class EmpresasController extends AbstractController
     /**
      * @Route("/add_admin", name="empresas_add_admin")
      */
-    public function add_admin(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $passEncoder): Response
-    {
+    public function add_admin(
+        EntityManagerInterface $em,
+        Request $request,
+        UserPasswordEncoderInterface $passEncoder,
+        HttpClientInterface $httpClientInterface
+    ): Response {
         $admin = $request->request->get('administradores');
         $nombre = $admin['nombre'];
         $usuario = $admin['usuario'];
@@ -131,18 +152,46 @@ class EmpresasController extends AbstractController
         ]);
 
         if (empty($duplicate)) {
-            $empleado = new Empleados();
-            $empleado
-                ->setIdEmpresa($em->getRepository(Empresas::class)->find($id_empresa))
-                ->setActivo(true)
-                ->setNombre($nombre)
-                ->setAdministrador(true)
-                ->setCorreo($usuario);
 
-            $em->persist($empleado);
+            $empresa = $em->getRepository(Empresas::class)->find($id_empresa);
 
-            $em->flush();
-            $this->addFlash('success', 'Adminitrador creado satisfactoriamente');
+            $response = $httpClientInterface->request(
+                "POST",
+                $_ENV['SITE_SOLYAG'] . "/api/employee/create-employee-from-adminsolyag",
+                [
+                    "body" => [
+                        "user" => $usuario,
+                        "name" => $nombre,
+                        "id_empresa" => $id_empresa,
+                        "empresa_name" => $empresa->getNombre(),
+                        "icon" => $empresa->getIconoTicket()
+                    ],
+                    'verify_peer' => false
+                ]
+            );
+
+            if ($response->getStatusCode() == 501)
+                $this->addFlash('error', 'el usuario esta en uso');
+
+            if ($response->getStatusCode() == 502) {
+                $this->addFlash('error', 'Erro de Envio de correo');
+            } else {
+
+                // enviar contrasena por email
+
+                $empleado = new Empleados();
+                $empleado
+                    ->setIdEmpresa($empresa)
+                    ->setActivo(true)
+                    ->setNombre($nombre)
+                    ->setAdministrador(true)
+                    ->setCorreo($usuario);
+
+                $em->persist($empleado);
+
+                $em->flush();
+                $this->addFlash('success', 'Adminitrador creado satisfactoriamente');
+            }
         } else {
             $this->addFlash('error', 'El empleado ya se encuentra registrado en la empresa ' . $duplicate[0]->getIdEmpresa()->getNombre());
         }
@@ -239,17 +288,37 @@ class EmpresasController extends AbstractController
             ->setCorreo($correo)
             ->setNroContrato($nro_contrato)
             ->setSiglas($siglas)
-            ->setTelefono($telefono);
+            ->setTelefono($telefono)
+            ->setRestore(false)
+            ->setReady(true)
+            ->setRestoreTest(false);
         $em->persist($new_Empresa);
+
+
+        /***COPY IMAGE EMPRES**/
+        $fichero = $siglas . '-' . $identificacion . '.png';
+        if ($request->files->get('icono_empresa')) {
+            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
+            $archivo = $request->files->get('icono_empresa');
+            $archivo->move($destino, $fichero);
+            $new_Empresa->setIcono($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
+        }
+        /***COPY IMAGE TICKET**/
+        $fichero = $siglas . '-' . $identificacion . '-ticket.png';
+        if ($request->files->get('icono_ticket')) {
+            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
+            $archivo = $request->files->get('icono_ticket');
+            $archivo->move($destino, $fichero);
+            $new_Empresa->setIconoTicket($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
+        }
+
         $em->flush();
 
-        /***COPY IMAGE**/
-        $fichero = $siglas . '-' . $identificacion . '.jpg';
-        if ($request->files->get('1')) {
-            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
-            $archivo = $request->files->get('1');
-            $archivo->move($destino, $fichero);
-        }
+        $name_database = 'db_emp' . $new_Empresa->getId();
+        $name_database_prueba = 'db_prueba_emp' . $new_Empresa->getId();
+        //crear la base de datos
+        $this->createDB($name_database, $name_database_prueba);
+
         $this->addFlash('success', 'Empresa adicionada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
     }
@@ -354,6 +423,7 @@ class EmpresasController extends AbstractController
 
         /** @var Empresas $new_Empresa */
         $new_Empresa = $em->getRepository(Empresas::class)->find($id);
+
         $new_Empresa
             ->setActivo(true)
             ->setNombre($nombre)
@@ -362,16 +432,27 @@ class EmpresasController extends AbstractController
             ->setNroContrato($nro_contrato)
             ->setSiglas($siglas)
             ->setTelefono($telefono);
+
+
+
+        /***COPY IMAGE EMPRES**/
+        $fichero = $siglas . '-' . $identificacion . '.png';
+        if ($request->files->get('icono_empresa')) {
+            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
+            $archivo = $request->files->get('icono_empresa');
+            $archivo->move($destino, $fichero);
+            $new_Empresa->setIcono($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero);
+        }
+        /***COPY IMAGE TICKET**/
+        $fichero_ticket = $siglas . '-' . $identificacion . '-ticket.png';
+        if ($request->files->get('icono_ticket')) {
+            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
+            $archivo = $request->files->get('icono_ticket');
+            $archivo->move($destino, $fichero_ticket);
+            $new_Empresa->setIconoTicket($_ENV['SITE_URL'] . '/images/empresas/' . $siglas . '/' . $fichero_ticket);
+        }
         $em->persist($new_Empresa);
         $em->flush();
-
-        /***COPY IMAGE**/
-        $fichero = $siglas . '-' . $identificacion . '.jpg';
-        if ($request->files->get('1')) {
-            $destino = $this->getParameter('kernel.project_dir') . "/public/images/empresas/" . $siglas . "/";
-            $archivo = $request->files->get('1');
-            $archivo->move($destino, $fichero);
-        }
         $this->addFlash('success', 'Empresa modificada satisfactoriamente.');
         return $this->redirectToRoute('empresas');
     }
@@ -403,46 +484,79 @@ class EmpresasController extends AbstractController
         return 'false';
     }
 
-    /**
-     * @Route("/restore_prueba", name="empresas_restore_prueba")
-     */
-    public function reastoreBackupPrueba(EntityManagerInterface $em,Request $request)
-    {
-        $id = $request->request->get('id');
-        $dbName = 'db_prueba_emp' . $id;
-        $filePath = '../src/Controller/backup/db.sql';
-        //FUNCION 1
-        $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
-        /** @var Empresas $empresa */
-        $empresa = $em->getRepository(Empresas::class)->find($id);
-        if($empresa){
-            $empresa->setRestoreTest(true);
-            $em->persist($empresa);
-            $em->flush();
-        }
-        $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
-        return $this->redirectToRoute('empresas');
-    }
 
     /**
      * @Route("/restore", name="empresas_restore")
      */
-    public function reastoreBackup(EntityManagerInterface $em,Request $request)
-    {
+    public function reastoreBackup(
+        EntityManagerInterface $em,
+        Request $request,
+        MigratorExcecuter $migratorExcecuter
+    ) {
+
         $id = $request->request->get('id');
-        $dbName = 'db_emp' . $id;
-        $filePath = '../src/Controller/backup/db.sql';
-        //FUNCION 1
-        $this->restoreDatabaseTables($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $dbName, $filePath);
+        $fullLoading = false;
+
         /** @var Empresas $empresa */
         $empresa = $em->getRepository(Empresas::class)->find($id);
-        if($empresa){
+
+        if ($empresa) {
+
+            $unit = $empresa->getNombre();
+            $phone = $empresa->getTelefono();
+            $email = $empresa->getCorreo();
+
+            // cuando se no queden mas migraciones por ejecutar, entonces ejecutar Fixtures
+            if (!$migratorExcecuter->excecuteMigrations($id)) {
+                // load initial data
+                if (!$migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email))
+                    $fullLoading = true;
+            }
+
             $empresa->setRestore(true);
             $em->persist($empresa);
             $em->flush();
         }
-        $this->addFlash('success','Bases de Datos restaurada satisfactoriamente');
-        return $this->redirectToRoute('empresas');
+        return $this->json(['full_loading' => $fullLoading]);
+        // $this->addFlash('success', 'Bases de Datos restaurada satisfactoriamente');
+        // return $this->redirectToRoute('empresas');
+    }
+
+    /**
+     * @Route("/restore_prueba", name="empresas_restore_prueba")
+     */
+    public function reastoreBackupPrueba(
+        EntityManagerInterface $em,
+        Request $request,
+        MigratorExcecuter $migratorExcecuter
+    ) {
+        $id = $request->request->get('id');
+
+        $fullLoading = false;
+
+        /** @var Empresas $empresa */
+        $empresa = $em->getRepository(Empresas::class)->find($id);
+        if ($empresa) {
+
+            $unit = $empresa->getNombre();
+            $phone = $empresa->getTelefono();
+            $email = $empresa->getCorreo();
+
+            // cuando se no queden mas migraciones por ejecutar, entonces ejecutar Fixtures
+            if (!$migratorExcecuter->excecuteMigrations($id, true)) {
+                // load initial data
+                if (!$migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email, true))
+                    $fullLoading = true;
+            }
+            // load test data
+            // $migratorExcecuter->loadTestFixtures($id);
+
+            $empresa->setRestoreTest(true);
+            $em->persist($empresa);
+            $em->flush();
+        }
+        return $this->json(['full_loading' => $fullLoading]);
+        // return $this->redirectToRoute('empresas');
     }
 
 

@@ -7,10 +7,28 @@ security:
             entity:
                 class: App\Entity\User
                 property: username
+        in_memory:
+            memory:
+                users:
+                    admin_api:
+                        {
+                            password: "$2y$13$FyFru.g9yWtBZYKHOBKVuur0r9JeKQHTnXe1eFLNJgOwiaGN5adsO",
+                            roles: ROLE_SUPER_ADMINISTRATOR,
+                        }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api_public:
+            pattern: ^/api
+            security: false
+        # api_login:
+        #     pattern: ^/api
+        #     user_checker: App\Security\UserChecker
+        #     anonymous: lazy
+        #     provider: all_app_users
+        #     json_login:
+        #         check_path: app_api_security_login
         main:
             anonymous: false
             lazy: true
@@ -20,107 +38,87 @@ security:
             logout:
                 path: app_logout
     access_control:
-        -
-            path: ^/home
-            roles:
-                - ROLE_USER
-                - ROLE_5918
-                - ROLE_ADMIN
-        -
-            path: ^/cliente
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-                - ROLE_5918
-        -
-            path: ^/registrar
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/edit
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-                - ROLE_5918
-        -
-            path: ^/api
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/select
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/confirm
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/contabilidad
-            roles:
-                - ROLE_ADMIN
-                - ROLE_USER
-        -
-            path: ^/contabilidad/config
-            roles:
-                - ROLE_ADMIN
-                - ROLE_USER
-        -
-            path: ^/config
-            roles:
-                - ROLE_ADMIN
-                - ROLE_USER
-        -
-            path: ^/turismo
-            roles:
-                - ROLE_USER
-                - ROLE_5918
-                - ROLE_ADMIN
-        -
-            path: ^/paymentreport.factura
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/paymentreport
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/efectivo
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/permisos-por-rol
-            roles:
-                - ROLE_USER
-                - ROLE_ADMIN
-        -
-            path: ^/cliente-index
-            roles:
-                - ROLE_USER
-                - ROLE_5918
-                - ROLE_ADMIN
-        -
-            path: ^/cliente-edit
-            roles:
-                - ROLE_USER
-                - ROLE_5918
-                - ROLE_ADMIN
-        -
-            path: ^/registrar-cliente
-            roles:
-                - ROLE_USER
-                - ROLE_5918
-                - ROLE_ADMIN
-        -
-            path: ^/edit-save
-            roles:
-                - ROLE_USER
-                - ROLE_5918
-                - ROLE_ADMIN
-       
+        - path: ^/home
+          roles:
+              - ROLE_USER
+              - ROLE_5918
+              - ROLE_ADMIN
+        - path: ^/cliente
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+              - ROLE_5918
+        - path: ^/registrar
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/edit
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+              - ROLE_5918
+        - path: ^/api
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/select
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/confirm
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/contabilidad
+          roles:
+              - ROLE_ADMIN
+              - ROLE_USER
+        - path: ^/contabilidad/config
+          roles:
+              - ROLE_ADMIN
+              - ROLE_USER
+        - path: ^/config
+          roles:
+              - ROLE_ADMIN
+              - ROLE_USER
+        - path: ^/turismo
+          roles:
+              - ROLE_USER
+              - ROLE_5918
+              - ROLE_ADMIN
+        - path: ^/paymentreport.factura
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/paymentreport
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/efectivo
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/permisos-por-rol
+          roles:
+              - ROLE_USER
+              - ROLE_ADMIN
+        - path: ^/cliente-index
+          roles:
+              - ROLE_USER
+              - ROLE_5918
+              - ROLE_ADMIN
+        - path: ^/cliente-edit
+          roles:
+              - ROLE_USER
+              - ROLE_5918
+              - ROLE_ADMIN
+        - path: ^/registrar-cliente
+          roles:
+              - ROLE_USER
+              - ROLE_5918
+              - ROLE_ADMIN
+        - path: ^/edit-save
+          roles:
+              - ROLE_USER
+              - ROLE_5918
+              - ROLE_ADMIN

@@ -31,8 +31,8 @@
             <th width="120px" class="text-left">Siglas</th>
             <th scope="col-1" class="text-left">Nombre</th>
             <th width="180px" class="text-left">Identificación</th>
-            <th width="180px" class="text-left">Nro. Contrato</th>
-            <th width="180px" class="text-left">Teléfono</th>
+            {# <th width="180px" class="text-left">Nro. Contrato</th>
+            <th width="180px" class="text-left">Teléfono</th> #}
             <th width="180px" class="text-left">Correo</th>
             <th width="180px" class="text-center">Acciones</th>
             <th width="100px" class="text-center">Restaurar</th>
@@ -44,8 +44,8 @@
                     <td style="font-weight:400;">{{ item.siglas }}</td>
                     <td style="font-weight:400;">{{ item.nombre }}</td>
                     <td style="font-weight:400;">{{ item.identificacion }}</td>
-                    <td style="font-weight:400;">{{ item.nro_contrato }}</td>
-                    <td style="font-weight:400;">{{ item.telefono }}</td>
+                    {# <td style="font-weight:400;">{{ item.nro_contrato }}</td>
+                    <td style="font-weight:400;">{{ item.telefono }}</td> #}
                     <td style="font-weight:400;">{{ item.correo }}</td>
                     <td class="text-center">
                         <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip"
@@ -58,6 +58,8 @@
                                         telefono:'{{ item.telefono }}' ,
                                         correo:'{{ item.correo }}' ,
                                         id: '{{ item.id }}',
+                                        icono: '{{ item.icono }}',
+                                        icono_ticket: '{{ item.icono_ticket }}',
                                         })">
                             <i class="fa fa-edit"></i>
                         </button>
@@ -76,7 +78,8 @@
                                     title="Desactivar" onclick="onDesactive({{ item.id }})">
                                 <i class="fa fa-check-square"></i>
                             </button>
-                            {% if item.restore_test or item. restore %}
+                            {# {% if item.restore_test and item.restore %} #}
+                            {% if item.restore %}
                                 <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal"
                                 data-target="#modal__form__cuentas__id" data-placement="bottom"
                                 title="Crear Administrador" onclick="onCreateAdmin({{ item.id }})">
@@ -89,7 +92,8 @@
                                     onclick="onActive({{ item.id }})">
                                 <i class="fa fa-check-square"></i>
                             </button>
-                            {% if item.restore_test or item. restore %}
+                            {# {% if item.restore_test and item.restore %} #}
+                            {% if item.restore %}
                                 <button type="button" class="btn btn-outline-info btn-sm ml-1"
                                         title="Crear Administrador" onclick="showMessage()">
                                     <i class="fa fa-user-times"></i>
@@ -99,7 +103,7 @@
                     </td>
                     <td class="text-center">
                         {% if item.ready %}
-                            {% if item.restore_test %}
+                            {# {% if item.restore_test %}
                                 <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="modal"
                                         data-target="#confirm__modal__database_test" data-placement="bottom"
                                         title="Restaurar Base de Datos de Prueba"
@@ -113,7 +117,7 @@
                                         onclick="restoreDatabaseTest('{{ item.id }}')">
                                     <i class="fa fa-database"></i>
                                 </button>
-                            {% endif %}
+                            {% endif %} #}
                             {% if item.restore %}
                                 <button type="button" class="btn btn-warning btn-sm px-1" data-toggle="modal"
                                         data-target="#confirm__modal__database" data-placement="bottom"
@@ -226,7 +230,7 @@
             $('#modal__btn__actualizar').show()
             $('#modal__btn__aceptar').hide()
 
-            const {siglas, nombre, identificacion, nro_contrato, telefono, correo, id,} = config
+            const {siglas, nombre, identificacion, nro_contrato, telefono, correo, id, icono, icono_ticket} = config
 
             $('#modal__form__id').modal('show')
             $('#modal__form__label__id').html("Modificar " + nombre)
@@ -238,6 +242,10 @@
             $('#empresas_nro_contrato').val(nro_contrato)
             $('#empresas_telefono').val(telefono)
             $('#empresas_correo').val(correo)
+                        
+            $('#icono_empresa').css("background-image", "url(" +  icono + ")");
+            $('#icono_ticket').css("background-image", "url(" +  icono_ticket + ")");
+
         }
         $(document).ready(function () {
             // init
@@ -284,7 +292,7 @@
             })
 
 
-            var validateFormAdmin = $('#form_modal_target_admin').validate({
+            $('#form_modal_target_admin').validate({
                 errorClass: 'invalid-label-orange',
                 errorPlacement: function (error, element) {
                     // colocar mensajes de error a la derecha de cada label para el componente
@@ -301,20 +309,28 @@
                 },
                 rules: {
                     'administradores[nombre]': "required",
-                    'administradores[usuario]': "required"
+                    'administradores[usuario]': {
+                                                required: true,
+                                                email: true
+                                                }
                 },
                 messages: {
                     'administradores[nombre]': 'Obligatorio!',
-                    'administradores[usuario]': 'Obligatorio!'
+                    'administradores[usuario]': {
+                                                required: 'Obligatorio!',
+                                                email: 'Debe ser un correo valido'
+                                                }
                 }
             })
 
             $('#modal__btn__cuenta__aceptar').on('click', function () {
                 const formulario_admin = $('#form_modal_target_admin')
-                formulario_admin.attr('method', `POST`)
-                formulario_admin.prop('action', '/empresas/add_admin')
-                formulario_admin.submit()
-                if (validateFormAdmin.errorList.length === 0) loadingModal.show()
+                if (formulario_admin.valid()) {
+                    formulario_admin.attr('method', `POST`)
+                    formulario_admin.prop('action', '/empresas/add_admin')
+                    formulario_admin.submit()
+                    loadingModal.show()
+                }
             })
 
             $('#modal__btn__actualizar').on('click', function () {
@@ -383,8 +399,8 @@
             $('#page__confirm__modal__database').val(id)
         }
 
-        $('#confirm__modal__database__btn_ok').on('click', function () {
-            loadingModal.show()
+        $('#confirm__modal__database__btn_ok').on('click', async function () {
+            /*loadingModal.show()
             let id = $('#page__confirm__modal__database').val()
             $('body').append(`
                     <form action='/empresas/restore'
@@ -394,26 +410,80 @@
 
             const fomrulario = $('#form_restore')
             fomrulario.submit()
-            fomrulario.remove()
+            fomrulario.remove()*/
+
+            loadingModal.show()
+            
+            let id = $('#page__confirm__modal__database').val()
+            let full_loading = false
+
+            const updateDB = () => new Promise( resolve => {
+                $.ajax({
+                    method: "POST",
+                    data: {id},
+                    url: '/empresas/restore',
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.full_loading) {
+                            resolve(true)                
+                        }
+                        resolve(false)
+                    },
+
+                    error: function(err) {
+                        loadingModal.close();
+                        alertTemplate('Error interno al modificar la BD', 'danger')
+                    }
+                });
+            });
+            
+            while(!full_loading) {
+                full_loading = await updateDB();
+            }
+
+            loadingModal.close();
+            $('#confirm__modal__database').modal('hide')
+             window.location.replace('/empresas');
         })
 
         function restoreDatabaseTest(id) {
             $('#page__confirm__modal__database_test').val(id)
         }
 
-        $('#confirm__modal__database_test__btn_ok').on('click', function () {
+        $('#confirm__modal__database_test__btn_ok').on('click', async function () {
             loadingModal.show()
+            
             let id = $('#page__confirm__modal__database_test').val()
-            $('body').append(`
-                    <form action='/empresas/restore_prueba'
-                         method="post" id='form_restore_prueba'>
-                            <input type='text' hidden name='id' value='${id}'/>
-                    </form>`)
+            let full_loading = false
 
-            const fomrulario = $('#form_restore_prueba')
-            fomrulario.submit()
-            fomrulario.remove()
-        })
+            const updateDB = () => new Promise( resolve => {
+                $.ajax({
+                    method: "POST",
+                    data: {id},
+                    url: '/empresas/restore_prueba',
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.full_loading) {
+                            resolve(true)                
+                        }
+                        resolve(false)
+                    },                    
+                    error: function(err) {
+                        alertTemplate('Error interno al modificar la BD', 'danger')
+                        loadingModal.close();
+                    }
+                });
+            });
+            
+            while(!full_loading) {
+                full_loading = await updateDB();
+            }
+
+            loadingModal.close();
+            $('#confirm__modal__database_test').modal('hide')
+            window.location.replace('/empresas');
+        
+        });
 
         function showMessage() {
             alertTemplate('No puede crear un administrador sin activar la empresa.', 'danger')
