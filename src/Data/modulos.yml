@@ -24,9 +24,9 @@ modulos:
   - id: 12
     name: "[Telecomunicaciones][Recarga Cubacell]"
   - id: 13
-    name: "[Telecomunicaciones][Gif Card]"
+    name: "[Telecomunicaciones][Larga Distancia]"
   - id: 14
-    name: "[Telecomunicaciones][Otros]"
+    name: "[Telecomunicaciones][Recarga Internacional]"
   - id: 15
     name: "[Distribucion y Entrega][Modulos para entregar]"
   - id: 16
