@@ -467,5 +467,6 @@ INSERT INTO `termino_pago` (`id`, `nombre`) VALUES(6, 'A 60 días');
 INSERT INTO `termino_pago` (`id`, `nombre`) VALUES(7, 'A 90 días');
 INSERT INTO `termino_pago` (`id`, `nombre`) VALUES(8, 'Personalizado');
 INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`, `activo`) VALUES(1, 'Recarga Cubacel', '0010', 'RC', 0);
+INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`, `activo`) VALUES(3, 'Larga Distancia', '0030', 'RC', 0);
 INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`, `activo`) VALUES(4, 'Envio Familiar', '0040', 'ER', 0);
 INSERT INTO `servicios` (`id`, `nombre`, `codigo`, `abreviatura`, `activo`) VALUES(11, 'Paquete Turístico Básico', '0110', 'PTB', 0);
