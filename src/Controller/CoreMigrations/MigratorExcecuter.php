@@ -3,7 +3,6 @@
 namespace App\Controller\CoreMigrations;
 
 use App\Controller\CoreMigrations\fixtures\initialDataFixture;
-use App\Controller\CoreMigrations\fixtures\testDataFixture;
 use Doctrine\DBAL\Connection;
 use Doctrine\Migrations\Finder\GlobFinder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -65,7 +64,8 @@ class MigratorExcecuter
             $this->strFixtureClass[] = new $strFixture();
         }
 
-        dd($this->migrationsClass,  $this->strFixtureClass);
+        // dd($this->strFixtureClass);
+        // dd($this->migrationsClass,  $this->strFixtureClass);
     }
 
     /**
@@ -102,14 +102,14 @@ class MigratorExcecuter
      */
     public function excecuteFixtures($empresaId, bool $test = false)
     {
-        $this->loadMigrationsFile();
+        $this->loadFixturesFile();
 
         $dbname = $test ? 'db_prueba_emp' . $empresaId : 'db_emp' . $empresaId;
         $conn = $this->getConnextion($dbname);
 
-        foreach ($this->migrationsClass as $key => $migration) {
+        foreach ($this->strFixtureClass as $key => $fixture) {
             // validar que se ejecute una sola migracion para hacerlo async con ajax
-            if ($migration->exceute($conn)) return true;
+            if ($fixture->exceute($conn)) return true;
         }
 
         return false;
@@ -135,28 +135,6 @@ class MigratorExcecuter
 
         return false;
     }
-
-    /**
-     * ejecuta `testDataFixture` en una base de datos
-     * de una en una para evitar la `Maximum execution time`
-     * 
-     * @return bool
-     *      **true**  - en caso que se ejecute correctamente | 
-     *      **false** - para poder dar paso a que se ejecute mas codigo
-     */
-    public function loadTestFixtures($empresaId)
-    {
-
-        $dbname = 'db_prueba_emp' . $empresaId;
-        $conn = $this->getConnextion($dbname);
-
-        $testFixture = new testDataFixture();
-
-        if ($testFixture->exceute($conn)) return true;
-
-        return false;
-    }
-
 
     public function createDB($name, $name_prueba): bool
     {
