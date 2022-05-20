@@ -507,11 +507,18 @@ class EmpresasController extends AbstractController
             $email = $empresa->getCorreo();
 
             // cuando se no queden mas migraciones por ejecutar, entonces ejecutar Fixtures
-            if (!$migratorExcecuter->excecuteMigrations($id)) {
-                // load initial data
-                if (!$migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email))
-                    $fullLoading = true;
-            }
+            if ($migratorExcecuter->excecuteMigrations($id))
+                return $this->json(['full_loading' => $fullLoading]);
+
+            // load initial data
+            if ($migratorExcecuter->loadInitFixtures($id, $unit, $phone, $email))
+                return $this->json(['full_loading' => $fullLoading]);
+
+            // load all the Fixtuares
+            if ($migratorExcecuter->excecuteFixtures($id))
+                return $this->json(['full_loading' => $fullLoading]);
+
+            $fullLoading = true;
 
             $empresa->setRestore(true);
             $em->persist($empresa);

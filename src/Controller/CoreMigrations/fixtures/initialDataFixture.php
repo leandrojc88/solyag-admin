@@ -22,7 +22,7 @@ class initialDataFixture extends AbstratFixture
 
     public function up(): void
     {
-        $file = file_get_contents(dirname(__FILE__) . '/initialData.sql');
+        $file = file_get_contents(dirname(__FILE__) . '/sql/initialData.sql');
         $sqlList = explode(";", $file);
 
         foreach ($sqlList as $key => $sql) {
