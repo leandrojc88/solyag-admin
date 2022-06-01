@@ -6,6 +6,7 @@
 {% block content %}
 	<div class="example-wrapper">
 		<button type="button" onclick="dtone()">enviar</button>
+		<button type="button" onclick="callback()">cb</button>
 	</div>
 {% endblock %}
 
@@ -20,6 +21,24 @@
             method: "POST",
             data: {},
             url: 'dtone/ejec',
+            dataType: 'json',
+            success: function (data) {
+                console.log('ok')
+            },
+
+            error: function(err) {
+                console.log('err', err)
+            }
+        });
+
+    }
+
+    function callback(){
+
+        $.ajax({
+            method: "POST",
+            data: {id: 1},
+            url: 'dtone/callback_url',
             dataType: 'json',
             success: function (data) {
                 console.log('ok')

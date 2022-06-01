@@ -5,6 +5,7 @@ namespace App\Service;
 use Error;
 use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class DToneManager
 {
@@ -41,49 +42,35 @@ class DToneManager
         //code...
         $response = $this->client->request(
             'POST',
-            // $_ENV['DTONE_API'] . 'async/transactions',
-            "https://preprod-dvs-api.dtone.com/v1/async/transactions",
+            $_ENV['DTONE_API'] . 'async/transactions',
             [
                 "headers" => [
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Basic ODNlOWZkZmYtNGQ0Yi00NDk0LWJiYjctOWI3ZGNiNDcwZTc2OjhjYjMwMTQ1LWUwZTctNDAwZS1iMTU0LWM0MmEwMjIyZTZiMQ==',
-
                 ],
-                "body" => [
-                    "external_id" => "345435", // id de la transaccion SOlyag
-                    "product_id" => 35719, // id del servicio en el API DTone
+                "json" => [
+                    "external_id" => $trasaccion, // id de la transaccion SOlyag
+                    "product_id" => self::PRODUCT_ID_RECARGA_CUBA, // id del servicio en el API DTone
                     "auto_confirm" => true,
                     "beneficiary" => [
-                        "last_name" => "string",
-                        "first_name" =>  "string",
+                        "last_name" => $last_name,
+                        "first_name" =>  $first_name,
                         "nationality_country_iso_code" => "CUB",
-                        "mobile_number" => "+5353443584",
+                        "mobile_number" => $mobile_number,
                     ],
                     "credit_party_identifier" => [
-                        "mobile_number" => "+5353443584"
+                        "mobile_number" => $mobile_number
                     ],
-                    "callback_url" => "http://example.com" //$_ENV['SITE_URL'] . self::CALLBACK_URL
-                    // "external_id" => $trasaccion, // id de la transaccion SOlyag
-                    // "product_id" => self::PRODUCT_ID_RECARGA_CUBA, // id del servicio en el API DTone
-                    // "auto_confirm" => true,
-                    // "beneficiary" => [
-                    //     "last_name" => $last_name,
-                    //     "first_name" =>  $first_name,
-                    //     "nationality_country_iso_code" => "CUB",
-                    //     "mobile_number" => $mobile_number,
-                    // ],
-                    // "credit_party_identifier" => [
-                    //     "mobile_number" => $mobile_number
-                    // ],
-                    // "callback_url" => $_ENV['SITE_URL'] . self::CALLBACK_URL
+                    "callback_url" => $_ENV['SITE_URL'] . self::CALLBACK_URL
 
                 ]
             ]
         );
 
-        dd(444, $response);
-        // } catch (Exception $e) {
-        //     dd($e);
-        // }
+        if ($response->getStatusCode() > 299) {
+            return json_decode($response->getContent(false));
+        }
+
+        return $response->toArray();
     }
 }
