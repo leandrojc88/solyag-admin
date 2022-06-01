@@ -2,7 +2,8 @@
 
 namespace App\Service;
 
-use Error;
+use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -11,13 +12,15 @@ class DToneManager
 {
 
     private HttpClientInterface $client;
+    private EntityManagerInterface $em;
 
     public const PRODUCT_ID_RECARGA_CUBA = 35719;
     public const CALLBACK_URL = "/dtone/callback_url";
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, EntityManagerInterface $em)
     {
         $this->client = $client;
+        $this->em = $em;
     }
 
     /**
@@ -71,6 +74,34 @@ class DToneManager
             return json_decode($response->getContent(false));
         }
 
-        return $response->toArray();
+        $result = $response->toArray();
+
+        $this->updateDToneIntoServiceEmpresa(
+            $trasaccion,
+            $result["id"],
+            $result["confirmation_date"],
+            $result["status"]["message"],
+            $result
+        );
+
+        return $result;
+    }
+
+    public function updateDToneIntoServiceEmpresa($id_trasaccion, $id_proveedor, $fecha, $status ,$json)
+    {
+
+        /** @var ServicioEmpresa $trasaccion */
+        $trasaccion = $this->em->getRepository(ServicioEmpresa::class)->find($id_trasaccion);
+
+        if (!$trasaccion)
+            throw new Exception("No existe la transaccion en la bd `ServicioEmpresa`");
+
+        $date = new \DateTime(explode(".", $fecha)[0] . '.000Z');
+        $trasaccion->setConfirmationDate($date);
+        $trasaccion->setIdConfirProveedor($id_proveedor);
+        $trasaccion->setResponse($json);
+
+        $this->em->persist($trasaccion);
+        $this->em->flush();
     }
 }

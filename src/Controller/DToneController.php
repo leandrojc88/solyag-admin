@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Pais;
+use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Status;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,11 +31,41 @@ class DToneController extends AbstractController
         $response = $dToneManager->execTransactions([
 
             'id_trasaccion' => "3454353",
-            'last_name' => "Capdesuner",
-            'first_name' => "Leandro",
+            'last_name' => "Capdesuner", // beneficiario
+            'first_name' => "Leandro", // beneficiario
             'mobile_number' => "+5353443584"
 
         ]);
+
+        return $this->json($response);
+    }
+
+    /**
+     * @Route("/looptask", name="looptask")
+     */
+    public function looptask(ServicioEmpresaRepository $servicioEmpresaRepository, DToneManager $dToneManager): JsonResponse
+    {
+
+        $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
+
+        foreach ($serviciosInit as $key => $item) {
+            /** @var ServicioEmpresa $item */
+
+            $response = $dToneManager->execTransactions([
+
+                'id_trasaccion' => $item->getId(),
+                'last_name' => "SOLYAG",
+                'first_name' => "SOLYAG",
+                'mobile_number' => $item->getNoTelefono()
+
+            ]);
+
+            // if (array_key_exists("error", $response)) {
+            //     return $response;
+            // }
+
+            // $item->setStatus();
+        }
 
         return $this->json($response);
     }
