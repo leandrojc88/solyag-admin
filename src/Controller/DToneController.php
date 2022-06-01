@@ -67,7 +67,7 @@ class DToneController extends AbstractController
             // $item->setStatus();
         }
 
-        return $this->json($response);
+        return $this->json(["finish" => true]);
     }
 
 

@@ -99,6 +99,7 @@ class DToneManager
         $date = new \DateTime(explode(".", $fecha)[0] . '.000Z');
         $trasaccion->setConfirmationDate($date);
         $trasaccion->setIdConfirProveedor($id_proveedor);
+        $trasaccion->setStatus($status);
         $trasaccion->setResponse($json);
 
         $this->em->persist($trasaccion);
