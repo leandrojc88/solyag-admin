@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Service\Telecomunicaciones;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
@@ -36,7 +34,7 @@ class ServicioEmpresaService
             ->setDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')))
             ->setStatus(Status::INIT)
             ->setEmpresa($this->empresasRepository->find($params["id_empresa"]))
-            ->setEmpleado($this->empleadosRepository->find($params["id_empleado"]))
+            ->setEmpleado($this->empleadosRepository->findOneBy(["email" => $params["email"]]))
             ->setServicio($params["id_servicio"]);
 
         $this->em->persist($empledo);

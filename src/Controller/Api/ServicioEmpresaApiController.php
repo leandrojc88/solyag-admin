@@ -22,7 +22,7 @@ class ServicioEmpresaApiController extends AbstractController
     /**
      * @Route("/create",name="servicio-empresa-create", methods="POST")
      */
-    public function getEmployeeByEmail(
+    public function create(
         Request $request,
         ServicioEmpresaService $servicioEmpresaService
     ): JsonResponse {
@@ -30,7 +30,7 @@ class ServicioEmpresaApiController extends AbstractController
         $params = [
             "no_telefono" => $request->get('no_telefono'),
             "id_empresa" => $request->get('id_empresa'),
-            "id_empleado" => $request->get('id_empleado'),
+            "email" => $request->get('email'),
             "id_servicio" => $request->get('id_servicio')
         ];
 
