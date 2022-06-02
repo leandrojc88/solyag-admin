@@ -34,8 +34,9 @@ class ServicioEmpresaService
             ->setDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')))
             ->setStatus(Status::INIT)
             ->setEmpresa($this->empresasRepository->find($params["id_empresa"]))
-            ->setEmpleado($this->empleadosRepository->findOneBy(["email" => $params["email"]]))
-            ->setServicio($params["id_servicio"]);
+            ->setEmpleado($this->empleadosRepository->findOneBy(["correo" => $params["email"]]))
+            ->setServicio($params["id_servicio"])
+            ->setSubServicio($params["sub_servicio"]);
 
         $this->em->persist($empledo);
         $this->em->flush();

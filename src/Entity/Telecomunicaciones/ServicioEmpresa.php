@@ -71,6 +71,11 @@ class ServicioEmpresa
      */
     private $response = [];
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $sub_servicio;
+
     public function getId(): ?UuidInterface
     {
         return $this->id;
@@ -180,6 +185,18 @@ class ServicioEmpresa
     public function setResponse(array $response): self
     {
         $this->response = $response;
+
+        return $this;
+    }
+
+    public function getSubServicio(): ?string
+    {
+        return $this->sub_servicio;
+    }
+
+    public function setSubServicio(string $sub_servicio): self
+    {
+        $this->sub_servicio = $sub_servicio;
 
         return $this;
     }

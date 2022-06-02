@@ -56,7 +56,8 @@ class DToneController extends AbstractController
                 'id_trasaccion' => $item->getId(),
                 'last_name' => "SOLYAG",
                 'first_name' => "SOLYAG",
-                'mobile_number' => $item->getNoTelefono()
+                'mobile_number' => $item->getNoTelefono(),
+                'product_id' => $item->getSubServicio()
 
             ]);
 

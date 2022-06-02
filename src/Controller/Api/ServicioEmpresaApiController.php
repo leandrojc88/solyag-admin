@@ -6,6 +6,7 @@ use App\Entity\Empleados;
 use App\Repository\EmpleadosRepository;
 use App\Repository\EmpresasRepository;
 use App\Repository\ModulosEmpresasRepository;
+use App\Service\DToneManager;
 use App\Service\Telecomunicaciones\ServicioEmpresaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,16 +28,21 @@ class ServicioEmpresaApiController extends AbstractController
         ServicioEmpresaService $servicioEmpresaService
     ): JsonResponse {
 
+        $sub_servicio = DToneManager::getProductIDbyValue($request->get('sub_servicio'));
+
+        if (!$sub_servicio)
+            return $this->json("el servicio externo DTOne, no  tiene configurado esta recarga , $sub_servicio", 500);
+
         $params = [
             "no_telefono" => $request->get('no_telefono'),
             "id_empresa" => $request->get('id_empresa'),
             "email" => $request->get('email'),
-            "id_servicio" => $request->get('id_servicio')
+            "id_servicio" => $request->get('id_servicio'),
+            "sub_servicio" => $sub_servicio
         ];
 
         $servicioEmpresaService->createServicioEmpresa($params);
 
         return $this->json('OK');
     }
-
 }
