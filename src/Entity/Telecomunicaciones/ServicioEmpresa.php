@@ -67,6 +67,11 @@ class ServicioEmpresa
     private $servicio;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $movimiento_venta;
+
+    /**
      * @ORM\Column(type="json", nullable=true)
      */
     private $response = [];
@@ -75,6 +80,12 @@ class ServicioEmpresa
      * @ORM\Column(type="string", nullable=true)
      */
     private $sub_servicio;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     */
+    private $no_orden;
 
     public function getId(): ?UuidInterface
     {
@@ -177,6 +188,18 @@ class ServicioEmpresa
         return $this;
     }
 
+    public function getMovimientoVenta(): ?int
+    {
+        return $this->movimiento_venta;
+    }
+
+    public function setMovimientoVenta(int $movimiento_venta): self
+    {
+        $this->movimiento_venta = $movimiento_venta;
+
+        return $this;
+    }
+
     public function getResponse(): ?array
     {
         return $this->response;
@@ -197,6 +220,18 @@ class ServicioEmpresa
     public function setSubServicio(string $sub_servicio): self
     {
         $this->sub_servicio = $sub_servicio;
+
+        return $this;
+    }
+
+    public function getNoOrden(): ?int
+    {
+        return $this->no_orden;
+    }
+
+    public function setNoOrden(int $no_orden): self
+    {
+        $this->no_orden = $no_orden;
 
         return $this;
     }

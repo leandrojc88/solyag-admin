@@ -38,7 +38,8 @@ class ServicioEmpresaApiController extends AbstractController
             "id_empresa" => $request->get('id_empresa'),
             "email" => $request->get('email'),
             "id_servicio" => $request->get('id_servicio'),
-            "sub_servicio" => $sub_servicio
+            "sub_servicio" => $sub_servicio,
+            "movimiento_venta" => $request->get('movimiento_venta')
         ];
 
         $servicioEmpresaService->createServicioEmpresa($params);

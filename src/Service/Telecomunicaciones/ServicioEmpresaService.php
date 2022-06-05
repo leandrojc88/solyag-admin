@@ -36,7 +36,8 @@ class ServicioEmpresaService
             ->setEmpresa($this->empresasRepository->find($params["id_empresa"]))
             ->setEmpleado($this->empleadosRepository->findOneBy(["correo" => $params["email"]]))
             ->setServicio($params["id_servicio"])
-            ->setSubServicio($params["sub_servicio"]);
+            ->setSubServicio($params["sub_servicio"])
+            ->setMovimientoVenta($params["movimiento_venta"]);
 
         $this->em->persist($empledo);
         $this->em->flush();
