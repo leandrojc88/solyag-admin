@@ -83,7 +83,6 @@ class ServicioEmpresa
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
      */
     private $no_orden;
 

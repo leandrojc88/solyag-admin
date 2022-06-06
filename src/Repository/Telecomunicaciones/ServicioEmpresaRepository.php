@@ -19,6 +19,17 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
         parent::__construct($registry, ServicioEmpresa::class);
     }
 
+    public function getMaxNoOrden($servicio){
+        return $this->createQueryBuilder('s')
+            ->select('MAX(s.no_orden) AS max_no_orden')
+            ->andWhere('s.servicio = :servicio')
+            ->setParameter('servicio', $servicio)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return ServicioEmpresa[] Returns an array of ServicioEmpresa objects
     //  */
