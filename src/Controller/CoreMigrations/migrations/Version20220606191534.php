@@ -10,7 +10,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220605220746 extends AbstratCoreMigration
+final class Version20220606191534 extends AbstratCoreMigration
 {
     public function getDescription() : string
     {
