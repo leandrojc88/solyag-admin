@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pais;
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use App\Http\httpPostServicioEmpresaSolyag;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
 use App\Service\Telecomunicaciones\ServicioEmpresaService;
@@ -47,7 +48,8 @@ class DToneController extends AbstractController
     public function looptask(
         ServicioEmpresaRepository $servicioEmpresaRepository,
         DToneManager $dToneManager,
-        ServicioEmpresaService $servicioEmpresaService
+        ServicioEmpresaService $servicioEmpresaService,
+        httpPostServicioEmpresaSolyag $httpPostServicioEmpresaSolyag
     ): JsonResponse {
 
         $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
@@ -80,10 +82,10 @@ class DToneController extends AbstractController
             // }
 
             $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
-
         }
 
-        dd($listServicios);
+        $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
+        // dd($listServicios);
 
         return $this->json(["finish" => true]);
     }
