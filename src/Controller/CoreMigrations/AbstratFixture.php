@@ -41,6 +41,7 @@ abstract class AbstratFixture extends AbstratCoreMigration
             } catch (UniqueConstraintViolationException $th) {
                 continue;
             } catch (\Exception $th) {
+                dd($th->getMessage());
                 array_push($tempListSql, $sql);
             }
         }

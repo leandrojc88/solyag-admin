@@ -47,7 +47,11 @@ abstract class AbstratCoreMigration
         if (!$this->canExcecute($conn)) return false;
 
         foreach ($this->plannedSql as $key => $sql) {
-            $conn->executeQuery($sql->getStatement());
+            try {
+                $conn->executeQuery($sql->getStatement());
+            } catch (\Exception $th) {
+                dd($th->getMessage());
+            }
         }
 
         $this->registerInDB($conn);
@@ -66,10 +70,9 @@ abstract class AbstratCoreMigration
             WHERE version = '$className'
             "
             )->fetchOne();
-            
-            return (bool) !$result;
 
-        } catch (TableNotFoundException $th) {            
+            return (bool) !$result;
+        } catch (TableNotFoundException $th) {
             return true;
         }
     }
@@ -80,7 +83,7 @@ abstract class AbstratCoreMigration
 
         $conn->executeQuery(
             "INSERT INTO doctrine_migration_versions
-            (version) values ('$name')            
+            (version) values ('$name')
             "
         );
     }
@@ -93,5 +96,4 @@ abstract class AbstratCoreMigration
 
         return $className;
     }
-
 }
