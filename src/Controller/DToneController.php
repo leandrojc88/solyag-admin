@@ -6,6 +6,7 @@ use App\Entity\Pais;
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
+use App\Service\Telecomunicaciones\ServicioEmpresaService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Status;
@@ -43,10 +44,22 @@ class DToneController extends AbstractController
     /**
      * @Route("/looptask", name="looptask")
      */
-    public function looptask(ServicioEmpresaRepository $servicioEmpresaRepository, DToneManager $dToneManager): JsonResponse
-    {
+    public function looptask(
+        ServicioEmpresaRepository $servicioEmpresaRepository,
+        DToneManager $dToneManager,
+        ServicioEmpresaService $servicioEmpresaService
+    ): JsonResponse {
 
         $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
+
+        /*
+        [ id_empresa,
+        servicios = [
+                [ movimiento_venta, no_orden, status ], ...
+            ]
+        ]
+        */
+        $listServicios = [];
 
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
@@ -61,12 +74,16 @@ class DToneController extends AbstractController
 
             ]);
 
-            // if (array_key_exists("error", $response)) {
+            // if (array_key_exists("errors", $response)) {
+            //     $listServicios[] = [];
             //     return $response;
             // }
 
-            // $item->setStatus();
+            $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
+
         }
+
+        dd($listServicios);
 
         return $this->json(["finish" => true]);
     }

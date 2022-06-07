@@ -3,8 +3,10 @@
 namespace App\Service;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Status;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -95,6 +97,14 @@ class DToneManager
         );
 
         if ($response->getStatusCode() > 299) {
+            $this->updateDToneIntoServiceEmpresa(
+                $trasaccion,
+                null,
+                null,
+                Status::DECLINED,
+                json_decode($response->getContent(false), true)
+            );
+
             return json_decode($response->getContent(false));
         }
 
@@ -120,9 +130,10 @@ class DToneManager
         if (!$trasaccion)
             throw new Exception("No existe la transaccion en la bd `ServicioEmpresa`");
 
-        $date = new \DateTime(explode(".", $fecha)[0] . '.000Z');
+        // dd($json);
+        $date = $fecha ? new \DateTime(explode(".", $fecha)[0] . '.000Z') : new DateTime();
         $trasaccion->setConfirmationDate($date);
-        $trasaccion->setIdConfirProveedor($id_proveedor);
+        if ($id_proveedor) $trasaccion->setIdConfirProveedor($id_proveedor);
         $trasaccion->setStatus($status);
         $trasaccion->setResponse($json);
 

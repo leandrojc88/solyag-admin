@@ -46,7 +46,7 @@ class ServicioEmpresaService
             ->setServicio($params["id_servicio"])
             ->setSubServicio($params["sub_servicio"])
             ->setMovimientoVenta($params["movimiento_venta"])
-            ->setNoOrden($maxNoOrden+1);
+            ->setNoOrden($maxNoOrden + 1);
 
         $this->em->persist($empledo);
         $this->em->flush();
@@ -106,5 +106,46 @@ class ServicioEmpresaService
         if (!$servicioEmpresa) throw new Error("No existe el servicio-empresa para el no_orden " . $noOrdenStr);
 
         return $servicioEmpresa;
+    }
+
+    /**
+     * llenando la data para enviar a solyag.online para actualizar el no_orden y 
+     * status de los movimientos_servicios
+     *
+     *  [ id_empresa,
+     *    servicios = [
+     *            [ movimiento_venta, no_orden, status ], ...
+     *        ]
+     *    ]
+     */
+    public function prepareDataToSolyagApp($data, ServicioEmpresa $trasaccion)
+    {
+        foreach ($data as $key => &$item) {
+
+            if ($item["id_empresa"] == $trasaccion->getEmpresa()->getId()) {
+                array_push(
+                    $item["servicios"],
+                    [
+                        "movimiento_venta" => $trasaccion->getMovimientoVenta(),
+                        "no_orden" => $this->noOrdeToStr($trasaccion),
+                        "status" => $trasaccion->getStatus(),
+                    ]
+                );
+                return $data;
+            }
+        }
+
+        $data[] = [
+            "id_empresa" => $trasaccion->getEmpresa()->getId(),
+            "servicios" => [
+                [
+                    "movimiento_venta" => $trasaccion->getMovimientoVenta(),
+                    "no_orden" => $this->noOrdeToStr($trasaccion),
+                    "status" => $trasaccion->getStatus()
+                ]
+            ]
+        ];
+
+        return $data;
     }
 }
