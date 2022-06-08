@@ -33,19 +33,19 @@ class ServicioEmpresaService
     public function createServicioEmpresa($params)
     {
 
-        $maxNoOrdenFind = $this->servicioEmpresaRepository->getMaxNoOrden($params["id_servicio"]);
+        $maxNoOrdenFind = $this->servicioEmpresaRepository->getMaxNoOrden($params['id_servicio']);
         $maxNoOrden = intval($maxNoOrdenFind[0]['max_no_orden']);
 
         $empledo = new ServicioEmpresa();
         $empledo
-            ->setNoTelefono($params["no_telefono"])
+            ->setNoTelefono($params['no_telefono'])
             ->setDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')))
             ->setStatus(Status::INIT)
-            ->setEmpresa($this->empresasRepository->find($params["id_empresa"]))
-            ->setEmpleado($this->empleadosRepository->findOneBy(["correo" => $params["email"]]))
-            ->setServicio($params["id_servicio"])
-            ->setSubServicio($params["sub_servicio"])
-            ->setMovimientoVenta($params["movimiento_venta"])
+            ->setEmpresa($this->empresasRepository->find($params['id_empresa']))
+            ->setEmpleado($this->empleadosRepository->findOneBy(['correo' => $params['email']]))
+            ->setServicio($params['id_servicio'])
+            ->setSubServicio($params['sub_servicio'])
+            ->setMovimientoVenta($params['movimiento_venta'])
             ->setNoOrden($maxNoOrden + 1);
 
         $this->em->persist($empledo);
@@ -103,7 +103,7 @@ class ServicioEmpresaService
             'no_ordne' => $data[1]
         ]);
 
-        if (!$servicioEmpresa) throw new Error("No existe el servicio-empresa para el no_orden " . $noOrdenStr);
+        if (!$servicioEmpresa) throw new Error('No existe el servicio-empresa para el no_orden ' . $noOrdenStr);
 
         return $servicioEmpresa;
     }
@@ -122,13 +122,13 @@ class ServicioEmpresaService
     {
         foreach ($data as $key => &$item) {
 
-            if ($item["id_empresa"] == $trasaccion->getEmpresa()->getId()) {
+            if ($item['id_empresa'] == $trasaccion->getEmpresa()->getId()) {
                 array_push(
-                    $item["servicios"],
+                    $item['servicios'],
                     [
-                        "movimiento_venta" => $trasaccion->getMovimientoVenta(),
-                        "no_orden" => $this->noOrdeToStr($trasaccion),
-                        "status" => $trasaccion->getStatus(),
+                        'movimiento_venta' => $trasaccion->getMovimientoVenta(),
+                        'no_orden' => $this->noOrdeToStr($trasaccion),
+                        'status' => $trasaccion->getStatus(),
                     ]
                 );
                 return $data;
@@ -136,12 +136,12 @@ class ServicioEmpresaService
         }
 
         $data[] = [
-            "id_empresa" => $trasaccion->getEmpresa()->getId(),
-            "servicios" => [
+            'id_empresa' => $trasaccion->getEmpresa()->getId(),
+            'servicios' => [
                 [
-                    "movimiento_venta" => $trasaccion->getMovimientoVenta(),
-                    "no_orden" => $this->noOrdeToStr($trasaccion),
-                    "status" => $trasaccion->getStatus()
+                    'movimiento_venta' => $trasaccion->getMovimientoVenta(),
+                    'no_orden' => $this->noOrdeToStr($trasaccion),
+                    'status' => $trasaccion->getStatus()
                 ]
             ]
         ];

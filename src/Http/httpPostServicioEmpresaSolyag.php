@@ -27,11 +27,12 @@ class httpPostServicioEmpresaSolyag
 
     public function updateServicioEmpresaInSolyag($data)
     {
+
         $data_api = $this->client->request(
             self::POST,
             $this->API_URL . self::PUT_SERVICIO_EMPRESA,
             [
-                "body" => ["data" => $data],
+                "body" => ["data" =>  $data],
                 'verify_peer' => false
             ]
         );
