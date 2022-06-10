@@ -19,22 +19,22 @@ class EmpresasRepository extends ServiceEntityRepository
         parent::__construct($registry, Empresas::class);
     }
 
-    // /**
-    //  * @return Empresas[] Returns an array of Empresas objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function listEmpresa()
     {
+
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('e.id as id_empresa, e.nombre, tp.id, tp.saldo, tp.tipo')
+            ->leftJoin(
+                'App\Entity\Telecomunicaciones\EmpresaTipoPaga',
+                'tp',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'e.id = tp.empresa'
+            )
+            ->andWhere('e.activo = true')
+            ->orderBy('e.nombre', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Empresas
@@ -50,7 +50,7 @@ class EmpresasRepository extends ServiceEntityRepository
     public function arrayModules($id_empresa): array
     {
 
-        $func = function ($valor) {            
+        $func = function ($valor) {
             return $valor['id_modulo'];
         };
 

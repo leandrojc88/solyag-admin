@@ -4,52 +4,57 @@
 {% endblock %}
 
 {% block content %}
-	<div class="example-wrapper">
-		<button type="button" onclick="dtone()">enviar</button>
-		<button type="button" onclick="callback()">cb</button>
+
+	{{ include('telecomunicaciones/modal/modal-edit-tipo-empresa.html.twig',{title:'Cambair datos de empresa'}) }}
+
+	{# header #}
+	<div class="d-flex align-items-center">
+		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+			Telecomunicaciones
+		</h4>
+		<div>
+			<button type="button" onclick="execDTone()">enviar</button>
+			{# <button type="button" onclick="callback()">cb</button> #}
+
+		</div>
 	</div>
+	{# end header #}
+	<table class="table-small-rows table table-hover text-light">
+		<thead class="thead-dark">
+			<th scope="col-1" class="text-left">Nombre</th>
+			<th width="180px" class="text-left">Tipo</th>
+			<th width="180px" class="text-left">Saldo</th>
+			<th width="70px" class="text-left">Acciones</th>
+		</thead>
+		<tbody>
+			{% for item in empresas %}
+				<tr>
+					<td style="font-weight:400;">{{ item.nombre }}</td>
+					<td style="font-weight:400;">{{ item.tipo }}</td>
+					<td style="font-weight:400;">{{ item.saldo }}</td>
+					<td style="font-weight:200;">
+						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="editarTipoEmpresa({ 
+							id: {% if item.id %} {{item.id}} {% else %} 0 {% endif %},
+							id_empresa: {{item.id_empresa}},
+							nombre: '{{item.nombre}}',
+							tipo: '{{item.tipo}}',
+							saldo: {% if item.saldo %} {{item.saldo}} {% else %} 0 {% endif %}
+							})">
+							<i class="fa fa-edit"></i>
+						</button>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
 
 
 {% block javascripts %}
-{{ parent() }}
-	<script>
+	{{ parent() }}
 
-    function dtone(){
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/init.js') }}"></script>
 
-        $.ajax({
-            method: "POST",
-            data: {},
-            url: 'dtone/looptask',
-            dataType: 'json',
-            success: function (data) {
-                console.log('ok')
-            },
-
-            error: function(err) {
-                console.log('err', err)
-            }
-        });
-
-    }
-
-    function callback(){
-
-        $.ajax({
-            method: "POST",
-            data: {id: 1},
-            url: 'dtone/callback_url',
-            dataType: 'json',
-            success: function (data) {
-                console.log('ok')
-            },
-
-            error: function(err) {
-                console.log('err', err)
-            }
-        });
-
-    }
-
-    </script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/editar-tipo-pago-empresa.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/exec-dtone.js') }}"></script>
 {% endblock %}

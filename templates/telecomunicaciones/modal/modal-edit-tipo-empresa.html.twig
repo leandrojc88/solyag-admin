@@ -1,0 +1,23 @@
+{% extends 'utils/modal_form.html.twig' %}
+
+{% block modalbody %}
+
+	<form method="post" id="form_tipo_pago_empresa" action="{{ url('update_tipo_saldo_empresa') }}">
+		<input name="id" id="id_tipo_pago_empresa" hidden>
+		<input name="id_empresa" id="id_empresa" hidden>
+		<div class="form-group  input-group">
+			<label class="label" for="saldo">Saldo</label>
+			<input type="number" class="form-control w-100" name="saldo" id="saldo">
+
+		</div>
+		<div class="form-group custom-control custom-switch">
+			<input type="checkbox" name="tipo" class="custom-control-input" id="tipo">
+			<label class="custom-control-label" for="tipo">Prepago</label>
+		</div>
+	</form>
+
+{% endblock %}
+
+{% block btnzone %}
+	<button type="submit" form="form_tipo_pago_empresa" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}
