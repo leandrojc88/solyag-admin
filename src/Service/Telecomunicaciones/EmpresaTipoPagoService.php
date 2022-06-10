@@ -34,7 +34,7 @@ class EmpresaTipoPagoService
             "empresa" => $empresa
         ]);
 
-        if ($empresas->getTipo() == self::POSPAGO) return true;
+        if (!$empresas || $empresas->getTipo() == self::POSPAGO) return true;
 
         return $empresas->getSaldo() >= $saldo;
     }
@@ -47,7 +47,7 @@ class EmpresaTipoPagoService
             "empresa" => $empresa
         ]);
 
-        if ($empresas->getTipo() == self::POSPAGO) return;
+        if (!$empresas || $empresas->getTipo() == self::POSPAGO) return;
 
         $empresas->setSaldo($empresas->getSaldo() - $saldo);
         $this->em->persist($empresas);
