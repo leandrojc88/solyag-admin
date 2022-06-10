@@ -25,8 +25,10 @@ class DToneManager
 
     public const CALLBACK_URL = "/dtone/callback_url";
 
-    public function __construct(HttpClientInterface $client, EntityManagerInterface $em)
-    {
+    public function __construct(
+        HttpClientInterface $client,
+        EntityManagerInterface $em
+    ) {
         $this->client = $client;
         $this->em = $em;
     }
@@ -42,6 +44,23 @@ class DToneManager
 
             case self::PRODUCT_ID_RECARGA_CUBA_700CUP[self::VALUE]:
                 return self::PRODUCT_ID_RECARGA_CUBA_700CUP[self::PRODUCT_ID];
+
+            default:
+                return false;
+        }
+    }
+
+    public static function getValueByProductID($product_id)
+    {
+        switch ($product_id) {
+            case self::PRODUCT_ID_RECARGA_CUBA_250CUP[self::PRODUCT_ID]:
+                return self::PRODUCT_ID_RECARGA_CUBA_250CUP[self::VALUE];
+
+            case self::PRODUCT_ID_RECARGA_CUBA_500CUP[self::PRODUCT_ID]:
+                return self::PRODUCT_ID_RECARGA_CUBA_500CUP[self::VALUE];
+
+            case self::PRODUCT_ID_RECARGA_CUBA_700CUP[self::PRODUCT_ID]:
+                return self::PRODUCT_ID_RECARGA_CUBA_700CUP[self::VALUE];
 
             default:
                 return false;

@@ -7,6 +7,7 @@ use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Http\httpPostServicioEmpresaSolyag;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
+use App\Service\Telecomunicaciones\EmpresaTipoPagoService;
 use App\Service\Telecomunicaciones\ServicioEmpresaService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,7 +50,8 @@ class DToneController extends AbstractController
         ServicioEmpresaRepository $servicioEmpresaRepository,
         DToneManager $dToneManager,
         ServicioEmpresaService $servicioEmpresaService,
-        httpPostServicioEmpresaSolyag $httpPostServicioEmpresaSolyag
+        httpPostServicioEmpresaSolyag $httpPostServicioEmpresaSolyag,
+        EmpresaTipoPagoService $empresaTipoPagoService
     ): JsonResponse {
 
         $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
@@ -66,26 +68,41 @@ class DToneController extends AbstractController
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
 
-            $response = $dToneManager->execTransactions([
+            $saldos = $dToneManager->getValueByProductID($item->getSubServicio());
 
-                'id_trasaccion' => $item->getId(),
-                'last_name' => "SOLYAG",
-                'first_name' => "SOLYAG",
-                'mobile_number' => $item->getNoTelefono(),
-                'product_id' => $item->getSubServicio()
+            if (!$empresaTipoPagoService->isHaveSaldo(
+                $item->getEmpresa()->getId(),
+                $saldos
+            )) {
+                $dToneManager->updateDToneIntoServiceEmpresa(
+                    $item->getId(),
+                    null,
+                    null,
+                    Status::DECLINED,
+                    ["errors" => [["code" => null, "message" => "Empresa sin saldo suficiente"]]]
+                );
+            } else {
 
-            ]);
+                $dToneManager->execTransactions([
 
-            // if (array_key_exists("errors", $response)) {
-            //     $listServicios[] = [];
-            //     return $response;
-            // }
+                    'id_trasaccion' => $item->getId(),
+                    'last_name' => "SOLYAG",
+                    'first_name' => "SOLYAG",
+                    'mobile_number' => $item->getNoTelefono(),
+                    'product_id' => $item->getSubServicio()
+
+                ]);
+
+                $empresaTipoPagoService->reducirSaldo(
+                    $item->getEmpresa()->getId(),
+                    $saldos
+                );
+            }
 
             $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
         }
 
         $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
-        // dd($listServicios);
 
         return $this->json(["finish" => true]);
     }
