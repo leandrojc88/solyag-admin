@@ -13,9 +13,10 @@ const editarTipoEmpresa = (params) => {
     $id_empresa_t_pago.val(id)
     $id_empresa.val(id_empresa)
     $saldo.val(saldo)
-    $tipo.prop('checked', isPrepago(tipo))
+    $tipo.prop('checked', isPospago(tipo))
 
+    drawTextFieldValor()
 
 }
 
-const isPrepago = (tipo) => tipo == PREPAGO
+const isPospago = (tipo) => tipo == POSPAGO

@@ -24,7 +24,7 @@ class EmpresaTipoPagoService
 
     public function getTipoForCheckBox($tipo)
     {
-        return $tipo ? self::PREPAGO : self::POSPAGO;
+        return $tipo ? self::POSPAGO : self::PREPAGO;
     }
 
 
