@@ -5,4 +5,47 @@
 
 {% block content %}
 
+	{{ include('telecomunicaciones/servicios/modals/modal_add_servicio.html.twig',{title:'Adicionar Servicio'}) }}
+
+	<div class="d-flex align-items-center">
+		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+			Servicios
+		</h4>
+		<div>
+			<button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#modal__form__id" data-placement="bottom" title="Adicionar">
+				Adicionar
+			</button>
+		</div>
+	</div>
+
+	<table class="table-small-rows table table-hover text-light">
+		<thead class="thead-dark">
+			<th scope="col-1" class="text-left">Nombre</th>
+			<th width="180px" class="text-left">Codigo</th>
+			<th width="180px" class="text-left">Abreviatura</th>
+			<th width="70px" class="text-left">Acciones</th>
+		</thead>
+		<tbody>
+			{% for item in servicios %}
+				<tr>
+					<td style="font-weight:400;">{{ item.nombre }}</td>
+					<td style="font-weight:400;">{{ item.codigo }}</td>
+					<td style="font-weight:400;">{{ item.abreviatura }}</td>
+					<td style="font-weight:200;">
+						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="">
+							<i class="fa fa-edit"></i>
+						</button>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/Telecomunicaciones/servicios/validate-form-post.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/servicios/auto-generate-abreviatura.js') }}"></script>
+
 {% endblock %}
