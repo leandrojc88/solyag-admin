@@ -7,6 +7,7 @@ use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Http\httpPostServicioEmpresaSolyag;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
+use App\Service\Telecomunicaciones\Config\GetLoadIsActiveService;
 use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
 use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use DateTime;
@@ -51,8 +52,12 @@ class DToneController extends AbstractController
         DToneManager $dToneManager,
         ServicioEmpresaService $servicioEmpresaService,
         httpPostServicioEmpresaSolyag $httpPostServicioEmpresaSolyag,
-        EmpresaTipoPagoService $empresaTipoPagoService
+        EmpresaTipoPagoService $empresaTipoPagoService,
+        GetLoadIsActiveService $getLoadIsActiveService
     ): JsonResponse {
+
+        if (!$getLoadIsActiveService->get())
+            return $this->json(["finish" => true, "msg" => "API DTone esta desactivada por el sistema"]);
 
         $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
 
@@ -101,8 +106,8 @@ class DToneController extends AbstractController
 
             $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
         }
-
-        $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
+        if ($listServicios)
+            $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
 
         return $this->json(["finish" => true]);
     }
