@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class postActiveController extends AbstractController
 {
     /**
-     * @Route("/dtone-active-is-actives", name="dtone-active-is-actives")
+     * @Route("/telecomunicaciones/config/dtone-is-active", name="dtone-active-is-actives")
      */
     public function activese(
         Request $request,

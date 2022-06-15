@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class isActiveController extends AbstractController
 {
     /**
-     * @Route("/dtone/load-is-active")
+     * @Route("/telecomunicaciones/config/load-is-active")
      */
     public function index(getLoadIsActiveService $getLoadIsActiveService): JsonResponse
     {

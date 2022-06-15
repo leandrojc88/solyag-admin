@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Telecomunicaciones\empresas;
 
 use App\Entity\Telecomunicaciones\EmpresaTipoPaga;
 use App\Repository\EmpresasRepository;
@@ -12,24 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TelecomunicacionesController extends AbstractController
+class updateSaldoEmpresaControlle extends AbstractController
 {
-    /**
-     * @Route("/telecomunicaciones", name="telecomunicaciones")
-     */
-    public function index(EmpresasRepository $empresasRepository): Response
-    {
-
-        $empresas = $empresasRepository->listEmpresa();
-        // dd($empresas);
-
-        return $this->render('telecomunicaciones/index.html.twig', [
-            'controller_name' => 'TelecomunicacionesController',
-            'empresas' => $empresas
-        ]);
-    }
-
-
     /**
      * @Route("/update-tipo-saldo-empresa",name="update_tipo_saldo_empresa")
      */
