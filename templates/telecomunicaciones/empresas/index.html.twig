@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'telecomunicaciones/base.html.twig' %}
 
 {% block title %}Telecomunicaciones
 {% endblock %}
@@ -10,16 +10,10 @@
 	{# header #}
 	<div class="d-flex align-items-center">
 		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
-			Telecomunicaciones
+			Empresas
 		</h4>
 		<div>
 			<button type="button" onclick="execDTone()">enviar</button>
-
-			<button type="button" title="desactivar api" id="btn_active_dtone" class="btn btn-outline-success btn-sm" onclick="activarDTone()">
-				<i class="fa fa-close"></i>
-				API DTone activa
-			</button>
-
 		</div>
 	</div>
 	{# end header #}
@@ -58,9 +52,6 @@
 	{{ parent() }}
 
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/init.js') }}"></script>
-	<script src="{{ asset('js/Telecomunicaciones/apiDTone/loadDTone.js') }}"></script>
-	<script src="{{ asset('js/Telecomunicaciones/apiDTone/draw.js') }}"></script>
-	<script src="{{ asset('js/Telecomunicaciones/apiDTone/activarDTone.js') }}"></script>
 
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/editar-tipo-pago-empresa.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/events/editar-tipo-pago-empresa.js') }}"></script>

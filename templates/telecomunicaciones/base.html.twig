@@ -12,9 +12,21 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<a class="dropdown-item" href="{{ url ('telecomunicaciones-empresas') }}">Empresas</a>
+				<a class="dropdown-item" href="{{ url ('servicios') }}">servicios</a>
 				{# <a class="dropdown-item" href="{{ url('telecomunicaciones') }}">Proveedores</a> #}
 			</ul>
+
+			<button type="button" title="desactivar api" id="btn_active_dtone" class="btn btn-outline btn-sm" onclick="activarDTone()"></button>
 		</div>
 	</nav>
 	<!-- Modal -->
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="{{ asset('js/Telecomunicaciones/apiDTone/loadDTone.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/apiDTone/draw.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/apiDTone/activarDTone.js') }}"></script>
+
 {% endblock %}
