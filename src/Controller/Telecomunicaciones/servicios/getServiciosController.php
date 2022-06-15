@@ -10,7 +10,8 @@ class getServiciosController extends AbstractController
     /**
      * @Route("/telecomunicaciones/servicio", name="telecomunicaciones-servicio")
      */
-    public function index(){
-
+    public function index()
+    {
+        return $this->render('telecomunicaciones/servicios/index.html.twig', []);
     }
 }
