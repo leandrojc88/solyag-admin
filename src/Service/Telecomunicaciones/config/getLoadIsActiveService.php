@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service\Telecomunicaciones\config;
+namespace App\Service\Telecomunicaciones\Config;
 
 use App\Repository\TelecomConfigsRepository;
 
-class getLoadIsActiveService
+class GetLoadIsActiveService
 {
 
     private TelecomConfigsRepository $telecomConfigsRepository;

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class telecomunicacionesController extends AbstractController
+class TelecomunicacionesController extends AbstractController
 {
     /**
      * @Route("/telecomunicaciones", name="telecomunicaciones")

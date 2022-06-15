@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Telecomunicaciones\config;
+namespace App\Service\Telecomunicaciones\Config;
 
 use App\Repository\TelecomConfigsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class modifyActiveService
+class ModifyActiveService
 {
 
     private TelecomConfigsRepository $telecomConfigsRepository;

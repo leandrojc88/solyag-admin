@@ -7,7 +7,7 @@ use App\Repository\EmpleadosRepository;
 use App\Repository\EmpresasRepository;
 use App\Repository\ModulosEmpresasRepository;
 use App\Service\DToneManager;
-use App\Service\Telecomunicaciones\ServicioEmpresaService;
+use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Telecomunicaciones;
+namespace App\Service\Telecomunicaciones\Empresas;
 
 use App\Repository\Telecomunicaciones\EmpresaTipoPagaRepository;
 use Doctrine\ORM\EntityManagerInterface;

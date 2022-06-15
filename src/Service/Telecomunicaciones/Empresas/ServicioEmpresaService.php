@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Telecomunicaciones;
+namespace App\Service\Telecomunicaciones\Empresas;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Repository\EmpleadosRepository;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller\Telecomunicaciones\servicios;
+namespace App\Controller\Telecomunicaciones\Servicios;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class getServiciosController extends AbstractController
+class GetServiciosController extends AbstractController
 {
     /**
      * @Route("/telecomunicaciones/servicio", name="telecomunicaciones-servicio")

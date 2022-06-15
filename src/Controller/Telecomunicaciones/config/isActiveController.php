@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controller\Telecomunicaciones\config;
+namespace App\Controller\Telecomunicaciones\Config;
 
-use App\Service\Telecomunicaciones\config\getLoadIsActiveService;
+use App\Service\Telecomunicaciones\Config\GetLoadIsActiveService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class isActiveController extends AbstractController
+class IsActiveController extends AbstractController
 {
     /**
      * @Route("/telecomunicaciones/config/load-is-active")
      */
-    public function index(getLoadIsActiveService $getLoadIsActiveService): JsonResponse
+    public function index(GetLoadIsActiveService $getLoadIsActiveService): JsonResponse
     {
         return $this->json(['active' => $getLoadIsActiveService->get()]);
     }
