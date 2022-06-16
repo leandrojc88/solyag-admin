@@ -1,0 +1,69 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% set id_serviciot = app.session.flashbag.get('id_servicio') %}
+
+{% block title %}Telecomunicaciones | subservicios
+{% endblock %}
+
+
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		.height-btn-add {
+			height: 40px;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<div class="d-flex align-items-center">
+		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+			Subservicios
+		</h4>
+		<div>
+			<form method="post" id="form_subservicios_post" class="d-flex align-items-center" action="{{ url('telecomunicaciones-post-subservicios') }}">
+				<div class="form-group input-group mb-0  input-group-sm d-block">
+					<input type="text" id="subservicios_nombre" name="nombre" required="required" class="form-control w-100 form-control">
+				</div>
+				<input type="text" id="id_servicio" name="id_servicio" hidden>
+				<button class="btn btn-primary height-btn-add mx-2 btn-sm fa fa-plus" data-toggle="modal" data-target="#modal__form__id" data-placement="bottom" title="Adicionar">
+					Adicionar
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<table class="table-small-rows table table-hover text-light">
+		<thead class="thead-dark">
+			<th scope="col-1" class="text-left">Nombre</th>
+			<th width="70px" class="text-left">Acciones</th>
+		</thead>
+		<tbody>
+			{% for item in subservicios %}
+				<tr>
+					<td style="font-weight:400;">{{ item.descripcion }}</td>
+					<td style="font-weight:200;">
+						<button type="button" class="btn btn-danger btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Eliminar" onclick="">
+							<i class="fa fa-trash"></i>
+						</button>
+
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script>
+		id_servicio = "{{ app.request.get('id_servicio') }}";
+		$('#id_servicio').val( id_servicio )
+	</script>
+
+	<script src=" {{ asset('public\js\Telecomunicaciones\subservicios\validate-form.js')}}"></script>
+{% endblock %}
