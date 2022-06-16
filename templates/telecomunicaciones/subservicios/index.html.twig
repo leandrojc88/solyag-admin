@@ -19,6 +19,9 @@
 {% block content %}
 
 	<div class="d-flex align-items-center">
+		<a href="{{ url("telecomunicaciones-servicio") }}">
+			<i class="text-light mx-3 mt-2 fa fa-arrow-circle-left text-drak fa-2x"></i>
+		</a>
 		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
 			Subservicios
 		</h4>
@@ -45,7 +48,7 @@
 				<tr>
 					<td style="font-weight:400;">{{ item.descripcion }}</td>
 					<td style="font-weight:200;">
-						<button type="button" class="btn btn-danger btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Eliminar" onclick="">
+						<button type="button" class="btn btn-danger btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Eliminar" onclick="onDeleteSubservicio({{ app.request.get('id_servicio') }}, {{item.id}} )">
 							<i class="fa fa-trash"></i>
 						</button>
 
@@ -62,8 +65,9 @@
 
 	<script>
 		id_servicio = "{{ app.request.get('id_servicio') }}";
-		$('#id_servicio').val( id_servicio )
+$('#id_servicio').val(id_servicio)
 	</script>
 
-	<script src=" {{ asset('public\js\Telecomunicaciones\subservicios\validate-form.js')}}"></script>
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/validate-form.js')}}"></script>
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/delete-subservicio.js')}}"></script>
 {% endblock %}
