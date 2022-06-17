@@ -2,6 +2,7 @@
 
 namespace App\Repository\Telecomunicaciones;
 
+use App\Entity\Telecomunicaciones\Servicios;
 use App\Entity\Telecomunicaciones\Subservicio;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,30 @@ class SubservicioRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Subservicio::class);
+    }
+
+    /**
+     * listdo de todos los subservicios y la configuracion de la empresa
+     * para las recargas de cubacel
+     */
+    public function listSubserviciosEmpresaRecargaCubacel($id_empresa)
+    {
+
+        return $this->createQueryBuilder('s')
+            // ->select('s, ess')
+            ->select('s.id as id_subservicio, s.descripcion, ess.id as id_empresa_subs_solyag, ess.costo')
+            ->leftJoin(
+                'App\Entity\Telecomunicaciones\EmpresaSubservicioSolyag',
+                'ess',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                's.id = ess.id_subservicio and ess.id_empresa = :id_empresa'
+            )
+            ->andWhere('s.id_servicio = :id_servicio')
+            // ->orderBy('e.nombre', 'ASC')
+            ->getQuery()
+            ->setParameter('id_empresa', $id_empresa)
+            ->setParameter('id_servicio', Servicios::ID_RECARGA_CUBACEL)
+            ->getResult();
     }
 
     // /**

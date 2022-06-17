@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Servicios
 {
+    const ID_RECARGA_CUBACEL = 1;
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")

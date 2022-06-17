@@ -1,0 +1,52 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% block title %}Telecomunicaciones | Subservicios Recarga Cubacell
+{% endblock %}
+
+
+{% block content %}
+
+	{{ include('telecomunicaciones/empresas/modal/modal-edit-costo-empresa.html.twig',{title:'Cambair costo del subservicio'}) }}
+
+	<div
+		class="container-fluid">
+		{# header #}
+		<div class="d-flex align-items-center">
+			<h1 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Subservicios Recarga Cubacel (
+				{{empresa_name}}
+				)
+			</h1>
+		</div>
+		{# end header #}
+
+		<table class="table-small-rows table table-hover text-light">
+			<thead class="thead-dark">
+				<th scope="col-1" class="text-left">Nombre</th>
+				<th width="180px" class="text-left">Costo</th>
+				<th width="70px" class="text-left">Acciones</th>
+			</thead>
+			<tbody>
+				{% for item in empresas %}
+					<tr>
+						<td style="font-weight:400;">{{ item.descripcion }}</td>
+						<td style="font-weight:400;">{{ item.costo }}</td>
+						<td style="font-weight:200;">
+							<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="editarCostoEmpresaCubacel({costo: {% if item.costo %} {{item.costo}} {% else %} 0 {% endif %}, id_subservicio: {{ item.id_subservicio }}, id_empresa: {{ app.request.get('id_empresa').id }} })">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/editar-costo-empresa-cubacel.js') }}"></script>
+{% endblock %}
