@@ -32,12 +32,20 @@
 					<td style="font-weight:400;">{{ item.codigo }}</td>
 					<td style="font-weight:400;">{{ item.abreviatura }}</td>
 					<td style="font-weight:200;">
-						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="">
-							<i class="fa fa-edit"></i>
-						</button>
-						<a type="button" class="btn btn-info btn-sm w-31" href="{{ url('telecomunicaciones-subservicios', { id_servicio: item.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Gestionar subservicios">
+						<a type="button" {% if item.activo %} disabled {% endif %} class="btn {% if item.activo %} btn-outline-secondary {% else %} btn-info {% endif %} btn-sm w-31" href="{{ url('telecomunicaciones-subservicios', { id_servicio: item.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Gestionar subservicios">
 							<i class="fa fa-comments"></i>
 						</a>
+
+						{% if item.activo %}
+							<button type="button" class="btn btn-outline-info btn-sm" title="Activar servicio" onclick="onDesactivarServicio({{item.id}})">
+								<i class="fa fa-check-square"></i>
+							</button>
+						{% else %}
+
+							<button type="button" class="btn btn-danger btn-sm" title="Desactivar servicio" onclick="onDesactivarServicio({{item.id}})">
+								<i class="fa fa-check-square"></i>
+							</button>
+						{% endif %}
 					</td>
 				</tr>
 			{% endfor %}
@@ -50,5 +58,6 @@
 	{{ parent() }}
 	<script src="{{ asset('js/Telecomunicaciones/servicios/validate-form-post.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/servicios/auto-generate-abreviatura.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/servicios/desactivar-servicio.js') }}"></script>
 
 {% endblock %}
