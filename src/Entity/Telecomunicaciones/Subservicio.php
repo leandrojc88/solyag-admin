@@ -33,6 +33,12 @@ class Subservicio
      */
     private $activo;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $productid_dtone;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +76,18 @@ class Subservicio
     public function setActivo(bool $activo): self
     {
         $this->activo = $activo;
+
+        return $this;
+    }
+
+    public function getProductidDtone(): ?int
+    {
+        return $this->productid_dtone;
+    }
+
+    public function setProductidDtone(?int $productid_dtone): self
+    {
+        $this->productid_dtone = $productid_dtone;
 
         return $this;
     }

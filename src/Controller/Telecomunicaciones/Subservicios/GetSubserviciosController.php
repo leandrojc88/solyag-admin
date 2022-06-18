@@ -18,6 +18,8 @@ class GetSubserviciosController extends AbstractController
 
         $subservicios = $subservicioRepository->findBy(['id_servicio' => $id_servicio]);
 
+        // dd($subservicios);
+
         return $this->render('telecomunicaciones/subservicios/index.html.twig', [
             'subservicios' => $subservicios
         ]);

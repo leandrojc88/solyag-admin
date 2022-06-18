@@ -1,21 +1,24 @@
-
 $('#form_subservicios_post').validate({
+    errorClass: 'invalid-label-orange',
+    errorPlacement: function (error, element) {
+        // colocar mensajes de error a la derecha de cada label para el componente
+        const error_label = element.closest("form").find(element.attr('id') + "-error")
+        if (error_label.length) {
+            error_label.removeClass('hide')
+        } else {
+            error.addClass('ml-3')
+            $(element)
+                .closest("form")
+                .find("label[for='" + element.attr("id") + "']")
+                .append(error);
+        }
+    },
     rules: {
-        'nombre': "required"
+        'nombre': "required",
+        'productid_dtone': "required"
     },
     messages: {
-        'nombre': ""
-    },
-    highlight: function (element, errorClass, validClass) {
-        $(element).addClass("is-invalid");
-        $(element).popover({ content: 'valor requerido!', placement: 'bottom', trigger: 'manual' }).popover('show').on('shown.bs.popover', function () {
-            $('#subservicios_nombre-error').hide()
-            setTimeout(function (time) {
-                $(element).popover('hide').removeClass('is-invalid')
-            }, 3000)
-        })
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass("is-invalid");
+        'nombre': CONTAB_MSG.REQUIRED_NOT_BLANK,
+        'productid_dtone': CONTAB_MSG.REQUIRED_NOT_BLANK
     }
 })
