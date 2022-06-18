@@ -3,12 +3,10 @@
 namespace App\Controller\Telecomunicaciones\Empresas;
 
 use App\Entity\Telecomunicaciones\EmpresaSubservicioSolyag;
-use App\Entity\Telecomunicaciones\EmpresaTipoPaga;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\EmpresaSubservicioSolyagRepository;
-use App\Repository\Telecomunicaciones\EmpresaTipoPagaRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
-use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
+use App\Service\Telecomunicaciones\Subservicios\HttpUpdateCostoscSubserviciosCubacel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +23,8 @@ class UpdateCostoEmpresaCubacelController extends AbstractController
         EntityManagerInterface $em,
         EmpresasRepository $empresasRepository,
         SubservicioRepository $subservicioRepository,
-        EmpresaSubservicioSolyagRepository $empresaSubservicioSolyagRepository
+        EmpresaSubservicioSolyagRepository $empresaSubservicioSolyagRepository,
+        HttpUpdateCostoscSubserviciosCubacel $httpUpdateCostoscSubserviciosCubacel
     ): Response {
 
         // TODO pasarlo despues para un servicio de {aplicacion}
@@ -52,6 +51,14 @@ class UpdateCostoEmpresaCubacelController extends AbstractController
 
         $em->persist($empresaCostoSolyag);
         $em->flush();
+
+        // enviar al api
+        ($httpUpdateCostoscSubserviciosCubacel)(
+            $id_empresa,
+            $empresaCostoSolyag->getIdSubservicio()->getId(),
+            $empresaCostoSolyag->getIdSubservicio()->getDescripcion(),
+            $empresaCostoSolyag->getCosto()
+        );
 
         $this->addFlash('success', 'Datos Actualizado ');
         return $this->redirectToRoute(
