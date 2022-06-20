@@ -4,6 +4,7 @@ namespace App\Entity\Telecomunicaciones;
 
 use App\Entity\Empleados;
 use App\Entity\Empresas;
+use App\Entity\Telecomunicaciones\Subservicio;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
@@ -77,7 +78,8 @@ class ServicioEmpresa
     private $response = [];
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Subservicio::class)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $sub_servicio;
 
@@ -211,12 +213,12 @@ class ServicioEmpresa
         return $this;
     }
 
-    public function getSubServicio(): ?string
+    public function getSubServicio(): ?Subservicio
     {
         return $this->sub_servicio;
     }
 
-    public function setSubServicio(string $sub_servicio): self
+    public function setSubServicio(Subservicio $sub_servicio): self
     {
         $this->sub_servicio = $sub_servicio;
 

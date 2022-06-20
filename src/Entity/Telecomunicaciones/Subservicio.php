@@ -38,6 +38,11 @@ class Subservicio
      */
     private $productid_dtone;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $valor;
+
 
     public function getId(): ?int
     {
@@ -88,6 +93,18 @@ class Subservicio
     public function setProductidDtone(?int $productid_dtone): self
     {
         $this->productid_dtone = $productid_dtone;
+
+        return $this;
+    }
+
+    public function getValor(): ?int
+    {
+        return $this->valor;
+    }
+
+    public function setValor(?int $valor): self
+    {
+        $this->valor = $valor;
 
         return $this;
     }
