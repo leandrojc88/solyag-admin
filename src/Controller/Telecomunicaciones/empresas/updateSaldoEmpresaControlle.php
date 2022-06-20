@@ -49,6 +49,6 @@ class UpdateSaldoEmpresaControlle extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Datos Actualizado ');
-        return $this->redirectToRoute('telecomunicaciones');
+        return $this->redirectToRoute('telecomunicaciones-empresas');
     }
 }

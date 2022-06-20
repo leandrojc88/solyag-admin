@@ -28,23 +28,6 @@ use Symfony\Component\Validator\Constraints\Json;
 class DToneController extends AbstractController
 {
     /**
-     * @Route("/ejec", name="dtone_index")
-     */
-    public function index(DToneManager $dToneManager): JsonResponse
-    {
-        $response = $dToneManager->execTransactions([
-
-            'id_trasaccion' => "3454353",
-            'last_name' => "Capdesuner", // beneficiario
-            'first_name' => "Leandro", // beneficiario
-            'mobile_number' => "+5353443584"
-
-        ]);
-
-        return $this->json($response);
-    }
-
-    /**
      * @Route("/looptask", name="looptask")
      */
     public function looptask(
@@ -73,7 +56,8 @@ class DToneController extends AbstractController
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
 
-            $saldos = $dToneManager->getValueByProductID($item->getSubServicio());
+            // $saldos = $dToneManager->getValueByProductID($item->getSubServicio());
+            $saldos = $item->getSubServicio()->getValor();
 
             if (!$empresaTipoPagoService->isHaveSaldo(
                 $item->getEmpresa()->getId(),
@@ -94,7 +78,7 @@ class DToneController extends AbstractController
                     'last_name' => "SOLYAG",
                     'first_name' => "SOLYAG",
                     'mobile_number' => $item->getNoTelefono(),
-                    'product_id' => $item->getSubServicio()
+                    'product_id' => $item->getSubServicio()->getProductidDtone()
 
                 ]);
 
