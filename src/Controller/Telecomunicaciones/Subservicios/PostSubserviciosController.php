@@ -23,6 +23,7 @@ class PostSubserviciosController extends AbstractController
                 'nombre' => $request->get('nombre'),
                 'id_servicio' => $request->get('id_servicio'),
                 'productid_dtone' => $request->get('productid_dtone'),
+                'valor' => $request->get('valor'),
             ];
 
             $creatorSubserviciosService->create($params);

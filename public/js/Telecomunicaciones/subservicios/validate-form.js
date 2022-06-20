@@ -15,10 +15,12 @@ $('#form_subservicios_post').validate({
     },
     rules: {
         'nombre': "required",
-        'productid_dtone': "required"
+        'productid_dtone': "required",
+        'valor': "required"
     },
     messages: {
         'nombre': CONTAB_MSG.REQUIRED_NOT_BLANK,
-        'productid_dtone': CONTAB_MSG.REQUIRED_NOT_BLANK
+        'productid_dtone': CONTAB_MSG.REQUIRED_NOT_BLANK,
+        'valor': CONTAB_MSG.REQUIRED_NOT_BLANK
     }
 })

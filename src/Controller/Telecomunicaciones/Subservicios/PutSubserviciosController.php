@@ -31,6 +31,7 @@ class PutSubserviciosController extends AbstractController
             );
 
             $id_subservicio->setDescripcion($request->get('nombre'));
+            $id_subservicio->setValor($request->get('valor'));
             $id_subservicio->setProductidDtone($request->get('productid_dtone'));
 
             $em->persist($id_subservicio);

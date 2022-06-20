@@ -26,6 +26,7 @@ class CreatorSubserviciosService
             'nombre' => $nombre,
             'id_servicio' => $id_servicio,
             'productid_dtone' => $productid_dtone,
+            'valor' => $valor,
         ] = $params;
 
         ($this->validate)($id_servicio,  $nombre, $productid_dtone);
@@ -35,6 +36,7 @@ class CreatorSubserviciosService
         $subservicio
             ->setDescripcion($nombre)
             ->setProductIdDtone($productid_dtone)
+            ->setValor($valor)
             ->setActivo(true)
             ->setIdServicio($this->em->getRepository(Servicios::class)->find($id_servicio));
 
