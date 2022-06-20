@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Status;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class DToneManager
 {

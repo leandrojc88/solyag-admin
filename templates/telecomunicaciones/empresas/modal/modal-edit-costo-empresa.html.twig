@@ -1,0 +1,18 @@
+{% extends 'utils/modal_form.html.twig' %}
+
+{% block modalbody %}
+
+	<form method="post" style="height: 130px;" id="form_modal_edit_costo_empresa" action="{{ url('update_costo_empresa_cubacel') }}">
+		<input name="id_servicio" id="id_servicio" hidden>
+		<input name="id_empresa" id="id_empresa" hidden>
+		<div id="costo-group" class="form-group  input-group">
+			<label class="label" for="costo">Costo</label>
+			<input type="number" step="any" class="form-control w-100" name="costo" id="costo">
+		</div>
+	</form>
+
+{% endblock %}
+
+{% block btnzone %}
+	<button type="submit" form="form_modal_edit_costo_empresa" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Telecomunicaciones;
+namespace App\Service\Telecomunicaciones\Empresas;
 
 use App\Repository\Telecomunicaciones\EmpresaTipoPagaRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +24,7 @@ class EmpresaTipoPagoService
 
     public function getTipoForCheckBox($tipo)
     {
-        return $tipo ? self::PREPAGO : self::POSPAGO;
+        return $tipo ? self::POSPAGO : self::PREPAGO;
     }
 
 

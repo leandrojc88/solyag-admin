@@ -1,0 +1,77 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% set id_serviciot = app.session.flashbag.get('id_servicio') %}
+
+{% block title %}Telecomunicaciones | subservicios
+{% endblock %}
+
+
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		.height-btn-add {
+			height: 40px;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	{{ include('telecomunicaciones/subservicios/modal/modal_add_subservicio.html.twig',{title: 'Adicionar Servicio' }) }}
+
+	<div class="d-flex align-items-center">
+		<a href="{{ url("telecomunicaciones-servicio") }}">
+			<i class="text-light mx-3 mt-2 fa fa-arrow-circle-left text-drak fa-2x"></i>
+		</a>
+		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+			Subservicios
+		</h4>
+		<div>
+			<button class="btn btn-primary height-btn-add mx-2 btn-sm fa fa-plus" data-toggle="modal" data-target="#modal__form__id" data-placement="bottom" title="Adicionar">
+				Adicionar
+			</button>
+		</div>
+	</div>
+
+	<table class="table-small-rows table table-hover text-light">
+		<thead class="thead-dark">
+			<th scope="col-1" class="text-left">Descripcion</th>
+			<th scope="col-1" class="text-left">Product id (DTone)</th>
+			<th scope="col-1" class="text-left">Valor</th>
+			<th width="70px" class="text-left">Acciones</th>
+		</thead>
+		<tbody>
+			{% for item in subservicios %}
+				<tr>
+					<td style="font-weight:400;">{{ item.descripcion }}</td>
+					<td style="font-weight:400;">{{ item.productidDtone }}</td>
+					<td style="font-weight:400;">{{ item.valor }}</td>
+					<td style="font-weight:200;">
+						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="onUpdateSubservicio({id_subservicio: {{item.id}}, descripcion: '{{item.descripcion}}', productid_dtone: {{item.productidDtone}}, valor: {{item.valor}}  })">
+							<i class="fa fa-edit"></i>
+						</button>
+						<button type="button" class="btn btn-danger btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Eliminar" onclick="onDeleteSubservicio({{ app.request.get('id_servicio') }}, {{item.id}} )">
+							<i class="fa fa-trash"></i>
+						</button>
+
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script>
+		id_servicio = "{{ app.request.get('id_servicio') }}";
+$('#id_servicio').val(id_servicio)
+	</script>
+
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/validate-form.js')}}"></script>
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/delete-subservicio.js')}}"></script>
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/update-subservicio.js')}}"></script>
+{% endblock %}

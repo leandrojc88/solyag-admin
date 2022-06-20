@@ -164,6 +164,10 @@ input#telefono {
     background: #ffffff;
 }
 
+.w-31 {
+    width: 31px;
+}
+
 /* ------ RWD -------- */
 @media (max-width: 480px) {
     .overflow-hidden-x-content {

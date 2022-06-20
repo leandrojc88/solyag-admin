@@ -4,7 +4,7 @@ function execDTone() {
     $.ajax({
         method: "POST",
         data: {},
-        url: 'dtone/looptask',
+        url: '/dtone/looptask',
         dataType: 'json',
         success: function (data) {
             console.log('ok')

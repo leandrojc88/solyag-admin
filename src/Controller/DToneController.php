@@ -7,8 +7,9 @@ use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Http\httpPostServicioEmpresaSolyag;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
-use App\Service\Telecomunicaciones\EmpresaTipoPagoService;
-use App\Service\Telecomunicaciones\ServicioEmpresaService;
+use App\Service\Telecomunicaciones\Config\GetLoadIsActiveService;
+use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
+use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Status;
@@ -27,23 +28,6 @@ use Symfony\Component\Validator\Constraints\Json;
 class DToneController extends AbstractController
 {
     /**
-     * @Route("/ejec", name="dtone_index")
-     */
-    public function index(DToneManager $dToneManager): JsonResponse
-    {
-        $response = $dToneManager->execTransactions([
-
-            'id_trasaccion' => "3454353",
-            'last_name' => "Capdesuner", // beneficiario
-            'first_name' => "Leandro", // beneficiario
-            'mobile_number' => "+5353443584"
-
-        ]);
-
-        return $this->json($response);
-    }
-
-    /**
      * @Route("/looptask", name="looptask")
      */
     public function looptask(
@@ -51,8 +35,12 @@ class DToneController extends AbstractController
         DToneManager $dToneManager,
         ServicioEmpresaService $servicioEmpresaService,
         httpPostServicioEmpresaSolyag $httpPostServicioEmpresaSolyag,
-        EmpresaTipoPagoService $empresaTipoPagoService
+        EmpresaTipoPagoService $empresaTipoPagoService,
+        GetLoadIsActiveService $getLoadIsActiveService
     ): JsonResponse {
+
+        if (!$getLoadIsActiveService->get())
+            return $this->json(["finish" => true, "msg" => "API DTone esta desactivada por el sistema"]);
 
         $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
 
@@ -68,7 +56,8 @@ class DToneController extends AbstractController
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
 
-            $saldos = $dToneManager->getValueByProductID($item->getSubServicio());
+            // $saldos = $dToneManager->getValueByProductID($item->getSubServicio());
+            $saldos = $item->getSubServicio()->getValor();
 
             if (!$empresaTipoPagoService->isHaveSaldo(
                 $item->getEmpresa()->getId(),
@@ -89,7 +78,7 @@ class DToneController extends AbstractController
                     'last_name' => "SOLYAG",
                     'first_name' => "SOLYAG",
                     'mobile_number' => $item->getNoTelefono(),
-                    'product_id' => $item->getSubServicio()
+                    'product_id' => $item->getSubServicio()->getProductidDtone()
 
                 ]);
 
@@ -101,8 +90,8 @@ class DToneController extends AbstractController
 
             $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
         }
-
-        $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
+        if ($listServicios)
+            $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
 
         return $this->json(["finish" => true]);
     }

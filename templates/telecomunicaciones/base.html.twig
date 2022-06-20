@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Telecomunicaciones
+{% endblock %}
+
+{% block navBar %}
+	<nav class="navbar navbar-expand-lg navbar-light bg-light nabvar-navegation">
+		<a style="cursor: pointer" class="navbar-brand text-white" href="{{ url ('telecomunicaciones') }}">| Telecomunicaciones |</a>
+		<button class="navbar-toggler order-md-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<a class="dropdown-item" href="{{ url ('telecomunicaciones-empresas') }}">Empresas</a>
+				<a class="dropdown-item" href="{{ url ('telecomunicaciones-servicio') }}">Servicios</a>
+				{# <a class="dropdown-item" href="{{ url('telecomunicaciones') }}">Proveedores</a> #}
+			</ul>
+
+			<button type="button" title="desactivar api" id="btn_active_dtone" class="btn btn-outline btn-sm" onclick="activarDTone()"></button>
+		</div>
+	</nav>
+	<!-- Modal -->
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="{{ asset('js/Telecomunicaciones/apiDTone/loadDTone.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/apiDTone/draw.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/apiDTone/activarDTone.js') }}"></script>
+
+{% endblock %}

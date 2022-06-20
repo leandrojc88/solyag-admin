@@ -1,0 +1,23 @@
+{% extends 'utils/modal_form.html.twig' %}
+{% block modalbody %}
+	<form method="post" class="text-left" id="form_subservicios_post" action="{{ url('telecomunicaciones-post-subservicios') }}">
+		<div class="form-group input-group input-group-sm d-block">
+			<label for="nombre" class="required">Nombre</label>
+			<input type="text" id="nombre" name="nombre" required="required" class="form-control w-100 form-control">
+		</div>
+		<div class="form-group input-group input-group-sm d-block">
+			<label for="productid_dtone" class="required">Product id (DTone)</label>
+			<input type="number" id="productid_dtone" name="productid_dtone" required="required" class="form-control w-100 form-control">
+		</div>
+		<div class="form-group input-group input-group-sm d-block">
+			<label for="valor" class="required">Valor</label>
+			<input type="number" id="valor" name="valor" required="required" class="form-control w-100 form-control">
+		</div>
+		<input type="text" id="id_servicio" name="id_servicio" hidden>
+	</form>
+{% endblock %}
+
+
+{% block btnzone %}
+	<button type="submit" form="form_subservicios_post" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}
