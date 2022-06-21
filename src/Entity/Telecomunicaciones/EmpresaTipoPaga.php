@@ -24,7 +24,7 @@ class EmpresaTipoPaga
     private $tipo;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $saldo;
 
@@ -51,12 +51,12 @@ class EmpresaTipoPaga
         return $this;
     }
 
-    public function getSaldo(): ?int
+    public function getSaldo(): ?float
     {
         return $this->saldo;
     }
 
-    public function setSaldo(int $saldo): self
+    public function setSaldo(float $saldo): self
     {
         $this->saldo = $saldo;
 

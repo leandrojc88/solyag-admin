@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Pais;
+use App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel;
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
-use App\Http\httpPostServicioEmpresaSolyag;
+use App\Http\httpPostServicioEmpresaCubacel;
+use App\Repository\Telecomunicaciones\EmpresaSubservicioCubacelRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
 use App\Service\Telecomunicaciones\Config\GetLoadIsActiveService;
@@ -12,6 +14,7 @@ use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
 use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Status;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,9 +37,10 @@ class DToneController extends AbstractController
         ServicioEmpresaRepository $servicioEmpresaRepository,
         DToneManager $dToneManager,
         ServicioEmpresaService $servicioEmpresaService,
-        httpPostServicioEmpresaSolyag $httpPostServicioEmpresaSolyag,
+        httpPostServicioEmpresaCubacel $httpPostServicioEmpresaCubacel,
         EmpresaTipoPagoService $empresaTipoPagoService,
-        GetLoadIsActiveService $getLoadIsActiveService
+        GetLoadIsActiveService $getLoadIsActiveService,
+        EmpresaSubservicioCubacelRepository $empresaSubservicioCubacelRepository
     ): JsonResponse {
 
         if (!$getLoadIsActiveService->get())
@@ -56,12 +60,19 @@ class DToneController extends AbstractController
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
 
-            // $saldos = $dToneManager->getValueByProductID($item->getSubServicio());
-            $saldos = $item->getSubServicio()->getValor();
+            $empresaSubservicioCubacel = $empresaSubservicioCubacelRepository->findOneBy([
+                "id_empresa" => $item->getEmpresa(),
+                "id_subservicio" => $item->getSubServicio()
+            ]);
+
+            if (!$empresaSubservicioCubacel)
+                throw new Exception("El subservicio " . $item->getSubServicio()->getDescripcion() . " no tiene un costo configurado para la empresa " . $item->getEmpresa()->getNombre());
+
+            $costo = $empresaSubservicioCubacel->getCosto();
 
             if (!$empresaTipoPagoService->isHaveSaldo(
                 $item->getEmpresa()->getId(),
-                $saldos
+                $costo
             )) {
                 $dToneManager->updateDToneIntoServiceEmpresa(
                     $item->getId(),
@@ -84,14 +95,14 @@ class DToneController extends AbstractController
 
                 $empresaTipoPagoService->reducirSaldo(
                     $item->getEmpresa()->getId(),
-                    $saldos
+                    $costo
                 );
             }
 
             $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
         }
         if ($listServicios)
-            $httpPostServicioEmpresaSolyag->updateServicioEmpresaInSolyag($listServicios);
+            $httpPostServicioEmpresaCubacel->update($listServicios);
 
         return $this->json(["finish" => true]);
     }

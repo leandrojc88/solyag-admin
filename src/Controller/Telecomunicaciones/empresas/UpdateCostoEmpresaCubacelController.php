@@ -2,9 +2,9 @@
 
 namespace App\Controller\Telecomunicaciones\Empresas;
 
-use App\Entity\Telecomunicaciones\EmpresaSubservicioSolyag;
+use App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel;
 use App\Repository\EmpresasRepository;
-use App\Repository\Telecomunicaciones\EmpresaSubservicioSolyagRepository;
+use App\Repository\Telecomunicaciones\EmpresaSubservicioCubacelRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
 use App\Service\Telecomunicaciones\Subservicios\HttpUpdateCostoscSubserviciosCubacel;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +23,7 @@ class UpdateCostoEmpresaCubacelController extends AbstractController
         EntityManagerInterface $em,
         EmpresasRepository $empresasRepository,
         SubservicioRepository $subservicioRepository,
-        EmpresaSubservicioSolyagRepository $empresaSubservicioSolyagRepository,
+        EmpresaSubservicioCubacelRepository $EmpresaSubservicioCubacelRepository,
         HttpUpdateCostoscSubserviciosCubacel $httpUpdateCostoscSubserviciosCubacel
     ): Response {
 
@@ -33,12 +33,12 @@ class UpdateCostoEmpresaCubacelController extends AbstractController
         $id_empresa = $request->get('id_empresa');
         $costo = $request->get('costo');
 
-        $empresaCostoSolyag = $empresaSubservicioSolyagRepository->findOneBy([
+        $empresaCostoSolyag = $EmpresaSubservicioCubacelRepository->findOneBy([
             "id_empresa" => $id_empresa, "id_subservicio" => $id_servicio
         ]);
 
         if (!$empresaCostoSolyag) {
-            $empresaCostoSolyag = new EmpresaSubservicioSolyag();
+            $empresaCostoSolyag = new EmpresaSubservicioCubacel();
 
             $empresaCostoSolyag
                 ->setCosto($costo)

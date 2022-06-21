@@ -2,25 +2,25 @@
 
 namespace App\Repository\Telecomunicaciones;
 
-use App\Entity\Telecomunicaciones\EmpresaSubservicioSolyag;
+use App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EmpresaSubservicioSolyag|null find($id, $lockMode = null, $lockVersion = null)
- * @method EmpresaSubservicioSolyag|null findOneBy(array $criteria, array $orderBy = null)
- * @method EmpresaSubservicioSolyag[]    findAll()
- * @method EmpresaSubservicioSolyag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method EmpresaSubservicioCubacel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method EmpresaSubservicioCubacel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EmpresaSubservicioCubacel[]    findAll()
+ * @method EmpresaSubservicioCubacel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EmpresaSubservicioSolyagRepository extends ServiceEntityRepository
+class EmpresaSubservicioCubacelRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EmpresaSubservicioSolyag::class);
+        parent::__construct($registry, EmpresaSubservicioCubacel::class);
     }
 
     // /**
-    //  * @return EmpresaSubservicioSolyag[] Returns an array of EmpresaSubservicioSolyag objects
+    //  * @return EmpresaSubservicioCubacel[] Returns an array of EmpresaSubservicioCubacel objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EmpresaSubservicioSolyagRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?EmpresaSubservicioSolyag
+    public function findOneBySomeField($value): ?EmpresaSubservicioCubacel
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

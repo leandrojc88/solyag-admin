@@ -38,12 +38,6 @@ class Subservicio
      */
     private $productid_dtone;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $valor;
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -97,15 +91,4 @@ class Subservicio
         return $this;
     }
 
-    public function getValor(): ?int
-    {
-        return $this->valor;
-    }
-
-    public function setValor(?int $valor): self
-    {
-        $this->valor = $valor;
-
-        return $this;
-    }
 }
