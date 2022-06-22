@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Types;
 class Status
 {
     const INIT = 'INIT'; // el unico esta q es 100 de SOLYAG
