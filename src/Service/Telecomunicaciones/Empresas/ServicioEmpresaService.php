@@ -18,19 +18,22 @@ class ServicioEmpresaService
     private EmpleadosRepository $empleadosRepository;
     private ServicioEmpresaRepository $servicioEmpresaRepository;
     private SubservicioRepository $subservicioRepository;
+    private ValidateSaldoEmpresa $validateSaldoEmpresa;
 
     public function __construct(
         EntityManagerInterface $em,
         EmpresasRepository $empresasRepository,
         EmpleadosRepository $empleadosRepository,
         ServicioEmpresaRepository $servicioEmpresaRepository,
-        SubservicioRepository $subservicioRepository
+        SubservicioRepository $subservicioRepository,
+        ValidateSaldoEmpresa $validateSaldoEmpresa
     ) {
         $this->em = $em;
         $this->empresasRepository = $empresasRepository;
         $this->empleadosRepository = $empleadosRepository;
         $this->servicioEmpresaRepository = $servicioEmpresaRepository;
         $this->subservicioRepository = $subservicioRepository;
+        $this->validateSaldoEmpresa = $validateSaldoEmpresa;
     }
 
 
@@ -40,12 +43,13 @@ class ServicioEmpresaService
         $maxNoOrdenFind = $this->servicioEmpresaRepository->getMaxNoOrden($params['id_servicio']);
         $maxNoOrden = intval($maxNoOrdenFind[0]['max_no_orden']);
 
+        $empresa = $this->empresasRepository->find($params['id_empresa']);
 
         $servicioEmpresa = new ServicioEmpresa();
         $servicioEmpresa
             ->setNoTelefono($params['no_telefono'])
             ->setDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')))
-            ->setEmpresa($this->empresasRepository->find($params['id_empresa']))
+            ->setEmpresa($empresa)
             ->setEmpleado($this->empleadosRepository->findOneBy(['correo' => $params['email']]))
             ->setServicio($params['id_servicio'])
             // ->setSubServicio($params['sub_servicio'])
@@ -56,11 +60,26 @@ class ServicioEmpresaService
 
         $subservicio = $this->subservicioRepository->find($params['id_api']);
 
-        if ($subservicio)
-            $servicioEmpresa
-                ->setStatus(Status::INIT)
-                ->setSubServicio($subservicio);
-        else {
+        if ($subservicio) {
+
+            if ($this->validateSaldoEmpresa->validate(
+                $empresa,
+                $subservicio
+            ))
+                $servicioEmpresa
+                    ->setStatus(Status::INIT)
+                    ->setSubServicio($subservicio);
+            else
+                $servicioEmpresa
+                    ->setStatus(Status::DECLINED)
+                    ->setSubServicio($subservicio)
+                    ->setResponse(
+                        ["errors" => [[
+                            "code" => null,
+                            "message" => "Empresa sin saldo suficiente"
+                        ]]]
+                    );
+        } else {
             $servicioEmpresa
                 ->setStatus(Status::DECLINED)
                 ->setResponse(

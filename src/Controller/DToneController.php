@@ -12,6 +12,7 @@ use App\Service\DToneManager;
 use App\Service\Telecomunicaciones\Config\GetLoadIsActiveService;
 use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
 use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
+use App\Service\Telecomunicaciones\Empresas\ValidateSaldoEmpresa;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -40,7 +41,8 @@ class DToneController extends AbstractController
         httpPostServicioEmpresaCubacel $httpPostServicioEmpresaCubacel,
         EmpresaTipoPagoService $empresaTipoPagoService,
         GetLoadIsActiveService $getLoadIsActiveService,
-        EmpresaSubservicioCubacelRepository $empresaSubservicioCubacelRepository
+        EmpresaSubservicioCubacelRepository $empresaSubservicioCubacelRepository,
+        ValidateSaldoEmpresa $validateSaldoEmpresa
     ): JsonResponse {
 
         if (!$getLoadIsActiveService->get())
@@ -70,10 +72,7 @@ class DToneController extends AbstractController
 
             $costo = $empresaSubservicioCubacel->getCosto();
 
-            if (!$empresaTipoPagoService->isHaveSaldo(
-                $item->getEmpresa()->getId(),
-                $costo
-            )) {
+            if (!$validateSaldoEmpresa->validate($item->getEmpresa(), $item->getSubServicio())) {
                 $dToneManager->updateDToneIntoServiceEmpresa(
                     $item->getId(),
                     null,

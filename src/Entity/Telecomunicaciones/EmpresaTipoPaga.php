@@ -11,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EmpresaTipoPaga
 {
+
+    const PREPAGO = 'prepago';
+    const POSPAGO = 'pospago';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
