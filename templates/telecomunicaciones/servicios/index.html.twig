@@ -7,51 +7,24 @@
 
 	{{ include('telecomunicaciones/servicios/modals/modal_add_servicio.html.twig',{title:'Adicionar Servicio'}) }}
 
-	<div class="d-flex align-items-center">
-		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
-			Servicios
-		</h4>
-		<div>
-			<button class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#modal__form__id" data-placement="bottom" title="Adicionar">
-				Adicionar
-			</button>
+	<div class="container">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Servicios
+			</h4>
 		</div>
+		<section class="d-flex">
+			<div class="card card-costom" style="width: 18rem;">
+				<a href="{{ url('telecomunicaciones-subservicios', { id_servicio: 1 }) }}">
+					<img src="{{ asset('images/telecomunicaciones/servicios/cubacel.png') }}" class="card-img-top" alt="Cubacel">
+				</a>
+			</div>
+			<div class="card card-costom" style="width: 18rem;">
+				<img src="{{ asset('images/telecomunicaciones/servicios/larga-distancia.png') }}" class="card-img-top" alt="larga distancia">
+			</div>
+		</section>
 	</div>
 
-	<table class="table-small-rows table table-hover text-light">
-		<thead class="thead-dark">
-			<th scope="col-1" class="text-left">Nombre</th>
-			<th width="180px" class="text-left">Codigo</th>
-			<th width="180px" class="text-left">Abreviatura</th>
-			<th width="70px" class="text-left">Acciones</th>
-		</thead>
-		<tbody>
-			{% for item in servicios %}
-				<tr>
-					<td style="font-weight:400;">{{ item.nombre }}</td>
-					<td style="font-weight:400;">{{ item.codigo }}</td>
-					<td style="font-weight:400;">{{ item.abreviatura }}</td>
-					<td style="font-weight:200;">
-						<a type="button" {% if item.activo %} disabled {% endif %} class="btn {% if item.activo %} btn-outline-secondary {% else %} btn-info {% endif %} btn-sm w-31" href="{{ url('telecomunicaciones-subservicios', { id_servicio: item.id }) }}" data-toggle="tooltip" data-placement="bottom" title="Gestionar subservicios">
-							<i class="fa fa-comments"></i>
-						</a>
-
-						{% if item.activo %}
-							<button type="button" class="btn btn-outline-info btn-sm" title="Activar servicio" onclick="onDesactivarServicio({{item.id}})">
-								<i class="fa fa-check-square"></i>
-							</button>
-						{% else %}
-
-							<button type="button" class="btn btn-danger btn-sm" title="Desactivar servicio" onclick="onDesactivarServicio({{item.id}})">
-								<i class="fa fa-check-square"></i>
-							</button>
-						{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
-
-		</tbody>
-	</table>
 {% endblock %}
 
 {% block javascripts %}
