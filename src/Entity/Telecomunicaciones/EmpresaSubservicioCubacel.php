@@ -3,13 +3,13 @@
 namespace App\Entity\Telecomunicaciones;
 
 use App\Entity\Empresas;
-use App\Repository\Telecomunicaciones\EmpresaSubservicioSolyagRepository;
+use App\Repository\Telecomunicaciones\EmpresaSubservicioCubacelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EmpresaSubservicioSolyagRepository::class)
+ * @ORM\Entity(repositoryClass=EmpresaSubservicioCubacelRepository::class)
  */
-class EmpresaSubservicioSolyag
+class EmpresaSubservicioCubacel
 {
     /**
      * @ORM\Id

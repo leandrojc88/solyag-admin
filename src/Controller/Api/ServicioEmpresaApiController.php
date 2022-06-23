@@ -2,14 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Empleados;
-use App\Repository\EmpleadosRepository;
-use App\Repository\EmpresasRepository;
-use App\Repository\ModulosEmpresasRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
-use App\Service\DToneManager;
 use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,8 +40,8 @@ class ServicioEmpresaApiController extends AbstractController
             "movimiento_venta" => $request->get('movimiento_venta')
         ];
 
-        $servicioEmpresaService->createServicioEmpresa($params);
+        $data = $servicioEmpresaService->createServicioEmpresa($params);
 
-        return $this->json('OK');
+        return $this->json($data);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class httpPostServicioEmpresaSolyag
+class httpPostServicioEmpresaCubacel
 {
 
     // endpint to AdminSolyag
@@ -25,7 +25,7 @@ class httpPostServicioEmpresaSolyag
         $this->client = $client;
     }
 
-    public function updateServicioEmpresaInSolyag($data)
+    public function update($data)
     {
 
         $data_api = $this->client->request(

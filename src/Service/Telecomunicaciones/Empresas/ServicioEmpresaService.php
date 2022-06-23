@@ -8,7 +8,7 @@ use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Error;
+use Exception;
 use Status;
 
 class ServicioEmpresaService
@@ -18,19 +18,22 @@ class ServicioEmpresaService
     private EmpleadosRepository $empleadosRepository;
     private ServicioEmpresaRepository $servicioEmpresaRepository;
     private SubservicioRepository $subservicioRepository;
+    private ValidateSaldoEmpresa $validateSaldoEmpresa;
 
     public function __construct(
         EntityManagerInterface $em,
         EmpresasRepository $empresasRepository,
         EmpleadosRepository $empleadosRepository,
         ServicioEmpresaRepository $servicioEmpresaRepository,
-        SubservicioRepository $subservicioRepository
+        SubservicioRepository $subservicioRepository,
+        ValidateSaldoEmpresa $validateSaldoEmpresa
     ) {
         $this->em = $em;
         $this->empresasRepository = $empresasRepository;
         $this->empleadosRepository = $empleadosRepository;
         $this->servicioEmpresaRepository = $servicioEmpresaRepository;
         $this->subservicioRepository = $subservicioRepository;
+        $this->validateSaldoEmpresa = $validateSaldoEmpresa;
     }
 
 
@@ -40,12 +43,13 @@ class ServicioEmpresaService
         $maxNoOrdenFind = $this->servicioEmpresaRepository->getMaxNoOrden($params['id_servicio']);
         $maxNoOrden = intval($maxNoOrdenFind[0]['max_no_orden']);
 
+        $empresa = $this->empresasRepository->find($params['id_empresa']);
 
         $servicioEmpresa = new ServicioEmpresa();
         $servicioEmpresa
             ->setNoTelefono($params['no_telefono'])
             ->setDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')))
-            ->setEmpresa($this->empresasRepository->find($params['id_empresa']))
+            ->setEmpresa($empresa)
             ->setEmpleado($this->empleadosRepository->findOneBy(['correo' => $params['email']]))
             ->setServicio($params['id_servicio'])
             // ->setSubServicio($params['sub_servicio'])
@@ -56,11 +60,26 @@ class ServicioEmpresaService
 
         $subservicio = $this->subservicioRepository->find($params['id_api']);
 
-        if ($subservicio)
-            $servicioEmpresa
-                ->setStatus(Status::INIT)
-                ->setSubServicio($subservicio);
-        else {
+        if ($subservicio) {
+
+            if ($this->validateSaldoEmpresa->validate(
+                $empresa,
+                $subservicio
+            ))
+                $servicioEmpresa
+                    ->setStatus(Status::INIT)
+                    ->setSubServicio($subservicio);
+            else
+                $servicioEmpresa
+                    ->setStatus(Status::DECLINED)
+                    ->setSubServicio($subservicio)
+                    ->setResponse(
+                        ["errors" => [[
+                            "code" => null,
+                            "message" => "Empresa sin saldo suficiente"
+                        ]]]
+                    );
+        } else {
             $servicioEmpresa
                 ->setStatus(Status::DECLINED)
                 ->setResponse(
@@ -73,28 +92,8 @@ class ServicioEmpresaService
 
         $this->em->persist($servicioEmpresa);
         $this->em->flush();
-    }
 
-    /**
-     * Convertir el numeor de orden al formato {#####} {id_servicio+ 4# que es el numero de orden}
-     * 10004, 10054, etc....
-     */
-    public function noOrdeToStr(ServicioEmpresa $servicioEmpresa)
-    {
-        $servicio = $servicioEmpresa->getServicio();
-        $noOrden = $servicioEmpresa->getNoOrden();
-
-        if ($noOrden < 10) {
-            return $servicio . '-000' . $noOrden;
-        }
-        if ($noOrden < 100) {
-            return $servicio . '-00' . $noOrden;
-        }
-        if ($noOrden < 1000) {
-            return $servicio . '-0' . $noOrden;
-        }
-
-        return $servicio . '-' . $noOrden;
+        return ["no_orden" => $servicioEmpresa->noOrdeToStr(), "status" => $servicioEmpresa->getStatus()];
     }
 
     /**
@@ -112,7 +111,6 @@ class ServicioEmpresaService
         return [$servicio, $noOrden];
     }
 
-
     /**
      * Obtener un {ServicioEmpresa} por un numero de orden determinado
      */
@@ -126,13 +124,13 @@ class ServicioEmpresaService
             'no_ordne' => $data[1]
         ]);
 
-        if (!$servicioEmpresa) throw new Error('No existe el servicio-empresa para el no_orden ' . $noOrdenStr);
+        if (!$servicioEmpresa) throw new Exception('No existe el servicio-empresa para el no_orden ' . $noOrdenStr);
 
         return $servicioEmpresa;
     }
 
     /**
-     * llenando la data para enviar a solyag.online para actualizar el no_orden y 
+     * llenando la data para enviar a solyag.online para actualizar el no_orden y
      * status de los movimientos_servicios
      *
      *  [ id_empresa,
@@ -150,7 +148,7 @@ class ServicioEmpresaService
                     $item['servicios'],
                     [
                         'movimiento_venta' => $trasaccion->getMovimientoVenta(),
-                        'no_orden' => $this->noOrdeToStr($trasaccion),
+                        'no_orden' => $trasaccion->noOrdeToStr(),
                         'status' => $trasaccion->getStatus(),
                     ]
                 );
@@ -163,7 +161,7 @@ class ServicioEmpresaService
             'servicios' => [
                 [
                     'movimiento_venta' => $trasaccion->getMovimientoVenta(),
-                    'no_orden' => $this->noOrdeToStr($trasaccion),
+                    'no_orden' => $trasaccion->noOrdeToStr($trasaccion),
                     'status' => $trasaccion->getStatus()
                 ]
             ]

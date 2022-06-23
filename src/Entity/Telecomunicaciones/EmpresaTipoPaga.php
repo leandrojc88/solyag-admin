@@ -11,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EmpresaTipoPaga
 {
+
+    const PREPAGO = 'prepago';
+    const POSPAGO = 'pospago';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,7 +28,7 @@ class EmpresaTipoPaga
     private $tipo;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $saldo;
 
@@ -51,12 +55,12 @@ class EmpresaTipoPaga
         return $this;
     }
 
-    public function getSaldo(): ?int
+    public function getSaldo(): ?float
     {
         return $this->saldo;
     }
 
-    public function setSaldo(int $saldo): self
+    public function setSaldo(float $saldo): self
     {
         $this->saldo = $saldo;
 

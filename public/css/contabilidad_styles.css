@@ -174,3 +174,15 @@ input#telefono {
         overflow-x: auto;
     }
 }
+
+.card-costom {
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px 5px rgb(0 0 0 / 25%), -3px -3px 5px 5px rgb(0 0 0 / 25%);
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 10px !important;
+}
+
+.card-costom:hover {
+    transform: scale(.99, .99);
+}

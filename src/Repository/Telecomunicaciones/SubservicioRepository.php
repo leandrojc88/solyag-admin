@@ -31,7 +31,7 @@ class SubservicioRepository extends ServiceEntityRepository
             // ->select('s, ess')
             ->select('s.id as id_subservicio, s.descripcion, ess.id as id_empresa_subs_solyag, ess.costo')
             ->leftJoin(
-                'App\Entity\Telecomunicaciones\EmpresaSubservicioSolyag',
+                'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
                 'ess',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 's.id = ess.id_subservicio and ess.id_empresa = :id_empresa'

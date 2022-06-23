@@ -2,7 +2,7 @@
 
 namespace App\Service\Telecomunicaciones\Subservicios;
 
-use App\Repository\Telecomunicaciones\EmpresaSubservicioSolyagRepository;
+use App\Repository\Telecomunicaciones\EmpresaSubservicioCubacelRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -12,16 +12,16 @@ class RemoveSubserviciosService
 
     private EntityManagerInterface $em;
     private SubservicioRepository $subservicioRepository;
-    private EmpresaSubservicioSolyagRepository $empresaSubservicioSolyagRepository;
+    private EmpresaSubservicioCubacelRepository $EmpresaSubservicioCubacelRepository;
 
     public function __construct(
         EntityManagerInterface $em,
         SubservicioRepository $subservicioRepository,
-        EmpresaSubservicioSolyagRepository $empresaSubservicioSolyagRepository
+        EmpresaSubservicioCubacelRepository $EmpresaSubservicioCubacelRepository
     ) {
         $this->em = $em;
         $this->subservicioRepository = $subservicioRepository;
-        $this->empresaSubservicioSolyagRepository = $empresaSubservicioSolyagRepository;
+        $this->EmpresaSubservicioCubacelRepository = $EmpresaSubservicioCubacelRepository;
     }
 
     public function delete($id_subservicio)
@@ -31,7 +31,7 @@ class RemoveSubserviciosService
         if (!$subservicio)
             throw new Exception("EL subservicio seleccionado no existe");
 
-        $subservicioCostoSolyag = $this->empresaSubservicioSolyagRepository->findBy(["id_subservicio" => $id_subservicio]);
+        $subservicioCostoSolyag = $this->EmpresaSubservicioCubacelRepository->findBy(["id_subservicio" => $id_subservicio]);
 
         if ($subservicioCostoSolyag)
             throw new Exception("EL subservicio seleccionado esta asociado a los cosatos de algunas empresas, no se puede ser eliminado");

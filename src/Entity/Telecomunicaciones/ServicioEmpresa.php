@@ -236,4 +236,27 @@ class ServicioEmpresa
 
         return $this;
     }
+
+    /**
+     * Convertir el numeor de orden al formato {#####} {id_servicio+ 4# que es el numero de orden}
+     * 10004, 10054, etc....
+     */
+    public function noOrdeToStr()
+    {
+        $servicio = $this->getServicio();
+        $noOrden = $this->getNoOrden();
+
+        if ($noOrden < 10) {
+            return $servicio . '-000' . $noOrden;
+        }
+        if ($noOrden < 100) {
+            return $servicio . '-00' . $noOrden;
+        }
+        if ($noOrden < 1000) {
+            return $servicio . '-0' . $noOrden;
+        }
+
+        return $servicio . '-' . $noOrden;
+    }
+
 }
