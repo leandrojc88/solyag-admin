@@ -7,9 +7,9 @@ use App\Repository\EmpleadosRepository;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
+use App\Types\Status;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Status;
 
 class ServicioEmpresaService
 {

@@ -35,6 +35,11 @@ class EmpresaSubservicioCubacel
      */
     private $costo;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,6 +77,18 @@ class EmpresaSubservicioCubacel
     public function setCosto(?float $costo): self
     {
         $this->costo = $costo;
+
+        return $this;
+    }
+
+    public function getActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo): self
+    {
+        $this->activo = $activo;
 
         return $this;
     }

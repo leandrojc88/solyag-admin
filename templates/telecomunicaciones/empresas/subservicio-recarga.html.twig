@@ -32,8 +32,12 @@
 						<td style="font-weight:400;">{{ item.descripcion }}</td>
 						<td style="font-weight:400;">{{ item.costo }}</td>
 						<td style="font-weight:200;">
-							<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="editarCostoEmpresaCubacel({costo: {% if item.costo %} {{item.costo}} {% else %} 0 {% endif %}, id_subservicio: {{ item.id_subservicio }}, id_empresa: {{ app.request.get('id_empresa').id }} })">
+							<button type="button" class="btn btn-warning btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="editarCostoEmpresaCubacel({costo: {% if item.costo %} {{item.costo}} {% else %} 0 {% endif %}, id_subservicio: {{ item.id_subservicio }}, id_empresa: {{ app.request.get('id_empresa').id }} })">
 								<i class="fa fa-edit"></i>
+							</button>
+
+							<button {% if not item.id_empresa_subs_solyag %} disabled {% endif %} type="button" class="btn {% if item.activo %} btn-info {% else %} btn-outline-danger {% endif %} btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="{% if item.activo %} Desactivar {% else %} Activar {% endif %}" onclick="onActivateOrNotSubservicio({% if item.id_empresa_subs_solyag %} {{item.id_empresa_subs_solyag}} {% else %} null {% endif %}, {% if item.activo %} true {% else %} false {% endif %})">
+								<i class="fa fa-check-square"></i>
 							</button>
 						</td>
 					</tr>
@@ -49,4 +53,5 @@
 	{{ parent() }}
 
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/editar-costo-empresa-cubacel.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/activate-or-not-subservicio.js') }}"></script>
 {% endblock %}

@@ -29,7 +29,7 @@ class SubservicioRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('s')
             // ->select('s, ess')
-            ->select('s.id as id_subservicio, s.descripcion, ess.id as id_empresa_subs_solyag, ess.costo')
+            ->select('s.id as id_subservicio, s.descripcion, ess.id as id_empresa_subs_solyag, ess.costo, ess.activo')
             ->leftJoin(
                 'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
                 'ess',

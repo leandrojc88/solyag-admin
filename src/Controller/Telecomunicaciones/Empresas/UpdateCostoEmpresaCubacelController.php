@@ -42,6 +42,7 @@ class UpdateCostoEmpresaCubacelController extends AbstractController
 
             $empresaCostoSolyag
                 ->setCosto($costo)
+                ->setActivo(true)
                 ->setIdEmpresa($empresasRepository->find($id_empresa))
                 ->setIdSubservicio($subservicioRepository->find($id_servicio));
         } else {
