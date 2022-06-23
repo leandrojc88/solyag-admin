@@ -16,7 +16,7 @@ use App\Service\Telecomunicaciones\Empresas\ValidateSaldoEmpresa;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Status;
+use App\Types\Status;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,9 +39,7 @@ class DToneController extends AbstractController
         DToneManager $dToneManager,
         ServicioEmpresaService $servicioEmpresaService,
         httpPostServicioEmpresaCubacel $httpPostServicioEmpresaCubacel,
-        EmpresaTipoPagoService $empresaTipoPagoService,
         GetLoadIsActiveService $getLoadIsActiveService,
-        EmpresaSubservicioCubacelRepository $empresaSubservicioCubacelRepository,
         ValidateSaldoEmpresa $validateSaldoEmpresa
     ): JsonResponse {
 
@@ -62,41 +60,15 @@ class DToneController extends AbstractController
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
 
-            $empresaSubservicioCubacel = $empresaSubservicioCubacelRepository->findOneBy([
-                "id_empresa" => $item->getEmpresa(),
-                "id_subservicio" => $item->getSubServicio()
+            $dToneManager->execTransactions([
+
+                'id_trasaccion' => $item->getId(),
+                'last_name' => "SOLYAG",
+                'first_name' => "SOLYAG",
+                'mobile_number' => $item->getNoTelefono(),
+                'product_id' => $item->getSubServicio()->getProductidDtone()
+
             ]);
-
-            if (!$empresaSubservicioCubacel)
-                throw new Exception("El subservicio " . $item->getSubServicio()->getDescripcion() . " no tiene un costo configurado para la empresa " . $item->getEmpresa()->getNombre());
-
-            $costo = $empresaSubservicioCubacel->getCosto();
-
-            if (!$validateSaldoEmpresa->validate($item->getEmpresa(), $item->getSubServicio())) {
-                $dToneManager->updateDToneIntoServiceEmpresa(
-                    $item->getId(),
-                    null,
-                    null,
-                    Status::DECLINED,
-                    ["errors" => [["code" => null, "message" => "Empresa sin saldo suficiente"]]]
-                );
-            } else {
-
-                $dToneManager->execTransactions([
-
-                    'id_trasaccion' => $item->getId(),
-                    'last_name' => "SOLYAG",
-                    'first_name' => "SOLYAG",
-                    'mobile_number' => $item->getNoTelefono(),
-                    'product_id' => $item->getSubServicio()->getProductidDtone()
-
-                ]);
-
-                $empresaTipoPagoService->reducirSaldo(
-                    $item->getEmpresa()->getId(),
-                    $costo
-                );
-            }
 
             $listServicios = $servicioEmpresaService->prepareDataToSolyagApp($listServicios, $item);
         }

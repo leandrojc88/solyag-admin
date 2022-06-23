@@ -5,6 +5,7 @@ namespace App\Service\Telecomunicaciones\Empresas;
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Repository\EmpleadosRepository;
 use App\Repository\EmpresasRepository;
+use App\Repository\Telecomunicaciones\EmpresaSubservicioCubacelRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
 use App\Types\Status;
@@ -19,6 +20,9 @@ class ServicioEmpresaService
     private ServicioEmpresaRepository $servicioEmpresaRepository;
     private SubservicioRepository $subservicioRepository;
     private ValidateSaldoEmpresa $validateSaldoEmpresa;
+    private EmpresaTipoPagoService $empresaTipoPagoService;
+    private EmpresaSubservicioCubacelRepository $empresaSubservicioCubacelRepository;
+
 
     public function __construct(
         EntityManagerInterface $em,
@@ -26,7 +30,9 @@ class ServicioEmpresaService
         EmpleadosRepository $empleadosRepository,
         ServicioEmpresaRepository $servicioEmpresaRepository,
         SubservicioRepository $subservicioRepository,
-        ValidateSaldoEmpresa $validateSaldoEmpresa
+        ValidateSaldoEmpresa $validateSaldoEmpresa,
+        EmpresaTipoPagoService $empresaTipoPagoService,
+        EmpresaSubservicioCubacelRepository $empresaSubservicioCubacelRepository
     ) {
         $this->em = $em;
         $this->empresasRepository = $empresasRepository;
@@ -34,6 +40,8 @@ class ServicioEmpresaService
         $this->servicioEmpresaRepository = $servicioEmpresaRepository;
         $this->subservicioRepository = $subservicioRepository;
         $this->validateSaldoEmpresa = $validateSaldoEmpresa;
+        $this->empresaTipoPagoService = $empresaTipoPagoService;
+        $this->empresaSubservicioCubacelRepository = $empresaSubservicioCubacelRepository;
     }
 
 
@@ -62,14 +70,24 @@ class ServicioEmpresaService
 
         if ($subservicio) {
 
-            if ($this->validateSaldoEmpresa->validate(
-                $empresa,
-                $subservicio
-            ))
+            if ($this->validateSaldoEmpresa->validate($empresa, $subservicio)) {
+
                 $servicioEmpresa
                     ->setStatus(Status::INIT)
                     ->setSubServicio($subservicio);
-            else
+
+                $empresaSubservicioCubacel = $this->empresaSubservicioCubacelRepository->findOneBy([
+                    "id_empresa" => $empresa,
+                    "id_subservicio" => $subservicio
+                ]);
+
+                if (!$empresaSubservicioCubacel)
+                    throw new Exception("El subservicio " . $subservicio->getDescripcion() . " no tiene un costo configurado para la empresa " . $empresa->getNombre());
+
+                $costo = $empresaSubservicioCubacel->getCosto();
+
+                $this->empresaTipoPagoService->reducirSaldo($empresa->getId(), $costo);
+            } else
                 $servicioEmpresa
                     ->setStatus(Status::DECLINED)
                     ->setSubServicio($subservicio)

@@ -6,7 +6,7 @@ use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Status;
+use App\Types\Status;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class DToneManager
