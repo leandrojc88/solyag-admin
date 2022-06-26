@@ -3,6 +3,7 @@
 namespace App\Repository\Telecomunicaciones;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use App\Types\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,7 +35,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
     public function getRecargaCubacelManual($empresa)
     {
         return $this->createQueryBuilder('se')
-            ->select('se.id, se.no_telefono, se.status, se.date, se.no_orden, s.descripcion, ecc.costo')
+            ->select('se.id, se.no_telefono, se.status, se.date, se.servicio, se.no_orden, s.descripcion, ecc.costo')
             ->join(
                 'App\Entity\Telecomunicaciones\Subservicio',
                 's',
@@ -49,8 +50,9 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             )
             ->andWhere('se.empresa = :empresa')
             ->andWhere('s.isDtone = false')
+            ->andWhere('se.status = :status')
             ->setParameter('empresa', $empresa)
-            // ->setMaxResults(1)
+            ->setParameter('status', Status::INIT)
             ->getQuery()
             ->getResult();
     }

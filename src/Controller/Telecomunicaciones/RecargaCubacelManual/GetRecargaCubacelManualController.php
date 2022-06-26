@@ -51,12 +51,26 @@ class GetRecargaCubacelManualController extends AbstractController
         "costo" => 250.0 */
         $recargas = $servicioEmpresaRepository->getRecargaCubacelManual($id_empresa);
 
-        // dd($recargas);
+        $data = [];
+        foreach ($recargas as $recarga) {
+
+            $empresaServicio = $servicioEmpresaRepository->find($recarga["id"]);
+
+            $data[] = [
+                "id" => $recarga["id"],
+                "no_telefono" => $recarga["no_telefono"],
+                "status" => $recarga["status"],
+                "date" => $recarga["date"],
+                "no_orden" => $empresaServicio->noOrdeToStr(),
+                "descripcion" => $recarga["descripcion"],
+                "costo" => $recarga["costo"],
+            ];
+        }
 
         return $this->render('telecomunicaciones\recatga-cubacel-manual\index.html.twig', [
             "empresas" => $empresas,
             "select_empresa" => $id_empresa->getId(),
-            "recargas" => $recargas
+            "recargas" => $data
         ]);
     }
 }
