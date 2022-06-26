@@ -19,15 +19,40 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
         parent::__construct($registry, ServicioEmpresa::class);
     }
 
-    public function getMaxNoOrden($servicio){
+    public function getMaxNoOrden($servicio)
+    {
         return $this->createQueryBuilder('s')
             ->select('MAX(s.no_orden) AS max_no_orden')
             ->andWhere('s.servicio = :servicio')
             ->setParameter('servicio', $servicio)
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+
+    public function getRecargaCubacelManual($empresa)
+    {
+        return $this->createQueryBuilder('se')
+            ->select('se.id, se.no_telefono, se.status, se.date, se.no_orden, s.descripcion, ecc.costo')
+            ->join(
+                'App\Entity\Telecomunicaciones\Subservicio',
+                's',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'se.sub_servicio = s.id'
+            )
+            ->join(
+                'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
+                'ecc',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'ecc.id_empresa = :empresa and ecc.id_subservicio = s.id'
+            )
+            ->andWhere('se.empresa = :empresa')
+            ->andWhere('s.isDtone = false')
+            ->setParameter('empresa', $empresa)
+            // ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
