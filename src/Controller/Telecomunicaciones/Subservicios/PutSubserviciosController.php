@@ -23,6 +23,7 @@ class PutSubserviciosController extends AbstractController
 
         try {
 
+            $idDTOne = is_null($request->get('isDTOne')) ? false : true;
             ($validate)(
                 $id_subservicio->getIdServicio()->getId(),
                 $request->get('nombre'),
@@ -31,8 +32,8 @@ class PutSubserviciosController extends AbstractController
             );
 
             $id_subservicio->setDescripcion($request->get('nombre'));
-            $id_subservicio->setValor($request->get('valor'));
-            $id_subservicio->setProductidDtone($request->get('productid_dtone'));
+            $id_subservicio->setIsDTOne($idDTOne);
+            $id_subservicio->setProductidDtone($idDTOne ? $request->get('productid_dtone') : 0);
 
             $em->persist($id_subservicio);
             $em->flush();
