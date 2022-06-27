@@ -46,7 +46,9 @@ class DToneController extends AbstractController
         if (!$getLoadIsActiveService->get())
             return $this->json(["finish" => true, "msg" => "API DTone esta desactivada por el sistema"]);
 
-        $serviciosInit = $servicioEmpresaRepository->findBy(["status" => Status::INIT]);
+        $serviciosInit = $servicioEmpresaRepository->findBy([
+            "status" => Status::INIT,
+        ]);
 
         /*
         [ id_empresa,
@@ -59,6 +61,8 @@ class DToneController extends AbstractController
 
         foreach ($serviciosInit as $key => $item) {
             /** @var ServicioEmpresa $item */
+
+            if (!$item->getSubServicio()->getIsDTOne()) continue;
 
             $dToneManager->execTransactions([
 
