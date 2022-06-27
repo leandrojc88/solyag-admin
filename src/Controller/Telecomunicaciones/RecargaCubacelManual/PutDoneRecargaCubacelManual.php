@@ -4,7 +4,6 @@ namespace App\Controller\Telecomunicaciones\RecargaCubacelManual;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Http\httpPostServicioEmpresaCubacel;
-use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use App\Types\Status;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +18,6 @@ class PutDoneRecargaCubacelManual extends AbstractController
      *      name="tele-recarga-cubacel-manual-done", methods="POST")
      */
     public function index(
-        ServicioEmpresaRepository $servicioEmpresaRepository,
         ServicioEmpresaService $servicioEmpresaService,
         httpPostServicioEmpresaCubacel $httpPostServicioEmpresaCubacel,
         EntityManagerInterface $em,
