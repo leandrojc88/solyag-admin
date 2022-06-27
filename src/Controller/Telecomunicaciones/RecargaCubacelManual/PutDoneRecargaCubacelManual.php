@@ -25,7 +25,9 @@ class PutDoneRecargaCubacelManual extends AbstractController
         ServicioEmpresa $recarga
     ): Response {
 
-        $recarga->setStatus(Status::COMPLETED);
+        $recarga
+            ->setStatus(Status::COMPLETED)
+            ->setConfirmationDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')));
 
         $em->persist($recarga);
         $em->flush();
