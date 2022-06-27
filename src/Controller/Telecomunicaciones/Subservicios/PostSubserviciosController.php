@@ -24,7 +24,7 @@ class PostSubserviciosController extends AbstractController
             $params = [
                 'nombre' => $request->get('nombre'),
                 'id_servicio' => $request->get('id_servicio'),
-                'productid_dtone' => $request->get('productid_dtone'),
+                'productid_dtone' => $request->get('productid_dtone') ? $request->get('productid_dtone') : 0,
                 'isDTOne' => $idDTOne,
             ];
 

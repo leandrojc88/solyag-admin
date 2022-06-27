@@ -28,7 +28,7 @@
 			Subservicios
 		</h4>
 		<div>
-			<button class="btn btn-primary height-btn-add mx-2 btn-sm fa fa-plus" data-toggle="modal" data-target="#modal__form__id" data-placement="bottom" title="Adicionar">
+			<button class="btn btn-primary height-btn-add mx-2 btn-sm fa fa-plus" data-toggle="modal" data-target="#modal__form__id" onclick="onAddSubservicio()" data-placement="bottom" title="Adicionar">
 				Adicionar
 			</button>
 		</div>
@@ -79,6 +79,7 @@ $('#id_servicio').val(id_servicio)
 
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/validate-form.js')}}"></script>
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/delete-subservicio.js')}}"></script>
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/add-subservicio.js')}}"></script>
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/update-subservicio.js')}}"></script>
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/draw-dtone.js')}}"></script>
 {% endblock %}

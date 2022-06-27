@@ -3,6 +3,7 @@
 namespace App\Controller\Telecomunicaciones\Subservicios;
 
 use App\Entity\Telecomunicaciones\Subservicio;
+use App\Service\Telecomunicaciones\Subservicios\HttpUpdateNombreSubservicios;
 use App\Service\Telecomunicaciones\Subservicios\ValidateSubservicioDescripAndProdctidModify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +19,8 @@ class PutSubserviciosController extends AbstractController
         Request $request,
         EntityManagerInterface $em,
         Subservicio $id_subservicio,
-        ValidateSubservicioDescripAndProdctidModify $validate
+        ValidateSubservicioDescripAndProdctidModify $validate,
+        HttpUpdateNombreSubservicios $httpUpdateNombreSubservicios
     ) {
 
         try {
@@ -31,12 +33,17 @@ class PutSubserviciosController extends AbstractController
                 $id_subservicio->getId()
             );
 
+            $submited = $id_subservicio->getDescripcion() != $request->get('nombre');
+
             $id_subservicio->setDescripcion($request->get('nombre'));
             $id_subservicio->setIsDTOne($idDTOne);
             $id_subservicio->setProductidDtone($idDTOne ? $request->get('productid_dtone') : 0);
 
             $em->persist($id_subservicio);
             $em->flush();
+
+            // actualizar en las empresas
+            if ($submited) ($httpUpdateNombreSubservicios)($id_subservicio->getId(), $request->get('nombre'));
 
             $this->addFlash('success', 'subservicio creado');
         } catch (\Throwable $th) {
