@@ -32,29 +32,39 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
     }
 
 
-    public function getRecargaCubacelManual($empresa)
+    public function getRecargaCubacelManual($empresa = null)
     {
-        return $this->createQueryBuilder('se')
-            ->select('se.id, se.no_telefono, se.status, se.date, se.servicio, se.no_orden, s.descripcion, ecc.costo')
+        $q = $this->createQueryBuilder('se')
+            ->select('se.id, se.no_telefono, se.status, se.date, se.servicio, se.no_orden, s.descripcion, ecc.costo, em.nombre as empresa')
             ->join(
+                'App\Entity\Empresas',
+                'em',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'se.empresa = em.id'
+            )
+            ->leftJoin(
                 'App\Entity\Telecomunicaciones\Subservicio',
                 's',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'se.sub_servicio = s.id'
             )
-            ->join(
+            ->leftJoin(
                 'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
                 'ecc',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
-                'ecc.id_empresa = :empresa and ecc.id_subservicio = s.id'
+                'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
             )
-            ->andWhere('se.empresa = :empresa')
             ->andWhere('s.isDtone = false')
-            ->andWhere('se.status = :status')
-            ->setParameter('empresa', $empresa)
-            ->setParameter('status', Status::INIT)
-            ->getQuery()
-            ->getResult();
+            ->andWhere('se.status = :status');
+
+        if ($empresa)
+            $q->andWhere('se.empresa = :empresa')
+                ->setParameter('empresa', $empresa);
+
+        $q->setParameter('status', Status::INIT)
+        ->orderBy('se.date');
+
+        return $q->getQuery()->getResult();
     }
 
     public function getListRecargaCubacel($filtros)
@@ -103,6 +113,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             // ->andWhere('se.status = :status')
             // ->setParameter('empresa', $empresa)
             // ->setParameter('status', Status::INIT)
+            ->orderBy('se.date')
             ->getQuery()
             ->getResult();
     }

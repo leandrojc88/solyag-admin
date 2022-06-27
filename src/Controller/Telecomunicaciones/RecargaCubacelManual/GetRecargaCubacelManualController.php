@@ -24,43 +24,12 @@ class GetRecargaCubacelManualController extends AbstractController
     public function index(
         Request $request,
         EmpresasRepository $empresasRepository,
+        ServicioEmpresaRepository $servicioEmpresaRepository,
         PaginatorInterface $pagination
     ): Response {
         $empresas = $empresasRepository->findBy(["activo" => true]);
 
-        return $this->render('telecomunicaciones\recatga-cubacel-manual\index.html.twig', [
-            "empresas" => $empresas,
-            "select_empresa" => 0,
-            "recargas" => $pagination->paginate(
-                array_reverse([]),
-                $request->query->getInt('page', 1),
-                25,
-                ['align' => 'center', 'style' => 'bottom']
-            )
-        ]);
-    }
-    /**
-     * @Route("/{id_empresa}", name="tele-recarga-cubacel-manual-id")
-     */
-    public function findEmpresa(
-        Request $request,
-        EmpresasRepository $empresasRepository,
-        ServicioEmpresaRepository $servicioEmpresaRepository,
-        PaginatorInterface $pagination,
-        Empresas $id_empresa
-    ): Response {
-
-        $empresas = $empresasRepository->findBy(["activo" => true]);
-
-        /*
-        "id" => Ramsey\Uuid\Lazy\LazyUuidFromString {#889 ▶}
-        "no_telefono" => "+5354525142"
-        "status" => "CONFIRMED"
-        "date" => DateTime @1654829711 {#893 ▶}
-        "no_orden" => 18
-        "descripcion" => "250"
-        "costo" => 250.0 */
-        $recargas = $servicioEmpresaRepository->getRecargaCubacelManual($id_empresa);
+        $recargas = $servicioEmpresaRepository->getRecargaCubacelManual();
 
         $data = [];
         foreach ($recargas as $recarga) {
@@ -75,6 +44,7 @@ class GetRecargaCubacelManualController extends AbstractController
                 "no_orden" => $empresaServicio->noOrdeToStr(),
                 "descripcion" => $recarga["descripcion"],
                 "costo" => $recarga["costo"],
+                "empresa" => $recarga["empresa"]
             ];
         }
 
@@ -85,9 +55,10 @@ class GetRecargaCubacelManualController extends AbstractController
             ['align' => 'center', 'style' => 'bottom',]
         );
 
+
         return $this->render('telecomunicaciones\recatga-cubacel-manual\index.html.twig', [
             "empresas" => $empresas,
-            "select_empresa" => $id_empresa->getId(),
+            "select_empresa" => 0,
             "recargas" => $paginator
         ]);
     }

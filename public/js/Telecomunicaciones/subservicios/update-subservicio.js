@@ -9,13 +9,6 @@ const onUpdateSubservicio = async (params) => {
     $isDTOneCmp.prop('checked', isDTOne)
 
     drawDTOneFields()
-    // const $productid_dtone_group = $('#productid_dtone_group')
-
-
-    // if (isDTOne)
-    //     $productid_dtone_group.show()
-    // else
-    //     $productid_dtone_group.hide()
 
     form = $('#form_subservicios_post')
     form.attr("action", `/telecomunicaciones/put-subservicios/${id_subservicio}`);
