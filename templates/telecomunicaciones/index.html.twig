@@ -1,3 +1,58 @@
 {% extends 'telecomunicaciones/base.html.twig' %}
 
-{% block content %}Tele{% endblock %}
+{% block content %}
+
+	{# header #}
+	<div class="container-fluid">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Reporte Recarga Cubacel
+			</h4>
+		</div>
+		{# end header #}
+		<table class="table-small-rows table table-hover text-light">
+			<tr>{# sorting of properties based on query components #}
+				{# <th>{{ knp_pagination_sortable(recargas, 'Descripcion', 'a.descripcion') }}</th> #}
+				{# <th>{{ knp_pagination_filter(recargas, {'descripcion' : 'Descripcion' }) }}</th>
+                <th>{{ knp_pagination_filter(recargas, {'no_orden' : 'No. Orden' }) }}</th>
+                <th>{{ knp_pagination_filter(recargas, {'costo' : 'costo' }) }}</th>
+                <th></th>
+                <th>{{ knp_pagination_filter(recargas, {'no_telefono' : 'no_telefono' }) }}</th> #}
+
+{# <th {% if pagination.isSorted('a.Title') %} class="sorted" {% endif %}>
+                    {{ knp_pagination_sortable(recargas, 'Title', 'a.title') }}
+                </th>
+                <th {% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted" {% endif %}>
+                    {{ knp_pagination_sortable(recargas, 'Release', ['a.date', 'a.time']) }}
+                </th> #}
+			</tr>
+			<thead class="thead-dark">
+				<th scope="col-1" class="text-left">Empresa</th>
+				<th scope="col-1" class="text-left">Descripcion</th>
+				<th scope="col-1" class="text-left">Empleado</th>
+				<th scope="col-1" class="text-left">No. Orden</th>
+				<th width="col-1" class="text-left">Beneficiario</th>
+				<th width="col-1" class="text-left">Estado</th>
+				<th scope="col-1" class="text-left">Fecha</th>
+				<th scope="col-1" class="text-left">Fecha de confirmación</th>
+			</thead>
+			<tbody>
+				{% for item in recargas %}
+					<tr>
+						<td style="font-weight:400;">{{ item.empresa }}</td>
+						<td style="font-weight:400;">{{ item.descripcion }}</td>
+						<td style="font-weight:400;">{{ item.empleado }}</td>
+						<td style="font-weight:400;">{{ item.no_orden }}</td>
+						<td style="font-weight:400;">{{ item.no_telefono }}</td>
+						<td style="font-weight:400;">{{ item.status }}</td>
+						<td style="font-weight:400;">{{ item.date|date("d M Y h:i A") }}</td>
+						<td style="font-weight:400;">{{ item.confirmation_date|date("d M Y h:i A") }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation">
+			{{ knp_pagination_render(recargas) }}
+		</div>
+	</div>
+{% endblock %}
