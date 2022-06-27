@@ -19,11 +19,13 @@ class PostSubserviciosController extends AbstractController
 
         try {
 
+            $idDTOne = is_null($request->get('isDTOne')) ? false : true;
+
             $params = [
                 'nombre' => $request->get('nombre'),
                 'id_servicio' => $request->get('id_servicio'),
                 'productid_dtone' => $request->get('productid_dtone'),
-                'valor' => $request->get('valor'),
+                'isDTOne' => $idDTOne,
             ];
 
             $creatorSubserviciosService->create($params);

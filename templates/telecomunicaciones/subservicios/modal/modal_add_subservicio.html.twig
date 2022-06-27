@@ -5,13 +5,13 @@
 			<label for="nombre" class="required">Nombre</label>
 			<input type="text" id="nombre" name="nombre" required="required" class="form-control w-100 form-control">
 		</div>
-		<div class="form-group input-group input-group-sm d-block">
+		<div class="form-group custom-control custom-switch ml-2">
+			<input type="checkbox" name="isDTOne" class="custom-control-input" id="isDTOne">
+			<label class="custom-control-label" for="isDTOne">is DTOne</label>
+		</div>
+		<div id="productid_dtone_group" class="form-group input-group input-group-sm">
 			<label for="productid_dtone" class="required">Product id (DTone)</label>
 			<input type="number" id="productid_dtone" name="productid_dtone" required="required" class="form-control w-100 form-control">
-		</div>
-		<div class="form-group input-group input-group-sm d-block">
-			<label for="valor" class="required">Valor</label>
-			<input type="number" id="valor" name="valor" required="required" class="form-control w-100 form-control">
 		</div>
 		<input type="text" id="id_servicio" name="id_servicio" hidden>
 	</form>

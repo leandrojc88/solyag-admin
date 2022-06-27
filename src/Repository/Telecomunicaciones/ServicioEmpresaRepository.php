@@ -3,6 +3,7 @@
 namespace App\Repository\Telecomunicaciones;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use App\Types\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,15 +20,91 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
         parent::__construct($registry, ServicioEmpresa::class);
     }
 
-    public function getMaxNoOrden($servicio){
+    public function getMaxNoOrden($servicio)
+    {
         return $this->createQueryBuilder('s')
             ->select('MAX(s.no_orden) AS max_no_orden')
             ->andWhere('s.servicio = :servicio')
             ->setParameter('servicio', $servicio)
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+
+    public function getRecargaCubacelManual($empresa)
+    {
+        return $this->createQueryBuilder('se')
+            ->select('se.id, se.no_telefono, se.status, se.date, se.servicio, se.no_orden, s.descripcion, ecc.costo')
+            ->join(
+                'App\Entity\Telecomunicaciones\Subservicio',
+                's',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'se.sub_servicio = s.id'
+            )
+            ->join(
+                'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
+                'ecc',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'ecc.id_empresa = :empresa and ecc.id_subservicio = s.id'
+            )
+            ->andWhere('se.empresa = :empresa')
+            ->andWhere('s.isDtone = false')
+            ->andWhere('se.status = :status')
+            ->setParameter('empresa', $empresa)
+            ->setParameter('status', Status::INIT)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getListRecargaCubacel($filtros)
+    {
+        return $this->createQueryBuilder('se')
+            ->select(
+                '
+                se.id,
+                em.nombre as empresa,
+                s.descripcion,
+                emp.nombre as empleado,
+                se.no_orden,
+                se.no_telefono,
+                se.status,
+                se.date,
+                se.confirmation_date,
+                se.servicio,
+                ecc.costo'
+            )
+            ->join(
+                'App\Entity\Empresas',
+                'em',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'se.empresa = em.id'
+            )
+            ->join(
+                'App\Entity\Empleados',
+                'emp',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'se.empleado = emp.id'
+            )
+            ->leftJoin(
+                'App\Entity\Telecomunicaciones\Subservicio',
+                's',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'se.sub_servicio = s.id'
+            )
+            ->leftJoin(
+                'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
+                'ecc',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
+            )
+            // ->andWhere('se.empresa = :empresa')
+            // ->andWhere('s.isDtone = false')
+            // ->andWhere('se.status = :status')
+            // ->setParameter('empresa', $empresa)
+            // ->setParameter('status', Status::INIT)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

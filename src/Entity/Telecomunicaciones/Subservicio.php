@@ -38,6 +38,11 @@ class Subservicio
      */
     private $productid_dtone;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDtone;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Subservicio
     public function setProductidDtone(?int $productid_dtone): self
     {
         $this->productid_dtone = $productid_dtone;
+
+        return $this;
+    }
+
+    public function getIsDTOne(): ?bool
+    {
+        return $this->isDtone || false;
+    }
+
+    public function setIsDTOne(bool $isDtone): self
+    {
+        $this->isDtone = $isDtone;
 
         return $this;
     }

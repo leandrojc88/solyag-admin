@@ -37,16 +37,24 @@
 	<table class="table-small-rows table table-hover text-light">
 		<thead class="thead-dark">
 			<th scope="col-1" class="text-left">Descripcion</th>
-			<th scope="col-1" class="text-left">Product id (DTone)</th>
+			<th scope="col-1" class="text-left">Es DTOne</th>
+			<th scope="col-1" class="text-left">Product id (DTOne)</th>
 			<th width="70px" class="text-left">Acciones</th>
 		</thead>
 		<tbody>
 			{% for item in subservicios %}
 				<tr>
 					<td style="font-weight:400;">{{ item.descripcion }}</td>
+					{% if item.isDTOne %}
+						<td style="font-weight:400;">
+							<i class="fa fa-check-square"></i>
+						</td>
+					{% else %}
+						<td style="font-weight:400;"></td>
+					{% endif %}
 					<td style="font-weight:400;">{{ item.productidDtone }}</td>
 					<td style="font-weight:200;">
-						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="onUpdateSubservicio({id_subservicio: {{item.id}}, descripcion: '{{item.descripcion}}', productid_dtone: {{item.productidDtone}} })">
+						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="onUpdateSubservicio({id_subservicio: {{item.id}}, descripcion: '{{item.descripcion}}', productid_dtone: {{item.productidDtone}}, isDTOne: {% if item.isDTOne %} true {% else %} false {% endif %} })">
 							<i class="fa fa-edit"></i>
 						</button>
 						<button type="button" class="btn btn-danger btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Eliminar" onclick="onDeleteSubservicio({{ app.request.get('id_servicio') }}, {{item.id}} )">
@@ -72,4 +80,5 @@ $('#id_servicio').val(id_servicio)
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/validate-form.js')}}"></script>
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/delete-subservicio.js')}}"></script>
 	<script src=" {{ asset('js/Telecomunicaciones/subservicios/update-subservicio.js')}}"></script>
+	<script src=" {{ asset('js/Telecomunicaciones/subservicios/draw-dtone.js')}}"></script>
 {% endblock %}

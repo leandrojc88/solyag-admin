@@ -1,0 +1,63 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% block title %}Telecomunicaciones | Recarga Cubacel Manual
+{% endblock %}
+
+{% block content %}
+
+	{# header #}
+	<div class="container">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Recarga Cubacel Manual
+			</h4>
+			<div class="input-group input-group-sm w-25">
+				<select name="id_empresa" id="id_empresa" class="form-control">
+					<option value="0" selected="false" disabled>...selecione la empresa...</option>
+					{% for empresa in empresas %}
+						<option {% if select_empresa == empresa.id %} selected="true" {% endif %} value="{{empresa.id}}">{{empresa.nombre}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		{# end header #}
+		<table class="table-small-rows table table-hover text-light">
+			<thead class="thead-dark">
+				<th scope="col-1" class="text-left">Descripcion</th>
+				<th scope="col-1" class="text-left">No. Orden</th>
+				<th scope="col-1" class="text-left">Costo</th>
+				<th scope="col-1" class="text-left">Fecha</th>
+				<th width="180px" class="text-left">Beneficiario</th>
+				<th width="70px" class="text-left">Acciones</th>
+			</thead>
+			<tbody>
+				{% for item in recargas %}
+					<tr>
+						<td style="font-weight:400;">{{ item.descripcion }}</td>
+						<td style="font-weight:400;">{{ item.no_orden }}</td>
+						<td style="font-weight:400;">{{ item.costo }}</td>
+						<td style="font-weight:400;">{{ item.date|date("d M Y h:i A") }}</td>
+						<td style="font-weight:400;">{{ item.no_telefono }}</td>
+						<td style="font-weight:200;">
+							<button type="button" class="btn btn-info btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Complerar Recarga" onclick="onCompletarRecarga({id_empresa: {{select_empresa}}, recarga: '{{item.id}}' })">
+								<i class="fa fa-check-square"></i>
+							</button>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation">
+			{{ knp_pagination_render(recargas) }}
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="{{ asset('js/Telecomunicaciones/recatgaCubacelManual/change-empresa.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/recatgaCubacelManual/on-completar-recarga.js') }}"></script>
+
+{% endblock %}
