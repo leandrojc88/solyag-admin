@@ -1,40 +1,97 @@
 {% extends 'telecomunicaciones/base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		.fiter th {
+			background-color: #2f2f2f !important;
+			padding: 6px 0;
+			border-bottom: 0 !important;
+		}
+
+		.w-date {
+			width: 150px !important;
+		}
+	</style>
+{% endblock %}
 {% block content %}
 
 	{# header #}
 	<div class="container-fluid">
 		<div class="d-flex align-items-center">
 			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
-				Reporte Recarga Cubacel
+				Listado Recarga Cubacel
 			</h4>
+			<div>
+				<button class="btn btn-success mx-1 btn-sm fa fa-filter" onclick="onFilterRecargas()" data-placement="bottom" title="Filtrar">
+					Filtrar
+				</button>
+				<button class="btn btn-outline-danger mx-1 btn-sm fa fa-close" onclick="onClearFilterRecargas()" data-placement="bottom" title="limpiar Filtrar"></button>
+			</div>
 		</div>
 		{# end header #}
 		<table class="table-small-rows table table-hover text-light">
-			<tr>{# sorting of properties based on query components #}
-				{# <th>{{ knp_pagination_sortable(recargas, 'Descripcion', 'a.descripcion') }}</th> #}
-				{# <th>{{ knp_pagination_filter(recargas, {'descripcion' : 'Descripcion' }) }}</th>
-                <th>{{ knp_pagination_filter(recargas, {'no_orden' : 'No. Orden' }) }}</th>
-                <th>{{ knp_pagination_filter(recargas, {'costo' : 'costo' }) }}</th>
-                <th></th>
-                <th>{{ knp_pagination_filter(recargas, {'no_telefono' : 'no_telefono' }) }}</th> #}
 
-{# <th {% if pagination.isSorted('a.Title') %} class="sorted" {% endif %}>
-                    {{ knp_pagination_sortable(recargas, 'Title', 'a.title') }}
-                </th>
-                <th {% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted" {% endif %}>
-                    {{ knp_pagination_sortable(recargas, 'Release', ['a.date', 'a.time']) }}
-                </th> #}
-			</tr>
+			<thead class="thead-dark">
+				<tr class="fiter">
+					<th>
+						<div class="input-group input-group-sm">
+							<select name="empresa" id="id_empresa" class="form-control mx-0 filter-select">
+								<option value="0">-- empresa --</option>
+								{% for empresa in empresas %}
+									{# <option {% if select_empresa == empresa.id %} selected="true" {% endif %} value="{{empresa.id}}">{{empresa.nombre}}</option> #}
+									<option value="{{empresa.id}}">{{empresa.nombre}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</th>
+					<th>
+						<div class="form-group input-group input-group-sm d-block filter-select">
+							<input type="text" id="descripcion" name="descripcion" placeholder="Descripción" class="form-control w-100 form-control">
+						</div>
+					</th>
+					<th>
+						<div class="form-group input-group input-group-sm d-block filter-select">
+							<input type="text" id="empleado" name="empleado" placeholder="Empleado" class="form-control w-100 form-control">
+						</div>
+					</th>
+					<th>
+						<div class="form-group input-group input-group-sm d-block filter-select">
+							<input type="text" id="no_orden" name="no_orden" placeholder="No. Orden" class="form-control w-100 form-control">
+						</div>
+					</th>
+					<th>
+						<div class="form-group input-group input-group-sm d-block filter-select">
+							<input type="text" id="beneficiario" name="beneficiario" placeholder="Beneficiario" class="form-control w-100 form-control">
+						</div>
+					</th>
+					<th>
+						<div class="input-group input-group-sm">
+							<select id="estado" name="status" placeholder="Estado" class="form-control mx-0 filter-select"></select>
+						</div>
+					</th>
+					<th>
+						<div class="input-group input-group-sm">
+							<input id='start_date' name="start_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Desde" class="form-control w-date filter-select" aria-label="Default" aria-describedby="inputGroup-sizing-sm">
+						</div>
+					</th>
+					<th>
+						<div class="input-group input-group-sm">
+							<input id='end_date' name="end_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Hasta" class="form-control w-date filter-select" aria-label="Default" aria-describedby="inputGroup-sizing-sm">
+						</div>
+					</th>
+				</tr>
+			</thead>
 			<thead class="thead-dark">
 				<th scope="col-1" class="text-left">Empresa</th>
-				<th scope="col-1" class="text-left">Descripcion</th>
+				<th scope="col-1" class="text-left">Descripción</th>
 				<th scope="col-1" class="text-left">Empleado</th>
 				<th scope="col-1" class="text-left">No. Orden</th>
 				<th width="col-1" class="text-left">Beneficiario</th>
 				<th width="col-1" class="text-left">Estado</th>
-				<th scope="col-1" class="text-left">Fecha</th>
-				<th scope="col-1" class="text-left">Fecha de confirmación</th>
+				<th scope="col-2" class="text-left">Fecha</th>
+				<th scope="col-2" class="text-left">F. Confirmación</th>
 			</thead>
 			<tbody>
 				{% for item in recargas %}
@@ -55,4 +112,15 @@
 			{{ knp_pagination_render(recargas) }}
 		</div>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="{{ asset('js/Telecomunicaciones/Status/Status.types.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/Status/load-status-in-select.js') }}"></script>
+
+	<script src="{{ asset('js/Telecomunicaciones/telecomunicaciones.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/on-filter-recargas.js') }}"></script>
+
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Repository\Telecomunicaciones;
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Types\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -69,7 +70,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
 
     public function getListRecargaCubacel($filtros)
     {
-        return $this->createQueryBuilder('se')
+        $q = $this->createQueryBuilder('se')
             ->select(
                 '
                 se.id,
@@ -107,15 +108,24 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
                 'ecc',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
-            )
+            );
             // ->andWhere('se.empresa = :empresa')
             // ->andWhere('s.isDtone = false')
             // ->andWhere('se.status = :status')
             // ->setParameter('empresa', $empresa)
             // ->setParameter('status', Status::INIT)
-            ->orderBy('se.date')
-            ->getQuery()
-            ->getResult();
+            // dd($filtros);
+            foreach ($filtros as $value) {
+                // dd("'$key = $value'");
+                $q->andWhere($value);
+            }
+
+            $q->orderBy('se.date', 'DESC')
+            // ->setMaxResults($limit)
+            ->getQuery();
+            // ->getResult();
+            // dd($q);
+            return $q;
     }
 
     // /**
