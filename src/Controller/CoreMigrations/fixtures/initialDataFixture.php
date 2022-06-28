@@ -33,10 +33,14 @@ class initialDataFixture extends AbstratFixture
         }
 
         // unidad
-        $this->addSql("INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`) VALUES (1, NULL, 2, '$this->unit', 1, '', 'dir.', '$this->phone', '$this->email', '', '');");
+        $this->addSql("INSERT INTO `unidad` (`id`, `id_padre_id`, `id_moneda_id`, `nombre`, `activo`, `codigo`, `direccion`, `telefono`, `correo`, `rnc`, `url`)
+        VALUES (1, NULL, 2, '$this->unit', 1, '', 'dir.', '$this->phone', '$this->email', '', '');");
 
         // almacen de transito
-        $this->addSql("INSERT INTO `almacen` VALUES (1, 1, 61, 'Almacén de Tránsito', 1, '000', 0, 'Dir.', 0, 0, 0, 0, 0, 0);");
+        $this->addSql("INSERT INTO `almacen` (
+            `id`, `id_unidad_id`, `id_cuenta_inventario_id`, `descripcion`, `activo`,
+            `codigo`, `punto_venta`, `direccion`, `mercancia`, `producto`, `humbral`, `otro_destino`, `apertura`, `consignacion`)
+        VALUES (1, 1, 61, 'Almacén de Tránsito', 1, '000', 0, 'Dir.', 0, 0, 0, 0, 0, 0);");
 
         // User para cierres automaticos
         $this->addSql("INSERT INTO `user` VALUES (1, 1, '$this->email', '[\"ROLE_ADMIN\"]', 1, 1, '', '$this->unit');");
