@@ -74,7 +74,7 @@ class TelecomunicacionesController extends AbstractController
         $paginator = $pagination->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5,
+            25,
             ['align' => 'center', 'style' => 'bottom',]
         );
 
