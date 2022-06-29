@@ -33,7 +33,7 @@ class TelecomunicacionesController extends AbstractController
         $end_date = $request->query->get("end_date");
         if ($start_date && $end_date) {
             array_push($filter, "se.date >= '$start_date'");
-            array_push($filter, "se.date <= '$end_date'");
+            array_push($filter, "se.date <= '$end_date 23:59:59'");
         }
 
         // filtro beneficiario

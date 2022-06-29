@@ -86,10 +86,13 @@ class DToneController extends AbstractController
     /**
      * @Route("/callback_url", name="callback_url", methods={"POST"})
      */
-    public function callback_url(EntityManagerInterface $em, Request $request): JsonResponse
+    public function callback_url(): JsonResponse
     {
+        $em = $this->getDoctrine()->getManager();
+
         $pais = new Pais();
-        $pais->setNombre(json_encode($request->request->all()));
+        // $pais->setNombre(json_encode($request->request->all()));
+        $pais->setNombre('123');
         $pais->setActivo(true);
 
         $em->persist($pais);
