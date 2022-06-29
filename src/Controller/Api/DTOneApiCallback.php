@@ -17,10 +17,11 @@ class DTOneApiCallback extends AbstractController
      */
     public function callback_url(Request $request): JsonResponse
     {
+        // dd(json_decode($request->getContent(), true));
         $em = $this->getDoctrine()->getManager();
 
         $pais = new Pais();
-        $pais->setNombre(json_encode($request->request->all()));
+        $pais->setNombre($request->getContent());
         // $pais->setNombre('123');
         $pais->setActivo(true);
 
