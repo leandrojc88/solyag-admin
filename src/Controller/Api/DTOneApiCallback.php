@@ -20,8 +20,8 @@ class DTOneApiCallback extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $pais = new Pais();
-        // $pais->setNombre(json_encode($request->request->all()));
-        $pais->setNombre('123');
+        $pais->setNombre(json_encode($request->request->all()));
+        // $pais->setNombre('123');
         $pais->setActivo(true);
 
         $em->persist($pais);
