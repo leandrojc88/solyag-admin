@@ -22,7 +22,7 @@ class DToneManager
     public const PRODUCT_ID_RECARGA_CUBA_700CUP = [self::PRODUCT_ID => 35736, self::VALUE => 700];
 
 
-    public const CALLBACK_URL = "/dtone/callback_url";
+    public const CALLBACK_URL = "/api/dtone-callback-url";
 
     public function __construct(
         HttpClientInterface $client,
