@@ -3,8 +3,10 @@
 namespace App\Controller\Api;
 
 use App\Entity\Pais;
+use App\Http\httpPostServicioEmpresaCubacel;
+use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use App\Service\DToneManager;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +21,10 @@ class DTOneApiCallback extends AbstractController
      */
     public function callback_url(
         Request $request,
-        DToneManager $dToneManager
+        DToneManager $dToneManager,
+        ServicioEmpresaService $servicioEmpresaService,
+        httpPostServicioEmpresaCubacel $httpPostServicioEmpresaCubacel,
+        ServicioEmpresaRepository $servicioEmpresaRepository
     ): JsonResponse {
 
         $result = json_decode($request->getContent(), true);
@@ -31,6 +36,23 @@ class DTOneApiCallback extends AbstractController
             $result["status"]["message"],
             $result
         );
+
+        // borrar cuando crea q este bien
+        $pais = new Pais();
+        $pais->setResponse($result);
+        $pais->setNombre('respuesta dtone');
+        $pais->setActivo(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($pais);
+        $em->flush();
+
+
+        // actualizar en solyag.online la recarga como movimiento de servicio
+        $recarga = $servicioEmpresaRepository->find($result["external_id"]);
+        if ($recarga) {
+            $data = $servicioEmpresaService->prepareDataToSolyagApp([], $recarga);
+            $httpPostServicioEmpresaCubacel->update($data);
+        }
 
         return $this->json('ok!');
     }
