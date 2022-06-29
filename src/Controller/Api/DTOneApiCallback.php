@@ -20,9 +20,11 @@ class DTOneApiCallback extends AbstractController
         // dd(json_decode($request->getContent(), true));
         $em = $this->getDoctrine()->getManager();
 
+        // $result["status"]["message"],
+
         $pais = new Pais();
-        $pais->setNombre($request->getContent());
-        // $pais->setNombre('123');
+        $pais->setResponse(json_decode($request->getContent()));
+        $pais->setNombre('respuesta dtone');
         $pais->setActivo(true);
 
         $em->persist($pais);

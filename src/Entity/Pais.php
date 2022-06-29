@@ -34,6 +34,11 @@ class Pais
      */
     private $activo;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $response = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +64,18 @@ class Pais
     public function setActivo(bool $activo): self
     {
         $this->activo = $activo;
+
+        return $this;
+    }
+
+    public function getResponse(): ?array
+    {
+        return $this->response;
+    }
+
+    public function setResponse(array $response): self
+    {
+        $this->response = $response;
 
         return $this;
     }
