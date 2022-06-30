@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Types;
+
 class Status
 {
     const INIT = 'INIT'; // el unico esta q es 100 de SOLYAG
@@ -14,7 +15,16 @@ class Status
     const DECLINED = 'DECLINED';
     const RE_DECLINED = 'RE_DECLINED';
 
-    function acceptStatus(string $status)
-    {
-    }
+    const toArray = [
+        self::INIT,
+        self::CREATED,
+        self::CONFIRMED,
+        self::REJECTED,
+        self::CANCELLED,
+        self::SUBMITTED,
+        self::COMPLETED,
+        self::REVERSED,
+        self::DECLINED,
+        self::RE_DECLINED
+    ];
 }

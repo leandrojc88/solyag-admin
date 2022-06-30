@@ -9,6 +9,7 @@ const Status =
     COMPLETED: 'COMPLETED',
     REVERSED: 'REVERSED',
     DECLINED: 'DECLINED',
+    RE_DECLINED: 'RE_DECLINED',
 }
 
 const arrayStatus = Object.values(Status);
