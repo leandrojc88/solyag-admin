@@ -87,11 +87,12 @@
 				<th scope="col-1" class="text-left">Empresa</th>
 				<th scope="col-1" class="text-left">Descripción</th>
 				<th scope="col-1" class="text-left">Empleado</th>
-				<th scope="col-1" class="text-left">No. Orden</th>
-				<th width="col-1" class="text-left">Beneficiario</th>
-				<th width="col-1" class="text-left">Estado</th>
-				<th scope="col-2" class="text-left">Fecha</th>
-				<th scope="col-2" class="text-left">F. Confirmación</th>
+				<th width="120px" class="text-left">No. Orden</th>
+				<th width="120px" class="text-left">Beneficiario</th>
+				<th width="120px" class="text-left">Estado</th>
+				<th width="170px" class="text-left">Fecha</th>
+				<th scope="col-1" class="text-left">No. Confirmación</th>
+				<th width="170px" class="text-left">F. Confirmación</th>
 			</thead>
 			<tbody>
 				{% for item in recargas %}
@@ -103,6 +104,7 @@
 						<td style="font-weight:400;">{{ item.no_telefono }}</td>
 						<td style="font-weight:400;">{{ item.status }}</td>
 						<td style="font-weight:400;">{{ item.date|date("d M Y h:i A") }}</td>
+						<td style="font-weight:400; padding-left: 15px !important;">{{ item.id_confir_proveedor }}</td>
 						<td style="font-weight:400;">{{ item.confirmation_date|date("d M Y h:i A") }}</td>
 					</tr>
 				{% endfor %}

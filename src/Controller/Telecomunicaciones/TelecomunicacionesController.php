@@ -95,7 +95,8 @@ class TelecomunicacionesController extends AbstractController
                 "date" => $recarga["date"],
                 "confirmation_date" => $recarga["confirmation_date"],
                 "servicio" => $recarga["servicio"],
-                "costo" => $recarga["costo"]
+                "costo" => $recarga["costo"],
+                "id_confir_proveedor" => $recarga["id_confir_proveedor"]
             ];
         }
 

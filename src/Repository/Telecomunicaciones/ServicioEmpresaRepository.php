@@ -83,7 +83,8 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
                 se.date,
                 se.confirmation_date,
                 se.servicio,
-                ecc.costo'
+                ecc.costo,
+                se.id_confir_proveedor'
             )
             ->join(
                 'App\Entity\Empresas',
