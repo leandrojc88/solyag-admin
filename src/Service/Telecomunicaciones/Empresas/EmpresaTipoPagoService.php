@@ -53,4 +53,18 @@ class EmpresaTipoPagoService
         $this->em->persist($empresas);
         $this->em->flush();
     }
+
+    public function reasignarSaldo($empresa, $saldo)
+    {
+
+        $empresas = $this->empresaTipoPagaRepository->findOneBy([
+            "empresa" => $empresa
+        ]);
+
+        if (!$empresas) return;
+
+        $empresas->setSaldo($empresas->getSaldo() + $saldo);
+        $this->em->persist($empresas);
+        $this->em->flush();
+    }
 }

@@ -12,6 +12,7 @@ class Status
     const COMPLETED = 'COMPLETED';
     const REVERSED = 'REVERSED';
     const DECLINED = 'DECLINED';
+    const RE_DECLINED = 'RE_DECLINED';
 
     function acceptStatus(string $status)
     {

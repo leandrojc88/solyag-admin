@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
+use App\Service\Telecomunicaciones\DTOne\UpdateDTOneApiForServiceEmpresa;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -21,6 +22,8 @@ class DToneManager
     public const PRODUCT_ID_RECARGA_CUBA_500CUP = [self::PRODUCT_ID => 35719, self::VALUE => 500];
     public const PRODUCT_ID_RECARGA_CUBA_700CUP = [self::PRODUCT_ID => 35736, self::VALUE => 700];
 
+    public const CODE_ERROR = 400;
+    public const CODE_OK = 200;
 
     public const CALLBACK_URL = "/api/dtone-callback-url";
 
@@ -83,10 +86,6 @@ class DToneManager
         $first_name = $params['first_name'];
         $mobile_number = $params['mobile_number'];
         $product_id = $params['product_id'];
-        // $callback_url = $params['callback_url'];
-
-        // try {
-        //code...
         $response = $this->client->request(
             'POST',
             $_ENV['DTONE_API'] . 'async/transactions',
@@ -115,47 +114,17 @@ class DToneManager
         );
 
         if ($response->getStatusCode() > 299) {
-            $this->updateDToneIntoServiceEmpresa(
-                $trasaccion,
-                null,
-                null,
-                Status::DECLINED,
-                json_decode($response->getContent(false), true)
-            );
-
-            return json_decode($response->getContent(false));
+            return [
+                "statusCode" => self::CODE_ERROR,
+                "response" => json_decode($response->getContent(false), true)
+            ];
         }
 
-        $result = $response->toArray();
 
-        $this->updateDToneIntoServiceEmpresa(
-            $trasaccion,
-            $result["id"],
-            $result["confirmation_date"],
-            $result["status"]["message"],
-            $result
-        );
+        return [
+            "statusCode" => self::CODE_OK,
+            "response" => $response->toArray()
+        ];
 
-        return $result;
-    }
-
-    public function updateDToneIntoServiceEmpresa($id_trasaccion, $id_proveedor, $fecha, $status, $json)
-    {
-
-        /** @var ServicioEmpresa $trasaccion */
-        $trasaccion = $this->em->getRepository(ServicioEmpresa::class)->find($id_trasaccion);
-
-        if (!$trasaccion)
-            throw new Exception("No existe la transaccion en la bd `ServicioEmpresa`");
-
-        // dd($json);
-        $date = $fecha ? new \DateTime(explode(".", $fecha)[0] . '.000Z') : new DateTime();
-        $trasaccion->setConfirmationDate($date);
-        if ($id_proveedor) $trasaccion->setIdConfirProveedor($id_proveedor);
-        $trasaccion->setStatus($status);
-        $trasaccion->setResponse($json);
-
-        $this->em->persist($trasaccion);
-        $this->em->flush();
     }
 }
