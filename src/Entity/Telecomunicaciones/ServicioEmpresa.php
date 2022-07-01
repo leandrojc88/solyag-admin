@@ -48,7 +48,7 @@ class ServicioEmpresa
     private $empleado;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $id_confir_proveedor;
 
@@ -141,12 +141,12 @@ class ServicioEmpresa
         return $this;
     }
 
-    public function getIdConfirProveedor(): ?int
+    public function getIdConfirProveedor(): ?string
     {
         return $this->id_confir_proveedor;
     }
 
-    public function setIdConfirProveedor(int $id_confir_proveedor): self
+    public function setIdConfirProveedor(string $id_confir_proveedor): self
     {
         $this->id_confir_proveedor = $id_confir_proveedor;
 
