@@ -89,7 +89,7 @@ class ServicioEmpresaService
                 $this->empresaTipoPagoService->reducirSaldo($empresa->getId(), $costo);
             } else
                 $servicioEmpresa
-                    ->setStatus(Status::DECLINED)
+                    ->setStatus(Status::DECLINED_SALDO)
                     ->setSubServicio($subservicio)
                     ->setResponse(
                         ["errors" => [[
