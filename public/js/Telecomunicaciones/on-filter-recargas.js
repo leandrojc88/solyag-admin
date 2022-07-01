@@ -6,6 +6,7 @@ const onFilterRecargas = () => {
     // const cmpFilters = $('.filter-select')
     const cmpFilters = [
         $empresa,
+        $servicio,
         $descripcion,
         $empleado,
         $no_orden,

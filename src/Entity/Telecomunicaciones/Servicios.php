@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Servicios
 {
     const ID_RECARGA_CUBACEL = 1;
+    const ID_LARGA_DISTANCIA = 3;
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
@@ -95,5 +96,27 @@ class Servicios
         $this->activo = $activo;
 
         return $this;
+    }
+
+    public static function getDescriptionByIdServicio(int $idServicio)
+    {
+        switch ($idServicio) {
+            case self::ID_RECARGA_CUBACEL:
+                return 'Recarga Cubacel';
+
+            case self::ID_LARGA_DISTANCIA:
+                return 'Larga Distancia';
+
+            default:
+                return '--no servicio--';
+        }
+    }
+
+    public static function getArrayServicio()
+    {
+        return [
+            self::ID_RECARGA_CUBACEL => 'Recarga Cubacel',
+            self::ID_LARGA_DISTANCIA => 'Larga Distancia'
+        ];
     }
 }

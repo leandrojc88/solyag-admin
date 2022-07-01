@@ -2,6 +2,7 @@
 
 namespace App\Controller\Telecomunicaciones;
 
+use App\Entity\Telecomunicaciones\Servicios;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -68,6 +69,10 @@ class TelecomunicacionesController extends AbstractController
         $empresa = $request->query->get("empresa");
         if ($empresa) array_push($filter, "em.id = $empresa ");
 
+        // filtro servicio
+        $servicio = $request->query->get("servicio");
+        if ($servicio) array_push($filter, "se.servicio = $servicio ");
+
 
         $query = $servicioEmpresaRepository->getListRecargaCubacel($filter);
 
@@ -95,6 +100,7 @@ class TelecomunicacionesController extends AbstractController
                 "date" => $recarga["date"],
                 "confirmation_date" => $recarga["confirmation_date"],
                 "servicio" => $recarga["servicio"],
+                "servicio_descripcion" => Servicios::getDescriptionByIdServicio($recarga["servicio"]),
                 "costo" => $recarga["costo"],
                 "id_confir_proveedor" => $recarga["id_confir_proveedor"]
             ];
@@ -107,7 +113,8 @@ class TelecomunicacionesController extends AbstractController
 
         return $this->render('telecomunicaciones/index.html.twig', [
             "recargas" => $paginator,
-            "empresas" => $empresas 
+            "empresas" => $empresas,
+            "servicios" => Servicios::getArrayServicio()
         ]);
     }
 }

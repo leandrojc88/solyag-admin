@@ -1,5 +1,6 @@
 // init
 $empresa = $('#id_empresa');
+$servicio = $('#servicio');
 $descripcion = $('#descripcion');
 $empleado = $('#empleado');
 $no_orden = $('#no_orden');
@@ -18,6 +19,7 @@ const loadQueryParams = () => {
     let queryParams = new URLSearchParams(window.location.search);
 
     let empresa = queryParams.get("empresa");
+    let servicio = queryParams.get("servicio");
     let descripcion = queryParams.get("descripcion");
     let empleado = queryParams.get("empleado");
     let no_orden = queryParams.get("no_orden");
@@ -29,6 +31,7 @@ const loadQueryParams = () => {
     if(queryParams.get("page")) page = queryParams.get("page") + '&';
 
     if(empresa) $empresa.val(empresa)
+    if(servicio) $servicio.val(servicio)
     if(descripcion) $descripcion.val(descripcion)
     if(empleado) $empleado.val(empleado)
     if(no_orden) $no_orden.val(no_orden)

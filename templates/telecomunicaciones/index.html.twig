@@ -40,8 +40,17 @@
 							<select name="empresa" id="id_empresa" class="form-control mx-0 filter-select">
 								<option value="0">-- empresa --</option>
 								{% for empresa in empresas %}
-									{# <option {% if select_empresa == empresa.id %} selected="true" {% endif %} value="{{empresa.id}}">{{empresa.nombre}}</option> #}
 									<option value="{{empresa.id}}">{{empresa.nombre}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</th>
+					<th>
+						<div class="input-group input-group-sm">
+							<select name="servicio" id="servicio" class="form-control mx-0 filter-select">
+								<option value="0">-- servicio --</option>
+								{% for key, servicio in servicios %}
+									<option value="{{key}}">{{servicio}}</option>
 								{% endfor %}
 							</select>
 						</div>
@@ -81,13 +90,15 @@
 							<input id='end_date' name="end_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Hasta" class="form-control w-date filter-select" aria-label="Default" aria-describedby="inputGroup-sizing-sm">
 						</div>
 					</th>
+					<th></th>
 				</tr>
 			</thead>
 			<thead class="thead-dark">
 				<th scope="col-1" class="text-left">Empresa</th>
+				<th scope="col-1" class="text-left">Servicio</th>
 				<th scope="col-1" class="text-left">Descripción</th>
 				<th scope="col-1" class="text-left">Empleado</th>
-				<th width="120px" class="text-left">No. Orden</th>
+				<th width="80px" class="text-left">No. Orden</th>
 				<th width="120px" class="text-left">Beneficiario</th>
 				<th width="120px" class="text-left">Estado</th>
 				<th width="170px" class="text-left">Fecha</th>
@@ -98,6 +109,7 @@
 				{% for item in recargas %}
 					<tr>
 						<td style="font-weight:400;">{{ item.empresa }}</td>
+						<td style="font-weight:400;">{{ item.servicio_descripcion }}</td>
 						<td style="font-weight:400;">{{ item.descripcion }}</td>
 						<td style="font-weight:400;">{{ item.empleado }}</td>
 						<td style="font-weight:400;">{{ item.no_orden }}</td>
