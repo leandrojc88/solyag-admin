@@ -18,6 +18,16 @@
 			height: 24px;
 			width: auto;
 		}
+		.load {
+			position: absolute;
+			width: 100%;
+			background: #4151608c;
+			z-index: 999999;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: none
+		}
 	</style>
 	<link href="{{ asset('css/components/toggle-switch.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}
@@ -55,7 +65,7 @@
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/validate-form-saldo.js') }}"></script>
 
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/asignar-saldo-empresa.js') }}"></script>
-	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/events/editar-tipo-pago-empresa.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/change-tipo-pago-empresa.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/draw/draw.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/exec-dtone.js') }}"></script>
 {% endblock %}

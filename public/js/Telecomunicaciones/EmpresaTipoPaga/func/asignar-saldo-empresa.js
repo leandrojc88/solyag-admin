@@ -7,6 +7,7 @@ const asignarSaldoEmpresa = (params) => {
 
     $id_empresa = $('#id_empresa')
     $id_empresa_t_pago = $('#id_tipo_pago_empresa')
+    $('#saldo').val('')
 
     $id_empresa_t_pago.val(id)
     $id_empresa.val(id_empresa)
