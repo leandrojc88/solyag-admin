@@ -2,17 +2,12 @@
 
 {% block modalbody %}
 
-	<form method="post" style="height: 130px;" id="form_tipo_pago_empresa" action="{{ url('update_tipo_saldo_empresa') }}">
+	<form method="post" id="form_tipo_pago_empresa" action="{{ url('tele_update_saldo_empresa') }}">
 		<input name="id" id="id_tipo_pago_empresa" hidden>
 		<input name="id_empresa" id="id_empresa" hidden>
-		<div class="form-group custom-control custom-switch ml-2">
-			<input type="checkbox" name="tipo" class="custom-control-input" id="tipo">
-			<label class="custom-control-label" for="tipo">Pospago</label>
-		</div>
 		<div id="saldo-group" class="form-group  input-group">
 			<label class="label" for="saldo">Saldo</label>
 			<input type="number" class="form-control w-100" name="saldo" id="saldo">
-
 		</div>
 	</form>
 

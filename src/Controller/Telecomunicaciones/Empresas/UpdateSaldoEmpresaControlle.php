@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UpdateSaldoEmpresaControlle extends AbstractController
 {
     /**
-     * @Route("/update-tipo-saldo-empresa",name="update_tipo_saldo_empresa")
+     * @Route("/update-saldo-empresa",name="tele_update_saldo_empresa")
      */
     public function updateTipoSaldoEmpresa(
         Request $request,
@@ -27,7 +27,7 @@ class UpdateSaldoEmpresaControlle extends AbstractController
 
         $id = $request->get('id');
         $id_empresa = $request->get('id_empresa');
-        $tipo = $request->get('tipo');
+        // $tipo = $request->get('tipo');
         $saldo = $request->get('saldo');
 
         $empresaTipoPaga = $empresasTipoPagaRepository->find($id);
@@ -36,19 +36,19 @@ class UpdateSaldoEmpresaControlle extends AbstractController
             $empresaTipoPaga = new EmpresaTipoPaga();
 
             $empresaTipoPaga
-                ->setTipo($empresasTipoPagaService->getTipoForCheckBox($tipo))
+                // ->setTipo($empresasTipoPagaService->getTipoForCheckBox($tipo))
                 ->setSaldo($saldo)
                 ->setEmpresa($empresasRepository->find($id_empresa));
         } else {
             $empresaTipoPaga
-                ->setTipo($empresasTipoPagaService->getTipoForCheckBox($tipo))
-                ->setSaldo($saldo);
+                // ->setTipo($empresasTipoPagaService->getTipoForCheckBox($tipo))
+                ->setSaldo($empresaTipoPaga->getSaldo() + $saldo);
         }
 
         $em->persist($empresaTipoPaga);
         $em->flush();
 
-        $this->addFlash('success', 'Datos Actualizado ');
+        $this->addFlash('success', 'Saldo asignado');
         return $this->redirectToRoute('telecomunicaciones-empresas');
     }
 }

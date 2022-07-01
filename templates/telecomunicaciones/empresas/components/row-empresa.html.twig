@@ -1,0 +1,28 @@
+<div class="b-card">
+	<div class="d-flex mb-2">
+		<h3 class="h3 text-capitalize" style="color: white; font-weight: 400;">{{empresa.nombre}}</h3>
+		<input class="tgl tgl-flip ml-auto" id="toggle-{{empresa.nombre}}" type="checkbox"/>
+		<label class="tgl-btn ml-auto" data-tg-off="Pospago" data-tg-on="Prepago" for="toggle-{{empresa.nombre}}"></label>
+	</div>
+	<div class="d-flex">
+		<a style="color: white;" class="btn btn-outline-info text-capitalize mr-2" href="{{ url('telecomunicaciones-empresas-subservicios-recarga-cubacel', { id_empresa: empresa.id_empresa }) }}">
+			<img class="icon-img" src="{{ asset('images/telecomunicaciones/servicios/cubacel-icon-lite.png') }}" alt="Recarga Cubacel">
+			Recarga Cubacel</a>
+		<button style="color: white;" class="btn btn-outline-info text-capitalize mr-2">
+			<img class="icon-img" src="{{ asset('images/telecomunicaciones/servicios/larga-distancia-icon.png') }}" alt="Recarga Cubacel">
+			Larga Distancia</button>
+		<button class="btn btn-outline-warning text-capitalize mr-2" onclick="asignarSaldoEmpresa({
+				id: {% if empresa.id %} {{item.id}} {% else %} 0 {% endif %},
+				id_empresa: {{empresa.id_empresa}},
+				nombre: '{{empresa.nombre}}',
+				tipo: '{{empresa.tipo}}',
+				saldo: {% if empresa.saldo %} {{empresa.saldo}} {% else %} 0 {% endif %}
+				})">
+			<i class="fa fa-dollar"></i>
+			Asignar Saldo</button>
+		<button class="btn btn-outline-warning text-capitalize mr-2">
+			<i class="fa fa-list"></i>
+			Historial de  Saldo</button>
+		<div class="ml-auto" style="color: white;">${{empresa.saldo}}</div>
+	</div>
+</div>

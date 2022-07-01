@@ -3,51 +3,48 @@
 {% block title %}Telecomunicaciones | empresas
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.b-card {
+			border: 1px #a5a5a5 solid;
+			border-radius: 5px;
+			margin: 5px 2px;
+			padding: 0.5rem 1rem;
+			background: #404040;
+		}
+
+		.icon-img {
+			height: 24px;
+			width: auto;
+		}
+	</style>
+	<link href="{{ asset('css/components/toggle-switch.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
 {% block content %}
 
-	{{ include('telecomunicaciones/empresas/modal/modal-edit-tipo-empresa.html.twig',{title:'Cambiar datos de empresa'}) }}
+	{{ include('telecomunicaciones/empresas/modal/modal-asignar-saldo-empresa.html.twig',{title:'Asignar saldo a la empresa empresa'}) }}
 
 	{# header #}
-	<div class="d-flex align-items-center">
-		<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
-			Empresas
-		</h4>
-		<div>
-			<button type="button" onclick="execDTone()">enviar</button>
+	<div class="container">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Empresas
+			</h4>
+			<div>
+				<button type="button" onclick="execDTone()">enviar</button>
+			</div>
 		</div>
-	</div>
-	{# end header #}
-	<table class="table-small-rows table table-hover text-light">
-		<thead class="thead-dark">
-			<th scope="col-1" class="text-left">Nombre</th>
-			<th width="180px" class="text-left">Tipo</th>
-			<th width="180px" class="text-left">Saldo</th>
-			<th width="70px" class="text-left">Acciones</th>
-		</thead>
-		<tbody>
+		{# end header #}
+		<section>
 			{% for item in empresas %}
-				<tr>
-					<td style="font-weight:400;">{{ item.nombre }}</td>
-					<td style="font-weight:400;">{{ item.tipo }}</td>
-					<td style="font-weight:400;">{{ item.saldo }}</td>
-					<td style="font-weight:200;">
-						<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="editarTipoEmpresa({
-						id: {% if item.id %} {{item.id}} {% else %} 0 {% endif %},
-						id_empresa: {{item.id_empresa}},
-						nombre: '{{item.nombre}}',
-						tipo: '{{item.tipo}}',
-						saldo: {% if item.saldo %} {{item.saldo}} {% else %} 0 {% endif %}
-						})">
-							<i class="fa fa-edit"></i>
-						</button>
-						<a type="button" class="btn btn-info btn-sm w-31" href="{{ url('telecomunicaciones-empresas-subservicios-recarga-cubacel', { id_empresa: item.id_empresa }) }}" data-toggle="tooltip" data-placement="bottom" title="Gestionar Costos Cubacel">
-							<i class="fa fa-phone"></i>
-						</a>
-					</td>
-				</tr>
+				{{ include ("telecomunicaciones/empresas/components/row-empresa.html.twig", {
+					empresa: item
+				}) }}
 			{% endfor %}
-		</tbody>
-	</table>
+		</section>
+	</div>
 {% endblock %}
 
 
@@ -55,8 +52,9 @@
 	{{ parent() }}
 
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/init.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/validate-form-saldo.js') }}"></script>
 
-	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/editar-tipo-pago-empresa.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/asignar-saldo-empresa.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/events/editar-tipo-pago-empresa.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/draw/draw.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/exec-dtone.js') }}"></script>
