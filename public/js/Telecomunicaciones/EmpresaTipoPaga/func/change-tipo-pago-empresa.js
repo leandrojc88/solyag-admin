@@ -7,7 +7,7 @@ const changeTipoPagoEmpresa = (idEmpresa) => {
 
     $.ajax({
         type: "POST",
-        url: `/update-tipo-pago-empresa/${idEmpresa}`,
+        url: `/telecomunicaciones/update-tipo-pago-empresa/${idEmpresa}`,
         data: { tipo },
         success: function (response) {
             $laodData.hide();

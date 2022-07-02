@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UpdateCostoEmpresaCubacelController extends AbstractController
 {
     /**
-     * @Route("/update-costo-empresa-cubacel",name="update_costo_empresa_cubacel")
+     * @Route("/telecomunicaciones/update-costo-empresa-cubacel",name="update_costo_empresa_cubacel")
      */
     public function update(
         Request $request,
