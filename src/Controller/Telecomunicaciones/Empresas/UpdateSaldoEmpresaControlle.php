@@ -3,6 +3,7 @@
 namespace App\Controller\Telecomunicaciones\Empresas;
 
 use App\Entity\Telecomunicaciones\EmpresaTipoPaga;
+use App\Entity\Telecomunicaciones\HistorialSaldoEmpresa;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\EmpresaTipoPagaRepository;
 use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
@@ -21,7 +22,6 @@ class UpdateSaldoEmpresaControlle extends AbstractController
     public function updateTipoSaldoEmpresa(
         Request $request,
         EntityManagerInterface $em,
-        EmpresasRepository $empresasRepository,
         EmpresaTipoPagaRepository $empresasTipoPagaRepository,
         RegisterSaldoToHostory $registerSaldoToHostory
     ): Response {
@@ -29,27 +29,34 @@ class UpdateSaldoEmpresaControlle extends AbstractController
         $id = $request->get('id');
         $id_empresa = $request->get('id_empresa');
         $saldo = $request->get('saldo');
+        $accion = $request->get('accion');
 
         $empresaTipoPaga = $empresasTipoPagaRepository->find($id);
 
-        if (!$empresaTipoPaga) {
-            $empresaTipoPaga = new EmpresaTipoPaga();
+        if ($accion == HistorialSaldoEmpresa::DISMINUIR) {
 
-            $empresaTipoPaga
-                ->setSaldo($saldo)
-                ->setEmpresa($empresasRepository->find($id_empresa));
+            if ($empresaTipoPaga->getSaldo() < $saldo) {
+                $this->addFlash('error', "el saldo que desea disminuir es superior al de la empresa");
+                return $this->redirectToRoute('telecomunicaciones-empresas');
+            }
+
+            $valor = $empresaTipoPaga->getSaldo() - $saldo;
+            $msg = "Saldo disminuido";
         } else {
-            $empresaTipoPaga
-                ->setSaldo($empresaTipoPaga->getSaldo() + $saldo);
+            $valor =  $empresaTipoPaga->getSaldo() + $saldo;
+            $msg = "Saldo agregado";
         }
+
+        $empresaTipoPaga->setSaldo($valor);
+
 
         $em->persist($empresaTipoPaga);
         $em->flush();
 
-        ($registerSaldoToHostory)($id_empresa, $saldo);
+        ($registerSaldoToHostory)($id_empresa, $saldo, $accion);
 
 
-        $this->addFlash('success', 'Saldo asignado');
+        $this->addFlash('success', $msg);
         return $this->redirectToRoute('telecomunicaciones-empresas');
     }
 }

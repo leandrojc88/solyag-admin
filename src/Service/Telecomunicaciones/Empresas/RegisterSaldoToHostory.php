@@ -22,7 +22,7 @@ class RegisterSaldoToHostory
         $this->security = $security;
     }
 
-    public function __invoke($idEmpresa, $saldo)
+    public function __invoke($idEmpresa, $saldo, $tipo)
     {
         $user = $this->security->getUser();
 
@@ -32,7 +32,8 @@ class RegisterSaldoToHostory
             ->setFecha(new DateTime())
             ->setEmpresa($this->em->getRepository(Empresas::class)->find($idEmpresa))
             ->setSaldo($saldo)
-            ->setUser($user);
+            ->setUser($user)
+            ->setTipo($tipo);
 
         $this->em->persist($historialSaldoEmpresa);
         $this->em->flush();

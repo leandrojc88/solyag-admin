@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HistorialSaldoEmpresa
 {
+    public const AGREGAR = 'Agregar';
+    public const DISMINUIR = 'Disminuir';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,6 +43,11 @@ class HistorialSaldoEmpresa
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $tipo;
 
     public function getId(): ?int
     {
@@ -90,6 +98,18 @@ class HistorialSaldoEmpresa
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTipo(): ?string
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(string $tipo): self
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }
