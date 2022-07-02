@@ -110,22 +110,12 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
             );
-            // ->andWhere('se.empresa = :empresa')
-            // ->andWhere('s.isDtone = false')
-            // ->andWhere('se.status = :status')
-            // ->setParameter('empresa', $empresa)
-            // ->setParameter('status', Status::INIT)
-            // dd($filtros);
             foreach ($filtros as $value) {
-                // dd("'$key = $value'");
                 $q->andWhere($value);
             }
 
             $q->orderBy('se.date', 'DESC')
-            // ->setMaxResults($limit)
             ->getQuery();
-            // ->getResult();
-            // dd($q);
             return $q;
     }
 

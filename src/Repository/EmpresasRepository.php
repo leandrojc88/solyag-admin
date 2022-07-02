@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Empresas;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,6 +35,22 @@ class EmpresasRepository extends ServiceEntityRepository
             ->orderBy('e.nombre', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+
+    public function empresasSinTipoPago()
+    {
+        $sql = "SELECT * FROM empresas
+                WHERE id not in (SELECT empresa_id FROM empresa_tipo_paga) and activo=TRUE";
+
+        $rsm = new ResultSetMapping();
+        // para obtener mas datos de la empresa q no sea solo el {id} tengo q poner mas `addFieldResult`
+        $rsm->addEntityResult('App\Entity\Empresas', 'e');
+        $rsm->addFieldResult('e', 'id', 'id');
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $results = $query->getResult();
+        return $results;
     }
 
     /*
