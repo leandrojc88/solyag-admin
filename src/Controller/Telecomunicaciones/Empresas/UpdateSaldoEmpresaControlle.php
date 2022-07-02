@@ -6,6 +6,7 @@ use App\Entity\Telecomunicaciones\EmpresaTipoPaga;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\EmpresaTipoPagaRepository;
 use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
+use App\Service\Telecomunicaciones\Empresas\RegisterSaldoToHostory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,11 @@ class UpdateSaldoEmpresaControlle extends AbstractController
         EntityManagerInterface $em,
         EmpresasRepository $empresasRepository,
         EmpresaTipoPagaRepository $empresasTipoPagaRepository,
-        EmpresaTipoPagoService $empresasTipoPagaService
+        RegisterSaldoToHostory $registerSaldoToHostory
     ): Response {
 
         $id = $request->get('id');
         $id_empresa = $request->get('id_empresa');
-        // $tipo = $request->get('tipo');
         $saldo = $request->get('saldo');
 
         $empresaTipoPaga = $empresasTipoPagaRepository->find($id);
@@ -36,17 +36,18 @@ class UpdateSaldoEmpresaControlle extends AbstractController
             $empresaTipoPaga = new EmpresaTipoPaga();
 
             $empresaTipoPaga
-                // ->setTipo($empresasTipoPagaService->getTipoForCheckBox($tipo))
                 ->setSaldo($saldo)
                 ->setEmpresa($empresasRepository->find($id_empresa));
         } else {
             $empresaTipoPaga
-                // ->setTipo($empresasTipoPagaService->getTipoForCheckBox($tipo))
                 ->setSaldo($empresaTipoPaga->getSaldo() + $saldo);
         }
 
         $em->persist($empresaTipoPaga);
         $em->flush();
+
+        ($registerSaldoToHostory)($id_empresa, $saldo);
+
 
         $this->addFlash('success', 'Saldo asignado');
         return $this->redirectToRoute('telecomunicaciones-empresas');
