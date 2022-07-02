@@ -5,6 +5,20 @@
 {% block title %}Telecomunicaciones | Historial de recargas de saldo
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.bg-agregar {
+			background: rgb(40 167 69 / 10%);
+			/*background: var(--success);*/
+		}
+		.bg-disminuir {
+			background: rgb(220 53 69 / 10%);
+			/*background: var(--danger);*/
+		}
+	</style>
+	<link href="{{ asset('css/components/toggle-switch.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
 
 {% block content %}
 
@@ -20,14 +34,24 @@
 
 		<table class="table-small-rows table table-hover text-light">
 			<thead class="thead-dark">
-				<th scope="col-1" class="text-left">Saldo</th>
 				<th scope="col-1" class="text-left">Fecha</th>
+				<th scope="col-1" class="text-left">Descripcion</th>
+				<th scope="col-1" class="text-left">Acción</th>
+				<th scope="col-1" class="text-left">Valor</th>
+				<th scope="col-1" class="text-left">Saldo</th>
 			</thead>
 			<tbody>
 				{% for item in historyEmpresas %}
-					<tr>
-						<td style="font-weight:400;">{{ item.saldo }}</td>
+					<tr {% if item.tipo == 'Agregar' %}
+						class="bg-agregar"
+					{% else %}
+						class="bg-disminuir"
+					{% endif %}>
 						<td style="font-weight:400;">{{ item.fecha|date("d M Y h:i A") }}</td>
+						<td style="font-weight:400;">{{ item.descripcion }}</td>
+						<td style="font-weight:400;">{{ item.tipo }}</td>
+						<td style="font-weight:400;">{{ item.valor }}</td>
+						<td style="font-weight:400;">{{ item.saldo }}</td>
 					</tr>
 				{% endfor %}
 

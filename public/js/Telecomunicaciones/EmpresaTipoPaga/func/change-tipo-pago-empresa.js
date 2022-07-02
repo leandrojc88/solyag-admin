@@ -13,7 +13,6 @@ const changeTipoPagoEmpresa = (idEmpresa) => {
             $laodData.hide();
 
             $(`#btn-asignar-saldo-${idEmpresa}`).css('display', response ? 'block' : 'none')
-            $(`#btn-view-history-${idEmpresa}`).css('display', response ? 'block' : 'none')
 
             $(`#txt-saldo-${idEmpresa}`).css('display', response ? 'block' : 'none')
             $(`#txt-saldo-${idEmpresa}`).css('color', 'white')

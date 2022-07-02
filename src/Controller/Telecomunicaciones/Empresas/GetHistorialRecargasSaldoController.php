@@ -3,6 +3,7 @@
 namespace App\Controller\Telecomunicaciones\Empresas;
 
 use App\Entity\Empresas;
+use App\Entity\Telecomunicaciones\HistorialSaldoEmpresa;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\HistorialSaldoEmpresaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +20,20 @@ class GetHistorialRecargasSaldoController extends AbstractController
         Empresas $empresa
     ): Response {
 
-        $historyEmpresas = $historialSaldoEmpresaRepository->findBy(
-            ["empresa" => $empresa],
-            ["fecha" => "DESC"]
-        );
+        $historyEmpresas = $historialSaldoEmpresaRepository->listSubmayor($empresa->getId());
+
+        $saldo = 0;
+
+        foreach ($historyEmpresas as &$value) {
+
+            if ($value["tipo"] == HistorialSaldoEmpresa::AGREGAR) {
+                $saldo += $value["valor"];
+                $value["saldo"] = $saldo;
+            } else {
+                $saldo -= $value["valor"];
+                $value["saldo"] = $saldo;
+            }
+        }
 
         return $this->render('telecomunicaciones/empresas/history-recarga-saldo.html.twig', [
             'historyEmpresas' => $historyEmpresas,
