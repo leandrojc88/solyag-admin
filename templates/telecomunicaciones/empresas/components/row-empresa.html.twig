@@ -13,14 +13,14 @@
 			<img class="icon-img" src="{{ asset('images/telecomunicaciones/servicios/larga-distancia-icon.png') }}" alt="Recarga Cubacel">
 			Larga Distancia</button>
 		<button id="btn-asignar-saldo-{{empresa.id_empresa}}" {% if empresa.tipo=='pospago' %} style="display: none;" {% endif %} class="btn btn-outline-warning text-capitalize mr-2" onclick="asignarSaldoEmpresa({
-								id: {% if empresa.id %} {{item.id}} {% else %} 0 {% endif %},
-								id_empresa: {{empresa.id_empresa}}
-								})">
+				id: {% if empresa.id %} {{item.id}} {% else %} 0 {% endif %},
+				id_empresa: {{empresa.id_empresa}}
+				})">
 			<i class="fa fa-dollar"></i>
 			Asignar Saldo</button>
-		<button id="btn-view-history-{{empresa.id_empresa}}" {% if empresa.tipo=='pospago' %} style="display: none;" {% endif %} class="btn btn-outline-warning text-capitalize mr-2">
+		<a id="btn-view-history-{{empresa.id_empresa}}" {% if empresa.tipo=='pospago' %} style="display: none;" {% endif %} class="btn btn-outline-warning text-capitalize mr-2" href="{{ url('tele-empresas-historial-recarga-saldo', { empresa: empresa.id_empresa }) }}">
 			<i class="fa fa-list"></i>
-			Historial de  Saldo</button>
+			Historial de  Saldo</a>
 		<div id="txt-saldo-{{empresa.id_empresa}}" class="ml-auto" {% if empresa.tipo=='pospago' %} style="display: none;" {% endif %} style="color: white; padding-top: 8px;">${{empresa.saldo}}</div>
 	</div>
 </div>

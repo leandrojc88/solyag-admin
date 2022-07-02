@@ -1,0 +1,42 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% set id_serviciot = app.session.flashbag.get('id_servicio') %}
+
+{% block title %}Telecomunicaciones | Historial de recargas de saldo
+{% endblock %}
+
+
+{% block content %}
+
+	<div class="container">
+		<div class="d-flex align-items-center">
+			<a href="{{ url("telecomunicaciones-empresas") }}">
+				<i class="text-light mx-3 mt-2 fa fa-arrow-circle-left text-drak fa-2x"></i>
+			</a>
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Historial de recargas del saldo ({{empresa.nombre}})
+			</h4>
+		</div>
+
+		<table class="table-small-rows table table-hover text-light">
+			<thead class="thead-dark">
+				<th scope="col-1" class="text-left">Saldo</th>
+				<th scope="col-1" class="text-left">Fecha</th>
+			</thead>
+			<tbody>
+				{% for item in historyEmpresas %}
+					<tr>
+						<td style="font-weight:400;">{{ item.saldo }}</td>
+						<td style="font-weight:400;">{{ item.fecha|date("d M Y h:i A") }}</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
