@@ -49,4 +49,19 @@ class ValidateSaldoEmpresa
 
         return $empresasTipoPago->getSaldo() >= $costoToVerificar;
     }
+
+    /**
+     * Valida si una empresa es de tipo PREPAGO, y si tiene el saldo suficiente para asumir el
+     * costo de un valor
+     */
+    public function validateVsValue(Empresas $empresa, $value)
+    {
+        $empresasTipoPago = $this->empresaTipoPagaRepository->findOneBy([
+            "empresa" => $empresa
+        ]);
+
+        if (!$empresasTipoPago || $empresasTipoPago->getTipo() == EmpresaTipoPaga::POSPAGO) return true;
+
+        return $empresasTipoPago->getSaldo() >= $value;
+    }
 }
