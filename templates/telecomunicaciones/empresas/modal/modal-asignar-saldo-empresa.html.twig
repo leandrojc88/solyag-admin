@@ -5,8 +5,9 @@
 	<form method="post" id="form_tipo_pago_empresa" action="{{ url('tele_update_saldo_empresa') }}">
 		<input name="id" id="id_tipo_pago_empresa" hidden>
 		<input name="id_empresa" id="id_empresa" hidden>
+		<input name="accion" id="accion" hidden>
 		<div id="saldo-group" class="form-group  input-group">
-			<label class="label" for="saldo">Saldo</label>
+			<label id="label_saldo" class="label" for="saldo">Agregar Saldo</label>
 			<input type="number" class="form-control w-100" name="saldo" id="saldo">
 		</div>
 	</form>

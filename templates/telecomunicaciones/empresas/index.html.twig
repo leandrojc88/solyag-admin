@@ -28,13 +28,17 @@
 			left: 0;
 			display: none
 		}
+
+		.dropdown-menu{
+			background: rgb(64, 64, 64);
+		}
 	</style>
 	<link href="{{ asset('css/components/toggle-switch.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}
 
 {% block content %}
 
-	{{ include('telecomunicaciones/empresas/modal/modal-asignar-saldo-empresa.html.twig',{title:'Asignar saldo a la empresa empresa'}) }}
+	{{ include('telecomunicaciones/empresas/modal/modal-asignar-saldo-empresa.html.twig',{title:'Saldo de la empresa empresa'}) }}
 
 	{# header #}
 	<div class="container">
