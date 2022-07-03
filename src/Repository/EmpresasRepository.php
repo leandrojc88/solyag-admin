@@ -24,12 +24,18 @@ class EmpresasRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('e')
-            ->select('e.id as id_empresa, e.nombre, tp.id, tp.saldo, tp.tipo')
+            ->select('e.id as id_empresa, e.nombre, tp.id, tp.saldo, tp.tipo, eld.costo as costo_larga_distancia')
             ->leftJoin(
                 'App\Entity\Telecomunicaciones\EmpresaTipoPaga',
                 'tp',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'e.id = tp.empresa'
+            )
+            ->leftJoin(
+                'App\Entity\Telecomunicaciones\EmpresaLargaDistancia',
+                'eld',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'e.id = eld.empresa'
             )
             ->andWhere('e.activo = true')
             ->orderBy('e.nombre', 'ASC')

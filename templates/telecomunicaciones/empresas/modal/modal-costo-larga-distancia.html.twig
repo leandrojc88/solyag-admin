@@ -1,0 +1,17 @@
+{% extends 'utils/modal_form_custom.html.twig' %}
+
+{% block modalbody %}
+
+	<form method="post" id="form_costo_larga_distancia" action="{{ url('post_costo_larga_distancia') }}">
+		<input name="id_empresa" id="id_empresa" hidden>
+		<div class="form-group  input-group">
+			<label id="label_saldo" class="label" for="costo"> % Costo de Larga Distancia</label>
+			<input type="number" class="form-control w-100" name="costo" id="costo">
+		</div>
+	</form>
+
+{% endblock %}
+
+{% block btnzone %}
+	<button type="submit" form="form_costo_larga_distancia" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}

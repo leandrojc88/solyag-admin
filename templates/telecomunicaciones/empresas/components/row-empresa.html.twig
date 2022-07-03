@@ -3,13 +3,13 @@
 	<div class="d-flex mb-2">
 		<h3 class="h3 text-capitalize" style="color: white; font-weight: 400;">{{empresa.nombre}}</h3>
 		<input class="tgl tgl-flip ml-auto" {% if empresa.tipo=='prepago' %} checked {% endif %} id="toggle-{{empresa.id_empresa}}" type="checkbox"/>
-		<label class="tgl-btn ml-auto" data-tg-off="Pospago" data-tg-on="Prepago" for="toggle-{{empresa.id_empresa}}" onclick="changeTipoPagoEmpresa({{item.id_empresa}})"></label>
+		<label class="tgl-btn ml-auto" data-tg-off="Pospago" data-tg-on="Prepago" for="toggle-{{empresa.id_empresa}}" onclick="changeTipoPagoEmpresa({{empresa.id_empresa}})"></label>
 	</div>
 	<div class="d-flex" style="color: white;">
 		<a style="color: white;" class="btn btn-outline-info text-capitalize mr-2" href="{{ url('telecomunicaciones-empresas-subservicios-recarga-cubacel', { id_empresa: empresa.id_empresa }) }}">
 			<img class="icon-img" src="{{ asset('images/telecomunicaciones/servicios/cubacel-icon-lite.png') }}" alt="Recarga Cubacel">
 			Recarga Cubacel</a>
-		<button style="color: white;" class="btn btn-outline-info text-capitalize mr-2">
+		<button style="color: white;" class="btn btn-outline-info text-capitalize mr-2" onclick="onCostoLargaDistancia({{empresa.id_empresa}}, {% if empresa.costo_larga_distancia %} {{empresa.costo_larga_distancia}} {% else %} '' {% endif %})">
 			<img class="icon-img" src="{{ asset('images/telecomunicaciones/servicios/larga-distancia-icon.png') }}" alt="Recarga Cubacel">
 			Larga Distancia</button>
 
@@ -19,7 +19,7 @@
 
 		<div id="btn-asignar-saldo-{{empresa.id_empresa}}" {% if empresa.tipo=='pospago' %} style="display: none;" {% endif %} class="btn-group">
 			<button class="btn btn-outline-warning text-capitalize" onclick="asignarSaldoEmpresa({
-					id: {% if empresa.id %} {{item.id}} {% else %} 0 {% endif %},
+					id: {% if empresa.id %} {{empresa.id}} {% else %} 0 {% endif %},
 					id_empresa: {{empresa.id_empresa}},
 					accion: 'Agregar'
 					})">
@@ -31,7 +31,7 @@
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
 				<button id="btn-asignar-saldo-{{empresa.id_empresa}}" {% if empresa.tipo=='pospago' %} style="display: none;" {% endif %} class="btn btn-outline-warning text-capitalize mx-2" onclick="asignarSaldoEmpresa({
-						id: {% if empresa.id %} {{item.id}} {% else %} 0 {% endif %},
+						id: {% if empresa.id %} {{empresa.id}} {% else %} 0 {% endif %},
 						id_empresa: {{empresa.id_empresa}},
 						accion: 'Disminuir'
 						})">

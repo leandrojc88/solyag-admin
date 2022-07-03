@@ -29,7 +29,7 @@
 			display: none
 		}
 
-		.dropdown-menu{
+		.dropdown-menu {
 			background: rgb(64, 64, 64);
 		}
 	</style>
@@ -39,6 +39,7 @@
 {% block content %}
 
 	{{ include('telecomunicaciones/empresas/modal/modal-asignar-saldo-empresa.html.twig',{title:'Saldo de la empresa empresa'}) }}
+	{{ include('telecomunicaciones/empresas/modal/modal-costo-larga-distancia.html.twig',{modal_id: 'modal-costo-larga-distancia', title:'Costo de Larga Distancia'}) }}
 
 	{# header #}
 	<div class="container">
@@ -69,6 +70,7 @@
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/validate-form-saldo.js') }}"></script>
 
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/asignar-saldo-empresa.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/editar-costo-larga-distancia.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/change-tipo-pago-empresa.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/draw/draw.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/EmpresaTipoPaga/func/exec-dtone.js') }}"></script>
