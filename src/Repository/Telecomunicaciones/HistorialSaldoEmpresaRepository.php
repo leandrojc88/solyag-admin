@@ -23,26 +23,29 @@ class HistorialSaldoEmpresaRepository extends ServiceEntityRepository
     public function listSubmayor($idEmpresa)
     {
 
-        $sql = "
-                SELECT row_number() OVER (ORDER BY sel.fecha, sel.no_orden) AS contador, sel.*,
-                SUM(
-                    ROUND(valor,2) *
-                    CASE
+        $sql = "SELECT row_number() OVER (ORDER BY sel.fecha, sel.no_orden) AS contador, sel.*,
+        SUM(
+                ROUND(valor,2) *
+                CASE
                         WHEN sel.tipo='Agregar' THEN 1
                         ELSE -1
-                    END
-                )  OVER (ORDER BY sel.fecha, sel.no_orden) as saldo
-                FROM (
+                END
+        )  OVER (ORDER BY sel.fecha, sel.no_orden) as saldo
+            FROM (
                 SELECT fecha, CONCAT(tipo, ' Saldo') as descripcion,  tipo, user_id as user, 0 as no_orden, saldo as valor
                 FROM historial_saldo_empresa
                 WHERE empresa_id = $idEmpresa
-                UNION
-                SELECT date as fecha, CONCAT(ser.nombre,' - ' , s.descripcion) as descripcion, 'Disminuir', se.empleado_id as user, se.no_orden, cc.costo as valor
+            UNION
+                SELECT date as fecha, CONCAT(ser.nombre,' - ' , s.descripcion) as descripcion, 'Disminuir', se.empleado_id as user, se.no_orden, cc.costo as valor 
                 FROM servicio_empresa se
                 join subservicio s ON s.id = se.sub_servicio_id
                 join empresa_subservicio_cubacel cc ON cc.id_empresa_id = se.empresa_id and se.sub_servicio_id = cc.id_subservicio_id
                 join servicios ser ON ser.id = se.servicio
                 WHERE se.empresa_id = $idEmpresa
+            UNION
+                SELECT date as fecha, 'Larga Distancia' as descripcion, 'Disminuir', empleado_id as user, no_orden, costo as valor
+            FROM empresa_larga_distancia_register
+                WHERE empresa_id = $idEmpresa
                 ORDER BY fecha, no_orden) as sel";
 
         $rsm = new ResultSetMapping();

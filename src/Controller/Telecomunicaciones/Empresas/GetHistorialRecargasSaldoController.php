@@ -26,7 +26,6 @@ class GetHistorialRecargasSaldoController extends AbstractController
 
         $query = $historialSaldoEmpresaRepository->listSubmayor($empresa->getId());
 
-        
         $paginator = $pagination->paginate(
             $query,
             $request->query->getInt('page', 1),

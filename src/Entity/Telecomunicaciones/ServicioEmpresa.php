@@ -5,6 +5,7 @@ namespace App\Entity\Telecomunicaciones;
 use App\Entity\Empleados;
 use App\Entity\Empresas;
 use App\Entity\Telecomunicaciones\Subservicio;
+use App\Model\ServiciosSolyag;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
@@ -13,7 +14,7 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * @ORM\Entity(repositoryClass=ServicioEmpresaRepository::class)
  */
-class ServicioEmpresa
+class ServicioEmpresa implements ServiciosSolyag
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface
@@ -241,7 +242,7 @@ class ServicioEmpresa
      * Convertir el numeor de orden al formato {#####} {id_servicio+ 4# que es el numero de orden}
      * 10004, 10054, etc....
      */
-    public function noOrdeToStr()
+    public function noOrdeToStr(): string
     {
         $servicio = $this->getServicio();
         $noOrden = $this->getNoOrden();

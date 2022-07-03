@@ -6,6 +6,7 @@ use App\Entity\Telecomunicaciones\ServicioEmpresa;
 use App\Types\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -63,16 +64,18 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
                 ->setParameter('empresa', $empresa);
 
         $q->setParameter('status', Status::INIT)
-        ->orderBy('se.date');
+            ->orderBy('se.date');
 
         return $q->getQuery()->getResult();
     }
 
     public function getListRecargaCubacel($filtros)
     {
-        $q = $this->createQueryBuilder('se')
-            ->select(
-                '
+
+        $where  = count($filtros) ? "WHERE " . join(" AND ", $filtros) : "";
+
+        $sql = "WITH  selected AS (
+            SELECT
                 se.id,
                 em.nombre as empresa,
                 s.descripcion,
@@ -84,39 +87,102 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
                 se.confirmation_date,
                 se.servicio,
                 ecc.costo,
-                se.id_confir_proveedor'
-            )
-            ->join(
-                'App\Entity\Empresas',
-                'em',
-                \Doctrine\ORM\Query\Expr\Join::WITH,
-                'se.empresa = em.id'
-            )
-            ->join(
-                'App\Entity\Empleados',
-                'emp',
-                \Doctrine\ORM\Query\Expr\Join::WITH,
-                'se.empleado = emp.id'
-            )
-            ->leftJoin(
-                'App\Entity\Telecomunicaciones\Subservicio',
-                's',
-                \Doctrine\ORM\Query\Expr\Join::WITH,
-                'se.sub_servicio = s.id'
-            )
-            ->leftJoin(
-                'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
-                'ecc',
-                \Doctrine\ORM\Query\Expr\Join::WITH,
-                'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
-            );
-            foreach ($filtros as $value) {
-                $q->andWhere($value);
-            }
+                se.id_confir_proveedor
+            FROM servicio_empresa se
+            INNER JOIN empresas em ON se.empresa_id = em.id
+            INNER JOIN empleados emp ON se.empleado_id = emp.id
+            LEFT JOIN subservicio s ON se.sub_servicio_id = s.id
+            LEFT JOIN empresa_subservicio_cubacel ecc ON ecc.id_empresa_id = se.empresa_id and ecc.id_subservicio_id = s.id
 
-            $q->orderBy('se.date', 'DESC')
-            ->getQuery();
-            return $q;
+            UNION
+
+            SELECT
+                ld.id,
+                em.nombre as empresa,
+                'Larga Distancia' as descripcion,
+                emp.nombre as empleado,
+                ld.no_orden,
+                ld.no_telefono,
+                ld.status,
+                ld.date,
+                ld.confirmation_date,
+                '3' as servicio,
+                ld.costo,
+                ld.id_confir_proveedor
+            FROM empresa_larga_distancia_register ld
+            INNER JOIN empresas em ON ld.empresa_id = em.id
+            INNER JOIN empleados emp ON ld.empleado_id = emp.id
+            )
+
+            SELECT * FROM selected
+            $where
+            ORDER BY date DESC";
+
+// dd($sql);
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('empresa', 'empresa');
+        $rsm->addScalarResult('descripcion', 'descripcion');
+        $rsm->addScalarResult('empleado', 'empleado');
+        $rsm->addScalarResult('no_orden', 'no_orden');
+        $rsm->addScalarResult('no_telefono', 'no_telefono');
+        $rsm->addScalarResult('status', 'status');
+        $rsm->addScalarResult('date', 'date');
+        $rsm->addScalarResult('confirmation_date', 'confirmation_date');
+        $rsm->addScalarResult('servicio', 'servicio');
+        $rsm->addScalarResult('costo', 'costo');
+        $rsm->addScalarResult('id_confir_proveedor', 'id_confir_proveedor');
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $results = $query->getResult();
+        return $results;
+        // $q = $this->createQueryBuilder('se')
+        //     ->select(
+        //         '
+        //         se.id,
+        //         em.nombre as empresa,
+        //         s.descripcion,
+        //         emp.nombre as empleado,
+        //         se.no_orden,
+        //         se.no_telefono,
+        //         se.status,
+        //         se.date,
+        //         se.confirmation_date,
+        //         se.servicio,
+        //         ecc.costo,
+        //         se.id_confir_proveedor'
+        //     )
+        //     ->join(
+        //         'App\Entity\Empresas',
+        //         'em',
+        //         \Doctrine\ORM\Query\Expr\Join::WITH,
+        //         'se.empresa = em.id'
+        //     )
+        //     ->join(
+        //         'App\Entity\Empleados',
+        //         'emp',
+        //         \Doctrine\ORM\Query\Expr\Join::WITH,
+        //         'se.empleado = emp.id'
+        //     )
+        //     ->leftJoin(
+        //         'App\Entity\Telecomunicaciones\Subservicio',
+        //         's',
+        //         \Doctrine\ORM\Query\Expr\Join::WITH,
+        //         'se.sub_servicio = s.id'
+        //     )
+        //     ->leftJoin(
+        //         'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
+        //         'ecc',
+        //         \Doctrine\ORM\Query\Expr\Join::WITH,
+        //         'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
+        //     );
+        //     foreach ($filtros as $value) {
+        //         $q->andWhere($value);
+        //     }
+
+        //     $q->orderBy('se.date', 'DESC')
+        //     ->getQuery();
+        //     return $q;
     }
 
     // /**

@@ -5,6 +5,7 @@ namespace App\Controller\Telecomunicaciones;
 use App\Entity\Telecomunicaciones\Servicios;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
+use App\Service\Telecomunicaciones\Servicios\ServicioMethodFactory;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,26 +21,27 @@ class TelecomunicacionesController extends AbstractController
         Request $request,
         PaginatorInterface $pagination,
         EmpresasRepository $empresasRepository,
-        ServicioEmpresaRepository $servicioEmpresaRepository
+        ServicioEmpresaRepository $servicioEmpresaRepository,
+        ServicioMethodFactory $servicioMethodFactory
     ): Response {
 
         $filter = [];
 
         // fintro de estado
         $se_status = $request->query->get("status");
-        if ($se_status) array_push($filter, "se.status='$se_status'");
+        if ($se_status) array_push($filter, "status='$se_status'");
 
         // fintro de fecha
         $start_date = $request->query->get("start_date");
         $end_date = $request->query->get("end_date");
         if ($start_date && $end_date) {
-            array_push($filter, "se.date >= '$start_date'");
-            array_push($filter, "se.date <= '$end_date 23:59:59'");
+            array_push($filter, "date >= '$start_date'");
+            array_push($filter, "date <= '$end_date 23:59:59'");
         }
 
         // filtro beneficiario
         $beneficiario = $request->query->get("beneficiario");
-        if ($beneficiario) array_push($filter, "se.no_telefono like '%$beneficiario%' ");
+        if ($beneficiario) array_push($filter, "no_telefono like '%$beneficiario%' ");
 
         // filtro no orden y/o servicio
         $no_orden = $request->query->get("no_orden");
@@ -49,29 +51,29 @@ class TelecomunicacionesController extends AbstractController
             $noOrden = "";
             if (count($result) == 2) {
                 $servicio = intval($result[0]);
-                array_push($filter, "se.servicio = $servicio ");
+                array_push($filter, "servicio = $servicio ");
                 $noOrden = intval($result[1]);
             } else
                 $noOrden = intval($result[0]);
 
-            array_push($filter, "se.no_orden like '%$noOrden%' ");
+            array_push($filter, "no_orden like '%$noOrden%' ");
         }
 
         // filtro empleado
         $empleado = $request->query->get("empleado");
-        if ($empleado) array_push($filter, "emp.nombre like '%$empleado%' ");
+        if ($empleado) array_push($filter, "empleado like '%$empleado%' ");
 
         // filtro descripcion
         $descripcion = $request->query->get("descripcion");
-        if ($descripcion) array_push($filter, "s.descripcion like '%$descripcion%' ");
+        if ($descripcion) array_push($filter, "descripcion like '%$descripcion%' ");
 
         // filtro empresa
         $empresa = $request->query->get("empresa");
-        if ($empresa) array_push($filter, "em.id = $empresa ");
+        if ($empresa) array_push($filter, "empresa = $empresa ");
 
         // filtro servicio
         $servicio = $request->query->get("servicio");
-        if ($servicio) array_push($filter, "se.servicio = $servicio ");
+        if ($servicio) array_push($filter, "servicio = $servicio ");
 
 
         $query = $servicioEmpresaRepository->getListRecargaCubacel($filter);
@@ -88,13 +90,13 @@ class TelecomunicacionesController extends AbstractController
         $data = [];
 
         foreach ($recargas as $recarga) {
-            $empresaServicio = $servicioEmpresaRepository->find($recarga["id"]);
+
             $data[] = [
                 "id" => $recarga["id"],
                 "empresa" => $recarga["empresa"],
                 "descripcion" => $recarga["descripcion"],
                 "empleado" => $recarga["empleado"],
-                "no_orden" => $empresaServicio->noOrdeToStr(),
+                "no_orden" => $servicioMethodFactory->getService($recarga["servicio"], $recarga["id"])->noOrdeToStr(),
                 "no_telefono" => $recarga["no_telefono"],
                 "status" => $recarga["status"],
                 "date" => $recarga["date"],
