@@ -11,9 +11,9 @@ class SoapLargaDistancia
     public function __invoke($mAmount, $mTelephone)
     {
         if ($_ENV['LARGA_DISTANCIA_MODE'] == "prod")
-            $this->execProdMode($mAmount, $mTelephone);
+            return $this->execProdMode($mAmount, $mTelephone);
         else {
-            $this->execDevMode($mAmount, $mTelephone);
+            return $this->execDevMode($mAmount, $mTelephone);
         }
     }
 
@@ -26,7 +26,7 @@ class SoapLargaDistancia
             'mCustomerID' => $_ENV['mCustomerID'],
             'mPassword' => $_ENV['mPassword'],
             'mAPIKey' =>  $_ENV['mAPIKey'],
-            'mTelephone' => '13054004243',
+            'mTelephone' => '13054004243', // numeor d epruebas
             'mAmount' => $mAmount
         );
 

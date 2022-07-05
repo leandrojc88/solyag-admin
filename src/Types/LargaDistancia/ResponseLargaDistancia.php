@@ -4,7 +4,7 @@ namespace App\Types;
 
 class ResponseLargaDistancia
 {
-    private Status $status;
+    private string $status;
     private string $result;
     private $responseOfLDAPi;
 
@@ -20,7 +20,7 @@ class ResponseLargaDistancia
     {
         if ($this->responseOfLDAPi->mErrorMessage) {
             $this->status = Status::DECLINED;
-            $this->result = "error - $this->responseOfLDAPi->mErrorMessage";
+            $this->result = "error - " . $this->responseOfLDAPi->mErrorMessage;
         } else {
 
             $this->status = Status::COMPLETED;
@@ -28,7 +28,7 @@ class ResponseLargaDistancia
         }
     }
 
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }

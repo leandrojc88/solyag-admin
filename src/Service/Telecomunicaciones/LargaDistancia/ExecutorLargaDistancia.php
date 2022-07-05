@@ -3,6 +3,7 @@
 namespace App\Service\Telecomunicaciones\LargaDistancia;
 
 use App\Entity\Telecomunicaciones\EmpresaLargaDistanciaRegister;
+use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
 use App\Types\ResponseLargaDistancia;
 use App\Types\Status;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,13 +12,16 @@ class ExecutorLargaDistancia
 {
     private EntityManagerInterface $em;
     private SoapLargaDistancia $soapLargaDistancia;
+    private EmpresaTipoPagoService $empresaTipoPagoService;
 
     public function __construct(
         EntityManagerInterface $em,
-        SoapLargaDistancia $soapLargaDistancia
+        SoapLargaDistancia $soapLargaDistancia,
+        EmpresaTipoPagoService $empresaTipoPagoService
     ) {
         $this->em = $em;
         $this->soapLargaDistancia = $soapLargaDistancia;
+        $this->empresaTipoPagoService = $empresaTipoPagoService;
     }
     public function __invoke(
         EmpresaLargaDistanciaRegister $empresaLargaDistanciaRegiter,
@@ -32,10 +36,18 @@ class ExecutorLargaDistancia
             $empresaLargaDistanciaRegiter
                 ->setIdConfirProveedor($response->getResult())
                 ->setConfirmationDate(\DateTime::createFromFormat('Y-m-d h:i:s A', Date('Y-m-d h:i:s A')))
-                ->setStatus("" . $response->getStatus());
+                ->setStatus($response->getStatus());
 
             $this->em->persist($empresaLargaDistanciaRegiter);
             $this->em->flush();
+
+            // retornar el saldo a la empresa
+            if ($response->getStatus() == Status::DECLINED) {
+                $this->empresaTipoPagoService->reasignarSaldo(
+                    $empresaLargaDistanciaRegiter->getEmpresa()->getId(),
+                    $empresaLargaDistanciaRegiter->getCosto()
+                );
+            }
         }
     }
 }
