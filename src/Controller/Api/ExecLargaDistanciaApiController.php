@@ -2,9 +2,14 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Telecomunicaciones\EmpresaLargaDistanciaRegister;
 use App\Repository\Telecomunicaciones\SubservicioRepository;
 use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use App\Service\Telecomunicaciones\LargaDistancia\CreateEmpresaLargaDistanciaRegister;
+use App\Service\Telecomunicaciones\LargaDistancia\ExecutorLargaDistancia;
+use App\Service\Telecomunicaciones\LargaDistancia\SoapLargaDistancia;
+use App\Types\ResponseLargaDistancia;
+use App\Types\Status;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,20 +23,31 @@ class ExecLargaDistanciaApiController extends AbstractController
      */
     public function create(
         Request $request,
-        CreateEmpresaLargaDistanciaRegister $createEmpresaLargaDistanciaRegister
+        CreateEmpresaLargaDistanciaRegister $createEmpresaLargaDistanciaRegister,
+        ExecutorLargaDistancia $executorLargaDistancia
     ): JsonResponse {
 
         $params = [
             "email" => $request->get('email'),
             "no_telefono" => $request->get('no_telefono'),
             "id_empresa" => $request->get('id_empresa'),
-            "no_confirmacion" => $request->get('no_confirmacion'),
             "movimiento_venta" => $request->get('movimiento_venta'),
-            "costo" => $request->get('costo')
+            "costo" => $request->get('costo'),
+            "precio" => $request->get('precio')
         ];
 
-        $data = ($createEmpresaLargaDistanciaRegister)($params);
+        /** @var EmpresaLargaDistanciaRegister $empresaLargaDistanciaRegiter */
+        $empresaLargaDistanciaRegiter = ($createEmpresaLargaDistanciaRegister)($params);
 
-        return $this->json($data);
+        ($executorLargaDistancia)(
+            $empresaLargaDistanciaRegiter,
+            $request->get('precio'),
+            $request->get('no_telefono')
+        );
+
+        return $this->json([
+            "no_orden" => $empresaLargaDistanciaRegiter->noOrdeToStr(),
+            "status" => $empresaLargaDistanciaRegiter->getStatus()
+        ]);
     }
 }

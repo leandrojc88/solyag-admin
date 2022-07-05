@@ -35,7 +35,7 @@ class CreateEmpresaLargaDistanciaRegister
         $this->empresaTipoPagoService = $empresaTipoPagoService;
         $this->empresaLargaDistanciaRegisterRepository = $empresaLargaDistanciaRegisterRepository;
     }
-    public function __invoke($params)
+    public function __invoke($params): EmpresaLargaDistanciaRegister
     {
         $maxNoOrdenFind = $this->empresaLargaDistanciaRegisterRepository->getMaxNoOrden();
         $maxNoOrden = intval($maxNoOrdenFind[0]['max_no_orden']);
@@ -52,12 +52,11 @@ class CreateEmpresaLargaDistanciaRegister
             ->setEmpleado($this->empleadosRepository->findOneBy(['correo' => $params['email']]))
             ->setMovimientoVenta($params['movimiento_venta'])
             ->setNoOrden($maxNoOrden + 1)
-            ->setIdConfirProveedor($params['no_confirmacion'])
             ->setCosto($costo);
 
         if ($this->validateSaldoEmpresa->validateVsValue($empresa, $costo)) {
             $empresaLargaDistanciaRegister
-                ->setStatus(Status::COMPLETED);
+                ->setStatus(Status::INIT);
 
             $this->empresaTipoPagoService->reducirSaldo($empresa->getId(), $costo);
         } else
@@ -68,9 +67,7 @@ class CreateEmpresaLargaDistanciaRegister
         $this->em->persist($empresaLargaDistanciaRegister);
         $this->em->flush();
 
-        return [
-            "no_orden" => $empresaLargaDistanciaRegister->noOrdeToStr(),
-            "status" => $empresaLargaDistanciaRegister->getStatus()
-        ];
+        return $empresaLargaDistanciaRegister;
+
     }
 }
