@@ -90,6 +90,7 @@ class DToneManager
             'POST',
             $_ENV['DTONE_API'] . 'async/transactions',
             [
+                'auth_basic' => [$_ENV['DTONE_API_KEY'], $_ENV['DTONE_API_SECRET']],
                 "headers" => [
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Basic ODNlOWZkZmYtNGQ0Yi00NDk0LWJiYjctOWI3ZGNiNDcwZTc2OjhjYjMwMTQ1LWUwZTctNDAwZS1iMTU0LWM0MmEwMjIyZTZiMQ==',
@@ -125,6 +126,5 @@ class DToneManager
             "statusCode" => self::CODE_OK,
             "response" => $response->toArray()
         ];
-
     }
 }
