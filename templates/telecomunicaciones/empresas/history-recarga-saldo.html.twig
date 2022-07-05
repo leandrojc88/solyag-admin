@@ -36,7 +36,7 @@
 			<thead class="thead-dark">
 				<th scope="col-1" class="text-left">Fecha</th>
 				<th scope="col-1" class="text-left">Descripcion</th>
-				<th scope="col-1" class="text-left">Acción</th>
+				{# <th scope="col-1" class="text-left">Acción</th> #}
 				<th scope="col-1" class="text-left">Valor</th>
 				<th scope="col-1" class="text-left">Saldo</th>
 			</thead>
@@ -49,9 +49,11 @@
 					{% endif %}>
 						<td style="font-weight:400;">{{ item.fecha|date("d M Y h:i A") }}</td>
 						<td style="font-weight:400;">{{ item.descripcion }}</td>
-						<td style="font-weight:400;">{{ item.tipo }}</td>
-						<td style="font-weight:400;">{{ item.valor }}</td>
-						<td style="font-weight:400;">{{ item.saldo }}</td>
+						{# <td style="font-weight:400;">{{ item.tipo }}</td> #}
+						<td style="font-weight:400; text-align: right;">{% if item.tipo == 'Disminuir' %}
+							- 
+						{% endif %}{{ item.valor }}</td>
+						<td style="font-weight:400; text-align: right;">{{ item.saldo }}</td>
 					</tr>
 				{% endfor %}
 
