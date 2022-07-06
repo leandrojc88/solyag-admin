@@ -92,8 +92,8 @@ class DToneManager
             [
                 'auth_basic' => [$_ENV['DTONE_API_KEY'], $_ENV['DTONE_API_SECRET']],
                 "headers" => [
-                    'Content-Type' => 'application/json',
-                    'Authorization' => 'Basic ODNlOWZkZmYtNGQ0Yi00NDk0LWJiYjctOWI3ZGNiNDcwZTc2OjhjYjMwMTQ1LWUwZTctNDAwZS1iMTU0LWM0MmEwMjIyZTZiMQ==',
+                    'Content-Type' => 'application/json'
+                    // 'Authorization' => 'Basic ODNlOWZkZmYtNGQ0Yi00NDk0LWJiYjctOWI3ZGNiNDcwZTc2OjhjYjMwMTQ1LWUwZTctNDAwZS1iMTU0LWM0MmEwMjIyZTZiMQ==',
                 ],
                 "json" => [
                     "external_id" => $trasaccion, // id de la transaccion SOlyag
@@ -120,7 +120,6 @@ class DToneManager
                 "response" => json_decode($response->getContent(false), true)
             ];
         }
-
 
         return [
             "statusCode" => self::CODE_OK,
