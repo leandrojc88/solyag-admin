@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Types;
+namespace App\Types\LargaDistancia;
+
+use App\Types\Status;
 
 class ResponseLargaDistancia
 {

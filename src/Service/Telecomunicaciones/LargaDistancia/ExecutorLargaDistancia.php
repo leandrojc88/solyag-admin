@@ -4,7 +4,7 @@ namespace App\Service\Telecomunicaciones\LargaDistancia;
 
 use App\Entity\Telecomunicaciones\EmpresaLargaDistanciaRegister;
 use App\Service\Telecomunicaciones\Empresas\EmpresaTipoPagoService;
-use App\Types\ResponseLargaDistancia;
+use App\Types\LargaDistancia\ResponseLargaDistancia;
 use App\Types\Status;
 use Doctrine\ORM\EntityManagerInterface;
 

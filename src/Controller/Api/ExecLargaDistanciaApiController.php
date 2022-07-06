@@ -8,7 +8,7 @@ use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
 use App\Service\Telecomunicaciones\LargaDistancia\CreateEmpresaLargaDistanciaRegister;
 use App\Service\Telecomunicaciones\LargaDistancia\ExecutorLargaDistancia;
 use App\Service\Telecomunicaciones\LargaDistancia\SoapLargaDistancia;
-use App\Types\ResponseLargaDistancia;
+use App\Types\LargaDistancia\ResponseLargaDistancia;
 use App\Types\Status;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

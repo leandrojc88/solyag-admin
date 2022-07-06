@@ -2,7 +2,7 @@
 
 namespace App\Service\Telecomunicaciones\LargaDistancia;
 
-use App\Types\ResponseLargaDistancia;
+use App\Types\LargaDistancia\ResponseLargaDistancia;
 use SoapClient;
 
 class SoapLargaDistancia
