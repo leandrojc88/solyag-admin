@@ -41,11 +41,11 @@ class HistorialSaldoEmpresaRepository extends ServiceEntityRepository
                 join subservicio s ON s.id = se.sub_servicio_id
                 join empresa_subservicio_cubacel cc ON cc.id_empresa_id = se.empresa_id and se.sub_servicio_id = cc.id_subservicio_id
                 join servicios ser ON ser.id = se.servicio
-                WHERE se.empresa_id = $idEmpresa
+                WHERE se.empresa_id = $idEmpresa  AND se.status not in ('DECLINED', 'DECLINED_SALDO', 'RE_DECLINED')
             UNION
                 SELECT date as fecha, 'Larga Distancia' as descripcion, 'Disminuir', empleado_id as user, no_orden, costo as valor
-            FROM empresa_larga_distancia_register
-                WHERE empresa_id = $idEmpresa
+            FROM empresa_larga_distancia_register ld
+                WHERE empresa_id = $idEmpresa  AND ld.status not in ('DECLINED', 'DECLINED_SALDO', 'RE_DECLINED')
                 ORDER BY fecha, no_orden) as sel";
 
         $rsm = new ResultSetMapping();
