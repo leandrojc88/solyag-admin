@@ -43,9 +43,9 @@ class NotifyEmailManualRecarga
                 $emailsDir = explode("|", $_ENV['EMAILS_CUBACEL_MANUAL']);
 
                 $email = (new TemplatedEmail())
-                    ->from(new Address($_ENV['EMAIL_ADMIN'], 'Administrador de credenciales'))
+                    ->from(new Address($_ENV['EMAIL_ADMIN'], 'Solyag Admin'))
                     // ->to($_ENV['EMAILS_CUBACEL_MANUAL'])
-                    ->subject("Existen $cantidad Recargas Manuales sin procesar!")
+                    ->subject("Existen ($cantidad) Recargas Manuales sin procesar!")
                     ->htmlTemplate('emails/notify-recargas-manuales.html.twig')
                     ->context([
                         'cantidad' => $cantidad,
