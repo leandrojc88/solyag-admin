@@ -25,6 +25,6 @@ class NotifyFromEmailApiController extends AbstractController
 
         ($notifyEmailManualRecarga)($id_empresa);
 
-        return $this->json(true);
+        return $this->json(["ok"]);
     }
 }
