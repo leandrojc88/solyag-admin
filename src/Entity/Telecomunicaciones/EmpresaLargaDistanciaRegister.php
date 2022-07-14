@@ -82,6 +82,11 @@ class EmpresaLargaDistanciaRegister implements ServiciosSolyag
      */
     private $costo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Factura::class)
+     */
+    private $factura;
+
     public function getId(): ?UuidInterface
     {
         return $this->id;
@@ -238,5 +243,17 @@ class EmpresaLargaDistanciaRegister implements ServiciosSolyag
         }
 
         return Servicios::ID_LARGA_DISTANCIA . '-' . $noOrden;
+    }
+
+    public function getFactura(): ?Factura
+    {
+        return $this->factura;
+    }
+
+    public function setFactura(?Factura $factura): self
+    {
+        $this->factura = $factura;
+
+        return $this;
     }
 }

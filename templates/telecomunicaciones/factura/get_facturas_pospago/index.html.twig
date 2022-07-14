@@ -1,0 +1,61 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% block title %}Telecomunicaciones | Facturas
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Factura
+			</h4>
+			<div>
+				<a class="btn btn-primary btn-sm fa fa-plus" style="color: white;">
+					Facturar
+				</a>
+			</div>
+		</div>
+		<table class="table-small-rows table table-hover text-light">
+			<thead class="thead-dark">
+				<th scope="col-1" class="text-left"># Factura</th>
+				<th scope="col-1" class="text-left">Fecha</th>
+				<th scope="col-1" class="text-left">Empresa</th>
+				<th width="100px" class="text-left">Moneda</th>
+				<th width="100px" class="text-left">Importe</th>
+			</thead>
+			<tbody>
+				{% for item in facturas %}
+					<tr>
+						<td style="font-weight:400;">{{ item.descripcion }}</td>
+						{% if item.isDTOne %}
+							<td style="font-weight:400;">
+								<i class="fa fa-check-square"></i>
+							</td>
+						{% else %}
+							<td style="font-weight:400;"></td>
+						{% endif %}
+						<td style="font-weight:400;">{{ item.productidDtone }}</td>
+						<td style="font-weight:200;">
+							<button type="button" class="btn btn-warning btn-sm px-1" data-toggle="tooltip" data-placement="bottom" title="Modificar" onclick="onUpdateSubservicio({id_subservicio: {{item.id}}, descripcion: '{{item.descripcion}}', productid_dtone: {{item.productidDtone}}, isDTOne: {% if item.isDTOne %} true {% else %} false {% endif %} })">
+								<i class="fa fa-edit"></i>
+							</button>
+							<button type="button" class="btn btn-danger btn-sm px-1 w-31" data-toggle="tooltip" data-placement="bottom" title="Eliminar" onclick="onDeleteSubservicio({{ app.request.get('id_servicio') }}, {{item.id}} )">
+								<i class="fa fa-trash"></i>
+							</button>
+
+						</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{# <script src="{{ asset('js/Telecomunicaciones/servicios/validate-form-post.js') }}"></script> #}
+
+{% endblock %}
