@@ -1,4 +1,4 @@
-$('#form_post_facturas_pospago').validate({
+const validateForm = $('#form_post_facturas_pospago').validate({
     errorClass: 'invalid-label-orange',
     errorPlacement: function (error, element) {
         // colocar mensajes de error a la derecha de cada label para el componente

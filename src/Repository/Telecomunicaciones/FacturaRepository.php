@@ -32,7 +32,7 @@ class FacturaRepository extends ServiceEntityRepository
 
     public static function noFacturaToStr($no_factura)
     {
-        $no = ($no_factura / 10000) . "";
+        $no = number_format(($no_factura / 100000), 5) . "";
         return str_replace(".", "", $no);
     }
 }

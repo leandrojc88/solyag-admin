@@ -135,9 +135,10 @@ class Factura
      * retorna el numero de orden en un formato correcto
      * ejemplo: no_orden=1  return= "000001"
      */
-    public function getNoFacturaStr(){
+    public function getNoFacturaStr()
+    {
         $noFactura = $this->getNoFactura();
-
-        return str_replace(".", "", ($noFactura / 10000) . "");
+        $no = number_format(($noFactura / 100000), 5) . "";
+        return str_replace(".", "", $no);
     }
 }

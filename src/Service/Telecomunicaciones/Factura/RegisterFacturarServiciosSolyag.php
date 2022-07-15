@@ -5,13 +5,11 @@ namespace App\Service\Telecomunicaciones\Factura;
 use App\Entity\Telecomunicaciones\EmpresaLargaDistanciaRegister;
 use App\Entity\Telecomunicaciones\Factura;
 use App\Entity\Telecomunicaciones\ServicioEmpresa;
-use App\Entity\Telecomunicaciones\Servicios;
 use App\Repository\Telecomunicaciones\EmpresaLargaDistanciaRegisterRepository;
 use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
-use App\Service\Telecomunicaciones\Servicios\GetCostoServicioSolyag;
 use Doctrine\ORM\EntityManagerInterface;
 
-class FacturarServicios
+class RegisterFacturarServiciosSolyag
 {
     private ServicioEmpresaRepository $servicioEmpresaRepository;
     private EmpresaLargaDistanciaRegisterRepository $empresaLargaDistanciaRegisterRepository;

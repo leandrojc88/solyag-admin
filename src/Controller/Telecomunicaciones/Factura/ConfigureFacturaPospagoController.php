@@ -19,6 +19,7 @@ class ConfigureFacturaPospagoController extends AbstractController
     ): Response {
 
         $no_factura = $facturaRepository->getNextNoFactura();
+        // dd(FacturaRepository::noFacturaToStr($no_factura));
         // empresas
         $empresas = $empresasRepository->findBy(["activo" => true]);
 

@@ -62,7 +62,7 @@
 						Salir
 					</a>
 
-					<button type="submit" class="btn btn-success ml-auto">
+					<button type="button" class="btn btn-success ml-auto" onclick="submitFactura()">
 						<i class="fa fa-check"></i>
 						Facturar
 					</button>
@@ -77,9 +77,12 @@
 	{{ parent() }}
 	<script src="{{ asset('js/Telecomunicaciones/factura/validate-form.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/factura/mostrar-servicios.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/factura/submit.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/factura/drow-table-servicios-solyag.js') }}"></script>
 	<script>
+		const tele_get_facturas_pospago = "{{ url('tele_get_facturas_pospago') }}"
 		const tele_post_servicios_perido_facturacion = "{{ url('tele_post_servicios_perido_facturacion') }}"
+		const tele_post_facturas_pospago = "{{ url('tele_post_facturas_pospago') }}"
 	</script>
 
 {% endblock %}

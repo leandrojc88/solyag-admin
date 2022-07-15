@@ -4,8 +4,9 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Factura</title>
-		<link rel="stylesheet" href="{{ asset('css/print/style.css') }}"> <link rel="icon" type="image/png" href="{{ logo }}">
+		<title>Factura de Venta</title>
+		<link rel="stylesheet" href="{{ asset('css/print/style.css') }}">
+		<link rel="icon" type="image/png" href="{{ asset('images/print_logo_factura.png') }}">
 		<style>
 			.w-100 {
 				min-width: 100px;
@@ -35,11 +36,11 @@
 					<div class="cs-invoice_left">
 						<p class="cs-invoice_number cs-primary_color cs-mb5 cs-f16">
 							<b class="cs-primary_color">No Factura:</b>
-							{{factura.nro_factura}}
+							{{factura.getNoFacturaStr}}
 						</p>
 						<p class="cs-invoice_number cs-primary_color cs-mb5 cs-f16">
 							<b class="cs-primary_color">Fecha:</b>
-							{{factura.fecha_factura}}
+							{{factura.fecha|date('d M Y h:i A')}}
 						</p>
 						<p class="cs-invoice_number cs-primary_color cs-mb5 cs-f16">
 							<b class="cs-primary_color">Moneda:</b>
@@ -47,7 +48,7 @@
 						</p>
 					</div>
 					<div class="cs-invoice_right cs-text_right">
-						<div class="cs-logo cs-mb5"><img src="{{ logo }}" alt="Logo Empresa"></div>
+						<div class="cs-logo cs-mb5"><img style src="{{ asset('images/logo-solyag-png.png') }}" alt="Logo Solyag"></div>
 					</div>
 				</div>
 				{# head empresa datos #}
@@ -55,41 +56,51 @@
 					<div class="cs-invoice_left">
 						<p class="cs-mb5">
 							<b class="cs-invoice_number cs-primary_color">Código:</b>
-							{{factura.codigo_unidad}}
+							05.01.2022
 						</p>
 						<p class="cs-mb5">
 							<b class="cs-invoice_number cs-primary_color">Teléfono::</b>
-							{{factura.telefono_unidad}}
+							+1 809-770-2266
 						</p>
 						<p class="cs-mb5">
 							<b class="cs-invoice_number cs-primary_color">Correo:</b>
-							{{factura.correo_unidad}}
+							solyag@gmail.com
 						</p>
 					</div>
 
 					<div class="cs-invoice_right cs-text_right">
-						<p class="cs-mb5 cs-f16">{{factura.nombre_unidad}}</p>
-						<p class="cs-mb5" style="width: 260px;">{{factura.direccion_unidad}}</p>
+						<p class="cs-mb5 cs-f16">Solyag Republica Dominicana</p>
+						<p class="cs-mb5" style="width: 260px;">
+							Juan Sanchez Ramires esq
+							<br>
+							Wenceslao Alvarez 10105
+							<br>
+							Santo Domingo,
+							<br>
+							República Dominicana
+						</p>
 					</div>
 				</div>
 
 				{# head datos del cliente #}
 				<div class="cs-invoice_head cs-mb20">
-					{% if factura.cliente != '' %}
-						<div class="cs-invoice_left">
-							<p class="cs-mb5">
-								<b class="cs-invoice_number cs-primary_color">Para:</b>
-								{{ cliente }}
-							</p>
-							{% if factura.direccion_cliente !='' %}
-								<p class="cs-mb0">{{ factura.direccion_cliente }}</p>
-							{% endif %}
-							{% if factura.telefono_cliente !='' %}
-								<p class="cs-mb0">{{ factura.telefono_cliente }}</p>
-							{% endif %}
+					<div class="cs-invoice_left">
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Para:</b>
+							{{ factura.empresa.nombre }}
+						</p>
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Dirección:</b>
+							{# {{ factura.empresa.nro_contrato }} #}
+						</p>
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Teléfono:</b>
+							{{ factura.empresa.telefono }}
+						</p>
 
-						</div>
-					{% endif %}
+						{# <p class="cs-mb0">{{ factura.telefono_cliente }}</p> #}
+
+					</div>
 				</div>
 
 				{# tabla Factura #}
@@ -100,48 +111,20 @@
 								<thead>
 									<tr>
 										<th class="cs-width_4 cs-semi_bold cs-primary_color cs-focus_bg">
-											{% if tipoFactura == 'mercancia' %}
-												Código
-											{% else %}
-												Servicio
-											{% endif %}
+											Servicio
 										</th>
-										<th class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg">
-											{% if tipoFactura == 'mercancia' %}
-												Descripción
-											{% else %}
-												Beneficiario
-											{% endif %}
-										</th>
-										{% if tipoFactura == 'servicio' %}
-											<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Nro. de Orden</th>
-										{% endif %}
-										{% if tipoFactura == 'mercancia' %}
-											<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Cantidad</th>
-										{% endif %}
-										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Precio</th>
-										{% if tipoFactura == 'mercancia' %}
-											<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Impuesto</th>
-										{% endif %}
+										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_center">Cantidad</th>
+										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Monto</th>
 										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Total</th>
 									</tr>
 								</thead>
 								<tbody>
-									{% for item in mercancias %}
+									{% for item in serviciosSolyag %}
 										<tr>
-											<td class="cs-width_4">{{ item.solicitud }}</td>
-											<td class="cs-width_3">{{ item.descripcion }}</td>
-											{% if tipoFactura == 'servicio' %}
-												<td class="cs-width_3 cs-text_right">{{ item.nro_orden }}</td>
-											{% endif %}
-											{% if tipoFactura == 'mercancia' %}
-												<td class="cs-width_2 cs-text_right">{{ item.cantidad|number_format(2) }}</td>
-											{% endif %}
-											<td class="cs-width_2 cs-text_right">{{ item.precio|number_format(2) }}</td>
-											{% if tipoFactura == 'mercancia' %}
-												<td class="cs-width_2 cs-text_right">{{ item.impuesto|number_format(2) }}</td>
-											{% endif %}
-											<td class="cs-width_2 cs-text_right">{{ item.subtotal|number_format(2) }}</td>
+											<td class="cs-width_4">{{ item.descripcion }}</td>
+											<td class="cs-width_3 cs-text_center">{{ item.cantidad }}</td>
+											<td class="cs-width_2 cs-text_right">{{ item.monto|number_format(2) }}</td>
+											<td class="cs-width_2 cs-text_right">{{ item.total|number_format(2) }}</td>
 										</tr>
 									{% endfor %}
 
@@ -154,79 +137,31 @@
 				{# detalles SUBTODA - TOTAL #}
 				<div class="cs-invoice_footer cs-border_bottom cs-border_left cs-border_right">
 					<div class="cs-left_footer cs-mobile_hide">
-						{% if observacion_general != '' %}
-							<p class="cs-mb5 cs-primary_color">
-								<b class=" ">Notas:
-								</b>
-								{{observacion_general}}
-							</p>
-						{% endif %}
+						<p class="cs-mb5 cs-primary_color">
+							<b class=" ">Notas:
+							</b>
+						</p>
 					</div>
 					<div class="cs-right_footer">
 						<table>
 							<tbody>
-								{% for detalles in detalles_factura %}
-									<tr class="cs-border_left">
-										<td class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg">{{ detalles.concepto }}</td>
-										<td class="cs-width_3 cs-semi_bold cs-focus_bg cs-primary_color cs-text_right">{{ detalles.valor }}</td>
-									</tr>
-								{% endfor %}
+								<tr class="cs-border_left">
+									<td class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg">Sub total</td>
+									<td class="cs-width_3 cs-semi_bold cs-focus_bg cs-primary_color cs-text_right">{{ total }}</td>
+								</tr>
+								<tr class="cs-border_left">
+									<td class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg">Total</td>
+									<td class="cs-width_3 cs-semi_bold cs-focus_bg cs-primary_color cs-text_right">{{ total }}</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 
-				{# Resumen de pagos #}
-				{% if detalles_pago|length %}
-					<p class="cs-bold cs-f16 cs-primary_color mt30">Resumen de pagos</p>
-					<div class="cs-table cs-style1">
-						<div class="cs-round_border">
-							<div class="cs-table_responsive">
-								<table>
-									<thead>
-										<tr>
-											<th class="cs-width_4 cs-semi_bold cs-primary_color cs-focus_bg">Fecha</th>
-											<th class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Metodo de pago</th>
-											<th class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Importe</th>
-											<th class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Por Pagar</th>
-											<th class="cs-width_2 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Cambio</th>
-										</tr>
-									</thead>
-									<tbody>
-										{% for element in detalles_pago %}
-											<tr>
-												<td class="cs-width_4">{{ element.fecha }}</td>
-												<td class="cs-width_3 cs-text_right">{{ element.metodo_pago }}</td>
-												<td class="cs-width_3 cs-text_right">{{ element.importe }}</td>
-												<td class="cs-width_3 cs-text_right">{{ element.resto }}</td>
-												<td class="cs-width_2 cs-text_right">{{ element.cambio }}</td>
-											</tr>
-										{% endfor %}
-
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				{% endif %}
-
 				{# pie de firma y QR #}
 
 				<div class="cs-invoice_footer mt30 footer-aling">
-					<div>
-						<p class="cs-bold cs-primary_color cs-mb5 cs-f16">Empleado:
-						</p>
-						<p>{{ empleado }}</p>
-						<p class="cs-mb1">______________________________</p>
-					</div>
-					{% if factura.cliente != '' %}
-						<div>
-							<p class="cs-bold cs-primary_color cs-mb5 cs-f16">Cliente:
-							</p>
-							<p>{{ cliente }}</p>
-							<p class="cs-mb1">______________________________</p>
-						</div>
-					{% endif %}
+					<div></div>
 					<svg style="height: 95px;" class="w-100 ml-5">
 						<g id="qrcode"/>
 					</svg>
