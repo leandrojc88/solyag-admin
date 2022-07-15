@@ -44,15 +44,18 @@
 						<button type="button" class="btn btn-secondary" onclick="onMostrarServicios()">Mostrar Servicios</button>
 					</div>
 				</div>
-				<table class="table-small-rows table table-hover text-light" style="min-height: 270px;">
-					<thead class="thead-dark">
-						<th scope="col-1" class="text-center">Servicio</th>
-						<th scope="col-1" class="text-right">Cantidad</th>
-						<th width="100px" class="text-right">Monto</th>
-						<th width="100px" class="text-right">Total</th>
-					</thead>
-					<tbody id="table-list-servicios-faturar"></tbody>
-				</table>
+				<section style="min-height: 270px;">
+					<table class="table-small-rows table table-hover text-light">
+						<thead class="thead-dark">
+							<th scope="col-1" class="text-left">Servicio</th>
+							<th scope="col-1" class="text-center">Cantidad</th>
+							<th width="100px" class="text-right">Monto</th>
+							<th width="100px" class="text-right">Total</th>
+						</thead>
+						<tbody id="table-list-servicios-faturar"></tbody>
+					</table>
+				</section>
+				<hr color="dimgray" class="my-1 ml-2 align-item-center" size=3>
 				<p id="txt_total_servicios" class="text-right text-white h-5">Total: 51515151</p>
 				<div class="d-flex">
 					<a class="btn btn-secondary" style="color: white;" href="{{ url('tele_get_facturas_pospago') }}">

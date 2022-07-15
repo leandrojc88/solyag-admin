@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CreateFacturaPospagoController extends AbstractController
+class ConfigureFacturaPospagoController extends AbstractController
 {
     /**
      * @Route("/telecomunicaciones/factura/create-facturas-pospago", name="tele_create_facturas_pospago")

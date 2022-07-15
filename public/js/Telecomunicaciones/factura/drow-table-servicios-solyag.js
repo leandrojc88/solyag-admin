@@ -7,10 +7,10 @@ const drawTableServiciosSolyag = (serviciosSolyag, total) => {
 
         $tablaBody.append(
             `<tr>
-            <td>${servicio.descripcion}</td>
-            <td>${servicio.cantidad}</td>
-            <td>${servicio.monto}</td>
-            <td>${servicio.total}</td>
+            <td >${servicio.descripcion}</td>
+            <td class="text-center">${servicio.cantidad}</td>
+            <td class="text-right">${servicio.monto}</td>
+            <td class="text-right">${servicio.total}</td>
             </tr>
             `
         )
