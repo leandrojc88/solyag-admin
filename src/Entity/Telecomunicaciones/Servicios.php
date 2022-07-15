@@ -12,6 +12,8 @@ class Servicios
 {
     const ID_RECARGA_CUBACEL = 1;
     const ID_LARGA_DISTANCIA = 3;
+    const NAME_RECARGA_CUBACEL = "Recarga Cubacel ";
+    const NAME_LARGA_DISTANCIA = "Larga Distancia ";
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")

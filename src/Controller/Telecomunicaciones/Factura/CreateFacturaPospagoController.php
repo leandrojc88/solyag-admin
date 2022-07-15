@@ -14,14 +14,17 @@ class CreateFacturaPospagoController extends AbstractController
      * @Route("/telecomunicaciones/factura/create-facturas-pospago", name="tele_create_facturas_pospago")
      */
     public function index(
-        EmpresasRepository $empresasRepository
+        EmpresasRepository $empresasRepository,
+        FacturaRepository $facturaRepository
     ): Response {
 
+        $no_factura = $facturaRepository->getNextNoFactura();
         // empresas
         $empresas = $empresasRepository->findBy(["activo" => true]);
 
         return $this->render('telecomunicaciones/factura/create-view.html.twig', [
-            "empresas" => $empresas
+            "empresas" => $empresas,
+            "no_factura" => FacturaRepository::noFacturaToStr($no_factura)
         ]);
     }
 }

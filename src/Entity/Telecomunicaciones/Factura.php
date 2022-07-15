@@ -138,6 +138,6 @@ class Factura
     public function getNoFacturaStr(){
         $noFactura = $this->getNoFactura();
 
-        return str_replace(($noFactura / 100000) . "", ".", "");
+        return str_replace(".", "", ($noFactura / 10000) . "");
     }
 }

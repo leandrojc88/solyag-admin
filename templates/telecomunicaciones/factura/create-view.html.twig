@@ -8,7 +8,8 @@
 	<div class="container my-2">
 		<div class="d-flex align-items-center mb-3">
 			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
-				Crear Factura - 00001
+				Crear Factura -
+				{{no_factura}}
 			</h4>
 		</div>
 		<section>
@@ -27,7 +28,7 @@
 						<label class="text-white" for="moneda">Moneda</label>
 						<input class="form-control w-100" name="moneda" id="moneda">
 					</div>
-					<input hidden class="form-control w-100" name="no_factura" id="no_factura" value="000001">
+					<input hidden class="form-control w-100" name="no_factura" id="no_factura" value="{{no_factura}}">
 					<div class="col-12 my-3">
 						<h5 class="text-white">Periodo de Facturación:</h5>
 					</div>
@@ -40,14 +41,15 @@
 						<input id='periodo_fin' name="periodo_fin" type="date" name="periodo_fin" class="form-control w-date w-100 filter-select">
 					</div>
 					<div class="form-group col-4 mt-auto input-group mb-3">
-						<button class="btn btn-secondary">Mostrar Servicios</button>
+						<button type="button" class="btn btn-secondary" onclick="onMostrarServicios()">Mostrar Servicios</button>
 					</div>
 				</div>
 				<table class="table-small-rows table table-hover text-light" style="min-height: 270px;">
 					<thead class="thead-dark">
-						<th scope="col-1" class="text-left">Descripcion</th>
-						<th scope="col-1" class="text-left">Fecha</th>
-						<th width="100px" class="text-left">Monto</th>
+						<th scope="col-1" class="text-center">Servicio</th>
+						<th scope="col-1" class="text-right">Cantidad</th>
+						<th width="100px" class="text-right">Monto</th>
+						<th width="100px" class="text-right">Total</th>
 					</thead>
 					<tbody id="table-list-servicios-faturar"></tbody>
 				</table>
@@ -71,5 +73,10 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script src="{{ asset('js/Telecomunicaciones/factura/validate-form.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/factura/mostrar-servicios.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/factura/drow-table-servicios-solyag.js') }}"></script>
+	<script>
+		const tele_post_servicios_perido_facturacion = "{{ url('tele_post_servicios_perido_facturacion') }}"
+	</script>
 
 {% endblock %}

@@ -87,6 +87,11 @@ class EmpresaLargaDistanciaRegister implements ServiciosSolyag
      */
     private $factura;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $monto;
+
     public function getId(): ?UuidInterface
     {
         return $this->id;
@@ -253,6 +258,18 @@ class EmpresaLargaDistanciaRegister implements ServiciosSolyag
     public function setFactura(?Factura $factura): self
     {
         $this->factura = $factura;
+
+        return $this;
+    }
+
+    public function getMonto(): ?float
+    {
+        return $this->monto;
+    }
+
+    public function setMonto(float $monto): self
+    {
+        $this->monto = $monto;
 
         return $this;
     }

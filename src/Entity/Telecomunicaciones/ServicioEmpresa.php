@@ -94,6 +94,11 @@ class ServicioEmpresa implements ServiciosSolyag
      */
     private $factura;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $descripcion;
+
     public function getId(): ?UuidInterface
     {
         return $this->id;
@@ -277,4 +282,15 @@ class ServicioEmpresa implements ServiciosSolyag
         return $this;
     }
 
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
 }
