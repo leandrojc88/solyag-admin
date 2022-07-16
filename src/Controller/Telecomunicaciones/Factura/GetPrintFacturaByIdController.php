@@ -48,13 +48,11 @@ class GetPrintFacturaByIdController extends AbstractController
             $total += $return[1];
         }
 
-        // dd($factura, $serviciosSolyag, $total);
-
         return $this->render('telecomunicaciones/factura/print.html.twig', [
             "factura" => $factura,
             "serviciosSolyag" => $serviciosSolyag,
             "total" => $total,
-            "qr_url" => $this->generateUrl("tele_get_print_facturas_qr", [
+            "qr_url" => $_ENV["SITE_URL"] . $this->generateUrl("tele_get_print_facturas_pospago", [
                 "factura" => $factura->getId()
             ])
         ]);
