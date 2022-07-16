@@ -42,6 +42,7 @@ class CreateEmpresaLargaDistanciaRegister
 
         $empresa = $this->empresasRepository->find($params['id_empresa']);
         $costo = $params['costo'];
+        $monto = $params['precio'];
 
         $empresaLargaDistanciaRegister = new EmpresaLargaDistanciaRegister();
 
@@ -52,6 +53,7 @@ class CreateEmpresaLargaDistanciaRegister
             ->setEmpleado($this->empleadosRepository->findOneBy(['correo' => $params['email']]))
             ->setMovimientoVenta($params['movimiento_venta'])
             ->setNoOrden($maxNoOrden + 1)
+            ->setMonto($monto)
             ->setCosto($costo);
 
         if ($this->validateSaldoEmpresa->validateVsValue($empresa, $costo)) {

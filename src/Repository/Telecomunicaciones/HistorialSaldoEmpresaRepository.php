@@ -36,14 +36,14 @@ class HistorialSaldoEmpresaRepository extends ServiceEntityRepository
                 FROM historial_saldo_empresa
                 WHERE empresa_id = $idEmpresa
             UNION
-                SELECT date as fecha, CONCAT(ser.nombre,' - ' , s.descripcion) as descripcion, 'Disminuir', se.empleado_id as user, se.no_orden, cc.costo as valor 
+                SELECT date as fecha, CONCAT(ser.nombre,' - ' , se.descripcion) as descripcion, 'Disminuir', se.empleado_id as user, se.no_orden, cc.costo as valor 
                 FROM servicio_empresa se
                 join subservicio s ON s.id = se.sub_servicio_id
                 join empresa_subservicio_cubacel cc ON cc.id_empresa_id = se.empresa_id and se.sub_servicio_id = cc.id_subservicio_id
                 join servicios ser ON ser.id = se.servicio
                 WHERE se.empresa_id = $idEmpresa  AND se.status not in ('DECLINED', 'DECLINED_SALDO', 'RE_DECLINED')
             UNION
-                SELECT date as fecha, 'Larga Distancia' as descripcion, 'Disminuir', empleado_id as user, no_orden, costo as valor
+                SELECT date as fecha, CONCAT('Larga Distancia - ', ld.monto) as descripcion, 'Disminuir', empleado_id as user, no_orden, costo as valor
             FROM empresa_larga_distancia_register ld
                 WHERE empresa_id = $idEmpresa  AND ld.status not in ('DECLINED', 'DECLINED_SALDO', 'RE_DECLINED')
                 ORDER BY fecha, no_orden) as sel";
