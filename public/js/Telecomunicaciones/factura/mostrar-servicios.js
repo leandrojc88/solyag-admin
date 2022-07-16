@@ -25,9 +25,14 @@ const onMostrarServicios = () => {
         success: function (response) {
             const { serviciosSolyag, total } = response;
             drawTableServiciosSolyag(serviciosSolyag, total)
+            if (total == 0) {
+                $('#btn-submit-factura').attr("disabled", true)
+            } else
+                $('#btn-submit-factura').attr("disabled", false)
             loadingModal.close()
 
-        }
+        },
+        error: (e) => loadingModal.close()
     });
 
 }

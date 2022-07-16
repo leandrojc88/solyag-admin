@@ -3,6 +3,7 @@
 namespace App\Repository\Telecomunicaciones;
 
 use App\Entity\Telecomunicaciones\EmpresaLargaDistanciaRegister;
+use App\Types\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,14 +31,17 @@ class EmpresaLargaDistanciaRegisterRepository extends ServiceEntityRepository
 
     public function getListInPeriodByEmpresa($empresa, $periodo_inicio, $periodo_fin)
     {
+
         return $this->createQueryBuilder('s')
             ->andWhere('s.empresa = :empresa')
             ->andWhere('s.date >= :periodo_inicio')
             ->andWhere('s.date <= :periodo_fin')
+            ->andWhere('s.status = :statez')
+            ->andWhere('s.factura is null')
             ->setParameter('empresa', $empresa)
             ->setParameter('periodo_inicio', $periodo_inicio . " 00:00:00")
             ->setParameter('periodo_fin', $periodo_fin . " 23:59:59")
-            ->setMaxResults(10)
+            ->setParameter('statez', Status::COMPLETED)
             ->getQuery()
             ->getResult();
     }

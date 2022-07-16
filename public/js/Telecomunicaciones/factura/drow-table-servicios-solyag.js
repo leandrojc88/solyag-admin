@@ -3,6 +3,18 @@ const drawTableServiciosSolyag = (serviciosSolyag, total) => {
     const $tablaBody = $('#table-list-servicios-faturar')
     $tablaBody.empty()
 
+    $('#txt_total_servicios').html(`Total: ${total} `)
+
+    if (total == 0) {
+        $tablaBody.append(
+            `<tr>
+                <td> No existen servicios completados para facturar </td>
+            </tr>
+            `
+        )
+        return;
+    }
+
     for (const servicio of serviciosSolyag) {
 
         $tablaBody.append(
@@ -16,5 +28,4 @@ const drawTableServiciosSolyag = (serviciosSolyag, total) => {
         )
     }
 
-    $('#txt_total_servicios').html(`Total: ${total} `)
 }

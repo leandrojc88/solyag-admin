@@ -144,9 +144,12 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             ->andWhere('s.empresa = :empresa')
             ->andWhere('s.date >= :periodo_inicio')
             ->andWhere('s.date <= :periodo_fin')
+            ->andWhere('s.status = :statez')
+            ->andWhere('s.factura is null')
             ->setParameter('empresa', $empresa)
             ->setParameter('periodo_inicio', $periodo_inicio . " 00:00:00")
             ->setParameter('periodo_fin', $periodo_fin . " 23:59:59")
+            ->setParameter('statez', Status::COMPLETED)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
