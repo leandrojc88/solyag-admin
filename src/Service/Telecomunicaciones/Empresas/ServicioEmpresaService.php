@@ -74,6 +74,7 @@ class ServicioEmpresaService
 
                 $servicioEmpresa
                     ->setStatus(Status::INIT)
+                    ->setDescripcion($subservicio->getDescripcion())
                     ->setSubServicio($subservicio);
 
                 $empresaSubservicioCubacel = $this->empresaSubservicioCubacelRepository->findOneBy([
@@ -90,6 +91,7 @@ class ServicioEmpresaService
             } else
                 $servicioEmpresa
                     ->setStatus(Status::DECLINED_SALDO)
+                    ->setDescripcion($subservicio->getDescripcion())
                     ->setSubServicio($subservicio)
                     ->setResponse(
                         ["errors" => [[

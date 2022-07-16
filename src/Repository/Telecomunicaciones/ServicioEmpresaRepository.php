@@ -78,7 +78,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             SELECT
                 se.id,
                 em.nombre as empresa,
-                s.descripcion,
+                se.descripcion,
                 emp.nombre as empleado,
                 se.no_orden,
                 se.no_telefono,
@@ -99,7 +99,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             SELECT
                 ld.id,
                 em.nombre as empresa,
-                'Larga Distancia' as descripcion,
+                monto as descripcion,
                 emp.nombre as empleado,
                 ld.no_orden,
                 ld.no_telefono,
