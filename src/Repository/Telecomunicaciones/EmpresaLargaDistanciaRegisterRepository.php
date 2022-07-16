@@ -3,6 +3,7 @@
 namespace App\Repository\Telecomunicaciones;
 
 use App\Entity\Telecomunicaciones\EmpresaLargaDistanciaRegister;
+use App\Types\Status;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -24,6 +25,23 @@ class EmpresaLargaDistanciaRegisterRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->select('MAX(s.no_orden) AS max_no_orden')
             ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getListInPeriodByEmpresa($empresa, $periodo_inicio, $periodo_fin)
+    {
+
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.empresa = :empresa')
+            ->andWhere('s.date >= :periodo_inicio')
+            ->andWhere('s.date <= :periodo_fin')
+            ->andWhere('s.status = :statez')
+            ->andWhere('s.factura is null')
+            ->setParameter('empresa', $empresa)
+            ->setParameter('periodo_inicio', $periodo_inicio . " 00:00:00")
+            ->setParameter('periodo_fin', $periodo_fin . " 23:59:59")
+            ->setParameter('statez', Status::COMPLETED)
             ->getQuery()
             ->getResult();
     }

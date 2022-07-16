@@ -1,0 +1,88 @@
+{% extends 'telecomunicaciones/base.html.twig' %}
+
+{% block title %}Telecomunicaciones | Facturas
+{% endblock %}
+
+{% block content %}
+
+	<div class="container my-2">
+		<div class="d-flex align-items-center mb-3">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Crear Factura -
+				{{no_factura}}
+			</h4>
+		</div>
+		<section>
+			<form method="post" id="form_post_facturas_pospago" action="{{ url('tele_post_facturas_pospago') }}" class="mx-auto" style="width:800px">
+				<div class="row">
+					<div class="col-8 form-group input-group input-group-sm">
+						<label class="text-white" for="empresa">Empresa</label>
+						<select name="empresa" id="empresa" class="form-control w-100">
+							<option value="0" disabled selected>-- seleccionar --</option>
+							{% for empresa in empresas %}
+								<option value="{{empresa.id_empresa}}">{{empresa.nombre}}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-4 mt-0 input-group input-group-sm">
+						<label class="text-white" for="moneda">Moneda</label>
+						<input class="form-control w-100" name="moneda" id="moneda">
+					</div>
+					<input hidden class="form-control w-100" name="no_factura" id="no_factura" value="{{no_factura}}">
+					<div class="col-12 my-3">
+						<h5 class="text-white">Periodo de Facturación:</h5>
+					</div>
+					<div class="form-group col-4 mt-0 input-group input-group-sm">
+						<label class="text-white" for="periodo_inicio">Desde</label>
+						<input id='periodo_inicio' name="periodo_inicio" type="date" name="periodo_inicio" class="form-control w-date w-100 filter-select">
+					</div>
+					<div class="form-group col-4 mt-0 input-group input-group-sm">
+						<label class="text-white" for="periodo_fin">Hasta</label>
+						<input id='periodo_fin' name="periodo_fin" type="date" name="periodo_fin" class="form-control w-date w-100 filter-select">
+					</div>
+					<div class="form-group col-4 mt-auto input-group mb-3">
+						<button type="button" class="btn btn-secondary" onclick="onMostrarServicios()">Mostrar Servicios</button>
+					</div>
+				</div>
+				<section style="min-height: 270px;">
+					<table class="table-small-rows table table-hover text-light">
+						<thead class="thead-dark">
+							<th scope="col-1" class="text-left">Servicio</th>
+							<th scope="col-1" class="text-center">Cantidad</th>
+							<th width="100px" class="text-right">Monto</th>
+							<th width="100px" class="text-right">Total</th>
+						</thead>
+						<tbody id="table-list-servicios-faturar"></tbody>
+					</table>
+				</section>
+				<hr color="dimgray" class="my-1 ml-2 align-item-center" size=3>
+				<p id="txt_total_servicios" class="text-right text-white h-5">Total: 51515151</p>
+				<div class="d-flex">
+					<a class="btn btn-secondary" style="color: white;" href="{{ url('tele_get_facturas_pospago') }}">
+						Salir
+					</a>
+
+					<button id="btn-submit-factura" disabled type="button" class="btn btn-success ml-auto" onclick="submitFactura()">
+						<i class="fa fa-check"></i>
+						Facturar
+					</button>
+				</div>
+			</form>
+		</section>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/Telecomunicaciones/factura/validate-form.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/factura/mostrar-servicios.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/factura/submit.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/factura/drow-table-servicios-solyag.js') }}"></script>
+	<script>
+		const tele_get_facturas_pospago = "{{ url('tele_get_facturas_pospago') }}"
+		const tele_post_servicios_perido_facturacion = "{{ url('tele_post_servicios_perido_facturacion') }}"
+		const tele_post_facturas_pospago = "{{ url('tele_post_facturas_pospago') }}"
+	</script>
+
+{% endblock %}

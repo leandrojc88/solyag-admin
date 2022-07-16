@@ -1,0 +1,200 @@
+<!doctype html>
+{% set company_logo = app.session.get('auth/company_logo') %}
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Factura de Venta</title>
+		<link rel="stylesheet" href="{{ asset('css/print/style.css') }}">
+		<link rel="icon" type="image/png" href="{{ asset('images/print_logo_factura.png') }}">
+		<style>
+			.w-100 {
+				min-width: 100px;
+				max-width: 100px;
+			}
+
+			img {
+				width: 200px;
+			}
+
+			.mt30 {
+				margin-top: 30px
+			}
+
+			.footer-aling {
+				justify-content: space-between;
+				align-items: flex-end;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="cs-container">
+			<div
+				class="cs-invoice cs-style1">
+				{# head presentacion #}
+				<div class="cs-invoice_head cs-type1 cs-mb25">
+					<div class="cs-invoice_left">
+						<p class="cs-invoice_number cs-primary_color cs-mb5 cs-f16">
+							<b class="cs-primary_color">No Factura:</b>
+							{{factura.getNoFacturaStr}}
+						</p>
+						<p class="cs-invoice_number cs-primary_color cs-mb5 cs-f16">
+							<b class="cs-primary_color">Fecha:</b>
+							{{factura.fecha|date('d M Y h:i A')}}
+						</p>
+						<p class="cs-invoice_number cs-primary_color cs-mb5 cs-f16">
+							<b class="cs-primary_color">Moneda:</b>
+							{{factura.moneda}}
+						</p>
+					</div>
+					<div class="cs-invoice_right cs-text_right">
+						<div class="cs-logo cs-mb5"><img style src="{{ asset('images/logo-solyag-png.png') }}" alt="Logo Solyag"></div>
+					</div>
+				</div>
+				{# head empresa datos #}
+				<div class="cs-invoice_head cs-mb10">
+					<div class="cs-invoice_left">
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Código:</b>
+							05.01.2022
+						</p>
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Teléfono::</b>
+							+1 809-770-2266
+						</p>
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Correo:</b>
+							solyag@gmail.com
+						</p>
+					</div>
+
+					<div class="cs-invoice_right cs-text_right">
+						<p class="cs-mb5 cs-f16">Solyag Republica Dominicana</p>
+						<p class="cs-mb5" style="width: 260px;">
+							Juan Sanchez Ramires esq
+							<br>
+							Wenceslao Alvarez 10105
+							<br>
+							Santo Domingo,
+							<br>
+							República Dominicana
+						</p>
+					</div>
+				</div>
+
+				{# head datos del cliente #}
+				<div class="cs-invoice_head cs-mb20">
+					<div class="cs-invoice_left">
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Para:</b>
+							{{ factura.empresa.nombre }}
+						</p>
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Dirección:</b>
+							{# {{ factura.empresa.nro_contrato }} #}
+						</p>
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Teléfono:</b>
+							{{ factura.empresa.telefono }}
+						</p>
+
+						{# <p class="cs-mb0">{{ factura.telefono_cliente }}</p> #}
+
+					</div>
+				</div>
+
+				{# tabla Factura #}
+				<div class="cs-table cs-style1">
+					<div class="cs-round_border">
+						<div class="cs-table_responsive">
+							<table>
+								<thead>
+									<tr>
+										<th class="cs-width_4 cs-semi_bold cs-primary_color cs-focus_bg">
+											Servicio
+										</th>
+										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_center">Cantidad</th>
+										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Monto</th>
+										<th class="w-100 cs-semi_bold cs-primary_color cs-focus_bg cs-text_right">Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for item in serviciosSolyag %}
+										<tr>
+											<td class="cs-width_4">{{ item.descripcion }}</td>
+											<td class="cs-width_3 cs-text_center">{{ item.cantidad }}</td>
+											<td class="cs-width_2 cs-text_right">{{ item.monto|number_format(2) }}</td>
+											<td class="cs-width_2 cs-text_right">{{ item.total|number_format(2) }}</td>
+										</tr>
+									{% endfor %}
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				{# detalles SUBTODA - TOTAL #}
+				<div class="cs-invoice_footer cs-border_bottom cs-border_left cs-border_right">
+					<div class="cs-left_footer cs-mobile_hide">
+						<p class="cs-mb5 cs-primary_color">
+							<b class=" ">Notas:
+							</b>
+						</p>
+					</div>
+					<div class="cs-right_footer">
+						<table>
+							<tbody>
+								<tr class="cs-border_left">
+									<td class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg">Sub total</td>
+									<td class="cs-width_3 cs-semi_bold cs-focus_bg cs-primary_color cs-text_right">{{ total }}</td>
+								</tr>
+								<tr class="cs-border_left">
+									<td class="cs-width_3 cs-semi_bold cs-primary_color cs-focus_bg">Total</td>
+									<td class="cs-width_3 cs-semi_bold cs-focus_bg cs-primary_color cs-text_right">{{ total }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				{# pie de firma y QR #}
+
+				<div class="cs-invoice_footer mt30 footer-aling">
+					<div></div>
+					<svg style="height: 95px;" class="w-100 ml-5">
+						<g id="qrcode"/>
+					</svg>
+				</div>
+				<p class="cs-bold mt30 cs-text_center">¡GRACIAS POR SU CONFIANZA!</p>
+			</div>
+		</div>
+		<script src="{{ asset('js/davidshimjs-qrcodejs-04f46c6/qrcode.js') }}"></script>
+	</body>
+</html>
+
+
+{% block javascripts %}
+	<script>
+
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+width: 20,
+height: 20,
+useSVG: true
+});
+
+const valor = '{{ qr_url|raw }}';
+
+qrcode.makeCode(valor);
+
+function imprimir() {
+$('#btn_print').hide()
+window.print()
+$('#btn_print').show()
+}
+
+const conector = new ConectorPlugin();
+const factura = {{ factura|json_encode()|raw }};
+const url_ticket = '{{ company_logo }}';
+	</script>
+{% endblock %}

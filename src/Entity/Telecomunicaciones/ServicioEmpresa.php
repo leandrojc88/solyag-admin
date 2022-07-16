@@ -89,6 +89,16 @@ class ServicioEmpresa implements ServiciosSolyag
      */
     private $no_orden;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Factura::class)
+     */
+    private $factura;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $descripcion;
+
     public function getId(): ?UuidInterface
     {
         return $this->id;
@@ -260,4 +270,27 @@ class ServicioEmpresa implements ServiciosSolyag
         return $servicio . '-' . $noOrden;
     }
 
+    public function getFactura(): ?Factura
+    {
+        return $this->factura;
+    }
+
+    public function setFactura(?Factura $factura): self
+    {
+        $this->factura = $factura;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
 }

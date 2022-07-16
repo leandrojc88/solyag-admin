@@ -118,7 +118,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             $where
             ORDER BY date DESC";
 
-// dd($sql);
+        // dd($sql);
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
         $rsm->addScalarResult('empresa', 'empresa');
@@ -136,81 +136,22 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $results = $query->getResult();
         return $results;
-        // $q = $this->createQueryBuilder('se')
-        //     ->select(
-        //         '
-        //         se.id,
-        //         em.nombre as empresa,
-        //         s.descripcion,
-        //         emp.nombre as empleado,
-        //         se.no_orden,
-        //         se.no_telefono,
-        //         se.status,
-        //         se.date,
-        //         se.confirmation_date,
-        //         se.servicio,
-        //         ecc.costo,
-        //         se.id_confir_proveedor'
-        //     )
-        //     ->join(
-        //         'App\Entity\Empresas',
-        //         'em',
-        //         \Doctrine\ORM\Query\Expr\Join::WITH,
-        //         'se.empresa = em.id'
-        //     )
-        //     ->join(
-        //         'App\Entity\Empleados',
-        //         'emp',
-        //         \Doctrine\ORM\Query\Expr\Join::WITH,
-        //         'se.empleado = emp.id'
-        //     )
-        //     ->leftJoin(
-        //         'App\Entity\Telecomunicaciones\Subservicio',
-        //         's',
-        //         \Doctrine\ORM\Query\Expr\Join::WITH,
-        //         'se.sub_servicio = s.id'
-        //     )
-        //     ->leftJoin(
-        //         'App\Entity\Telecomunicaciones\EmpresaSubservicioCubacel',
-        //         'ecc',
-        //         \Doctrine\ORM\Query\Expr\Join::WITH,
-        //         'ecc.id_empresa = se.empresa and ecc.id_subservicio = s.id'
-        //     );
-        //     foreach ($filtros as $value) {
-        //         $q->andWhere($value);
-        //     }
-
-        //     $q->orderBy('se.date', 'DESC')
-        //     ->getQuery();
-        //     return $q;
     }
 
-    // /**
-    //  * @return ServicioEmpresa[] Returns an array of ServicioEmpresa objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getListInPeriodByEmpresa($empresa, $periodo_inicio, $periodo_fin)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
+            ->andWhere('s.empresa = :empresa')
+            ->andWhere('s.date >= :periodo_inicio')
+            ->andWhere('s.date <= :periodo_fin')
+            ->andWhere('s.status = :statez')
+            ->andWhere('s.factura is null')
+            ->setParameter('empresa', $empresa)
+            ->setParameter('periodo_inicio', $periodo_inicio . " 00:00:00")
+            ->setParameter('periodo_fin', $periodo_fin . " 23:59:59")
+            ->setParameter('statez', Status::COMPLETED)
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ServicioEmpresa
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
