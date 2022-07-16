@@ -2,6 +2,9 @@
 
 namespace App\Controller\Telecomunicaciones\Factura;
 
+use App\Entity\Empresas;
+use App\Entity\Telecomunicaciones\EmpresaTipoPaga;
+use App\Form\EmpresasType;
 use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\FacturaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +24,16 @@ class ConfigureFacturaPospagoController extends AbstractController
         $no_factura = $facturaRepository->getNextNoFactura();
         // dd(FacturaRepository::noFacturaToStr($no_factura));
         // empresas
-        $empresas = $empresasRepository->findBy(["activo" => true]);
+        // $empresas = $empresasRepository->findBy(["activo" => true]);
+        $empresasQuery = $empresasRepository->listEmpresa();
+
+        $empresas = [];
+
+        foreach ($empresasQuery as $empresa) {
+            if ($empresa["tipo"] == EmpresaTipoPaga::POSPAGO) {
+                $empresas[] = $empresa;
+            }
+        }
 
         return $this->render('telecomunicaciones/factura/create-view.html.twig', [
             "empresas" => $empresas,
