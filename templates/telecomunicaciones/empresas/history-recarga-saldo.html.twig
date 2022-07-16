@@ -52,8 +52,8 @@
 						{# <td style="font-weight:400;">{{ item.tipo }}</td> #}
 						<td style="font-weight:400; text-align: right;">{% if item.tipo == 'Disminuir' %}
 							- 
-						{% endif %}{{ item.valor }}</td>
-						<td style="font-weight:400; text-align: right;">{{ item.saldo }}</td>
+						{% endif %}{{ item.valor|number_format(2) }}</td>
+						<td style="font-weight:400; text-align: right;">{{ item.saldo|number_format(2) }}</td>
 					</tr>
 				{% endfor %}
 
