@@ -43,7 +43,7 @@ class FormatRecargaCubacelToFacturaData
                 $returnFormat[] = [
                     "id_servicio" => Servicios::ID_RECARGA_CUBACEL,
                     "id_subservicio" => $recarga->getSubServicio()->getId(),
-                    "descripcion" => Servicios::NAME_RECARGA_CUBACEL . " - " . $recarga->getSubServicio()->getDescripcion(),
+                    "descripcion" => Servicios::NAME_RECARGA_CUBACEL . " - " . $recarga->getDescripcion(),
                     "cantidad"    => 1,
                     "monto"    => number_format($monto, 2),
                     "total" => number_format($monto, 2)

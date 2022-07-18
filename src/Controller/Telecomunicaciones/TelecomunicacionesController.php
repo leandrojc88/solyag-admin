@@ -69,7 +69,7 @@ class TelecomunicacionesController extends AbstractController
 
         // filtro empresa
         $empresa = $request->query->get("empresa");
-        if ($empresa) array_push($filter, "empresa = $empresa ");
+        if ($empresa) array_push($filter, "id_empresa = $empresa ");
 
         // filtro servicio
         $servicio = $request->query->get("servicio");

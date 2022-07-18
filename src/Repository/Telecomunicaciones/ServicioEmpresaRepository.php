@@ -78,6 +78,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             SELECT
                 se.id,
                 em.nombre as empresa,
+                em.id as id_empresa,
                 se.descripcion,
                 emp.nombre as empleado,
                 se.no_orden,
@@ -99,6 +100,7 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             SELECT
                 ld.id,
                 em.nombre as empresa,
+                em.id as id_empresa,
                 monto as descripcion,
                 emp.nombre as empleado,
                 ld.no_orden,
