@@ -150,7 +150,6 @@ class ServicioEmpresaRepository extends ServiceEntityRepository
             ->setParameter('periodo_inicio', $periodo_inicio . " 00:00:00")
             ->setParameter('periodo_fin', $periodo_fin . " 23:59:59")
             ->setParameter('statez', Status::COMPLETED)
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
