@@ -91,14 +91,15 @@
 						</p>
 						<p class="cs-mb5">
 							<b class="cs-invoice_number cs-primary_color">Dirección:</b>
-							{# {{ factura.empresa.nro_contrato }} #}
 						</p>
 						<p class="cs-mb5">
 							<b class="cs-invoice_number cs-primary_color">Teléfono:</b>
 							{{ factura.empresa.telefono }}
 						</p>
-
-						{# <p class="cs-mb0">{{ factura.telefono_cliente }}</p> #}
+						<p class="cs-mb5">
+							<b class="cs-invoice_number cs-primary_color">Periodo de Facturación:</b>
+							{{factura.periodoInicio|date('d M Y')}} - {{factura.periodoFin|date('d M Y')}}
+						</p>
 
 					</div>
 				</div>

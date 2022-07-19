@@ -8,7 +8,7 @@ const drawTableServiciosSolyag = (serviciosSolyag, total) => {
     if (total == 0) {
         $tablaBody.append(
             `<tr>
-                <td> No existen servicios completados para facturar </td>
+                <td> el periodo ya esta facturado </td>
             </tr>
             `
         )

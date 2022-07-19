@@ -19,7 +19,7 @@
 		<table class="table-small-rows table table-hover text-light">
 			<thead class="thead-dark">
 				<th scope="col-1" class="text-left"># Factura</th>
-				<th scope="col-1" class="text-left">Fecha</th>
+				<th scope="col-1" class="text-left">Periodo de Facturación</th>
 				<th scope="col-1" class="text-left">Empresa</th>
 				<th width="100px" class="text-left">Moneda</th>
 				<th width="100px" class="text-left">Importe</th>
@@ -31,7 +31,7 @@
 				{% for factura in facturas %}
 					<tr>
 						<td style="font-weight:400;">{{ factura.getNoFacturaStr }}</td>
-						<td style="font-weight:400;">{{ factura.fecha|date('d M Y h:i A') }}</td>
+						<td style="font-weight:400;">{{factura.periodo_inicio|date('d M Y')}} - {{factura.periodo_fin|date('d M Y')}}</td>
 						<td style="font-weight:400;">{{ factura.empresa.nombre }}</td>
 						<td style="font-weight:400;">{{ factura.moneda }}</td>
 						<td style="font-weight:400;" class="text-right">{{ factura.importe }}</td>

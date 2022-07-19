@@ -31,7 +31,7 @@ class PostFacturaPospagoController extends AbstractController
         $no_factura = $facturaRepository->getNextNoFactura();
 
         $empresa = $request->get("empresa");
-        $moneda = $request->get("moneda");
+        $moneda = "USD";//$request->get("moneda");
         $periodo_inicio = $request->get("periodo_inicio");
         $periodo_fin = $request->get("periodo_fin");
 
