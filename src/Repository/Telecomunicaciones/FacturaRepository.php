@@ -30,6 +30,18 @@ class FacturaRepository extends ServiceEntityRepository
         return ($query[0]["max_no_factura"] ? $query[0]["max_no_factura"] : 0) + 1;
     }
 
+    public function search($filtros)
+    {
+        $q = $this->createQueryBuilder('f');
+        foreach ($filtros as $filtro) {
+            $q->andWhere($filtro);
+        }
+        // dd($q->getQuery());
+        return $q->getQuery()
+            ->getResult();
+    }
+
+
     public static function noFacturaToStr($no_factura)
     {
         $no = number_format(($no_factura / 100000), 5) . "";

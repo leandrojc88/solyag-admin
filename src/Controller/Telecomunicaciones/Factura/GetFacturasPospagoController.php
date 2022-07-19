@@ -2,7 +2,9 @@
 
 namespace App\Controller\Telecomunicaciones\Factura;
 
+use App\Entity\Telecomunicaciones\EmpresaTipoPaga;
 use App\Entity\Telecomunicaciones\Factura;
+use App\Repository\EmpresasRepository;
 use App\Repository\Telecomunicaciones\FacturaRepository;
 use App\Service\Telecomunicaciones\Factura\CalcImporteFactura;
 use Knp\Component\Pager\PaginatorInterface;
@@ -20,10 +22,31 @@ class GetFacturasPospagoController extends AbstractController
         FacturaRepository $facturaRepository,
         Request $request,
         PaginatorInterface $pagination,
+        EmpresasRepository $empresasRepository,
         CalcImporteFactura $CalcImporteFactura
     ): Response {
 
-        $facturasSql = $facturaRepository->findAll();
+        $filter = [];
+
+        // no factura
+        $no_factura = $request->query->get("no_factura");
+        if ($no_factura) array_push($filter, "f.no_factura like '%$no_factura%' ");
+
+        // filtro fecha
+        $fecha = $request->query->get("fecha");
+        if ($fecha) {
+            // dd($fecha);
+            array_push($filter, "f.periodo_inicio <= '$fecha' ");
+            array_push($filter, "f.periodo_fin >= '$fecha' ");
+        }
+
+        // filtro empresa
+        $empresa = $request->query->get("empresa");
+        if ($empresa) {
+            array_push($filter, "f.empresa = $empresa ");
+        }
+
+        $facturasSql = $facturaRepository->search($filter);
 
         $paginator = $pagination->paginate(
             $facturasSql,
@@ -53,8 +76,18 @@ class GetFacturasPospagoController extends AbstractController
 
         $paginator->setItems($data);
 
+        $empresas = [];
+        $empresasQuery = $empresasRepository->listEmpresa();
+
+        foreach ($empresasQuery as $empresa) {
+            if ($empresa["tipo"] == EmpresaTipoPaga::POSPAGO) {
+                $empresas[] = $empresa;
+            }
+        }
+
         return $this->render('telecomunicaciones/factura/get_facturas_pospago/index.html.twig', [
-            "facturas" => $paginator
+            "facturas" => $paginator,
+            "empresas" => $empresas
         ]);
     }
 }

@@ -17,6 +17,45 @@
 			</div>
 		</div>
 		<table class="table-small-rows table table-hover text-light">
+			<form action="">
+				<thead class="thead-dark">
+					<tr class="fiter">
+						<th>
+							<div class="form-group input-group input-group-sm d-block filter-select">
+								<input type="text" value="{{app.request.get('no_factura')}}" id="no_factura" name="no_factura" placeholder="No Factura" class="form-control w-100 form-control">
+							</div>
+						</th>
+						<th>
+							<div class="form-group input-group input-group-sm d-block filter-select">
+								<input
+								value="{{app.request.get('fecha')}}" id='fecha' name="fecha" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Fecha" class="form-control w-date w-100 filter-select" aria-label="Default" aria-describedby="inputGroup-sizing-sm">
+
+							{# <input type="text" value="{{app.request.get('descripcion')}}" id="descripcion" name="descripcion" placeholder="Descripción" class="form-control w-100 form-control"> #}
+							</div>
+						</th>
+						<th>
+							<div class="input-group input-group-sm">
+								<select name="empresa" id="id_empresa" class="form-control mx-0 filter-select">
+									<option value="0">-- empresa --</option>
+									{% for empresa in empresas %}
+										<option {% if app.request.get('empresa') == empresa.id_empresa %} selected {% endif %} value="{{empresa.id_empresa}}">{{empresa.nombre}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</th>
+
+						<th colspan="2">
+							<button class="btn btn-success mx-1 btn-sm fa fa-filter" data-placement="bottom" title="Filtrar">
+								Filtrar
+							</button>
+						</th>
+						<th>
+							<a href="{{ url ('tele_get_facturas_pospago') }}" class="btn btn-outline-danger mx-1 btn-sm fa fa-close" data-placement="bottom" title="limpiar Filtrar"></a>
+						</th>
+					</tr>
+				</thead>
+			</form>
+
 			<thead class="thead-dark">
 				<th scope="col-1" class="text-left"># Factura</th>
 				<th scope="col-1" class="text-left">Periodo de Facturación</th>
@@ -31,7 +70,9 @@
 				{% for factura in facturas %}
 					<tr>
 						<td style="font-weight:400;">{{ factura.getNoFacturaStr }}</td>
-						<td style="font-weight:400;">{{factura.periodo_inicio|date('d M Y')}} - {{factura.periodo_fin|date('d M Y')}}</td>
+						<td style="font-weight:400;">{{factura.periodo_inicio|date('d M Y')}}
+							-
+							{{factura.periodo_fin|date('d M Y')}}</td>
 						<td style="font-weight:400;">{{ factura.empresa.nombre }}</td>
 						<td style="font-weight:400;">{{ factura.moneda }}</td>
 						<td style="font-weight:400;" class="text-right">{{ factura.importe }}</td>
