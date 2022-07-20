@@ -45,4 +45,8 @@ security:
               path: ^/telecomunicaciones/factura/print-facturas-pospago,
               roles: IS_AUTHENTICATED_ANONYMOUSLY,
           }
+        - {
+              path: ^/dtone,
+              roles: IS_AUTHENTICATED_ANONYMOUSLY,
+          }
         - { path: ^/.+, roles: [IS_AUTHENTICATED_FULLY] } # todos loq ue tengan datos despeus de /
