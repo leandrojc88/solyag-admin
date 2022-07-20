@@ -6,6 +6,7 @@
 {% block content %}
 
 	{{ include('telecomunicaciones/recatga-cubacel-manual/modal_numero-confirmacion.html.twig',{title:'Número de Confirmación'}) }}
+	{{ include('telecomunicaciones/recatga-cubacel-manual/modal_confirmacion-to-dtone.html.twig',{modal_id: 'modal-recarga-manual-dtone', title:'Recarga para DTNone'}) }}
 
 	{# header #}
 	<div class="container">
@@ -13,14 +14,11 @@
 			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
 				Recarga Cubacel Manual
 			</h4>
-			{# <div class="input-group input-group-sm w-25">
-				<select name="id_empresa" id="id_empresa" class="form-control">
-					<option value="0" selected="false" disabled>...selecione la empresa...</option>
-					{% for empresa in empresas %}
-						<option {% if select_empresa == empresa.id %} selected="true" {% endif %} value="{{empresa.id}}">{{empresa.nombre}}</option>
-					{% endfor %}
-				</select>
-			</div> #}
+			<div class="input-group input-group-sm w-25">
+				<button type="button" class="btn btn-outline-info" data-toggle="tooltip" data-placement="bottom" title="Complerar Recarga DTOne" onclick="onCompletarDtone()">
+					<i class="fa fa-check-square mr-2"></i>Ejecutar Recargas DTOne
+				</button>
+			</div>
 		</div>
 		{# end header #}
 		<table class="table-small-rows table table-hover text-light">
@@ -63,5 +61,6 @@
 	<script src="{{ asset('js/Telecomunicaciones/recatgaCubacelManual/validate-form.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/recatgaCubacelManual/change-empresa.js') }}"></script>
 	<script src="{{ asset('js/Telecomunicaciones/recatgaCubacelManual/on-completar-recarga.js') }}"></script>
+	<script src="{{ asset('js/Telecomunicaciones/recatgaCubacelManual/on-completar-dtone.js') }}"></script>
 
 {% endblock %}

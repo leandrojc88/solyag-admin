@@ -2,16 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Telecomunicaciones\ServicioEmpresa;
-use App\Http\httpPostServicioEmpresaCubacel;
-use App\Repository\Telecomunicaciones\ServicioEmpresaRepository;
-use App\Service\DToneManager;
 use App\Service\Telecomunicaciones\Config\GetLoadIsActiveService;
 use App\Service\Telecomunicaciones\DTOne\ExecTransactionForDeclined;
 use App\Service\Telecomunicaciones\DTOne\ExecTransactionForInit;
-use App\Service\Telecomunicaciones\Empresas\ServicioEmpresaService;
-use App\Service\Telecomunicaciones\Empresas\ValidateSaldoEmpresa;
-use App\Types\Status;
+use App\Service\Telecomunicaciones\DTOne\ExecTransactionForManual;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,20 +21,18 @@ class DToneController extends AbstractController
      * @Route("/looptask", name="looptask")
      */
     public function looptask(
-        ServicioEmpresaRepository $servicioEmpresaRepository,
-        DToneManager $dToneManager,
-        ServicioEmpresaService $servicioEmpresaService,
-        httpPostServicioEmpresaCubacel $httpPostServicioEmpresaCubacel,
         GetLoadIsActiveService $getLoadIsActiveService,
         ExecTransactionForInit $execTransactionForInit,
-        ExecTransactionForDeclined $execTransactionForDeclined
+        ExecTransactionForDeclined $execTransactionForDeclined,
+        ExecTransactionForManual $execTransactionForManual
     ): JsonResponse {
 
         if (!$getLoadIsActiveService->get())
             return $this->json(["finish" => true, "msg" => "API DTone esta desactivada por el sistema"]);
 
-        ($execTransactionForInit)();
-        ($execTransactionForDeclined)();
+        $execTransactionForInit->__invoke();
+        $execTransactionForDeclined->__invoke();
+        $execTransactionForManual->__invoke();
 
 
         return $this->json(["finish" => true]);

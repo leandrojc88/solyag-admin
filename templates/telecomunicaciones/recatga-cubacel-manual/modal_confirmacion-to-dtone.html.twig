@@ -1,0 +1,14 @@
+{% extends 'utils/modal_form_custom.html.twig' %}
+{% block modalbody %}
+	<form method="post" action="{{ url('tele-recargas-cubacel-manual-to-dtone') }}" class="text-left" id="form_confirm_dtone" >
+		<div class="form-group input-group input-group-sm d-block">
+			<label for="productid_dtone" class="required">Product Id</label>
+			<input type="text" id="productid_dtone" name="productid_dtone" required="required" class="form-control w-100 form-control">
+		</div>
+	</form>
+{% endblock %}
+
+
+{% block btnzone %}
+	<button type="submit" form="form_confirm_dtone" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}

@@ -15,6 +15,7 @@ class Status
     const DECLINED = 'DECLINED';
     const RE_DECLINED = 'RE_DECLINED';
     const DECLINED_SALDO = 'DECLINED_SALDO';
+    const MANUAL_DTONE = 'MANUAL_DTONE';
 
     const toArray = [
         self::INIT,
@@ -27,6 +28,7 @@ class Status
         self::REVERSED,
         self::DECLINED,
         self::RE_DECLINED,
-        self::DECLINED_SALDO
+        self::DECLINED_SALDO,
+        self::MANUAL_DTONE
     ];
 }
