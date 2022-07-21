@@ -16,6 +16,9 @@
 			background: rgb(220 53 69 / 10%);
 			/*background: var(--danger);*/
 		}
+		.w-200 {
+			width: 200px !important;
+		}
 	</style>
 	<link href="{{ asset('css/components/toggle-switch.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}
@@ -32,7 +35,28 @@
 			</h4>
 		</div>
 
+		<form action="" class="d-flex thead-dark mb-2">
+			<div class="input-group input-group-sm d-block w-200 mr-2">
+				<input value="{{app.request.get('start_date')}}" id='start_date' name="start_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Fecha Inicio" class="form-control w-date filter-select w-200" aria-label="Default" aria-describedby="inputGroup-sizing-sm">
+			</div>
+			<div class="input-group input-group-sm d-block w-200 mr-2">
+				<input value="{{app.request.get('end_date')}}" id='end_date' name="end_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Fecha Fin" class="form-control w-date filter-select w-200" aria-label="Default" aria-describedby="inputGroup-sizing-sm">
+			</div>
+			<div class="input-group input-group-sm w-200 mr-2">
+				<select name="descripcion" id="descripcion" class="form-control mx-0 filter-select w-200">
+					<option value="0">-- descripcion --</option>
+					<option {% if app.request.get('descripcion') == "Recarga Cubacel" %} selected {% endif %} value="Recarga Cubacel">Recarga Cubacel</option>
+					<option {% if app.request.get('descripcion') == "Larga Distancia" %} selected {% endif %} value="Larga Distancia">Larga Distancia</option>
+					<option {% if app.request.get('descripcion') == "Agregar Saldo" %} selected {% endif %} value="Agregar Saldo">Agregar Saldo</option>
+				</select>
+			</div>
+			<button class="btn btn-success mx-1  fa fa-filter ml-auto" data-placement="bottom" title="Filtrar">
+				Filtrar
+			</button>
+			<a href="{{ url ('tele-empresas-historial-recarga-saldo', {empresa: empresa.id }) }}" class="btn btn-outline-danger mx-1 fa fa-close" data-placement="bottom" title="limpiar Filtrar"></a>
+		</form>
 		<table class="table-small-rows table table-hover text-light">
+
 			<thead class="thead-dark">
 				<th scope="col-1" class="text-left">Fecha</th>
 				<th scope="col-1" class="text-left">Descripcion</th>
@@ -42,17 +66,15 @@
 			</thead>
 			<tbody>
 				{% for item in historyEmpresas %}
-					<tr {% if item.tipo == 'Agregar' %}
-						class="bg-agregar"
-					{% else %}
-						class="bg-disminuir"
-					{% endif %}>
+					<tr {% if item.tipo == 'Agregar' %} class="bg-agregar" {% else %} class="bg-disminuir" {% endif %}>
 						<td style="font-weight:400;">{{ item.fecha|date("d M Y h:i A") }}</td>
 						<td style="font-weight:400;">{{ item.descripcion }}</td>
 						{# <td style="font-weight:400;">{{ item.tipo }}</td> #}
-						<td style="font-weight:400; text-align: right;">{% if item.tipo == 'Disminuir' %}
-							- 
-						{% endif %}{{ item.valor|number_format(2) }}</td>
+						<td style="font-weight:400; text-align: right;">
+							{% if item.tipo == 'Disminuir' %}
+								-
+							{% endif %}
+							{{ item.valor|number_format(2) }}</td>
 						<td style="font-weight:400; text-align: right;">{{ item.saldo|number_format(2) }}</td>
 					</tr>
 				{% endfor %}

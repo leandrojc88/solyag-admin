@@ -20,10 +20,14 @@ class HistorialSaldoEmpresaRepository extends ServiceEntityRepository
         parent::__construct($registry, HistorialSaldoEmpresa::class);
     }
 
-    public function listSubmayor($idEmpresa)
+    public function listSubmayor($idEmpresa, $filtros=null)
     {
 
-        $sql = "SELECT row_number() OVER (ORDER BY sel.fecha, sel.no_orden) AS contador, sel.*,
+        // $where = count($filterArr) ? "WHERE " : "";//descripcion like '%Agregar%'
+        $where  = count($filtros) ? "WHERE " . join(" AND ", $filtros) : "";
+
+        $sql = "WITH history AS(
+        SELECT row_number() OVER (ORDER BY sel.fecha, sel.no_orden) AS contador, sel.*,
         SUM(
                 ROUND(valor,2) *
                 CASE
@@ -46,7 +50,10 @@ class HistorialSaldoEmpresaRepository extends ServiceEntityRepository
                 SELECT date as fecha, CONCAT('Larga Distancia - ', ld.monto) as descripcion, 'Disminuir', empleado_id as user, no_orden, costo as valor
             FROM empresa_larga_distancia_register ld
                 WHERE empresa_id = $idEmpresa  AND ld.status not in ('DECLINED', 'DECLINED_SALDO', 'RE_DECLINED')
-                ORDER BY fecha, no_orden) as sel";
+                ORDER BY fecha, no_orden) as sel
+            )
+
+        SELECT * FROM history $where";
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('fecha', 'fecha');

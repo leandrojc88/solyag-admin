@@ -24,7 +24,21 @@ class GetHistorialRecargasSaldoController extends AbstractController
         Empresas $empresa
     ): Response {
 
-        $query = $historialSaldoEmpresaRepository->listSubmayor($empresa->getId());
+        $filter = [];
+
+        // filtro descripcion
+        $descripcion = $request->query->get("descripcion");
+        if ($descripcion) array_push($filter, "descripcion like '%$descripcion%' ");
+
+        // fintro de fecha
+        $start_date = $request->query->get("start_date");
+        $end_date = $request->query->get("end_date");
+        if ($start_date && $end_date) {
+            array_push($filter, "fecha >= '$start_date'");
+            array_push($filter, "fecha <= '$end_date 23:59:59'");
+        }
+
+        $query = $historialSaldoEmpresaRepository->listSubmayor($empresa->getId(),  $filter);
 
         $paginator = $pagination->paginate(
             $query,
