@@ -45,6 +45,7 @@
 {% block content %}
 
 	{{ include('campanna/empresa/modals/modal-costo-campanna-sms.html.twig',{modal_id: 'modal-costo-campanna-sms', title:'Costo de Campaña sms'}) }}
+	{{ include('campanna/empresa/modals/modal-asignar-saldo-empresa.html.twig',{modal_id: 'modal-saldo-campanna-sms', title:'Saldo de Campaña sms'}) }}
 
 	{# header #}
 	<div class="container">
@@ -67,4 +68,5 @@
 	{{ parent() }}
 
 	<script src="{{ asset('js/Campanna/Empresa/on-costo-campanna-sms.js') }}"></script>
+	<script src="{{ asset('js/Campanna/Empresa/on-asignar-saldo-campanna-sms.js') }}"></script>
 {% endblock %}

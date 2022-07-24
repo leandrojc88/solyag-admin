@@ -1,0 +1,19 @@
+{% extends 'utils/modal_form_custom.html.twig' %}
+
+{% block modalbody %}
+
+	<form method="post" id="form_asignar_saldo_campana_sms" action="{{ url('campanna-post-saldo-campanna-sms') }}">
+		<input name="id" id="id_empresa_campanna" hidden>
+		<input name="id_empresa" id="id_empresa" hidden>
+		<input name="accion" id="accion" hidden>
+		<div id="saldo-group" class="form-group  input-group">
+			<label id="label_saldo" class="label" for="saldo">Agregar Saldo</label>
+			<input type="number" class="form-control w-100" name="saldo" id="saldo">
+		</div>
+	</form>
+
+{% endblock %}
+
+{% block btnzone %}
+	<button type="submit" form="form_asignar_saldo_campana_sms" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}
