@@ -6,9 +6,9 @@
 	<div class="b-card-data ">
 	</div>
 	<div class="d-flex" style="color: white;">
-		<button style="color: white;" class="btn btn-outline-info text-capitalize mr-2" onclick="onCostoLargaDistancia({{empresa.id_empresa}}, {% if empresa.costo_larga_distancia %} {{empresa.costo_larga_distancia}} {% else %} '' {% endif %})">
-			<img class="icon-img" src="{{ asset('images/telecomunicaciones/servicios/larga-distancia-icon.png') }}" alt="Recarga Cubacel">
-			Larga Distancia</button>
+		<button class="btn btn-outline-warning text-capitalize mr-2" onclick="onCostoCampannaSms({{empresa.id_empresa}}, {% if empresa.costo %} {{empresa.costo}} {% else %} '' {% endif %})">
+			<i class="fa fa-dollar"></i> Configurar Costo</button>
+
 		<div id="btn-asignar-saldo-{{empresa.id_empresa}}" class="btn-group">
 			<button class="btn btn-outline-warning text-capitalize" onclick="asignarSaldoEmpresa({
 					id: {% if empresa.id %} {{empresa.id}} {% else %} 0 {% endif %},

@@ -1,0 +1,17 @@
+{% extends 'utils/modal_form_custom.html.twig' %}
+
+{% block modalbody %}
+
+	<form method="post" id="form_costo_campanna_sms" action="{{ url('campanna-post-costo-campanna-sms') }}">
+		<input name="id_empresa" id="id_empresa" hidden>
+		<div class="form-group  input-group">
+			<label class="label" for="costo">Costo</label>
+			<input type="number" class="form-control w-100" name="costo" id="costo">
+		</div>
+	</form>
+
+{% endblock %}
+
+{% block btnzone %}
+	<button type="submit" form="form_costo_campanna_sms" class="my-0 btn btn-secondary">Aceptar</button>
+{% endblock %}

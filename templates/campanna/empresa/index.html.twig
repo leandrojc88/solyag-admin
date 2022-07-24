@@ -44,8 +44,7 @@
 
 {% block content %}
 
-	{# {{ include('telecomunicaciones/empresas/modal/modal-asignar-saldo-empresa.html.twig',{title:'Saldo de la empresa empresa'}) }}
-	{{ include('telecomunicaciones/empresas/modal/modal-costo-larga-distancia.html.twig',{modal_id: 'modal-costo-larga-distancia', title:'Costo de Larga Distancia'}) }} #}
+	{{ include('campanna/empresa/modals/modal-costo-campanna-sms.html.twig',{modal_id: 'modal-costo-campanna-sms', title:'Costo de Campaña sms'}) }}
 
 	{# header #}
 	<div class="container">
@@ -66,4 +65,6 @@
 
 {% block javascripts %}
 	{{ parent() }}
+
+	<script src="{{ asset('js/Campanna/Empresa/on-costo-campanna-sms.js') }}"></script>
 {% endblock %}

@@ -90,4 +90,36 @@ class EmpresasRepository extends ServiceEntityRepository
 
         return  array_map($func, $query);
     }
+
+    public function listEmpresaConfigCampannaSms()
+    {
+
+        return $this->createQueryBuilder('e')
+            ->select('e.id as id_empresa, e.nombre, cp.id, cp.saldo, cp.costo')
+            ->leftJoin(
+                'App\Entity\Campanna\CampannaConfig',
+                'cp',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'e.id = cp.empresa'
+            )
+            ->andWhere('e.activo = true')
+            ->orderBy('e.nombre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function empresasSinCampannaConfig()
+    {
+        $sql = "SELECT * FROM empresas
+                WHERE id not in (SELECT empresa_id FROM campanna_config) and activo=TRUE";
+
+        $rsm = new ResultSetMapping();
+        // para obtener mas datos de la empresa q no sea solo el {id} tengo q poner mas `addFieldResult`
+        $rsm->addEntityResult('App\Entity\Empresas', 'e');
+        $rsm->addFieldResult('e', 'id', 'id');
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $results = $query->getResult();
+        return $results;
+    }
 }
