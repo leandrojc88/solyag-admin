@@ -2,29 +2,27 @@
 
 namespace App\Entity;
 
-use App\Repository\PaisRepository;
+use App\Repository\MunicipiosRepository;
 use App\Types\Remesas\Zone;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @UniqueEntity(
- *      fields={"nombre","activo"},
- *      message="Ya existe un país con el mismo nombre introducido."
- * )
- * @ORM\Entity(repositoryClass=PaisRepository::class)
+ * @ORM\Entity(repositoryClass=MunicipiosRepository::class)
  */
-class Pais extends Zone
+class Municipios extends Zone
 {
-    const NAME = 'pais';
+    const NAME = 'municipio';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $code;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,13 +35,25 @@ class Pais extends Zone
     private $activo;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Provincias::class, inversedBy="municipios")
      */
-    private $response = [];
+    private $provincia;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
     public function getNombre(): ?string
@@ -70,14 +80,14 @@ class Pais extends Zone
         return $this;
     }
 
-    public function getResponse(): ?array
+    public function getProvincia(): ?Provincias
     {
-        return $this->response;
+        return $this->provincia;
     }
 
-    public function setResponse(array $response): self
+    public function setProvincia(?Provincias $provincia): self
     {
-        $this->response = $response;
+        $this->provincia = $provincia;
 
         return $this;
     }

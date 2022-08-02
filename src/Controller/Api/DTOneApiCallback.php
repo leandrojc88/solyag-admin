@@ -45,16 +45,6 @@ class DTOneApiCallback extends AbstractController
             $result
         );
 
-        // borrar cuando crea q este bien
-        $pais = new Pais();
-        $pais->setResponse($result);
-        $pais->setNombre('respuesta dtone');
-        $pais->setActivo(true);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($pais);
-        $em->flush();
-
-
         // actualizar en solyag.online la recarga como movimiento de servicio
         $data = $servicioEmpresaService->prepareDataToSolyagApp([], $recarga);
         $httpPostServicioEmpresaCubacel->update($data);
