@@ -46,11 +46,6 @@ class Provincias extends Zone
      */
     private $pais;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Municipios::class, mappedBy="provincia")
-     */
-    private $municipios;
-
     public function __construct()
     {
         $this->municipios = new ArrayCollection();
@@ -117,37 +112,6 @@ class Provincias extends Zone
     public function setPais(?Pais $pais): self
     {
         $this->pais = $pais;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Municipios[]
-     */
-    public function getMunicipios(): Collection
-    {
-        return $this->municipios;
-    }
-
-    public function addMunicipio(Municipios $municipio): self
-    {
-        if (!$this->municipios->contains($municipio)) {
-            $this->municipios[] = $municipio;
-            $municipio->setProvincia($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMunicipio(Municipios $municipio): self
-    {
-        if ($this->municipios->contains($municipio)) {
-            $this->municipios->removeElement($municipio);
-            // set the owning side to null (unless already changed)
-            if ($municipio->getProvincia() === $this) {
-                $municipio->setProvincia(null);
-            }
-        }
 
         return $this;
     }

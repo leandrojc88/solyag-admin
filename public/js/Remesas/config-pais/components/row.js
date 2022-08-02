@@ -1,13 +1,14 @@
 const cmpRow = (config) => {
 
-    const { id, type, name, } = config
+    const { id, type, nombre, } = config
 
     return `
-    <div class="row-table d-flex align-items-center" type-row="${type}">
+    <div class="row-table d-flex align-items-center" item-row='{"id": "${id}", "nombre": "${nombre}", "type": "${type}" }' type-row="${type}">
         <div class="mr-auto" style="flex: auto;">
-        ${name}
+        ${nombre}
         </div>
         <i class="fa fa-close" onclick="onDelete('${type}', ${id})" ></i>
     </div>
-    `
+    `;
+
 }

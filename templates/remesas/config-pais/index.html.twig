@@ -48,13 +48,8 @@
 			</h4>
 		</div>
 		<section class="grid">
-			{% for item in [
-			{nombre: 'Paises', type: 'pais',items: [{id: 1, name: 'Cuba'}, {id: 2, name: 'Republica Dominicana'}] },
-			{nombre: 'Provicincias', type: 'provincia',items: [] },
-		] %}
-
+			{% for item in data %}
 				{{ include('remesas/config-pais/components/card-location.html.twig', item) }}
-
 			{% endfor %}
 
 		</section>
@@ -65,6 +60,12 @@
 	{{ parent() }}
 	<script src="{{ asset('js/Remesas/config-pais/init.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/components/row.js') }}"></script>
+
+	<script src="{{ asset('js/Remesas/config-pais/draw/rows-for-selected.js') }}"></script>
+
+	<script src="{{ asset('js/Remesas/config-pais/func/set-zone-selected.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/func/get-zone-selected.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/func/cleare-children-herarchy.js') }}"></script>
 
 	<script src="{{ asset('js/Remesas/config-pais/on-new-row.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/on-delete-row.js') }}"></script>

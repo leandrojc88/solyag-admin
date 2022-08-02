@@ -1,4 +1,4 @@
-<div class="card card-p" style="width: 18rem;">
+<div class="card card-p" style="width: 18rem; height: 25rem;" type-card="{{type}}">
 	<div class="card-body">
 		<div class="card-title d-flex align-items-center">
 			<h5 class="" style="color: var(--white);">{{nombre}}</h5>
@@ -6,11 +6,11 @@
 		</div>
 		<div class="card-text">
 			{% for item in items %}
-				<div class="row-table d-flex align-items-center" type-row="{{type}}">
+				<div class="row-table d-flex align-items-center" item-row='{"id": "{{item.id}}", "nombre": "{{item.name}}", "type": "{{type}}" }' type-row="{{type}}">
 					<div class="mr-auto" style="flex: auto;">
 						{{item.name}}
 					</div>
-					<i class="fa fa-close" onclick="onDelete('{{type}}', {{item.id}})" ></i>
+					<i class="fa fa-close" onclick="onDelete('{{type}}', {{item.id}})"></i>
 				</div>
 			{% endfor %}
 		</div>

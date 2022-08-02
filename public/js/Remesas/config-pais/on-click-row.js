@@ -1,13 +1,13 @@
 const onClickRow = async (typeRowSelected) => {
     let result;
+    const id = getZoneSelected(typeRowSelected).id
+    typeHerarchy = getZoneChildrenHerarchy(typeRowSelected)
     await $.ajax({
         type: "post",
-        url: `/remesas/config-paises/get-config-by-selected/${typeRowSelected}`,
-        data: "data",
+        url: `/remesas/config-paises/get-config-by-selected/${typeHerarchy}`,
+        data: { id },
         success: function (response) {
-            console.log(response);
-
-            result = { id: '55', name: 'nuevo comp', type: typeRowSelected }
+            result = response;
         }
     });
 
@@ -15,15 +15,23 @@ const onClickRow = async (typeRowSelected) => {
 
 }
 
+registeListenerOnClick = () => {
 
-$('.row-table div').click(async function (e) {
+    $('.row-table div').click(async function (e) {
 
-    $(this).parent().addClass('row-selected');
-    $(this).parent().siblings().removeClass('row-selected');
+        $(this).parent().addClass('row-selected');
+        $(this).parent().siblings().removeClass('row-selected');
 
-    const typeRow = $(this).parent().attr('type-row');
+        const typeRow = $(this).parent().attr('type-row');
+        const itemRow = JSON.parse($(this).parent().attr('item-row'));
 
-    const cofing = await onClickRow(typeRow)
-    console.log(cofing);
-    $(this).parent().parent().append(cmpRow(cofing));
-});
+        cleareChildrenHerarchy(typeRow)
+        setZoneSelected(typeRow, itemRow);
+
+        const cofing = await onClickRow(typeRow)
+
+        drawRowsForSelected(getZoneChildrenHerarchy(typeRow), cofing);
+    });
+}
+
+registeListenerOnClick();
