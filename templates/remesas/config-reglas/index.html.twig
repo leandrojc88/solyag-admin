@@ -1,0 +1,20 @@
+{% extends 'remesas/base.html.twig' %}
+
+{% block content %}
+
+	{# header #}
+	<div class="container-fluid">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Configuración de Reglas
+			</h4>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	{# <script src="{{ asset('js/Telecomunicaciones/Status/Status.types.js') }}"></script> #}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'remesas/base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		.fiter th {
+			background-color: #2f2f2f !important;
+			padding: 6px 0;
+			border-bottom: 0 !important;
+		}
+
+		.w-date {
+			width: 150px !important;
+		}
+	</style>
+{% endblock %}
+{% block content %}
+
+	{# header #}
+	<div class="container-fluid">
+		<div class="d-flex align-items-center">
+			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
+				Listado de Remesas ( ## )
+			</h4>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	{# <script src="{{ asset('js/Telecomunicaciones/Status/Status.types.js') }}"></script> #}
+
+{% endblock %}
+
