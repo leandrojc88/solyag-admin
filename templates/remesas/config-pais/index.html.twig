@@ -1,5 +1,43 @@
 {% extends 'remesas/base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		.card-p {
+			border: 1px var(--gray) solid !important;
+		}
+
+		.add {
+			font-size: 0.8rem;
+			cursor: pointer;
+			color: #007bff !important;
+		}
+
+		.row-table {
+			padding: 0.4rem;
+			border-top: 0.1rem var(--gray) solid
+		}
+
+		.row-table .fa-close:hover{
+			cursor: pointer;
+		}
+
+		.row-table:hover {
+			background-color: var(--bg-nabvar);
+		}
+
+		.row-selected {
+			background-color: #21262a;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			grid-gap: 1rem;
+		}
+	</style>
+{% endblock %}
 {% block content %}
 
 	{# header #}
@@ -9,12 +47,27 @@
 				Configuración de Paises
 			</h4>
 		</div>
+		<section class="grid">
+			{% for item in [
+			{nombre: 'Paises', type: 'pais',items: [{id: 1, name: 'Cuba'}, {id: 2, name: 'Republica Dominicana'}] },
+			{nombre: 'Provicincias', type: 'provincia',items: [] },
+		] %}
+
+				{{ include('remesas/config-pais/components/card-location.html.twig', item) }}
+
+			{% endfor %}
+
+		</section>
 	</div>
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
+	<script src="{{ asset('js/Remesas/config-pais/init.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/components/row.js') }}"></script>
 
-	{# <script src="{{ asset('js/Telecomunicaciones/Status/Status.types.js') }}"></script> #}
+	<script src="{{ asset('js/Remesas/config-pais/on-new-row.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/on-delete-row.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/on-click-row.js') }}"></script>
 
 {% endblock %}
