@@ -19,7 +19,7 @@
 			border-top: 0.1rem var(--gray) solid
 		}
 
-		.row-table .fa-close:hover{
+		.row-table .fa-close:hover {
 			cursor: pointer;
 		}
 
@@ -35,6 +35,19 @@
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr 1fr;
 			grid-gap: 1rem;
+		}
+
+		.load {
+			position: absolute;
+			width: 100%;
+			background: #4151608c;
+			z-index: 999999;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: none;
+			justify-content: center;
+			align-items: center;
 		}
 	</style>
 {% endblock %}
@@ -62,6 +75,7 @@
 	<script src="{{ asset('js/Remesas/config-pais/components/row.js') }}"></script>
 
 	<script src="{{ asset('js/Remesas/config-pais/draw/rows-for-selected.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/draw/load-data.js') }}"></script>
 
 	<script src="{{ asset('js/Remesas/config-pais/func/set-zone-selected.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/func/get-zone-selected.js') }}"></script>

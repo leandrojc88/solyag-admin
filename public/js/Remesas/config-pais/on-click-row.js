@@ -25,12 +25,16 @@ registeListenerOnClick = () => {
         const typeRow = $(this).parent().attr('type-row');
         const itemRow = JSON.parse($(this).parent().attr('item-row'));
 
+        const nextCard = getZoneChildrenHerarchy(typeRow);
+
+        drawLoadData(nextCard, true)
         cleareChildrenHerarchy(typeRow)
         setZoneSelected(typeRow, itemRow);
 
         const cofing = await onClickRow(typeRow)
 
-        drawRowsForSelected(getZoneChildrenHerarchy(typeRow), cofing);
+        drawLoadData(nextCard, false)
+        drawRowsForSelected(nextCard, cofing);
     });
 }
 
