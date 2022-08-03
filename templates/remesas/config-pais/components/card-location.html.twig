@@ -11,7 +11,7 @@
 		</div>
 		<div class="card-text" style="overflow-y: auto; height: 86%;">
 			{% for item in items %}
-				<div class="row-table d-flex align-items-center" item-row='{"id": "{{item.id}}", "nombre": "{{item.name}}", "type": "{{type}}" }' type-row="{{type}}">
+				<div class="row-table d-flex align-items-center" id-row="{{item.id}}" item-row='{"id": "{{item.id}}", "nombre": "{{item.name}}", "type": "{{type}}" }' type-row="{{type}}">
 					<div class="mr-auto" style="flex: auto;">
 						{{item.name}}
 					</div>

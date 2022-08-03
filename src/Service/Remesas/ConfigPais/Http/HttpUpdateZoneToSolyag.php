@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Remesas\ConfigPais;
+namespace App\Service\Remesas\ConfigPais\Http;
 
 use App\Entity\Municipios;
 use App\Entity\Provincias;
