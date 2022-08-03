@@ -53,6 +53,8 @@
 {% endblock %}
 {% block content %}
 
+	{{ include("remesas/config-pais/components/modal_add.html.twig", {title: "Adicionar"}) }}
+
 	{# header #}
 	<div class="container-fluid">
 		<div class="d-flex align-items-center">
@@ -75,11 +77,13 @@
 	<script src="{{ asset('js/Remesas/config-pais/components/row.js') }}"></script>
 
 	<script src="{{ asset('js/Remesas/config-pais/draw/rows-for-selected.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/draw/new-row.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/draw/load-data.js') }}"></script>
 
 	<script src="{{ asset('js/Remesas/config-pais/func/set-zone-selected.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/func/get-zone-selected.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/func/cleare-children-herarchy.js') }}"></script>
+	<script src="{{ asset('js/Remesas/config-pais/func/submit-new-row.js') }}"></script>
 
 	<script src="{{ asset('js/Remesas/config-pais/on-new-row.js') }}"></script>
 	<script src="{{ asset('js/Remesas/config-pais/on-delete-row.js') }}"></script>

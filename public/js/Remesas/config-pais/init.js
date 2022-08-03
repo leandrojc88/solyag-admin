@@ -7,7 +7,7 @@ const TYPES = [TYPE_PAIS, TYPE_PROVINCIA, TYPE_MUNICIPIO];
 let paisSelected = null;
 let provinciaSelected = null;
 let municipioSelected = null;
-
+let typeSelected = TYPE_PAIS;
 
 getZoneChildrenHerarchy = (zone) => {
     if (zone == TYPE_PAIS) return TYPE_PROVINCIA;

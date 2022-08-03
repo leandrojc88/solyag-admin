@@ -30,6 +30,7 @@ class CreateProvincia
 
         $provincia = new Provincias();
         $provincia
+            ->setCode($provinciaName)
             ->setNombre($provinciaName)
             ->setPais($pais)
             ->setActivo(true);

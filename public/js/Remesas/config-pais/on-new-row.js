@@ -1,15 +1,32 @@
-const onNewRow = (treePoss) => {
-    alert("poss ", treePoss)
+const onNewRow = (zoneType) => {
+
+    ensureSelectedPaisForAddProvincia(zoneType)
+    ensureSelectedProvinciaForAddMunicipio(zoneType)
 
     $modal = $('#modal__form__id')
     $modal.modal('show')
+    $('#modal__form__label__id').html(`Adicionar ${zoneType}`)
 
     $form = $('#form_add_row')
-    
+    $form.resetForm()
+    typeSelected = zoneType;
+
 }
 
 
+const ensureSelectedPaisForAddProvincia = (zoneType) => {
+    if (zoneType == TYPE_PROVINCIA && !paisSelected) {
+        alertTemplate("debe seleccionar un Pais", 'danger');
+        throw new Error();
+    }
+}
 
+const ensureSelectedProvinciaForAddMunicipio = (zoneType) => {
+    if (zoneType == TYPE_MUNICIPIO && !provinciaSelected) {
+        alertTemplate("debe seleccionar una Provincia", 'danger');
+        throw new Error();
+    }
+}
 
 $('#form_add_row').validate({
     errorClass: 'invalid-label-orange',

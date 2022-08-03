@@ -17,6 +17,7 @@ const onClickRow = async (typeRowSelected) => {
 
 registeListenerOnClick = () => {
 
+    $('.row-table div').off('click'); // eliminar primero para evitar multi-registro del evento click
     $('.row-table div').click(async function (e) {
 
         $(this).parent().addClass('row-selected');

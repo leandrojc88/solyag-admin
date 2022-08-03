@@ -30,6 +30,7 @@ class CreateMunicipio
 
         $municipio = new Municipios();
         $municipio
+            ->setCode($municipioName)
             ->setNombre($municipioName)
             ->setProvincia($provincia)
             ->setActivo(true);

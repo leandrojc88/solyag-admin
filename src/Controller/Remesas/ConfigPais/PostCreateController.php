@@ -30,7 +30,7 @@ class PostCreateController extends AbstractController
         try {
 
             $nombre = $request->get('nombre');
-            $zone = new Zone();
+            $zone = null;
 
             switch ($selectedZone) {
                 case Pais::NAME:
