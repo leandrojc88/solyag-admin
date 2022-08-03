@@ -43,11 +43,14 @@ class HttpUpdateZoneToSolyag
             $url = self::POST_UPDATE_MUNICIPIO;
         }
 
+        $empresas = $this->empresasRepo->findBy(["activo" => true]);
+
         $data_api = $this->client->request(
             self::POST,
             $this->API_URL . $url,
             [
                 "body" => [
+                    "empresas" => array_map( fn($empresa) => $empresa->getId() , $empresas),
                     "id_api" => $zone->getId(),
                     "descripcion" => $zone->getNombre(),
                     "id_parent" => $zone->getIdParent()
