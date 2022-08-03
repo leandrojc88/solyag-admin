@@ -4,6 +4,7 @@ namespace App\Service\Remesas\ConfigPais;
 
 use App\Entity\Municipios;
 use App\Entity\Provincias;
+use App\Repository\EmpresasRepository;
 use App\Types\Remesas\Zone;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -23,12 +24,15 @@ class HttpUpdateZoneToSolyag
     const DELETE = "DELETE";
 
     private HttpClientInterface $client;
+    private EmpresasRepository $empresasRepo;
 
     public function __construct(
-        HttpClientInterface $client
+        HttpClientInterface $client,
+        EmpresasRepository $empresasRepo
     ) {
         $this->API_URL = $_ENV['SITE_SOLYAG'] . "/api/";
         $this->client = $client;
+        $this->empresasRepo = $empresasRepo;
     }
 
     public function __invoke(Zone $zone)

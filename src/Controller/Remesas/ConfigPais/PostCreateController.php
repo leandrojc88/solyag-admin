@@ -8,6 +8,7 @@ use App\Entity\Provincias;
 use App\Service\Remesas\ConfigPais\CreateMunicipio;
 use App\Service\Remesas\ConfigPais\CreatePais;
 use App\Service\Remesas\ConfigPais\CreateProvincia;
+use App\Service\Remesas\ConfigPais\HttpUpdateZoneToSolyag;
 use App\Types\Remesas\Zone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,6 +26,7 @@ class PostCreateController extends AbstractController
         CreatePais $createPais,
         CreateProvincia $createProvincia,
         CreateMunicipio $createMunicipio,
+        HttpUpdateZoneToSolyag $httpUpdateZoneToSolyag,
         $selectedZone
     ): JsonResponse {
         try {
@@ -48,8 +50,8 @@ class PostCreateController extends AbstractController
                     break;
             }
 
-            if($zone){
-                
+            if ($zone) {
+                $httpUpdateZoneToSolyag->__invoke($zone);
             }
 
             return $this->json($this->serializeRespose($zone));
