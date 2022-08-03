@@ -48,6 +48,10 @@ class PostCreateController extends AbstractController
                     break;
             }
 
+            if($zone){
+                
+            }
+
             return $this->json($this->serializeRespose($zone));
         } catch (\Exception $e) {
             return $this->json($e->getMessage(), JsonResponse::HTTP_NOT_ACCEPTABLE);

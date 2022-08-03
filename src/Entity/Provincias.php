@@ -115,4 +115,9 @@ class Provincias extends Zone
 
         return $this;
     }
+
+    public function getIdParent()
+    {
+        return $this->pais->getId();
+    }
 }

@@ -91,4 +91,9 @@ class Municipios extends Zone
 
         return $this;
     }
+
+    public function getIdParent()
+    {
+        return $this->provincia->getId();
+    }
 }

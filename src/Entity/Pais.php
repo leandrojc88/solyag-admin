@@ -81,4 +81,9 @@ class Pais extends Zone
 
         return $this;
     }
+
+    public function getIdParent()
+    {
+        return null;
+    }
 }
