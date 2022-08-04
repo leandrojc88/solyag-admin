@@ -1,20 +1,99 @@
 {% extends 'remesas/base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		.card-p {
+			border: 1px var(--gray) solid !important;
+		}
+
+		.add {
+			font-size: 0.8rem;
+			cursor: pointer;
+			color: #007bff !important;
+		}
+
+		.row-table {
+			padding: 0.4rem;
+			border-top: 0.1rem var(--gray) solid;
+			display: grid;
+			grid-template-columns: 1fr 6rem 1rem;
+			grid-gap: 0.2rem;
+		}
+
+		.row-black {
+			background: black;
+		}
+
+		.row-table .fa-close:hover {
+			cursor: pointer;
+		}
+
+		.row-table:hover {
+			background-color: var(--bg-nabvar);
+		}
+
+		.row-selected {
+			background-color: #21262a;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, 18rem);
+			grid-gap: 1rem;
+			justify-content: left;
+		}
+
+		.load {
+			position: absolute;
+			width: 100%;
+			background: #4151608c;
+			z-index: 999999;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: none;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+{% endblock %}
 {% block content %}
+
+	{{ include("remesas/monedas/components/modal_add.html.twig", {title: "Adicionar Moneda"}) }}
 
 	{# header #}
 	<div class="container-fluid">
-		<div class="d-flex align-items-center">
+		<div class="d-flex align-items-center mb-4">
 			<h4 class="mr-auto display-4 mb-0 mr-auto title-table text-light">
 				Configuración de Monedas
 			</h4>
+			<div class="input-group input-group-sm" style="width:220px;">
+				<select name="empresa" id="select_empresa" class="form-control mx-0 filter-select">
+					<option value="0">-- empresa --</option>
+					{% for empresa in empresas %}
+						<option {% if app.request.get('empresa') == empresa.id %} selected {% endif %} value="{{empresa.id}}">{{empresa.nombre}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<button type="button" {% if not app.request.get('empresa') %} disabled {% endif %} title="Asociar moneda" class="btn btn-primary mx-2" onclick="onAddMonedaPais({{app.request.get('empresa')}})">
+				Asociar moneda
+			</button>
 		</div>
+
+		<section class="grid">
+			{% for monedaPais in monedas_pais %}
+				{{ include('remesas/monedas/components/card.html.twig', {monedaPais}) }}
+			{% endfor %}
+		</section>
 	</div>
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 
-	{# <script src="{{ asset('js/Telecomunicaciones/Status/Status.types.js') }}"></script> #}
+	<script src="{{ asset('js/Remesas/monedas/on-change-select-empresas.js') }}"></script>
+	<script src="{{ asset('js/Remesas/monedas/on-add-moneda-pais.js') }}"></script>
 
 {% endblock %}

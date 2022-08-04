@@ -1,0 +1,27 @@
+<div class="card card-p" style="width: 18rem; height: 25rem;">
+	<div id="load-data-{{monedaPais.pais.id}}" class="load">
+		<span class="spinner-border text-primary" role="status" aria-hidden="true"></span>
+		<span class="text-primary ml-2" id="loading-modal-msg">
+			cargando...</span>
+	</div>
+	<div class="card-body">
+		<div class="card-title d-flex align-items-center">
+			<h5 class="" style="color: var(--white);">{{monedaPais.pais.nombre}}</h5>
+			<a onclick="onAddMonedaPais({{app.request.get('empresa')}},{{monedaPais.pais.id}})" class="card-link add ml-auto">Asociar moneda</a>
+		</div>
+		<div class="card-text" style="overflow-y: auto; height: 86%;">
+			<div class="row-table row-black">
+				<div>Moneda</div>
+				<div>Valor</div>
+			</div>
+			{% for moneda in monedaPais.monedas %}
+				<div class="row-table align-items-center">
+					<div>{{moneda.moneda}}</div>
+					<div>{{moneda.valorConversion}}</div>
+					<i class="fa fa-close" onclick="onDelete({{moneda.id}})"></i>
+				</div>
+			{% endfor %}
+		</div>
+
+	</div>
+</div>
