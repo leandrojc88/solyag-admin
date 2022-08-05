@@ -24,8 +24,8 @@ class GetCostoAndSaldoByEmpresaController extends AbstractController
         $campannaConfig = $campannaConfigRepository->findOneBy(['empresa' => $id_empresa]);
 
         return $this->json([
-            'costo' => $campannaConfig->getCosto(),
-            'saldo' => $campannaConfig->getSaldo()
+            'costo' => $campannaConfig ? $campannaConfig->getCosto() : 0,
+            'saldo' => $campannaConfig ? $campannaConfig->getSaldo() : 0
         ]);
     }
 }
