@@ -46,7 +46,7 @@ recomendamos utilizar las migraciones de Symfony debido a que ya existen algunas
 
 se encuentran los .js organizados por las carpetas de los modulos que se utilizan ejemplo, **js/Remesas/monedas/*.js** se encuentran los js necesarios para las configuracion de las monedas en remesas
 
-![image-20220809110302604](\readme\image-20220809110302604.png)
+![image-20220809110302604](readme\image-20220809110302604.png)
 
 ## src\Controller\Api
 
